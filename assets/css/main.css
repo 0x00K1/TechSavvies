@@ -120,7 +120,7 @@ nav ul li {
 ============================== */
 .hero {
   height: 100vh;
-  background: url('../images/home.png') no-repeat center/cover;
+  background: url('../images/home.png') no-repeat center/cover; /**/
   display: flex;
   align-items: center;
   justify-content: center;
