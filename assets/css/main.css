@@ -519,6 +519,15 @@ footer {
   width: 400px;
 }
 
+.auth-modal-content img {
+  display: block;
+  width: 80px;
+  height: auto; 
+  margin: 0 auto;
+  position: relative;
+  margin-bottom: 25px; 
+}
+
 .auth-modal-content h2 {
   color: #1a1a1a;
   text-align: center;
