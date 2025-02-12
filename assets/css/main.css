@@ -83,34 +83,45 @@ nav ul li {
   cursor: pointer;
 }
 
+/* Container for the icon and text */
+.account-control {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 0.5rem; /* Space between icon and text */
+}
+
+/* Optional: style the caret icon */
+.account-control i.fa-caret-down {
+  font-size: 0.8rem;
+}
+
+/* Position the dropdown absolutely beneath the account-control */
 .account-dropdown {
   position: absolute;
-  top: 45px;
-  right: 0;
-  background-color: var(--secondary-color);
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  display: none;
-  z-index: 999;
+  top: 100%;
+  right: 0; 
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: none; /* Hidden by default */
+  min-width: 150px;
+  z-index: 1000;
 }
 
 .account-dropdown a {
   display: block;
-  padding: 10px 15px;
-  color: var(--primary-color);
-  font-size: 14px;
-  border-bottom: 1px solid #ddd;
+  padding: 0.75rem 1rem;
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
 }
 
 .account-dropdown a:hover {
-  background-color: #ddd;
+  background-color: #f2f2f2;
 }
 
-.account-dropdown a:last-child {
-  border-bottom: none;
-}
-
+/* Show the dropdown when toggled */
 .show-dropdown .account-dropdown {
   display: block;
 }

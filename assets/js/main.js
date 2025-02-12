@@ -62,20 +62,51 @@ document.addEventListener("DOMContentLoaded", function () {
   // Global authentication state
   let isAuthenticated = false;
 
+  fetch("../includes/check_session.php", {
+    credentials: "include"
+  })
+    .then(response => response.json())
+    .then(data => {
+      if (data.loggedIn) {
+        isAuthenticated = true;
+        // Possibly display data.user info in the UI
+      } else {
+        isAuthenticated = false;
+      }
+      updateAccountLink();
+    })
+    .catch(error => console.error("Session check error:", error));
+
   // Update account link based on authentication state
   function updateAccountLink() {
     const accountLink = document.getElementById("accountLink");
     if (!accountLink) return;
+
     if (isAuthenticated) {
+      // Enhanced design: add text, a caret icon, and an icon in each dropdown link
       accountLink.innerHTML = `
-        <img src="assets/images/account.png" alt="Account" id="accountIcon" />
+        <div class="account-control" id="accountIconWrapper">
+          <img src="assets/images/account.png" alt="Account" id="accountIcon" />
+          <i class="fa fa-caret-down"></i>
+        </div>
         <div class="account-dropdown" id="accountDropdown">
-          <a href="profile.html">Profile</a>
-          <a href="logout.html">Log Out</a>
+          <a href="profile.html">
+            <i class="fa fa-user-circle"></i>
+            Profile
+          </a>
+          <a href="/includes/logout.php">
+            <i class="fa fa-sign-out-alt"></i>
+            Log Out
+          </a>
         </div>
       `;
     } else {
-      accountLink.innerHTML = `<img src="assets/images/account.png" alt="Account" id="accountIcon" />`;
+      // Show just the account icon if user is not authenticated
+      accountLink.innerHTML = `
+        <div class="account-control" id="accountIconWrapper">
+          <img src="assets/images/account.png" alt="Account" id="accountIcon" />
+        </div>
+      `;
     }
   }
 
@@ -156,6 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: email, otp: otp }),
+          credentials: 'include'  // <-- This ensures the session cookie is sent  
         })
           .then((response) => response.json())
           .then((data) => {
