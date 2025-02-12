@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Logged Out - TechSavvies</title>
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <script>
+    // Simulate logout (in a real app, clear cookies or session data)
+    document.addEventListener("DOMContentLoaded", function() {
+      console.log("User logged out.");
+      setTimeout(function() {
+        window.location.href = "index.html";
+      }, 3000);
+    });
+  </script>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="assets/images/Logo.png" alt="TechSavvies Logo" height="30" />
+    </div>
+    <nav>
+      <ul>
+        <li id="accountLink">
+          <img src="assets/images/account.png" alt="Account" id="accountIcon" />
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Logout Message -->
+  <div class="main-content" style="text-align: center; padding: 50px;">
+    <h1>You have been logged out.</h1>
+    <p>Redirecting to the homepage...</p>
+  </div>
+</body>
+</html>
