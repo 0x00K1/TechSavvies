@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Global authentication state
   let isAuthenticated = false;
 
-  fetch("../includes/check_session.php", {
+  fetch("/includes/check_session.php", {
     credentials: "include"
   })
     .then(response => response.json())
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!accountLink) return;
 
     if (isAuthenticated) {
-      // Enhanced design: add text, a caret icon, and an icon in each dropdown link
+      // Enhanced
       accountLink.innerHTML = `
         <div class="account-control" id="accountIconWrapper">
           <img src="assets/images/account.png" alt="Account" id="accountIcon" />
@@ -214,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (accountIcon && accountIcon.contains(e.target)) {
         if (isAuthenticated) {
           accountLink.classList.toggle("show-dropdown");
-        } else {
+        } else { /* We'll inject the HTML here [LATER] */
           openAuthModal();
         }
       } else {
