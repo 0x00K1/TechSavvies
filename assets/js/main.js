@@ -86,11 +86,11 @@ document.addEventListener("DOMContentLoaded", function () {
       // Enhanced
       accountLink.innerHTML = `
         <div class="account-control" id="accountIconWrapper">
-          <img src="assets/images/account.png" alt="Account" id="accountIcon" />
+          <img src="/assets/images/account.png" alt="Account" id="accountIcon" />
           <i class="fa fa-caret-down"></i>
         </div>
         <div class="account-dropdown" id="accountDropdown">
-          <a href="profile.html">
+          <a href="/profile.html">
             <i class="fa fa-user-circle"></i>
             Profile
           </a>
@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Show just the account icon if user is not authenticated
       accountLink.innerHTML = `
         <div class="account-control" id="accountIconWrapper">
-          <img src="assets/images/account.png" alt="Account" id="accountIcon" />
+          <img src="/assets/images/account.png" alt="Account" id="accountIcon" />
         </div>
       `;
     }
@@ -153,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
         // Send AJAX request to send_otp.php
-        fetch("../includes/send_otp.php", {
+        fetch("/includes/send_otp.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: email }),
@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
         // Send AJAX request to verify_otp.php
-        fetch("../includes/verify_otp.php", {
+        fetch("/includes/verify_otp.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: email, otp: otp }),
