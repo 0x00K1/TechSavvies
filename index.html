@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TechSavvies - Home</title>
-  <link rel="icon" href="assets/images/Logo.png" type="image/png" />
+  <link rel="icon" href="assets/icons/Logo.ico" sizes="64x64" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/main.css" />
 </head>
@@ -13,12 +13,12 @@
   <!-- Header Section -->
   <header>
     <div class="logo">
-      <img src="assets/images/LogoName.webp" alt="TechSavvies Logo"/>
+      <img src="assets/images/LogoName.webp" alt="TechSavvies Logo" />
     </div>
     <nav>
       <ul>
         <li id="accountLink">
-          <img src="assets/images/account.png" alt="Account" id="accountIcon"/>
+          <img src="assets/images/account.png" alt="Account" id="accountIcon" />
         </li>
       </ul>
     </nav>
@@ -33,8 +33,8 @@
     </div>
   </section>
 
-   <!-- Main Content -->
-   <div class="main-content">
+  <!-- Main Content -->
+  <div class="main-content">
     <!-- Categories Section -->
     <section class="categories" id="shop">
       <h2 class="section-title">Shop by Category</h2>
@@ -88,11 +88,11 @@
           <img src="assets/images/games.png" alt="Games" />
           <h3>Games</h3>
           <p>Explore the latest tech games.</p>
-        </div>        
+        </div>
       </div>
     </section>
 
-    <!-- Popular Products Slider (require logic)-->
+    <!-- Popular Products Slider (homepage-specific) -->
     <section class="popular-products">
       <h2 class="section-title">Popular Products</h2>
       <div class="slider">
@@ -113,15 +113,15 @@
       </div>
     </section>
 
-    <!-- Testimonials Section (require logic)-->
+    <!-- Testimonials Section -->
     <section class="testimonials">
       <h2 class="section-title">What Our Customers Say</h2>
       <div class="testimonial-container">
         <div class="testimonial">
-          <p>"Amazing quality and fast delivery!" - Jane Doe</p>
+          <p>"Amazing quality and fast delivery!" - فتحي</p>
         </div>
         <div class="testimonial">
-          <p>"The best tech products I've found online." - John Smith</p>
+          <p>"The best tech products I've found online." - kun</p>
         </div>
       </div>
     </section>
@@ -156,11 +156,11 @@
   <!-- Authentication Modal -->
   <div class="auth-modal" id="authModal">
     <div class="auth-modal-content">
-      <span class="close" id="closeModal">&times;</span>
+      <a class="close" id="closeModal">&times;</a>
       
       <!-- Step 1: Enter Email -->
       <div class="auth-step" id="authStep1">
-        <img src="assets/images/logo.png">
+        <img src="assets/images/logo.png" alt="Site Logo" />
         <p>Enter your email for savvy shopping</p>
         <input type="email" id="authEmail" placeholder="Email Address" />
         <button id="sendOtpBtn">Send OTP</button>

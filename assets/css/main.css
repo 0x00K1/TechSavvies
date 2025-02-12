@@ -519,6 +519,30 @@ footer {
   width: 400px;
 }
 
+.auth-modal-content {
+  position: relative;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  padding: 40px;
+  width: 400px;
+}
+
+.auth-modal-content a {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  color: #333;
+  text-decoration: none;
+  cursor: pointer; /* Shows hand cursor on hover */
+  transition: color 0.3s ease;
+}
+
+.auth-modal-content a:hover {
+  color: #d42d2d; 
+}
+
 .auth-modal-content img {
   display: block;
   width: 80px;
@@ -627,12 +651,6 @@ footer {
 .auth-modal-content button:active {
   transform: translateY(0);
   box-shadow: 0 4px 15px rgba(1, 23, 255, 0.2);
-}
-
-/* Hover effect for the close button */
-.close:hover {
-  color: #d42d2d; /* Change color on hover */
-  transform: scale(1.2); /* Slightly increase size on hover */
 }
 
 /* Step Transitions */
