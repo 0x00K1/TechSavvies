@@ -1,77 +1,75 @@
 <?php
-session_start();
+require_once __DIR__ . '/secure_session.php';
 header("Content-Type: application/json");
 require_once "db.php";
 
-// Get POST JSON input
+// Decode input and ensure email, OTP, and CSRF token are provided
 $data = json_decode(file_get_contents("php://input"), true);
-if (!isset($data['email']) || !isset($data['otp'])) {
-    echo json_encode(["success" => false, "error" => "Email and OTP are required."]);
+if (!isset($data['email'], $data['otp'], $data['csrf_token']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+    echo json_encode(["success" => false, "error" => "Valid email, OTP, and CSRF token are required."]);
     exit;
 }
 
-$email = $data['email'];
+// Validate CSRF token
+if (!hash_equals($_SESSION['csrf_token'], $data['csrf_token'])) {
+    echo json_encode(["success" => false, "error" => "Invalid CSRF token."]);
+    exit;
+}
+
+$email = filter_var($data['email'], FILTER_SANITIZE_EMAIL);
 $otp_input = trim($data['otp']);
 
-// Check if the OTP matches and the email is the same as when sent
-if (
-    !isset($_SESSION['otp'], $_SESSION['otp_email']) ||
-    $_SESSION['otp_email'] !== $email ||
-    $_SESSION['otp'] != $otp_input
-) {
+// Verify OTP stored in the session
+if (!isset($_SESSION['otp'], $_SESSION['otp_email']) || $_SESSION['otp_email'] !== $email || !hash_equals((string)$_SESSION['otp'], $otp_input)) {
     echo json_encode(["success" => false, "error" => "Incorrect OTP."]);
     exit;
 }
 
+// Check OTP expiration (180 seconds = 3 minutes)
+if ((time() - $_SESSION['last_otp_time']) > 180) {
+    echo json_encode(["success" => false, "error" => "OTP expired. Request a new one."]);
+    unset($_SESSION['otp'], $_SESSION['otp_email']);
+    exit;
+}
+
 try {
-    // Check if the user already exists
+    // Lookup the user by email
     $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
     
+    // If user doesn't exist, register a new one with a unique username
     if (!$user) {
-        // The user does not exist; generate a unique username starting with "savvyclient"
-        $username = "";
         do {
-            $randomNumber = rand(1000, 9999);
+            $randomNumber = random_int(1, 99999);
             $username = "savvyclient" . $randomNumber;
-            $stmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = ?");
-            $stmt->execute([$username]);
-            $count = $stmt->fetchColumn();
-        } while ($count > 0);
-        
-        // Temp logic (shall we config the user without pass ?)
-        $defaultPassword = password_hash("default_password", PASSWORD_DEFAULT);
-        
-        $stmt = $pdo->prepare(
-            "INSERT INTO users (email, password, username, role, is_verified, created_at)
-             VALUES (?, ?, ?, 'user', 1, CURRENT_TIMESTAMP)"
-        );
-        $stmt->execute([$email, $defaultPassword, $username]);
-        
+            $checkStmt = $pdo->prepare("SELECT COUNT(*) FROM users WHERE username = ?");
+            $checkStmt->execute([$username]);
+        } while ($checkStmt->fetchColumn() > 0);
+
+        $randomPassword = bin2hex(random_bytes(8));
+        $hashedPassword = password_hash($randomPassword, PASSWORD_DEFAULT);
+
+        $insertStmt = $pdo->prepare("INSERT INTO users (email, password, username, role, created_at) VALUES (?, ?, ?, 'user', CURRENT_TIMESTAMP)");
+        $insertStmt->execute([$email, $hashedPassword, $username]);
+
         $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    } else {
-        // The user exists: update verification status if needed.
-        if (!$user['is_verified']) {
-            $stmt = $pdo->prepare("UPDATE users SET is_verified = 1 WHERE email = ?");
-            $stmt->execute([$email]);
-            // Re-fetch the updated user information
-            $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
-            $stmt->execute([$email]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        }
     }
-    
-    // Clear the OTP session variables since verification succeeded
+
+    // Remove OTP data from session
     unset($_SESSION['otp'], $_SESSION['otp_email']);
-    
-    // Create a session entry to keep the user logged in
+
+    // Regenerate session ID after successful authentication to prevent fixation attacks
+    session_regenerate_id(true);
+
+    unset($user['password']);
     $_SESSION['user'] = $user;
-    
     echo json_encode(["success" => true, "user" => $user]);
+
 } catch (PDOException $e) {
-    echo json_encode(["success" => false, "error" => "Database error: " . $e->getMessage()]);
+    error_log("Database error: " . $e->getMessage());
+    echo json_encode(["success" => false, "error" => "A database error occurred."]);
 }
 ?>

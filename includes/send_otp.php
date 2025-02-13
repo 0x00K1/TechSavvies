@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once __DIR__ . '/secure_session.php';
 header("Content-Type: application/json");
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -9,51 +9,62 @@ require '../assets/php/Exception.php';
 require '../assets/php/PHPMailer.php';
 require '../assets/php/SMTP.php';
 
-// Get the POST JSON input
 $data = json_decode(file_get_contents("php://input"), true);
-if (!isset($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
-    echo json_encode(["success" => false, "error" => "Invalid email address."]);
+if (!isset($data['email'], $data['csrf_token']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+    echo json_encode(["success" => false, "error" => "Invalid email or CSRF token."]);
+    exit;
+}
+
+// Validate CSRF token
+if (!hash_equals($_SESSION['csrf_token'], $data['csrf_token'])) {
+    echo json_encode(["success" => false, "error" => "Invalid CSRF token."]);
+    exit;
+}
+
+// Enforce a 60-second wait between OTP requests
+if (isset($_SESSION['last_otp_time']) && (time() - $_SESSION['last_otp_time'] < 60)) {
+    echo json_encode(["success" => false, "error" => "Wait before requesting another OTP."]);
     exit;
 }
 
 $email = $data['email'];
 
-// Generate a 6-digit OTP and store it in the session [We'll update it later, "security reasons"]
-$otp = rand(100000, 999999);
+function generateOTP($length = 6) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()';
+    $otp = '';
+    for ($i = 0; $i < $length; $i++) {
+        $otp .= $characters[random_int(0, strlen($characters) - 1)];
+    }
+    return $otp;
+}
+
+$otp = generateOTP(6);
 $_SESSION['otp'] = $otp;
 $_SESSION['otp_email'] = $email;
+$_SESSION['last_otp_time'] = time();
 
-// Prepare email content
-$subject = "Your OTP Code for TechSavvies";
-$message = "Hello,\n\nYour OTP code is: $otp\n\nPlease use this code to verify your email address.\n\nThank you.";
+$subject = "OTP for TechSavvies.shop";
+// Hello <username> ... [LATER]
+$message = "Hello,\n\nYour OTP is: $otp\nIf you did not request OTP from TechSavvies.shop, just ignore this email.\n\nThank you.";
 
-// Create a new PHPMailer instance
 $mail = new PHPMailer(true);
-
 try {
-    // Server settings
     $mail->isSMTP();
     $mail->Host       = 'smtp.mailersend.net';
     $mail->SMTPAuth   = true;
-    $mail->Username   = '';
-    $mail->Password   = '';
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // or 'tls'
+    $mail->Username   = ""; // getenv 
+    $mail->Password   = ""; // getenv 
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = 587;
-
-    // Recipients
-    $mail->setFrom('', 'TechSavvies');
+    $mail->setFrom("" /*getenv*/ , 'TechSavvies');
     $mail->addAddress($email);
-
-    // Content
-    $mail->isHTML(false); // Set email format to plain text
+    $mail->isHTML(false);
     $mail->Subject = $subject;
     $mail->Body    = $message;
-    $mail->AltBody = $message;
-
     $mail->send();
-
     echo json_encode(["success" => true]);
 } catch (Exception $e) {
-    echo json_encode(["success" => false, "error" => "Mailer Error: " . $mail->ErrorInfo]);
+    error_log("Mailer Error: " . $mail->ErrorInfo);
+    echo json_encode(["success" => false, "error" => "Unable to send email."]);
 }
 ?>

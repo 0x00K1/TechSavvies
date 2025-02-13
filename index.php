@@ -1,33 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+require_once __DIR__ . '/includes/secure_session.php';
+?>
+
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>TechSavvies - Home</title>
-  <link rel="icon" href="assets/icons/Logo.ico" sizes="64x64" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/main.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
-  <!-- Header Section -->
-  <header>
-    <div class="logo">
-      <a href="index.html"><img src="assets/images/LogoName.webp" alt="TechSavvies Logo" /></a>
-    </div>
-    <nav>
-      <ul>
-        <li id="accountLink">
-          <img src="assets/images/account.png" alt="Account" id="accountIcon" />
-        </li>
-      </ul>
-    </nav>
-  </header>
+<?php require_once __DIR__ . '/assets/php/main.php'; ?>
 
   <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content">
-      <h1>Welcome to TechSavvies Shop</h1>
+      <h1>Welcome to <span class="glitch-text">TechSavvies</span> Shop</h1>
       <p>Bridging innovation and everyday life with cutting-edge tech and style.</p>
       <a href="#shop"><span>Shop Now</span></a>
     </div>
@@ -39,52 +25,52 @@
     <section class="categories" id="shop">
       <h2 class="section-title">Shop by Category</h2>
       <div class="category-grid">
-        <div class="category-box" onclick="location.href='categories/tshirts.html'">
+        <div class="category-box" onclick="location.href='categories?name=tshirts'">
           <img src="assets/images/tshirts.png" alt="T-shirts" />
           <h3>T-shirts</h3>
           <p>Cool tech-inspired apparel.</p>
         </div>
-        <div class="category-box" onclick="location.href='categories/backpacks.html'">
+        <div class="category-box" onclick="location.href='categories?name=backpacks'">
           <img src="assets/images/backpacks.png" alt="Backpacks" />
           <h3>Backpacks</h3>
           <p>Stylish and functional bags.</p>
         </div>
-        <div class="category-box" onclick="location.href='categories/books.html'">
+        <div class="category-box" onclick="location.href='categories?name=books'">
           <img src="assets/images/digital-books.png" alt="Digital Books" />
           <h3>Books</h3>
           <p>Learn and master tech skills.</p>
         </div>
-        <div class="category-box" onclick="location.href='categories/laptops.html'">
+        <div class="category-box" onclick="location.href='categories?name=laptops'">
           <img src="assets/images/laptops.png" alt="Laptops" />
           <h3>Laptops</h3>
           <p>High performance laptops for every need.</p>
         </div>
-        <div class="category-box" onclick="location.href='categories/stickers.html'">
+        <div class="category-box" onclick="location.href='categories?name=stickers'">
           <img src="assets/images/stickers.png" alt="Stickers" />
           <h3>Stickers</h3>
           <p>Show off your passion with our stickers.</p>
         </div>
-        <div class="category-box" onclick="location.href='categories/hardware-tools.html'">
+        <div class="category-box" onclick="location.href='categories?name=hardware-tools'">
           <img src="assets/images/hardware-tools.png" alt="Hardware Tools" />
           <h3>Hardware Tools</h3>
           <p>Essential tools for every tech enthusiast.</p>
         </div>
-        <div class="category-box" onclick="location.href='categories/software-tools.html'">
+        <div class="category-box" onclick="location.href='categories?name=software-tools'">
           <img src="assets/images/software-tools.png" alt="Software Tools" />
           <h3>Software Tools</h3>
           <p>Tools to boost your productivity.</p>
         </div>
-        <div class="category-box" onclick="location.href='categories/mugs.html'">
+        <div class="category-box" onclick="location.href='categories?name=mugs'">
           <img src="assets/images/mugs.png" alt="Mugs" />
           <h3>Mugs</h3>
           <p>Perfect for your daily caffeine fix.</p>
         </div>
-        <div class="category-box" onclick="location.href='categories/phone-cases.html'">
+        <div class="category-box" onclick="location.href='categories?name=phone-cases'">
           <img src="assets/images/phone-cases.png" alt="Phone Cases" />
           <h3>Phone Cases</h3>
           <p>Protect your device with style.</p>
         </div>
-        <div class="category-box" onclick="location.href='categories/games.html'">
+        <div class="category-box" onclick="location.href='categories?name=games'">
           <img src="assets/images/games.png" alt="Games" />
           <h3>Games</h3>
           <p>Explore the latest tech games.</p>
@@ -144,37 +130,14 @@
   <!-- Footer Section -->
   <footer>
     <div class="footer-links">
-      <a href="about.html">About Us</a>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Service</a>
+      <a href="about.php">About Us</a>
+      <a href="privacy.php">Privacy Policy</a>
+      <a href="terms.php">Terms of Service</a>
     </div>
     <div class="footer-contact">
       <p><a href="mailto:support@techsavvies.shop">support@techsavvies.shop</a></p>
     </div>
   </footer>
-
-  <!-- Authentication Modal -->
-  <div class="auth-modal" id="authModal">
-    <div class="auth-modal-content">
-      <a class="close" id="closeModal">&times;</a>
-      
-      <!-- Step 1: Enter Email -->
-      <div class="auth-step" id="authStep1">
-        <img src="assets/images/logo.png" alt="Site Logo" />
-        <p>Sign in/up for savvy shopping</p>
-        <input type="email" id="authEmail" placeholder="Email Address" />
-        <button id="sendOtpBtn">Send OTP</button>
-      </div>
-  
-      <!-- Step 2: Enter OTP -->
-      <div class="auth-step" id="authStep2" style="display: none;">
-        <h2>Verify It's You</h2>
-        <p>We've sent a code to your email</p>
-        <input type="text" id="authOTP" maxlength="6" />
-        <button id="verifyOtpBtn">Verify & Continue</button>
-      </div>
-    </div>
-  </div>
 
   <script src="assets/js/home1.js"></script>
   <script src="assets/js/main.js"></script>

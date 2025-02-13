@@ -1,8 +1,8 @@
 <?php
 $host = "localhost";
 $dbname = "techsavvies";
-$username = "";
-$password = "";
+$username = ""; // getenv
+$password = ""; // getenv
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);

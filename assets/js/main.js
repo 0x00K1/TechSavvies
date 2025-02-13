@@ -119,6 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const authOTPInput = document.getElementById("authOTP");
   const sendOtpBtn = document.getElementById("sendOtpBtn");
   const verifyOtpBtn = document.getElementById("verifyOtpBtn");
+  const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
   if (authModal && authStep1 && authStep2 && authEmailInput && authOTPInput) {
     function openAuthModal() {
@@ -152,11 +153,12 @@ document.addEventListener("DOMContentLoaded", function () {
           alert("Please enter a valid email.");
           return;
         }
+
         // Send AJAX request to send_otp.php
         fetch("/includes/send_otp.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email }),
+          body: JSON.stringify({ email: email, csrf_token: csrfToken }),
         })
           .then((response) => response.json())
           .then((data) => {
@@ -186,7 +188,11 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch("/includes/verify_otp.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email, otp: otp }),
+          body: JSON.stringify({
+            email: email,
+            otp: otp,
+            csrf_token: csrfToken
+          }),
           credentials: 'include'  // <-- This ensures the session cookie is sent  
         })
           .then((response) => response.json())

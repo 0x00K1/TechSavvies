@@ -160,6 +160,33 @@ nav ul li {
   animation: fadeInDown 1s ease-out;
 }
 
+.glitch-text {
+  animation: glitch 1s infinite;
+  position: relative;
+  color: #fff;
+}
+
+@keyframes glitch {
+  0% {
+    text-shadow: 2px 0 #0117ff, -2px 0 #8d07cc;
+  }
+  20% {
+    text-shadow: -2px 0 #d42d2d, 2px 0 #0117ff;
+  }
+  40% {
+    text-shadow: 2px 2px #8d07cc, -2px -2px #d42d2d;
+  }
+  60% {
+    text-shadow: -2px 2px #0117ff, 2px -2px #8d07cc;
+  }
+  80% {
+    text-shadow: 2px 0 #d42d2d, -2px 0 #0117ff;
+  }
+  100% {
+    text-shadow: 2px 0 #0117ff, -2px 0 #8d07cc;
+  }
+}
+
 .hero-content p {
   font-size: 1.2em;
   margin-bottom: 30px;

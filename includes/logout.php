@@ -1,13 +1,12 @@
 <?php
-session_start();
+require_once __DIR__ . '/secure_session.php';
 
 // Unset all session variables
 $_SESSION = [];
 
-// If you want to kill the session (remove the session cookie) 
+// Remove the session cookie
 if (ini_get("session.use_cookies")) {
     $params = session_get_cookie_params();
-    // Set the cookie to expire in the past
     setcookie(
         session_name(), 
         '', 
@@ -22,7 +21,7 @@ if (ini_get("session.use_cookies")) {
 // Destroy the session
 session_destroy();
 
-// Redirect to a dedicated "logged out" page or the homepage
+// Redirect to a logged-out page
 header("Location: /logout.html");
 exit;
 ?>
