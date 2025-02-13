@@ -22,6 +22,6 @@ if (ini_get("session.use_cookies")) {
 session_destroy();
 
 // Redirect to a logged-out page
-header("Location: /logout.html");
+header("Location: /logout.php");
 exit;
 ?>

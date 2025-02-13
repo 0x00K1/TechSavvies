@@ -25,52 +25,52 @@ require_once __DIR__ . '/includes/secure_session.php';
     <section class="categories" id="shop">
       <h2 class="section-title">Shop by Category</h2>
       <div class="category-grid">
-        <div class="category-box" onclick="location.href='categories?name=tshirts'">
+        <div class="category-box" onclick="location.href='categories?type=tshirts'">
           <img src="assets/images/tshirts.png" alt="T-shirts" />
           <h3>T-shirts</h3>
           <p>Cool tech-inspired apparel.</p>
         </div>
-        <div class="category-box" onclick="location.href='categories?name=backpacks'">
+        <div class="category-box" onclick="location.href='categories?type=backpacks'">
           <img src="assets/images/backpacks.png" alt="Backpacks" />
           <h3>Backpacks</h3>
           <p>Stylish and functional bags.</p>
         </div>
-        <div class="category-box" onclick="location.href='categories?name=books'">
+        <div class="category-box" onclick="location.href='categories?type=books'">
           <img src="assets/images/digital-books.png" alt="Digital Books" />
           <h3>Books</h3>
           <p>Learn and master tech skills.</p>
         </div>
-        <div class="category-box" onclick="location.href='categories?name=laptops'">
+        <div class="category-box" onclick="location.href='categories?type=laptops'">
           <img src="assets/images/laptops.png" alt="Laptops" />
           <h3>Laptops</h3>
           <p>High performance laptops for every need.</p>
         </div>
-        <div class="category-box" onclick="location.href='categories?name=stickers'">
+        <div class="category-box" onclick="location.href='categories?type=stickers'">
           <img src="assets/images/stickers.png" alt="Stickers" />
           <h3>Stickers</h3>
           <p>Show off your passion with our stickers.</p>
         </div>
-        <div class="category-box" onclick="location.href='categories?name=hardware-tools'">
+        <div class="category-box" onclick="location.href='categories?type=hardware-tools'">
           <img src="assets/images/hardware-tools.png" alt="Hardware Tools" />
           <h3>Hardware Tools</h3>
           <p>Essential tools for every tech enthusiast.</p>
         </div>
-        <div class="category-box" onclick="location.href='categories?name=software-tools'">
+        <div class="category-box" onclick="location.href='categories?type=software-tools'">
           <img src="assets/images/software-tools.png" alt="Software Tools" />
           <h3>Software Tools</h3>
           <p>Tools to boost your productivity.</p>
         </div>
-        <div class="category-box" onclick="location.href='categories?name=mugs'">
+        <div class="category-box" onclick="location.href='categories?type=mugs'">
           <img src="assets/images/mugs.png" alt="Mugs" />
           <h3>Mugs</h3>
           <p>Perfect for your daily caffeine fix.</p>
         </div>
-        <div class="category-box" onclick="location.href='categories?name=phone-cases'">
+        <div class="category-box" onclick="location.href='categories?type=phone-cases'">
           <img src="assets/images/phone-cases.png" alt="Phone Cases" />
           <h3>Phone Cases</h3>
           <p>Protect your device with style.</p>
         </div>
-        <div class="category-box" onclick="location.href='categories?name=games'">
+        <div class="category-box" onclick="location.href='categories?type=games'">
           <img src="assets/images/games.png" alt="Games" />
           <h3>Games</h3>
           <p>Explore the latest tech games.</p>
@@ -78,7 +78,7 @@ require_once __DIR__ . '/includes/secure_session.php';
       </div>
     </section>
 
-    <!-- Popular Products Slider (homepage-specific) -->
+    <!-- Popular Products Slider (homepage-specific) [require logic] -->
     <section class="popular-products">
       <h2 class="section-title">Popular Products</h2>
       <div class="slider">
@@ -99,7 +99,7 @@ require_once __DIR__ . '/includes/secure_session.php';
       </div>
     </section>
 
-    <!-- Testimonials Section -->
+    <!-- Testimonials Section [require logic] -->
     <section class="testimonials">
       <h2 class="section-title">What Our Customers Say</h2>
       <div class="testimonial-container">
@@ -112,7 +112,7 @@ require_once __DIR__ . '/includes/secure_session.php';
       </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Contact Section [require logic]->[LATER] -->
     <section id="contact">
       <h2>Contact Us</h2>
       <form id="contactForm">
