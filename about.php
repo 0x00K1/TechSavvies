@@ -98,7 +98,7 @@
         <div class="team-member">
           <h3>Abdulrahman</h3>
           <p>
-            <a href="https://github.com/x" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/AbdulrahmanQht" target="_blank" rel="noopener noreferrer">
               <img src="assets/icons/github.svg" alt="GitHub Icon" class="github-icon" />
             </a>
           </p>
@@ -107,7 +107,7 @@
         <div class="team-member">
           <h3>Anas</h3>
           <p>
-            <a href="https://github.com/Ananas0-dev" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/Ananas0dev" target="_blank" rel="noopener noreferrer">
               <img src="assets/icons/github.svg" alt="GitHub Icon" class="github-icon" />
             </a>
           </p>
@@ -116,7 +116,7 @@
         <div class="team-member">
           <h3>Nouh</h3>
           <p>
-            <a href="https://github.com/x" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/NouhShamea" target="_blank" rel="noopener noreferrer">
               <img src="assets/icons/github.svg" alt="GitHub Icon" class="github-icon" />
             </a>
           </p>
@@ -125,7 +125,7 @@
         <div class="team-member">
           <h3>Omar</h3>
           <p>
-            <a href="https://github.com/x" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/OmarAlnasser" target="_blank" rel="noopener noreferrer">
               <img src="assets/icons/github.svg" alt="GitHub Icon" class="github-icon" />
             </a>
           </p>
@@ -134,7 +134,7 @@
         <div class="team-member">
           <h3>Hameed</h3>
           <p>
-            <a href="https://github.com/x" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/HameedJHD" target="_blank" rel="noopener noreferrer">
               <img src="assets/icons/github.svg" alt="GitHub Icon" class="github-icon" />
             </a>
           </p>
@@ -143,7 +143,7 @@
         <div class="team-member">
           <h3>Abdulaziz</h3>
           <p>
-            <a href="https://github.com/x" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/ivaix" target="_blank" rel="noopener noreferrer">
               <img src="assets/icons/github.svg" alt="GitHub Icon" class="github-icon" />
             </a>
           </p>
@@ -152,7 +152,7 @@
         <div class="team-member">
           <h3>Abdulaziz</h3>
           <p>
-            <a href="https://github.com/x" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com/one1-zer0" target="_blank" rel="noopener noreferrer">
               <img src="assets/icons/github.svg" alt="GitHub Icon" class="github-icon" />
             </a>
           </p>
