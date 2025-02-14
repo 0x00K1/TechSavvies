@@ -1,5 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <title>Privacy Policy - TechSavvies</title>
+  <?php require_once __DIR__ . '/assets/php/main.php'; ?>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/main.css" />
   <style>
@@ -54,7 +57,8 @@
   </style>
 </head>
 <body>
-  <?php require_once __DIR__ . '/assets/php/main.php'; ?>
+  <!-- Header Section -->
+  <?php require_once __DIR__ . '/assets/php/header.php'; ?>
 
   <!-- Privacy Policy Content -->
   <div class="main-content">
@@ -73,6 +77,12 @@
     <h2>Your Rights</h2>
     <p>You have the right to access, update, or delete your personal information. Contact our support team if you have any concerns.</p>
   </div>
+  
+  <!-- Authentication Modal -->
+  <?php require_once __DIR__ . '/assets/php/auth.php'; ?>
+
+  <!-- Footer Section -->
+  <?php require_once __DIR__ . '/assets/php/footer.php'; ?>
   
   <script src="assets/js/main.js"></script>
 </body>

@@ -1,5 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <title>Logged Out - TechSavvies</title>
+  <?php require_once __DIR__ . '/assets/php/main.php'; ?>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/main.css">
   <script>
@@ -12,7 +15,8 @@
   </script>
 </head>
 <body>
-<?php require_once __DIR__ . '/assets/php/main.php'; ?>
+  <!-- Header Section -->
+  <?php require_once __DIR__ . '/assets/php/header.php'; ?>
 
   <!-- Logout Message -->
   <div class="main-content" style="text-align: center; padding: 50px;">

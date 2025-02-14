@@ -1,14 +1,14 @@
-<?php
-require_once __DIR__ . '/includes/secure_session.php';
-?>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <title>TechSavvies - Home</title>
+  <?php require_once __DIR__ . '/assets/php/main.php'; ?>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
-<?php require_once __DIR__ . '/assets/php/main.php'; ?>
+  <!-- Header Section -->
+  <?php require_once __DIR__ . '/assets/php/header.php'; ?>
 
   <!-- Hero Section -->
   <section class="hero">
@@ -107,7 +107,7 @@ require_once __DIR__ . '/includes/secure_session.php';
           <p>"Amazing quality and fast delivery!" - فتحي</p>
         </div>
         <div class="testimonial">
-          <p>"The best tech products I've found online." - kun</p>
+          <p>"The best tech products I've found online." - عبدالصمد ثلاجة</p>
         </div>
       </div>
     </section>
@@ -128,16 +128,10 @@ require_once __DIR__ . '/includes/secure_session.php';
   </div>
 
   <!-- Footer Section -->
-  <footer>
-    <div class="footer-links">
-      <a href="about.php">About Us</a>
-      <a href="privacy.php">Privacy Policy</a>
-      <a href="terms.php">Terms of Service</a>
-    </div>
-    <div class="footer-contact">
-      <p><a href="mailto:support@techsavvies.shop">support@techsavvies.shop</a></p>
-    </div>
-  </footer>
+  <?php require_once __DIR__ . '/assets/php/footer.php'; ?>
+
+  <!-- Authentication Modal -->
+  <?php require_once __DIR__ . '/assets/php/auth.php'; ?>
 
   <script src="assets/js/home1.js"></script>
   <script src="assets/js/main.js"></script>

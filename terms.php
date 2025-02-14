@@ -1,5 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <title>Terms of Service - TechSavvies</title>
+  <?php require_once __DIR__ . '/assets/php/main.php'; ?>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/main.css" />
   <style>
@@ -53,7 +56,8 @@
   </style>
 </head>
 <body>
-<?php require_once __DIR__ . '/assets/php/main.php'; ?>
+  <!-- Header Section -->
+  <?php require_once __DIR__ . '/assets/php/header.php'; ?>
 
   <!-- Terms of Service Content -->
   <div class="main-content">
@@ -73,6 +77,12 @@
     <p>We reserve the right to modify these terms at any time. Please review this page periodically for changes.</p>
   </div>
   
+  <!-- Authentication Modal -->
+  <?php require_once __DIR__ . '/assets/php/auth.php'; ?>
+
+  <!-- Footer Section -->
+  <?php require_once __DIR__ . '/assets/php/footer.php'; ?>
+
   <script src="assets/js/main.js"></script>
 </body>
 </html>
