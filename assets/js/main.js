@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <i class="fa fa-caret-down"></i>
         </div>
         <div class="account-dropdown" id="accountDropdown">
-          <a href="/profile.html">
+          <a href="/profile.php">
             <i class="fa fa-user-circle"></i>
             Profile
           </a>
