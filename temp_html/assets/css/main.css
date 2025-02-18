@@ -1,0 +1,759 @@
+/* ==============================
+   CSS Variables & Global Styles
+============================== */
+:root {
+  --primary-color: #000000;
+  --secondary-color: #f4f4f4;
+  --accent-color: #c9d6df;
+  --light-bg: #f9f9f9;
+  --text-color: #000000;
+  --header-bg: #000; /* Changed from rgba(34, 34, 34, 0.9) to black */
+  --gradient: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+html {
+  scroll-behavior: smooth;
+  overscroll-behavior: contain; /* Prevents excessive scrolling momentum */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  background: #fff;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  background: linear-gradient(135deg, #d42d2d, #8d07cc, #0117ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transform: scale(1.05); /* Slightly enlarges on hover */
+}
+
+/* ==============================
+   Sticky Header with Account Dropdown
+============================== */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 60px; /* up down header height */
+  background: var(--header-bg);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo img {
+  height: 120px; /* Increase the size */
+  width: auto;
+  max-width: 376px; /* Ensures it doesn't exceed */
+  object-fit: contain;
+  display: block;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav ul li {
+  position: relative;
+}
+
+#accountIcon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+
+/* Container for the icon and text */
+.account-control {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 0.5rem; /* Space between icon and text */
+}
+
+/* Optional: style the caret icon */
+.account-control i.fa-caret-down {
+  font-size: 0.8rem;
+}
+
+/* Position the dropdown absolutely beneath the account-control */
+.account-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0; 
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: none; /* Hidden by default */
+  min-width: 150px;
+  z-index: 1000;
+}
+
+.account-dropdown a {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.account-dropdown a:hover {
+  background-color: #f2f2f2;
+}
+
+/* Show the dropdown when toggled */
+.show-dropdown .account-dropdown {
+  display: block;
+}
+
+/* ==============================
+   Hero Section
+============================== */
+.hero {
+  height: 100vh;
+  background: url('../images/home.png') no-repeat center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.hero-content {
+  position: relative;
+  text-align: center;
+  color: #fff;
+  z-index: 1;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.hero-content h1 {
+  font-size: 3em;
+  margin-bottom: 20px;
+  animation: fadeInDown 1s ease-out;
+}
+
+.glitch-text {
+  animation: glitch 1s infinite;
+  position: relative;
+  color: #fff;
+}
+
+@keyframes glitch {
+  0% {
+    text-shadow: 2px 0 #0117ff, -2px 0 #8d07cc;
+  }
+  20% {
+    text-shadow: -2px 0 #d42d2d, 2px 0 #0117ff;
+  }
+  40% {
+    text-shadow: 2px 2px #8d07cc, -2px -2px #d42d2d;
+  }
+  60% {
+    text-shadow: -2px 2px #0117ff, 2px -2px #8d07cc;
+  }
+  80% {
+    text-shadow: 2px 0 #d42d2d, -2px 0 #0117ff;
+  }
+  100% {
+    text-shadow: 2px 0 #0117ff, -2px 0 #8d07cc;
+  }
+}
+
+.hero-content p {
+  font-size: 1.2em;
+  margin-bottom: 30px;
+  animation: fadeInUp 1s ease-out;
+}
+
+/* Hero Button Styles */
+.hero-content a {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  background: linear-gradient(135deg, #0117ff, #8d07cc, #d42d2d);
+  color: #fff;
+  font-size: 1.2em;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  min-width: 160px;
+  height: 50px;
+}
+
+/* Text element */
+.hero-content a span {
+  display: block;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Down arrow (hidden by default) */
+.hero-content a::after {
+  content: "↓";
+  position: absolute;
+  top: 150%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: all 0.3s ease;
+  font-size: 24px;
+}
+
+/* Hover effects */
+.hero-content a:hover span {
+  transform: translateY(-20px);
+  opacity: 0;
+}
+
+.hero-content a:hover::after {
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+}
+
+/* Gradient animation */
+.hero-content a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #d42d2d, #8d07cc, #0117ff);
+  z-index: -1;
+  border-radius: 30px;
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.hero-content a:hover::before {
+  transform: translateY(0);
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==============================
+   Main Content Container
+============================== */
+.main-content {
+  padding: 120px 20px 30px;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 2em;
+  color: var(--primary-color);
+}
+
+/* ==============================
+   Categories Section
+============================== */
+.categories {
+  padding: 40px 0;
+  background: var(--light-bg);
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.category-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Gradient border */
+.category-box::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #0117ff, #8d07cc, #d42d2d);
+  z-index: -1;
+}
+
+.category-box:hover {
+  transform: translateY(-5px);
+  border: 3px solid;
+  border-image-source: linear-gradient(135deg, #0117ff, #8d07cc, #d42d2d);
+  border-image-slice: 1;
+  box-shadow: 0 0 20px rgba(1, 23, 255, 0.7), 
+              0 0 30px rgba(141, 7, 204, 0.6),
+              0 0 50px rgba(212, 45, 45, 0.5);
+}
+
+.category-box img {
+  width: 100%; /* Ensures image fits */
+  height: auto; /* Maintains aspect ratio */
+  max-height: 200px; /* Adjust height for better display */
+  object-fit: contain; /* Ensures full image is visible */
+  margin-bottom: 10px;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.category-box img:hover {
+  transform: scale(1.05);
+}
+
+.category-box h3 {
+  margin-bottom: 8px;
+  font-size: 1.2em;
+  color: var(--primary-color);
+}
+
+.category-box p {
+  font-size: 0.9em;
+  color: var(--text-color);
+}
+
+/* ==============================
+   Popular Products Slider
+============================== */
+.popular-products {
+  padding: 60px 0;
+}
+
+.slider {
+  position: relative;
+  overflow: hidden;
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.slider-wrapper {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.slide {
+  min-width: 100%;
+  flex-shrink: 0;
+  text-align: center;
+  background: #fff;
+  padding: 20px;
+}
+
+.slide img {
+  width: 80%;
+  max-width: 300px;
+  margin: auto;
+  transition: transform 0.3s ease;
+}
+
+.slide img:hover {
+  transform: scale(1.05);
+}
+
+.slide p {
+  margin-top: 15px;
+  font-size: 1.1em;
+  color: var(--primary-color);
+}
+
+/* ==============================
+   Testimonials Section
+============================== */
+.testimonials {
+  padding: 60px 20px;
+  background: #f0f0f0;
+}
+
+.testimonial-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.testimonial {
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-size: 1.1em;
+  color: var(--text-color);
+}
+
+/* ==============================
+   Contact Section
+============================== */
+#contact {
+  padding: 60px 20px;
+  background: var(--secondary-color);
+}
+
+#contact h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2em;
+  color: var(--primary-color);
+}
+
+#contact form {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+#contact input,
+#contact textarea {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1em;
+  transition: border-color 0.3s ease;
+}
+
+#contact input:focus,
+#contact textarea:focus {
+  border-color: var(--accent-color);
+  outline: none;
+}
+
+#contact button {
+  padding: 15px;
+  background: var(--primary-color);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#contact button:hover {
+  background: #000000;
+}
+
+#map {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 1em;
+  color: var(--primary-color);
+}
+
+/* ==============================
+   Footer Section
+============================== */
+footer {
+  background: var(--primary-color);
+  color: #fff;
+  padding: 30px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.footer-links a {
+  color: #fff;
+  margin-right: 20px;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: var(--accent-color);
+}
+
+.footer-contact {
+  font-size: 1em;
+}
+
+/* ==============================
+   Enhanced Authentication Modal
+============================== */
+.auth-modal {
+  display: none; /* Initially hidden */
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  animation: fadeIn 0.5s ease;
+  
+  /* Add these properties to center the modal content */
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-modal-content {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  padding: 40px;
+  width: 400px;
+}
+
+.auth-modal-content {
+  position: relative;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  padding: 40px;
+  width: 400px;
+}
+
+.auth-modal-content a {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  color: #333;
+  text-decoration: none;
+  cursor: pointer; /* Shows hand cursor on hover */
+  transition: color 0.3s ease;
+}
+
+.auth-modal-content a:hover {
+  color: #d42d2d; 
+}
+
+.auth-modal-content img {
+  display: block;
+  width: 80px;
+  height: auto; 
+  margin: 0 auto;
+  position: relative;
+  margin-bottom: 25px; 
+}
+
+.auth-modal-content h2 {
+  color: #1a1a1a;
+  text-align: center;
+  font-size: 1.8em;
+  margin-bottom: 25px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.auth-modal-content h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #0117ff, #8d07cc, #d42d2d);
+}
+
+.auth-modal-content p {
+  color: #666;
+  margin-bottom: 10px; /* Reduce space between label and input field */
+  font-size: 14px;
+}
+
+.auth-modal-content input {
+  width: 100%;
+  padding: 15px 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+  position: relative;
+  margin-bottom: 20px; /* Add space below input field */
+}
+
+.auth-modal-content input:focus {
+  border-color: #8d07cc;
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(1, 23, 255, 0.1);
+  outline: none;
+}
+
+.auth-modal-content input::placeholder {
+  color: #a0a0a0;
+}
+
+/* Email Input Icon */
+#authStep1::before {
+  content: '';
+  position: absolute;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%238d07cc" width="24" height="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>');
+  width: 24px;
+  height: 24px;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.6;
+}
+
+/* OTP Input Styling */
+#authOTP {
+  letter-spacing: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  padding: 15px;
+  background: repeating-linear-gradient(90deg, 
+    #0117ff22 0%, 
+    #8d07cc22 50%, 
+    #d42d2d22 100%);
+}
+
+.auth-modal-content button {
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, #0117ff, #8d07cc, #d42d2d);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-modal-content button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(1, 23, 255, 0.3);
+}
+
+.auth-modal-content button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 15px rgba(1, 23, 255, 0.2);
+}
+
+/* Step Transitions */
+.auth-step {
+  transition: all 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .auth-modal-content {
+    width: 90%;
+    padding: 25px;
+  }
+  
+  .auth-modal-content input {
+    padding: 12px 15px;
+  }
+  
+  .auth-modal-content button {
+    padding: 12px;
+  }
+}
+
+/* ==============================
+   Responsive Adjustments
+============================== */
+@media (max-width: 600px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  nav ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+  footer {
+    flex-direction: column;
+    text-align: center;
+  }
+  .footer-links {
+    margin-bottom: 10px;
+  }
+  .hero-content h1 {
+    font-size: 2em;
+  }
+  .hero-content p {
+    font-size: 1em;
+  }
+}
+/* Scrollbar for WebKit Browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px; /* Adjust width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--secondary-color); /* Background color */
+  border-radius: 10px; /* Rounded corners */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color); /* Color of the scrollbar */
+  border-radius: 10px; /* Rounded corners */
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color); /* Color on hover */
+}
