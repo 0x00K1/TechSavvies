@@ -79,24 +79,92 @@
     </section>
 
     <!-- Popular Products Slider (homepage-specific) [require logic] -->
+    <!-- Popular Products Slider -->
     <section class="popular-products">
-      <h2 class="section-title">Popular Products</h2>
-      <div class="slider">
-        <div class="slider-wrapper" id="sliderWrapper">
-          <div class="slide">
-            <img src="assets/images/popular-tshirt.png" alt="Popular T-shirt" />
-            <p>Tech T-shirt</p>
-          </div>
-          <div class="slide">
-            <img src="assets/images/popular-backpack.png" alt="Popular Backpack" />
-            <p>Stylish Backpack</p>
-          </div>
-          <div class="slide">
-            <img src="assets/images/popular-mug.png" alt="Popular Mug" />
-            <p>Coffee Mug</p>
-          </div>
-        </div>
-      </div>
+        <h2 class="section-title">Popular Products</h2>
+        <div class="slider">
+            <button class="prev">&lt;</button>
+            <div class="slider-wrapper">
+                <div class="slide">
+                    <div class="product-card">
+                        <img src="assets/images/T-Shirt.png" alt="Popular T-shirt" />
+                        <div class="product-info">
+                            <h3>Tech T-shirt</h3>
+                            <p class="price">$29.99</p>
+                            <button class="add-to-cart-btn">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="product-card">
+                        <img src="assets/images/T-Shirt.png" alt="Tech Backpack" />
+                        <div class="product-info">
+                            <h3>Tech Backpack</h3>
+                            <p class="price">$59.99</p>
+                            <button class="add-to-cart-btn">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="product-card">
+                        <img src="assets/images/T-Shirt.png" alt="Developer Mug" />
+                        <div class="product-info">
+                            <h3>Developer Mug</h3>
+                            <p class="price">$19.99</p>
+                            <button class="add-to-cart-btn">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="product-card">
+                        <img src="assets/images/T-Shirt.png" alt="Developer Mug" />
+                        <div class="product-info">
+                            <h3>Developer Mug</h3>
+                            <p class="price">$19.99</p>
+                            <button class="add-to-cart-btn">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="product-card">
+                        <img src="assets/images/T-Shirt.png" alt="Developer Mug" />
+                        <div class="product-info">
+                            <h3>Developer Mug</h3>
+                            <p class="price">$19.99</p>
+                            <button class="add-to-cart-btn">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="product-card">
+                        <img src="assets/images/T-Shirt.png" alt="Developer Mug" />
+                        <div class="product-info">
+                            <h3>Developer Mug</h3>
+                            <p class="price">$19.99</p>
+                            <button class="add-to-cart-btn">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="product-card">
+                        <img src="assets/images/T-Shirt.png" alt="Developer Mug" />
+                        <div class="product-info">
+                            <h3>Developer Mug</h3>
+                            <p class="price">$19.99</p>
+                            <button class="add-to-cart-btn">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="product-card">
+                        <img src="assets/images/T-Shirt.png" alt="Developer Mug" />
+                        <div class="product-info">
+                            <h3>Developer Mug</h3>
+                            <p class="price">$19.99</p>
+                            <button class="add-to-cart-btn">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
     </section>
 
     <!-- Testimonials Section [require logic] -->
@@ -105,14 +173,13 @@
       <div class="testimonial-container">
         <div class="testimonial">
           <p>"Amazing quality and fast delivery!" - فتحي</p>
-        </div>
+            </div>
         <div class="testimonial">
           <p>"The best tech products I've found online." - عبدالصمد ثلاجة</p>
         </div>
-      </div>
+        </div>
     </section>
-
-    <!-- Contact Section [require logic]->[LATER] -->
+    <!-- Contact Section -->
     <section id="contact">
       <h2>Contact Us</h2>
       <form id="contactForm">

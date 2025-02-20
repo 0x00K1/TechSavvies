@@ -1,46 +1,56 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const shopNowButton = document.querySelector(".hero-content a span");
-
-  shopNowButton.addEventListener("mouseenter", function () {
-      shopNowButton.style.opacity = "1"; // Ensure text stays visible
-      shopNowButton.style.transform = "translateY(-5px)"; // Slight movement effect
-  });
-
-  shopNowButton.addEventListener("mouseleave", function () {
-      shopNowButton.style.opacity = "1"; // Keep text visible after hover
-      shopNowButton.style.transform = "translateY(0)"; // Reset movement effect
-  });
-
-  // --- Slider Functionality ---
-  const sliderWrapper = document.getElementById("sliderWrapper");
-  if (sliderWrapper) {
-    let currentSlide = 0;
-    const slides = sliderWrapper.getElementsByClassName("slide");
-    const totalSlides = slides.length;
-
-    function showSlide(index) {
-      if (index >= totalSlides) {
-        currentSlide = 0;
-      } else if (index < 0) {
-        currentSlide = totalSlides - 1;
-      } else {
-        currentSlide = index;
-      }
-      sliderWrapper.style.transform = "translateX(" + -currentSlide * 100 + "%)";
+// Popular Products Slider Functionality
+class ProductSlider {
+    constructor() {
+        this.slider = document.querySelector('.slider-wrapper');
+        this.slides = document.querySelectorAll('.slide');
+        this.prevBtn = document.querySelector('.prev');
+        this.nextBtn = document.querySelector('.next');
+        this.currentIndex = 0;
+        this.slidesToShow = 3;
+        this.slideWidth = 320; // Fixed width including gap
+        
+        if (this.slider && this.slides.length > 0) {
+            this.init();
+        }
     }
 
-    setInterval(() => {
-      showSlide(currentSlide + 1);
-    }, 3000);
-  }
+    init() {
+        // Add click events
+        this.prevBtn.addEventListener('click', () => this.slide('prev'));
+        this.nextBtn.addEventListener('click', () => this.slide('next'));
+        
+        // Initial button state
+        this.updateButtonStates();
+    }
 
-  // --- Contact Form Submission (Simulation) ---
-  const contactForm = document.getElementById("contactForm");
-  if (contactForm) {
-    contactForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      alert("Thank you for your message! We will get back to you soon.");
-      contactForm.reset();
-    });
-  }
+    slide(direction) {
+        const maxIndex = Math.ceil(this.slides.length / this.slidesToShow) - 1;
+        
+        if (direction === 'prev') {
+            this.currentIndex = Math.max(0, this.currentIndex - 1);
+        } else {
+            this.currentIndex = Math.min(maxIndex, this.currentIndex + 1);
+        }
+
+        const translateX = -(this.currentIndex * (this.slideWidth * this.slidesToShow));
+        this.slider.style.transform = `translateX(${translateX}px)`;
+        
+        this.updateButtonStates();
+    }
+
+    updateButtonStates() {
+        const maxIndex = Math.ceil(this.slides.length / this.slidesToShow) - 1;
+        
+        // Update prev button
+        this.prevBtn.disabled = this.currentIndex <= 0;
+        this.prevBtn.style.opacity = this.currentIndex <= 0 ? '0.5' : '1';
+        
+        // Update next button
+        this.nextBtn.disabled = this.currentIndex >= maxIndex;
+        this.nextBtn.style.opacity = this.currentIndex >= maxIndex ? '0.5' : '1';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    new ProductSlider();
 });
