@@ -90,11 +90,11 @@ document.addEventListener("DOMContentLoaded", function () {
           <i class="fa fa-caret-down"></i>
         </div>
         <div class="account-dropdown" id="accountDropdown">
-          <a href="/profile.html">
+          <a href="/profile.php">
             <i class="fa fa-user-circle"></i>
             Profile
           </a>
-          <a href="/includes/logout.php">
+          <a href="/includes/cls.php">
             <i class="fa fa-sign-out-alt"></i>
             Log Out
           </a>
@@ -201,6 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
               isAuthenticated = true;
               updateAccountLink();
               closeAuthModal();
+              window.location.reload();
             } else {
               alert("Verification failed: " + data.error);
             }

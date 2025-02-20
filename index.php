@@ -112,15 +112,16 @@
       </div>
     </section>
 
-    <!-- Contact Section [require logic]->[LATER] -->
-    <section id="contact">
+     <!-- Contact Section -->
+     <section id="contact">
       <h2>Contact Us</h2>
-      <form id="contactForm">
+      <form id="contactForm" action="assets/php/send_email.php" method="POST">
         <input type="text" id="name" name="name" placeholder="Your Name" required />
         <input type="email" id="email" name="email" placeholder="Your Email" required />
         <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
         <button type="submit">Send Message</button>
       </form>
+      <div id="messageStatus"></div>
       <div id="map">
         <p>Address: 01 TechSavvies, Tech City</p>
       </div>

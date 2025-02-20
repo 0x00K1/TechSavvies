@@ -12,3 +12,6 @@ Thumbs.db
 *.tmp
 *.vscode/
 *.env
+/vendor/
+error.log
+Composer-Setup.exe

@@ -64,6 +64,11 @@ try {
     // Regenerate session ID after successful authentication to prevent fixation attacks
     session_regenerate_id(true);
 
+    /////// ammmmmmm
+    if ($user['role'] === 'root') {
+        $_SESSION['is_root'] = true;
+    }
+
     unset($user['password']);
     $_SESSION['user'] = $user;
     echo json_encode(["success" => true, "user" => $user]);
