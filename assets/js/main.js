@@ -61,6 +61,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   // Global authentication state
   let isAuthenticated = false;
+  // Track OTP verification failures
+  let otpFailureCount = 0;
 
   fetch("/includes/check_session.php", {
     credentials: "include"
@@ -153,8 +155,10 @@ document.addEventListener("DOMContentLoaded", function () {
           alert("Please enter a valid email.");
           return;
         }
-
-        // Send AJAX request to send_otp.php
+    
+        // 1) Show loading state (spinner)
+        toggleButtonLoading(sendOtpBtn, true);
+    
         fetch("/includes/send_otp.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -162,6 +166,9 @@ document.addEventListener("DOMContentLoaded", function () {
         })
           .then((response) => response.json())
           .then((data) => {
+            // 2) Hide loading state
+            toggleButtonLoading(sendOtpBtn, false);
+    
             if (data.success) {
               authStep1.style.display = "none";
               authStep2.style.display = "block";
@@ -170,12 +177,13 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           })
           .catch((error) => {
+            toggleButtonLoading(sendOtpBtn, false);
             console.error("Error sending OTP:", error);
             alert("Failed to send OTP. Please try again.");
           });
       });
     }
-
+    
     if (verifyOtpBtn) {
       verifyOtpBtn.addEventListener("click", function () {
         const email = authEmailInput.value.trim();
@@ -184,7 +192,10 @@ document.addEventListener("DOMContentLoaded", function () {
           alert("Please enter the OTP.");
           return;
         }
-        // Send AJAX request to verify_otp.php
+    
+        // 1) Show loading state (spinner)
+        toggleButtonLoading(verifyOtpBtn, true);
+    
         fetch("/includes/verify_otp.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -193,25 +204,40 @@ document.addEventListener("DOMContentLoaded", function () {
             otp: otp,
             csrf_token: csrfToken
           }),
-          credentials: 'include'  // <-- This ensures the session cookie is sent  
+          credentials: 'include'
         })
           .then((response) => response.json())
           .then((data) => {
+            // 2) Hide loading state
+            toggleButtonLoading(verifyOtpBtn, false);
+    
             if (data.success) {
+              // OTP verification succeeded
+              otpFailureCount = 0;        // Reset failures
               isAuthenticated = true;
               updateAccountLink();
               closeAuthModal();
               window.location.reload();
             } else {
+              // OTP verification failed
+              otpFailureCount++;
+    
               alert("Verification failed: " + data.error);
+    
+              if (otpFailureCount >= 3) {
+                alert("Too many attempts!");
+                closeAuthModal();
+                otpFailureCount = 0; // Reset for future attempts
+              }
             }
           })
           .catch((error) => {
+            toggleButtonLoading(verifyOtpBtn, false);
             console.error("Error verifying OTP:", error);
             alert("OTP verification failed. Please try again.");
           });
       });
-    }
+    }  
 
     // Toggle account dropdown or open modal if not authenticated
     document.addEventListener("click", function (e) {
@@ -230,6 +256,39 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     });
+  }
+
+  /**
+   * Toggles a modern loading state for a button using CSS spinner.
+   * @param {HTMLButtonElement} button - The button element.
+   * @param {boolean} isLoading - Whether to show or hide the loading state.
+   */
+  function toggleButtonLoading(button, isLoading) {
+    if (!button) return;
+
+    if (isLoading) {
+      // Save original text if not already saved
+      if (!button.dataset.originalText) {
+        button.dataset.originalText = button.textContent.trim();
+      }
+      // Disable button
+      button.disabled = true;
+      // Optional: Add "Loading..." text or keep original text
+      // Uncomment line below to force "Loading..." text:
+      // button.textContent = "Loading...";
+      
+      // Add spinner class to show rotating circle
+      button.classList.add("button-spinner");
+    } else {
+      // Re-enable button
+      button.disabled = false;
+      // Restore original text
+      if (button.dataset.originalText) {
+        button.textContent = button.dataset.originalText;
+      }
+      // Remove spinner class
+      button.classList.remove("button-spinner");
+    }
   }
 
   // Initialization
