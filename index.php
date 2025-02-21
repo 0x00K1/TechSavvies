@@ -93,14 +93,12 @@ $popularProducts = getPopularProducts(9);
                 <div class="slider-wrapper">
                     <?php foreach ($popularProducts as $product): ?>
                         <div class="slide">
-                            <div class="product-card">
+                            <a href="product.php?id=<?= htmlspecialchars($product['product_id']) ?>" class="product-card">
                                 <img src="assets/images/<?= htmlspecialchars($product['picture']) ?>" alt="<?= htmlspecialchars($product['product_name']) ?>">
                                 <div class="product-info">
                                     <h3><?= htmlspecialchars($product['product_name']) ?></h3>
-                                    <p class="price">$<?= number_format($product['price'], 2) ?></p>
-                                    <button class="add-to-cart-btn">Add to Cart</button>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     <?php endforeach; ?>
                 </div>

@@ -413,6 +413,8 @@ nav ul li {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 2px solid transparent;
   padding: 20px;
+  text-decoration: none;
+  color: inherit;
 }
 
 .product-card:hover {
@@ -446,37 +448,11 @@ nav ul li {
 
 .product-info h3 {
   color: #333;
-  margin: 0 0 10px;
+  margin: 0;
   font-size: 1.1em;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.price {
-  font-size: 1.2em;
-  font-weight: bold;
-  color: #8d07cc;
-  margin: 5px 0 15px;
-}
-
-/* Add to Cart Button */
-.add-to-cart-btn {
-  width: 80%;
-  padding: 10px 20px;
-  background: linear-gradient(135deg, #0117ff, #8d07cc, #d42d2d);
-  color: #fff;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin: 0 auto;
-  display: block;
-}
-
-.add-to-cart-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 2px 10px rgba(141, 7, 204, 0.3);
 }
 
 /* Navigation Buttons */
