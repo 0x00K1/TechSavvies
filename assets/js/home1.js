@@ -6,11 +6,17 @@ class ProductSlider {
         this.prevBtn = document.querySelector('.prev');
         this.nextBtn = document.querySelector('.next');
         this.currentIndex = 0;
-        this.slidesToShow = 3;
-        this.slideWidth = 320; // Fixed width including gap
+        this.slidesToShow = window.innerWidth < 768 ? 1 : 3;
+        this.slideWidth = window.innerWidth < 768 ? window.innerWidth - 40 : 320;
         
         if (this.slider && this.slides.length > 0) {
             this.init();
+            window.addEventListener('resize', () => {
+                this.slidesToShow = window.innerWidth < 768 ? 1 : 3;
+                this.slideWidth = window.innerWidth < 768 ? window.innerWidth - 40 : 320;
+                this.updateButtonStates();
+                this.slide('current');
+            });
         }
     }
 

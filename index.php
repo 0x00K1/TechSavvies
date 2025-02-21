@@ -1,8 +1,14 @@
+<?php
+require_once __DIR__ . '/assets/php/main.php';
+require_once __DIR__ . '/assets/php/get_popular_products.php';
+
+// Fetch popular products
+$popularProducts = getPopularProducts(10);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <title>TechSavvies - Home</title>
-  <?php require_once __DIR__ . '/assets/php/main.php'; ?>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -78,33 +84,29 @@
       </div>
     </section>
 
-    <!-- Popular Products Slider (homepage-specific) [require logic] -->
     <!-- Popular Products Slider -->
     <section class="popular-products">
         <h2 class="section-title">Popular Products</h2>
         <div class="slider">
-            <button class="prev">&lt;</button>
             <div class="slider-container">
-                <button class="slider-button prev">❮</button>
+                <button class="prev">❮</button>
                 <div class="slider-wrapper">
                     <?php foreach ($popularProducts as $product): ?>
                         <div class="slide">
-                            <img src="assets/images/products/<?= htmlspecialchars($product['picture']) ?>" alt="<?= htmlspecialchars($product['product_name']) ?>">
-                            <h3><?= htmlspecialchars($product['product_name']) ?></h3>
-                            <p class="price">$<?= number_format($product['price'], 2) ?></p>
-                            <div class="rating">
-                                <?php
-                                $rating = round($product['avg_rating']);
-                                for ($i = 1; $i <= 5; $i++) {
-                                    echo $i <= $rating ? '★' : '☆';
-                                }
-                                ?>
+                            <div class="product-card">
+                                <img src="assets/images/products/<?= htmlspecialchars($product['picture']) ?>" alt="<?= htmlspecialchars($product['product_name']) ?>">
+                                <div class="product-info">
+                                    <h3><?= htmlspecialchars($product['product_name']) ?></h3>
+                                    <p class="price">$<?= number_format($product['price'], 2) ?></p>
+                                    <button class="add-to-cart-btn">Add to Cart</button>
+                                </div>
                             </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
-                <button class="slider-button next">❯</button>
+                <button class="next">❯</button>
             </div>
+        </div>
     </section>
 
     <!-- Testimonials Section [require logic] -->
