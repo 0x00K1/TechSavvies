@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../includes/db.php';
 
-function getPopularProducts($limit = 10) {
+function getPopularProducts($limit = 9) {
     global $pdo;
     
     try {

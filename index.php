@@ -3,7 +3,7 @@ require_once __DIR__ . '/assets/php/main.php';
 require_once __DIR__ . '/assets/php/get_popular_products.php';
 
 // Fetch popular products
-$popularProducts = getPopularProducts(10);
+$popularProducts = getPopularProducts(9);
 ?>
 <!DOCTYPE html>
 <html lang="en">
