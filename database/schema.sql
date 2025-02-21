@@ -50,7 +50,7 @@ CREATE TABLE orders (
     user_id INT NOT NULL,
     order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     status ENUM('pending', 'paid', 'shipped', 'completed', 'cancelled') NOT NULL DEFAULT 'pending',
-    total_amount DECIMAL(10,2) NOT NULL COMMENT 'Total price of the order',
+    total_amount DECIMAL(10,2) NOT NULL DEFAULT 0.00 COMMENT 'Total price of the order',
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
