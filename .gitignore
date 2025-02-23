@@ -12,3 +12,5 @@ Thumbs.db
 *.tmp
 *.vscode/
 *.env
+.phcode.json
+index.html
