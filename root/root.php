@@ -27,9 +27,9 @@
                 <div id="EditProduct" class="content">
                     <form id="addProduct_form">
                         <div class="EditProduct_bar">
-                            <button type="button" id="AddPro_button">Add</button>
-                            <button type="button" id="RemovePro_button">Remove</button>
-                            <button type="button" id="ModifyPro_button">Modify</button>
+                            <button id="AddPro_button">Add</button>
+                            <button id="RemovePro_button">Remove</button>
+                            <button id="ModifyPro_button">Modify</button>
                         </div>
                         <div id="add_display" class="AddProduct">
                             <p>
