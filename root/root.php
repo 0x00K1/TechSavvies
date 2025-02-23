@@ -12,15 +12,24 @@
         <script><?php include ('..\assets\js\root.js'); ?></script>
 
         <!-- functions section -->
+<<<<<<< HEAD
         <section class= "hero">
             <div class="funcarea">
                 <div class="toolbar">
                     <button id="EditPro_button">Edit Products</button> 
+=======
+<<<<<<< HEAD
+        <section class= "hero">
+            <div class="funcarea">
+                <div class="toolbar">
+                    <button id="EditPro_button">Edit Products</button> <!-- make on default-->
+>>>>>>> c8caee962f3a1df76cec3dfb70065af26efd0e57
                     <button id="EditUser_button">Edit User</button>
                     <button id="Queries_button">Queries</button>
                 </div>
                 <div class="content-container">
                     <div id="EditProduct" class="content">
+<<<<<<< HEAD
                         <!-- specify required inputs!!!!!-->
     <!-- product form--> <form id="addProduct_form"><!-- the form attributes!!!!!!!-->
                             <div class="EditProduct_bar">
@@ -58,10 +67,46 @@
                     </div>
                     <div id="Queries" class="content" style="display: none;">
                         <p>queriese Like bills, payments, statistics , printing users or products, some graphs wpuld be amazing</p>
+=======
+                        <form>
+                            <p>test</p>
+                        </form>
+                    </div>
+                    <div id="EditUser" class="content" style="display: none;">
+                        <p>Remove Item Form/Content</p>
+                    </div>
+                    <div id="Queries" class="content" style="display: none;">
+                        <p>Edit Item Form/Content</p>
+>>>>>>> c8caee962f3a1df76cec3dfb70065af26efd0e57
                     </div>
                 </div>
             </div>    
         </section>
+<<<<<<< HEAD
+=======
+=======
+        <div class="funcarea">
+            <div class="toolbar">
+                    <!-- STILL NOT CLEAR WHETHER I WILL MAKE ANOTHER PAGES FOR EVERY FUNCTION OR ADD FUNCTIONS IN <div></div> CONTAINERS -->
+                <div><button id="BAdd">Add Item</button></div>
+                <div><button id="BRemove">Remove Item</button></div>
+                <div><button id="BEdit">Edit Item</button></div>
+                <div class=toolbar-spacer></div>
+            </div>
+                <div class="content-container">
+                    <div id="addContent" class="content">
+                        <p>Add Item Form/Content</p>
+                    </div>
+                    <div id="removeContent" class="content" style="display: none;">
+                        <p>Remove Item Form/Content</p>
+                    </div>
+                    <div id="editContent" class="content" style="display: none;">
+                        <p>Edit Item Form/Content</p>
+                    </div>
+                </div>
+            </div>        
+>>>>>>> 6ca0705560e707a812b2f5d2d3f6394ed6314e41
+>>>>>>> c8caee962f3a1df76cec3dfb70065af26efd0e57
     </body>
 </html> 
 
