@@ -37,4 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
         EditUser_button.classList.remove('active');
         Queries_button.classList.add('active');
     });
+
+    User_Query_Button.addEventListener('click', function(){
+        /*Retreives user data from DATABASe and fills it into the fields*/
+    })
 });
