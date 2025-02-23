@@ -760,6 +760,10 @@ footer {
 }
 
 /* ==================
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> c8caee962f3a1df76cec3dfb70065af26efd0e57
 root toolbar (WIP)
 =================== */
 .funcarea {
@@ -813,6 +817,7 @@ root toolbar (WIP)
 
 .toolbar button.active{
    background: var(--links-color);
+<<<<<<< HEAD
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -839,4 +844,73 @@ root toolbar (WIP)
 }
 .AddProduct{
   /* good luck :)*/
+=======
+=======
+Admin toolbar (WIP)
+=================== */
+.funcarea {
+    position: fixed;
+    top: 70px; /* Position below the header */
+    left: 10%;
+    width: 80%;
+    display: flex; /* Use flexbox to arrange toolbar and container */
+    flex-direction: column; /* Stack toolbar and container vertically */
+}
+.toolbar {
+  background-color: var(--primary-color);
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex; /* Make it horizontal */
+  align-items: center; /* Vertically center buttons */
+  justify-content: center; /* Aligns buttons to the left */
+}
+
+.toolbar button {
+    background-color: var(--primary-color);
+    background: var(--secondary-color);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border-radius: 10px;
+    padding: 5px;
+    margin: 10px 20px;
+    border: unset;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.toolbar button:hover {
+    background: var(--links-color);
+>>>>>>> 6ca0705560e707a812b2f5d2d3f6394ed6314e41
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+.content-container {
+<<<<<<< HEAD
+  margin: 20px;
+  background-color: #fff;
+  margin-top: 20px;
+  
+}
+
+.content {
+    border:hidden;
+    border-radius: 30px;
+    padding: 15px;
+=======
+    margin-top: 160px; /* Adjust based on toolbar height and header */
+    padding: 22px;
+>>>>>>> 6ca0705560e707a812b2f5d2d3f6394ed6314e41
+}
+
+.content {
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 5px;
+>>>>>>> c8caee962f3a1df76cec3dfb70065af26efd0e57
 }
