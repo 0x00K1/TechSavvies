@@ -78,8 +78,26 @@ nav ul li {
 }
 
 #accountIcon {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 35px;
+  cursor: pointer;
+}
+
+#homeIcon {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+#cartIcon {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+#rootIcon {
+  width: 35px;
+  height: 35px;
   cursor: pointer;
 }
 

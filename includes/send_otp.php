@@ -37,7 +37,7 @@ if (!hash_equals($_SESSION['csrf_token'], $data['csrf_token'])) {
 
 // Enforce 60-second wait between OTP requests
 if (isset($_SESSION['last_otp_time']) && (time() - $_SESSION['last_otp_time'] < 60)) {
-    echo json_encode(["success" => false, "error" => "Please wait before requesting another OTP."]);
+    echo json_encode(["success" => false, "error" => "Wait before requesting another OTP."]);
     exit;
 }
 
@@ -45,7 +45,7 @@ $email = $data['email'];
 
 // Function to generate a secure OTP
 function generateSecureOTP($length = 6) {
-    $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()';
     $otp = '';
     for ($i = 0; $i < $length; $i++) {
         $otp .= $characters[random_int(0, strlen($characters) - 1)];
@@ -53,13 +53,64 @@ function generateSecureOTP($length = 6) {
     return $otp;
 }
 
-$otp = generateSecureOTP();
+$otp = generateSecureOTP(6);
 $_SESSION['otp'] = $otp;
 $_SESSION['otp_email'] = $email;
 $_SESSION['last_otp_time'] = time();
 
 $subject = "Your OTP for TechSavvies.shop";
-$message = "Hello,\n\nYour OTP is: $otp\nIf you did not request this OTP, please ignore this email.\n\nThank you.";
+$htmlMessage = <<<HTML
+<html>
+<head>
+  <style>
+    .email-container {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+      text-align: center;
+    }
+    .email-content {
+      background-color: #ffffff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: inline-block;
+      max-width: 600px;
+      width: 100%;
+    }
+    .logo {
+      max-width: 150px;
+      margin-bottom: 20px;
+    }
+    .otp-code {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333333;
+    }
+    .footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #777777;
+    }
+  </style>
+</head>
+<body>
+  <div class="email-container">
+    <div class="email-content">
+      <img class="logo" src='https://i.postimg.cc/rDHDSjZw/Logo.png' alt="TechSavvies.shop Logo">
+      <h2>OTP for TechSavvies.shop</h2>
+      <p>Holla, Your One Time Password is:</p>
+      <p class="otp-code">$otp</p>
+      <p>If you did not request this OTP, just ignore this email.</p>
+      <p class="footer">Thank you,<br>TechSavvies.shop Team</p>
+    </div>
+  </div>
+</body>
+</html>
+HTML;
+
+// Plain text version for email clients that do not support HTML
+$plainMessage = "Hello,\n\nYour OTP is: $otp\nIf you did not request this OTP, just ignore this email.\n\nThank you,\nTechSavvies.shop Team";
 
 $mail = new PHPMailer(true);
 
@@ -75,9 +126,10 @@ try {
     $mail->setFrom(getenv('MAIL_FROM_ADDRESS'), getenv('MAIL_FROM_NAME'));
     $mail->addAddress($email);
 
-    $mail->isHTML(false);
+    $mail->isHTML(true);
     $mail->Subject = $subject;
-    $mail->Body    = $message;
+    $mail->Body    = $htmlMessage;
+    $mail->AltBody = $plainMessage;
 
     $mail->send();
     echo json_encode(["success" => true, "message" => "OTP sent to your email."]);

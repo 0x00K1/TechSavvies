@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Enhanced
       accountLink.innerHTML = `
         <div class="account-control" id="accountIconWrapper">
-          <img src="/assets/images/account.png" alt="Account" id="accountIcon" />
+          <svg id="accountIcon" viewBox="0 0 24 24" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><defs><style>.cls-1{fill:none;stroke:#ffffff;stroke-miterlimit:10;stroke-width:1.91px;}</style></defs><circle class="cls-1" cx="12" cy="7.25" r="5.73"></circle><path class="cls-1" d="M1.5,23.48l.37-2.05A10.3,10.3,0,0,1,12,13h0a10.3,10.3,0,0,1,10.13,8.45l.37,2.05"></path></g></svg>
           <i class="fa fa-caret-down"></i>
         </div>
         <div class="account-dropdown" id="accountDropdown">
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Show just the account icon if user is not authenticated
       accountLink.innerHTML = `
         <div class="account-control" id="accountIconWrapper">
-          <img src="/assets/images/account.png" alt="Account" id="accountIcon" />
+          <svg id="accountIcon" viewBox="0 0 24 24" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" fill="#ffffff" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><defs><style>.cls-1{fill:none;stroke:#ffffff;stroke-miterlimit:10;stroke-width:1.91px;}</style></defs><circle class="cls-1" cx="12" cy="7.25" r="5.73"></circle><path class="cls-1" d="M1.5,23.48l.37-2.05A10.3,10.3,0,0,1,12,13h0a10.3,10.3,0,0,1,10.13,8.45l.37,2.05"></path></g></svg>
         </div>
       `;
     }
@@ -273,9 +273,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
       // Disable button
       button.disabled = true;
-      // Optional: Add "Loading..." text or keep original text
-      // Uncomment line below to force "Loading..." text:
-      // button.textContent = "Loading...";
       
       // Add spinner class to show rotating circle
       button.classList.add("button-spinner");

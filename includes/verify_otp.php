@@ -69,12 +69,6 @@ if (!hash_equals($_SESSION['otp'], $otp_input)) {
 // Reset the failure counter
 $_SESSION['otp_fail_count'] = 0;
 
-// OTP is valid, clear session values
-unset($_SESSION['otp'], $_SESSION['otp_email'], $_SESSION['last_otp_time']);
-
-// Regenerate session ID for security
-session_regenerate_id(true);
-
 try {
     // Lookup the user by email
     $stmt = $pdo->prepare("SELECT * FROM users WHERE email = ?");
@@ -101,16 +95,27 @@ try {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Store user session
-    $_SESSION['user'] = $user;
-    
     // Debugging: Confirm successful authentication
     // error_log("DEBUG: User authenticated successfully: " . json_encode($user));
+
+    // OTP is valid, clear session values
+    unset($_SESSION['otp'], $_SESSION['otp_email'], $_SESSION['last_otp_time']);
+
+    // Regenerate session ID after successful authentication to prevent fixation attacks
+    session_regenerate_id(true);
+
+    /////// ammmmmmm
+    if ($user['role'] === 'root') {
+        $_SESSION['is_root'] = true;
+    }
+
+    unset($user['password']);
+    $_SESSION['user'] = $user;
+    $_SESSION['logged_in'] = true;
 
     // Send JSON response
     ob_clean(); // Clean any output before sending JSON
     echo json_encode(["success" => true, "user" => $user]);
-
 } catch (PDOException $e) {
     error_log("Database error: " . $e->getMessage());
     ob_clean(); // Prevent any errors from corrupting JSON
