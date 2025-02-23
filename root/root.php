@@ -1,5 +1,5 @@
-<!DOCTYPE html5>
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
         <link rel="icon" href="..\assets\icons\Logo.ico">
         <link rel="stylesheet" href="..\assets\css\main.css">
@@ -9,15 +9,30 @@
     <body>
         <!-- Header Section -->
         <?php include('..\assets\php\header.php'); ?>
+        <script><?php include ('..\assets\js\root.js'); ?></script>
 
-        <!-- Sidebar section -->
-        <div class="sidebar">
-            <ul>
-                <!-- STILL NOT CLEAR WHETHER I WILL MAKE ANOTHER PAGES FOR EVERY FUNCTION OR ADD FUNCTIONS IN <div></div> CONTAINERS -->
-                <li><a href="">Add Item</a></li> 
-                <li><a href="">Remove Item</a></li>
-                <li><a href="">Edit Item</a></li>
-            </ul>
-        </div>
+        <!-- functions section -->
+        <section class= "hero">
+            <div class="funcarea">
+                <div class="toolbar">
+                    <button id="EditPro_button">Edit Products</button> <!-- make on default-->
+                    <button id="EditUser_button">Edit User</button>
+                    <button id="Queries_button">Queries</button>
+                </div>
+                <div class="content-container">
+                    <div id="EditProduct" class="content">
+                        <form>
+                            <p>test</p>
+                        </form>
+                    </div>
+                    <div id="EditUser" class="content" style="display: none;">
+                        <p>Remove Item Form/Content</p>
+                    </div>
+                    <div id="Queries" class="content" style="display: none;">
+                        <p>Edit Item Form/Content</p>
+                    </div>
+                </div>
+            </div>    
+        </section>
     </body>
 </html> 

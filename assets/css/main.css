@@ -9,6 +9,7 @@
   --text-color: #000000;
   --header-bg: #000; /* Changed from rgba(34, 34, 34, 0.9) to black */
   --gradient: linear-gradient(135deg, #667eea, #764ba2);
+  --links-color: linear-gradient(135deg, #d42d2d, #8d07cc, #0117ff); /*moved it from a:hover to use it again in root buttons @anana0dev*/
 }
 
 html {
@@ -35,7 +36,7 @@ a {
 }
 
 a:hover {
-  background: linear-gradient(135deg, #d42d2d, #8d07cc, #0117ff);
+  background: var(--links-color);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -759,44 +760,74 @@ footer {
 }
 
 /* ==================
-Admin Sidebar (WIP)
+root toolbar (WIP)
 =================== */
-.sidebar {
-  width: 250px;
-  background-color: #1f1f1f; /* Sidebar color */
-  color: #ffffff; /* Text color */
-  height: calc(100vh - 70px); /* Full height minus header height */
-  position: fixed; /* Keeps the sidebar fixed */
-  top: 65px; /* Position below the header */
-  left: 5px; /* shifts the bar fro thy left*/
-  padding: 10px 0; /* Add padding to the sidebar */
-  border-radius: 15px; /* Smooth edges */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: adds a subtle shadow */
+.funcarea {
+  background:  var(--secondary-color); /*  #7979dc a nicer color*/
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  position: fixed;
+  top: 70px; /* Position below the header */
+  left: 10%;
+  width: 80%;
+  display: flex; /* Use flexbox to arrange toolbar and container */
+  flex-direction: column; /* Stack toolbar and container vertically */
+  z-index: 2;
 }
-.sidebar h2 {
+.toolbar {
+  background-color: var(--primary-color);
+  border-radius: 15px;
+  display: flex;
+  align-items: center; 
+  justify-content: center; 
+}
+.toolbar button.active{
+    background: var(--links-color);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.toolbar button {
+  background-color: var(--primary-color);
+  background: var(--secondary-color);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px 20px;
+  border:hidden;
   text-align: center;
-  padding: 20px;
-  margin: 0;
-  color: #ffffff; /* Header color */
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 20px;
 }
-.sidebar ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+
+.toolbar button:hover {
+    background: var(--links-color);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
-.sidebar ul li {
-  background-color: #8d07cc; /* Background color for li */
-  border-radius: 10px; /* Smooth corners */
-  padding: 5px; /* Padding for li */
-  margin: 10px 20px; /* Margin around li */
-  text-align: center;
-  transition: background-color 0.3s; /* Smooth transition */
+
+
+.toolbar button.active{
+   background: var(--links-color);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
-.sidebar ul li:hover {
-  background-color: #d42d2d; /* Change color on hover */
+
+
+.content-container {
+  margin: 20px;
+  background-color: #fff;
+  margin-top: 20px;
+  
 }
-.sidebar ul li a {
-  color: #ffffff; /* Link color */
-  text-decoration: none;
-  display: block;
+
+.content {
+    border:hidden;
+    border-radius: 30px;
+    padding: 15px;
 }
