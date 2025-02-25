@@ -25,15 +25,25 @@
             </div>
         </div>
         <div class="funcarea">
-            <!-- the id 'search_button' is linked with the java script -->
             <div class="content-container">
+                <div class="product_managment_display">
+                    <form name="Product_queries" method="post" action="root.php"><!-- or root_product.php-->
+                        <div class="search_div">
+                            <input name="search_field" id="search_field" type="text" placeholder="Search" />
+                            <input name="search_button" id="search_button" type="submit" value="Search"/> 
+                        </div>
+                        <div class="table_div">
+                            <div class="table_header">
+                                
+                            </div>
+                            <table>
+
+                            </table>
+                        </div>
+                    </form>
+                </div>
                 <div id="EditProduct" class="content">
                     <form id="addProduct_form">
-                        <div class="EditProduct_bar">
-                            <button id="AddPro_button">Add</button>
-                            <button id="RemovePro_button">Remove</button>
-                            <button id="ModifyPro_button">Modify</button>
-                        </div>
                         <div id="add_display" class="AddProduct">
                             <p>
                                 <label for="product_name">Product Name:</label>
