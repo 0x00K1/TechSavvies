@@ -33,7 +33,7 @@ root toolbar (WIP)
     background-color: var(--primary-color);
     position: sticky;
     width: 15%;
-    height: 100vh;
+    height: calc(100%-70px);
     margin-top: 60px;
     z-index: 10000000;/*becuase header in the way*/
   }
