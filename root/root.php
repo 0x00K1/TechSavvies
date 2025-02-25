@@ -11,19 +11,21 @@
 
 <body>
     <!-- Header Section -->
-    <?php include('..\assets\php\header.php'); ?>
+   <?php include('..\assets\php\header.php'); ?>
     <script>
-        <?php include('..\assets\js\root.js'); ?>
+    <?php include('..\assets\js\root.js'); ?>
     </script>
 
     <!-- functions section -->
-    <section class="hero">
-        <div class="funcarea">
-            <div class="toolbar">
+    <section class="Boss">
+        <div class="toolbar">
+            <div class="toolbar_buttons">
                 <button id="EditPro_button">Edit Products</button>
                 <button id="EditUser_button">Edit User</button>
-                <button id="Queries_button">Queries</button>
             </div>
+        </div>
+        <div class="funcarea">
+            <!-- the id 'search_button' is linked with the java script -->
             <div class="content-container">
                 <div id="EditProduct" class="content">
                     <form id="addProduct_form">
@@ -35,11 +37,13 @@
                         <div id="add_display" class="AddProduct">
                             <p>
                                 <label for="product_name">Product Name:</label>
-                                <input type="text" name="product_name" id="product_name" placeholder="Enter the product's name" maxlength="255" required>
+                                <input type="text" name="product_name" id="product_name"
+                                    placeholder="Enter the product's name" maxlength="255" required>
                             </p>
                             <p>
                                 <label for="categoryList">Category:</label>
-                                <input id="categoryList" type="text" placeholder="Choose a category..." list="Pro_category">
+                                <input id="categoryList" type="text" placeholder="Choose a category..."
+                                    list="Pro_category">
                                 <datalist id="Pro_category">
                                     <option value="test1"></option>
                                     <option value="test2"></option>
@@ -55,19 +59,23 @@
                             </p>
                             <p>
                                 <label for="product_color">Product Color:</label>
-                                <input type="text" name="product_color" id="product_color" placeholder="Enter the product's color" maxlength="255" required>
+                                <input type="text" name="product_color" id="product_color"
+                                    placeholder="Enter the product's color" maxlength="255" required>
                             </p>
                             <p>
                                 <label for="product_size">Product Size:</label>
-                                <input type="text" name="product_size" id="product_size" placeholder="Enter the product's size" maxlength="50" required>
+                                <input type="text" name="product_size" id="product_size"
+                                    placeholder="Enter the product's size" maxlength="50" required>
                             </p>
                             <p>
                                 <label for="product_price">Product Price:</label>
-                                <input type="number" name="product_price" id="product_price" placeholder="Enter the product's price" step="0.01" required>
+                                <input type="number" name="product_price" id="product_price"
+                                    placeholder="Enter the product's price" step="0.01" required>
                             </p>
                             <p>
                                 <label for="product_stock">Product Stock:</label>
-                                <input type="number" name="product_stock" id="product_stock" placeholder="Enter the product's stock" step="1" required>
+                                <input type="number" name="product_stock" id="product_stock"
+                                    placeholder="Enter the product's stock" step="1" required>
                             </p>
                         </div>
                     </form>
@@ -106,7 +114,8 @@
 
                 </div>
                 <div id="Queries" class="content" style="display: none;">
-                    <p>queriese Like bills, payments, statistics , printing users or products, some graphs wpuld be amazing</p>
+                    <p>queriese Like bills, payments, statistics , printing users or products, some graphs wpuld be
+                        amazing</p>
                 </div>
             </div>
         </div>
@@ -114,20 +123,3 @@
 </body>
 
 </html>
-
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get form data
-    $name = $_POST["name"];
-    $message = $_POST["message"];
-
-    // Generate timestamp
-    $timestamp = date("Y-m-d H:i:s"); // MySQL format
-
-    // Database insertion (replace with your database code)
-    // ... insert $name, $message, and $timestamp into your database ...
-
-    // Display success message (or redirect)
-    echo "Form submitted successfully at: " . $timestamp;
-}
-?>

@@ -1,7 +1,22 @@
 
+:root {   /*better to link it*/
+  --primary-color: #000000;
+  --secondary-color: #f4f4f4;
+  --accent-color: #c9d6df;
+  --light-bg: #f9f9f9;
+  --text-color: #000000;
+  --header-bg: #000; /* Changed from rgba(34, 34, 34, 0.9) to black */
+  --gradient: linear-gradient(135deg, #667eea, #764ba2);
+  --links-color: linear-gradient(135deg, #d42d2d, #8d07cc, #0117ff); /*moved it from a:hover to use it again in root buttons @anana0dev*/
+}
 /* ==================
 root toolbar (WIP)
 =================== */
+.Boss{
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
 .funcarea {
     background:  var(--secondary-color); /*  #7979dc a nicer color*/
     border-top-left-radius: 15px;
@@ -12,22 +27,30 @@ root toolbar (WIP)
     width: 80%;
     display: flex; /* Use flexbox to arrange toolbar and container */
     flex-direction: column; /* Stack toolbar and container vertically */
-    z-index: 2;
+   
   }
   .toolbar {
     background-color: var(--primary-color);
-    border-radius: 15px;
-    display: flex;
-    align-items: center; 
-    justify-content: center; 
+    position: sticky;
+    width: 15%;
+    height: 100vh;
+    margin-top: 60px;
+    z-index: 5;
   }
-  .toolbar button.active{
+  .toolbar_buttons{
+    padding-top: 20px;
+    height: 100%;
+    width: 100%;
+    margin-left: 20px;
+  }
+  
+  .toolbar .toolbar_buttons button.active{
       background: var(--links-color);
       background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
   }
-  .toolbar button {
+  .toolbar .toolbar_buttons button {
     background-color: var(--primary-color);
     background: var(--secondary-color);
     background-clip: text;
@@ -43,7 +66,7 @@ root toolbar (WIP)
     font-size: 20px;
   }
   
-  .toolbar button:hover {
+  .toolbar .toolbar_buttons button:hover {
       background: var(--links-color);
       background-clip: text;
       -webkit-background-clip: text;
@@ -51,7 +74,7 @@ root toolbar (WIP)
   }
   
   
-  .toolbar button.active{
+  .toolbar .toolbar_buttons button.active{
      background: var(--links-color);
       background-clip: text;
       -webkit-background-clip: text;
