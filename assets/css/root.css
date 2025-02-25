@@ -1,86 +1,100 @@
 
 :root {   /*better to link it*/
-  --primary-color: #000000;
-  --secondary-color: #f4f4f4;
-  --accent-color: #c9d6df;
-  --light-bg: #f9f9f9;
-  --text-color: #000000;
-  --header-bg: #000; /* Changed from rgba(34, 34, 34, 0.9) to black */
-  --gradient: linear-gradient(135deg, #667eea, #764ba2);
-  --links-color: linear-gradient(135deg, #d42d2d, #8d07cc, #0117ff); /*moved it from a:hover to use it again in root buttons @anana0dev*/
+
+    --primary-color: #000000;
+    --secondary-color: #f4f4f4;
+    --accent-color: #c9d6df;
+    --light-bg: #f9f9f9;
+    --text-color: #2d2d2d; /* Increased text contrast */
+    --header-bg: #000;      /* Kept as black for strong contrast */
+    --gradient: linear-gradient(135deg, #667eea, #764ba2);
+    --links-color: linear-gradient(135deg, #d42d2d, #8d07cc, #0117ff);
+  
+  
 }
 /* ==================
 root toolbar (WIP)
 =================== */
 .Boss{
   display: flex;
-  min-height: 100vh;
-  width: 100%;
+  height: calc(100vh - 80px);
+  margin-top: 70px;
 }
 .funcarea {
-    background:  var(--secondary-color); /*  #7979dc a nicer color*/
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    position: fixed;
-    top: 70px; /* Position below the header */
-    left: 10%;
-    width: 80%;
-    display: flex; /* Use flexbox to arrange toolbar and container */
-    flex-direction: column; /* Stack toolbar and container vertically */
-   
-  }
-  .toolbar {
-    background-color: var(--primary-color);
-    position: sticky;
-    width: 15%;
-    height: calc(100%-70px);
-    margin-top: 60px;
-    z-index: 10000000;/*becuase header in the way*/
-  }
-  .toolbar_buttons{
-    height: 100%;
-    width: 100%;
+  position: relative;
+  width: 85%;
+  margin-left: 10px;
+  padding: 10px;
+  background-color: #b4b3b3;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
   }
   
-  .toolbar_buttons div{
-    margin: 20px;
-    margin-right: 0px;
-    height: 80px;
-    background-color: var(--secondary-color);
-  }
-  .toolbar button {
-    padding: 10px;
-   border: none;
-   background-color: var(--primary-color);
-   color: var(--secondary-color);
-   height: 100%;
-   width: 100%;
-   font-size: 20px;
-   text-align: left;
-  }
-  
-  .toolbar  button:hover {
-   background-color:var(--accent-color);
-   color :var(--text-color);
-   scale: -5px;
-  }
-  
-  
-  .toolbar  button.active{
-    background: var(--links-color);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  
-  
+/* Base toolbar styling */
+.toolbar {
+  margin-left: 10px;
+  width: 15%;
+  min-width: 200px;
+  background-color: #bbb9b9;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+/* Button container styling */
+.toolbar__buttons {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  /*padding: 0 20px;  Add some side padding */
+}
+
+/* Individual button styling */
+.toolbar button {
+  position: relative;
+  padding: 5px 20px;
+  border-radius: 8px;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 8px;
+  min-width: 160px; /* Minimum width for button spacing */
+}
+
+/* Active state styling */
+.toolbar button.active {
+  background-color: var(--links-color);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+/* Hover effect */
+.toolbar button:hover {
+  background-color: var(--accent-color);
+  transform: scale(1.05); /* Subtler scaling */
+  box-shadow: 0 3px 6px rgba(255, 255, 255, 0.2);
+}
+
+/* Focus state for accessibility */
+.toolbar button:focus {
+  outline: none;
+  border-radius: 10px;
+  box-shadow: 0 0 0 3px rgba(var(--accent-color-rgb), 0.4);
+}
+
+/* Optional: Add a divider between buttons */
+.toolbar__button-separator {
+  width: 1px;
+  height: 50%;
+  background-color: var(--text-color);
+  margin-left: 8px;
+}
+
   .content-container {
-    margin: 20px;
-    background-color: #fff;
-    margin-top: 20px;
-    max-height: calc(100vh - 300px);
-    overflow-y: auto;
-    
+    margin: 20px;    
   }
   .content {
     background-color: var(--light-bg);
