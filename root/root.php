@@ -20,8 +20,8 @@
     <section class="Boss">
         <div class="toolbar">
             <div class="toolbar_buttons">
-                <button id="EditPro_button">Edit Products</button>
-                <button id="EditUser_button">Edit User</button>
+                <div><button id="EditPro_button">Edit Products</button></div>
+                <div><button id="EditUser_button">Edit User</button></div>
             </div>
         </div>
         <div class="funcarea">

@@ -35,50 +35,42 @@ root toolbar (WIP)
     width: 15%;
     height: 100vh;
     margin-top: 60px;
-    z-index: 5;
+    z-index: 10000000;/*becuase header in the way*/
   }
   .toolbar_buttons{
-    padding-top: 20px;
     height: 100%;
     width: 100%;
-    margin-left: 20px;
   }
   
-  .toolbar .toolbar_buttons button.active{
-      background: var(--links-color);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+  .toolbar_buttons div{
+    margin: 20px;
+    margin-right: 0px;
+    height: 80px;
+    background-color: var(--secondary-color);
   }
-  .toolbar .toolbar_buttons button {
-    background-color: var(--primary-color);
-    background: var(--secondary-color);
+  .toolbar button {
+    padding: 10px;
+   border: none;
+   background-color: var(--primary-color);
+   color: var(--secondary-color);
+   height: 100%;
+   width: 100%;
+   font-size: 20px;
+   text-align: left;
+  }
+  
+  .toolbar  button:hover {
+   background-color:var(--accent-color);
+   color :var(--text-color);
+   scale: -5px;
+  }
+  
+  
+  .toolbar  button.active{
+    background: var(--links-color);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    border-radius: 10px;
-    padding: 10px;
-    margin: 10px 20px;
-    border:hidden;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    font-size: 20px;
-  }
-  
-  .toolbar .toolbar_buttons button:hover {
-      background: var(--links-color);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-  }
-  
-  
-  .toolbar .toolbar_buttons button.active{
-     background: var(--links-color);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
   }
   
   
