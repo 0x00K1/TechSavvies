@@ -11,9 +11,12 @@
     <body>
         <!-- Header Section -->
         <?php include('..\assets\php\header.php'); ?>
-
+    <div class="Boss">
+        <!-- Toolbar -->
+        <?php include('..\assets\php\toolbar.php'); ?>
         <!-- functions section -->
         <?php include('..\assets\php\funcarea.php'); ?>
+        </div>
         <?php include('..\assets\php\add_product_popup.php')?>
 
 
