@@ -19,14 +19,14 @@
     <!-- functions section -->
     <section class="Boss">
         <div class="toolbar">
-            <div class="toolbar_buttons">
-                <div><button id="EditPro_button">Edit Products</button></div>
-                <div><button id="EditUser_button">Edit User</button></div>
-            </div>
+            <nav class="nav">
+                <button id="EditPro_button">Edit Products</button>
+                <button id="EditUser_button">Edit User</button>
+            </nav>
         </div>
         <div class="funcarea">
             <div class="content-container">
-                <div class="product_managment_display">
+                <div class="content">
                     <form name="Product_queries" method="post" action="root.php"><!-- or root_product.php-->
                         <div class="search_div">
                             <input name="search_field" id="search_field" type="text" placeholder="Search" />
