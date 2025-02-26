@@ -60,14 +60,15 @@ root toolbar (WIP)
 
 /* Individual button styling */
 .toolbar button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   box-sizing: border-box;
   border-width: 0;
   border-style: solid;
   
   padding: 0.75rem;
   border-radius: 0.5rem;
-  
-  align-items: center; /* Vertically centers content inside the button */
   
   transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1); /* Combined transition properties */
   
@@ -205,7 +206,11 @@ root toolbar (WIP)
 }
 
 
-<
+/*button icons*/
+.b-icon{
+  margin: 2px;
+  max-height: 1.5rem;
+}
 
 
 
