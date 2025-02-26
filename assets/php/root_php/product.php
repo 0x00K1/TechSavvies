@@ -46,6 +46,5 @@
                 </tbody>
             </table>
         </div>
-        <?php include("confirmation.php");?>
     </form>
 </div>

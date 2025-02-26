@@ -16,9 +16,9 @@
         <?php include('..\assets\php\root_php\toolbar.php'); ?>
         <!-- functions section -->
         <?php include('..\assets\php\root_php\funcarea.php'); ?>
-        </div>
-        <?php include('..\assets\php\root_php\add_product_popup.php')?>
     </div>
+        <?php include('..\assets\php\root_php\add_product_popup.php')?>
+        <?php include('..\assets\php\root_php\confirmation.php');?>
         <script src="../assets/js/root.js"></script>  <!-- keep last in body so all html elemnts are loaded-->
     </body>
 </html>

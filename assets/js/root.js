@@ -89,8 +89,8 @@ function closeaddProPopup() {
 }
 
 function confirmationPopup(){
-    document.getElementById("confirmationPopup").style.display= "block";
+    document.getElementById("confirmationPopup_display").style.display= "block";
 }
 function closeconfirmationPopup(){
-    document.getElementById("confirmationPopup").style.display= "none";
+    document.getElementById("confirmationPopup_display").style.display= "none";
 }
