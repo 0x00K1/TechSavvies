@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const EditUser = document.getElementById('EditUser');
     
     /* forms*/
-    const addProduct_form=document.getElementById('addProduct_form');
-    const 
+    const addProduct_form =document.getElementById('addProduct_form');
+    const editUser_form =document.getElementById('editUser_form');
     /*first time loading page */
     EditProduct.style.display = 'block';
     EditPro_button.classList.add('active');
