@@ -1,6 +1,6 @@
 <div id="EditProduct" class="content">
-    <button id="Addpupup" class="addbutton" onclick="openPopup()">Add</button>
-    <form name="Product_queries" method="post" action="root.php">
+    <button id="addProPopup_button" class="addProPopup_button" onclick="addProPopup();">Add</button>
+    <form name="Product_queries" method="post" action="index.php">
         <!-- or root_product.php-->
         <div class="search_div">
             <input class="search-field" name="search_field" id="search_field" type="text" placeholder="Search" />

@@ -80,11 +80,17 @@ function enableForm(formToEnable) {
     }
 }
 
-function openPopup() {
-        document.getElementById("myPopup").style.display = "block";
-
+function addProPopup() {
+        document.getElementById("addProPopup").style.display = "block";
 }
 
-function closePopup() {
-        document.getElementById("myPopup").style.display = "none";
+function closeaddProPopup() {
+        document.getElementById("addProPopup").style.display = "none";
+}
+
+function confirmationPopup(){
+    document.getElementById("confirmationPopup").style.display= "block";
+}
+function closeconfirmationPopup(){
+    document.getElementById("confirmationPopup").style.display= "none";
 }
