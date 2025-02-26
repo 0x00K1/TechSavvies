@@ -81,16 +81,16 @@ function enableForm(formToEnable) {
 }
 
 function addProPopup() {
-        document.getElementById("addProPopup").style.display = "block";
+        document.getElementById("addProPopup_display").style.display = "block";
 }
 
 function closeaddProPopup() {
-        document.getElementById("addProPopup").style.display = "none";
+        document.getElementById("addProPopup_display").style.display = "none";
 }
 
 function confirmationPopup(){
-    document.getElementById("confirmationPopup").style.display= "block";
+    document.getElementById("confirm_input").style.display= "block";
 }
 function closeconfirmationPopup(){
-    document.getElementById("confirmationPopup").style.display= "none";
+    document.getElementById("confirm_input").style.display= "none";
 }

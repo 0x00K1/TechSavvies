@@ -7,20 +7,20 @@
                 <div class="EditUser">
                     <p>
                         <label for="User_ID">User ID:</label>
-                        <input type="text" id="User_ID" required>
+                        <input name="User_ID" type="text" id="User_ID" required>
                     </p>
                     <button class="search-button" id="User_Query_Button">Search</button>
                     <p>
                         <label for="Username">Username:</label>
-                        <input type="text" id="Username" required>
+                        <input name="Username" type="text" id="Username" required>
                     </p>
                     <p>
                         <label for="User_Email">Email:</label>
-                        <input type="email" id="User_Email" required>
+                        <input name="User_Email" type="email" id="User_Email" required>
                     </p>
                     <p>
                         <label for="User_Role">Role:</label>
-                        <select id="User_Role" required>
+                        <select name="User_Role" id="User_Role" required>
                             <option value="admin">Admin</option>
                             <option value="user">User</option>
                         </select>

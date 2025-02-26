@@ -1,6 +1,6 @@
-<div id="myPopup" class="popup">
+<div id="addProPopup_display" class="popup">
         <span class="close" onclick="closePopup()">&times;</span>
-        <form name="add_product_form" id="addProduct_form" method="post" action="test popup.html">
+        <form name="add_product_form" id="addProduct_form" method="post" action="index.php">
             <div id="add_display" class="AddProduct">
                 <p>
                     <label for="product_name">Product Name:</label>
@@ -43,7 +43,7 @@
                     <input type="number" name="product_stock" id="product_stock" placeholder="Enter the product's stock"
                         step="1" required>
                 </p>
-                <input style="z-index:10000000000000000000;" name="submit_add_product" id="submit_add_product" type="submit" value="Add"/>
+                <input name="submit_add_product" id="submit_add_product" type="submit" value="Add"/>
             </div>
         </form>
     </div>
