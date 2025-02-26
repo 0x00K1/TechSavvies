@@ -1,0 +1,255 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Filter Menu Icon Styling */
+.filter-menu-icon {
+    font-size: 36px;
+    cursor: pointer;
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    /* Positioned on the right */
+    z-index: 2;
+    color: #000;
+}
+
+/* Hide the checkbox input */
+#filter-toggle {
+    display: none;
+}
+
+.filter-group {
+    margin-bottom: 15px;
+    /* Adds space between filter sections */
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    /* Optional: Adds a light divider */
+}
+
+/* Filter Sidebar Styling */
+.filter-sidebar {
+    position: fixed;
+    top: 60px;
+    /* Adjust this to match your header height */
+    right: 0;
+    width: 250px;
+    height: 100%;
+    background-color: #fff;
+    padding-top: 20px;
+    padding-left: 20px;
+    /* Moves text inside the filter sidebar */
+    border-left: 2px solid #ccc;
+    /* This is the vertical line */
+}
+
+.filter-group summary {
+    cursor: pointer;
+    font-weight: bold;
+    list-style: none;
+    position: relative;
+    padding-left: 20px;
+}
+
+/* Adding custom +/- before summary text */
+.filter-group summary::before {
+    content: "+";
+    position: absolute;
+    left: 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* When the details are open, change the icon to - */
+.filter-group[open] summary::before {
+    content: "-";
+}
+
+.price-range {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.price-range label {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.dollar-sign {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.price-range input {
+    width: 60px;
+    /* Small width for a few digits */
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+.swatches {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 10px;
+    /* Space between swatches */
+}
+
+.swatches label {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Hide the radio button */
+.swatches input[type="radio"] {
+    display: none;
+}
+
+/* Style the swatches */
+.swatch {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    -webkit-transition: border 0.2s ease-in-out;
+    transition: border 0.2s ease-in-out;
+}
+
+/* Apply black border to selected swatch */
+.swatches input[type="radio"]:checked + .swatch {
+    border: 3px solid black;
+}
+
+.swatches input[type="radio"]:checked + .swatch[style*="background-color: white"] {
+    border: 3px solid black !important;
+}
+
+.swatch:hover {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+}
+
+
+.rating {
+    display: inline-block;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    float: right;
+    cursor: pointer;
+    color: #ccc;
+    -webkit-transition: color 0.3s;
+    transition: color 0.3s;
+}
+
+.rating label:before {
+    content: '\2605';
+    font-size: 30px;
+}
+
+.rating input:checked ~ label,
+.rating label:hover,
+.rating label:hover ~ label {
+    color: yellow;
+    -webkit-transition: color 0.3s;
+    transition: color 0.3s;
+}
+
+
+button {
+    outline: none;
+    cursor: pointer;
+    border: none;
+    padding: 0.9rem 2rem;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    position: relative;
+    display: inline-block;
+    letter-spacing: 0.05rem;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 400px;
+    overflow: hidden;
+    background: #ccc;
+    color: white;
+    /* Ensure text is white */
+}
+
+
+button span {
+    position: relative;
+    z-index: 10;
+    -webkit-transition: color 0.4s;
+    transition: color 0.4s;
+    color: white;
+    /* Keep text white */
+}
+
+button:hover span {
+    color: white;
+    /* Prevent color change on hover */
+}
+
+.button-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+button::before,
+button::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    color: white;
+}
+
+button::before {
+    color: white;
+    content: "";
+    background: #000;
+    width: 120%;
+    left: -10%;
+    -webkit-transform: skew(30deg);
+    transform: skew(30deg);
+    -webkit-transition: -webkit-transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+    transition: -webkit-transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+    transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+    transition: transform 0.4s cubic-bezier(0.3, 1, 0.8, 1), -webkit-transform 0.4s cubic-bezier(0.3, 1, 0.8, 1);
+}
+
+button:hover::before {
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+}
