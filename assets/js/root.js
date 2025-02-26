@@ -4,10 +4,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const manageUser_button = document.getElementById('manageUser_button');
     const Orders_button= document.getElementById('Orders_button');
     const search_button= document.getElementById('search_button');
+    const transaction_button= document.getElementById('transactions_button');
+    const review_button= document.getElementById('Reviews_button');
+
     /* div or displays*/
     const EditProduct = document.getElementById('EditProduct');
     const EditUser = document.getElementById('EditUser');
     const orders_display=document.getElementById('orders_display');
+    const Transaction_display = document.getElementById('Transactions_display'); // New div for transactions
+    const Reviews_display = document.getElementById('Reviews_Display'); // New div for reviews
     /* forms*/
     const addProduct_form =document.getElementById('addProduct_form');
     const editUser_form =document.getElementById('editUser_form');
@@ -17,6 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
     EditProduct.style.display = 'block';
     EditUser.style.display = 'none';
     orders_display.style.display= 'none';
+    Transaction_display.style.display = 'none'; // Initially hide
+    Reviews_display.style.display = 'none'; // Initially hide
     managePro_button.classList.add('active');/*for button styles*/
     
     
@@ -30,6 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
         EditProduct.style.display = 'block';
         EditUser.style.display = 'none';
         orders_display.style.display= 'none';
+        Transaction_display.style.display = 'none';
+        Reviews_display.style.display = 'none';
         managePro_button.classList.add('active');
         manageUser_button.classList.remove('active');
         Orders_button.classList.remove('active'); 
@@ -39,6 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
         EditProduct.style.display = 'none';
         EditUser.style.display = 'block';
         orders_display.style.display= 'none';
+        Transaction_display.style.display = 'none';
+        Reviews_display.style.display = 'none';
         managePro_button.classList.remove('active');
         manageUser_button.classList.add('active');
         Orders_button.classList.remove('active'); 
@@ -48,11 +59,34 @@ document.addEventListener('DOMContentLoaded', function() {
         EditProduct.style.display = 'none';
         EditUser.style.display = 'none';
         orders_display.style.display= 'block';
+        Transaction_display.style.display = 'none';
+        Reviews_display.style.display = 'none';
         managePro_button.classList.remove('active');
         manageUser_button.classList.remove('active');
         Orders_button.classList.add('active');
     });
    
+    transaction_button.addEventListener('click', function() {
+        EditProduct.style.display = 'none';
+        EditUser.style.display = 'none';
+        orders_display.style.display = 'none';
+        Transaction_display.style.display = 'block'; // Show reviews div
+        Reviews_display.style.display = 'none'; // Hide transactions div
+        managePro_button.classList.remove('active');
+        manageUser_button.classList.remove('active');
+        Orders_button.classList.remove('active');
+    });
+
+    review_button.addEventListener('click', function() {
+        EditProduct.style.display = 'none';
+        EditUser.style.display = 'none';
+        orders_display.style.display = 'none';
+        Transaction_display.style.display = 'none'; // Hide reviews div
+        Reviews_display.style.display = 'block'; // Show transactions div
+        managePro_button.classList.remove('active');
+        manageUser_button.classList.remove('active');
+        Orders_button.classList.remove('active');
+    });
 
     search_button.addEventListener('click', function(){
         /*Retreives user data from DATABASe and fills it into the tabel*/

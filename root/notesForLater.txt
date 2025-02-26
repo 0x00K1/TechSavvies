@@ -1,2 +1,10 @@
 when forms are diabled or enabled
 user managment functionality. view only?
+
+FROM HAMEED!!!!
+{
+    I HAVE ADDED: 
+        1- Reviews.php
+        2- Transactions.php
+    
+}

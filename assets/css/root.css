@@ -224,6 +224,9 @@ root toolbar (WIP)
     align-items: center; /* Vertical centering */
     
   }
+  .table_div table{
+    width: 90%;
+  }
   .table_header{
     position: sticky;
   }
@@ -306,3 +309,20 @@ root toolbar (WIP)
     justify-content: center; /* Horizontal centering */
     align-items: center; /* Vertical centering */
   }
+
+
+
+  /* Orders Table */
+  
+  .div table {
+    width: 100%;
+    border-collapse: collapse;
+}
+  .div th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+.div th {
+    background-color: #f2f2f2;
+}
