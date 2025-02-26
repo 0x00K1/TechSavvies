@@ -22,11 +22,13 @@
 
   /* Links color, should be distinct but not overly bright to avoid eye strain */
   --links-color: #30332E;
+  --process-color: #0091ff;
 }
 
 /* ==================
 root toolbar (WIP)
 =================== */
+
 .Boss{
   display: flex;
   height: calc(100vh - 60px);
@@ -105,8 +107,6 @@ root toolbar (WIP)
     border-radius: 15px;
     padding: 20px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  
-    
   }
   
   /* Button styles */
@@ -181,11 +181,12 @@ root toolbar (WIP)
 }
 /*Text Field*/
   .search-field {
-    width: 80%;
+    width: 48%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     transition: border-color 0.3s;
+    margin-left: 15%;
 }
 /*Button*/
 .search-button {
@@ -214,13 +215,12 @@ root toolbar (WIP)
 }
 
   /*@ananas0dev :)*/
-  .product_managment_display{
-
-  }
-
   .table_div{
     text-align: center;
     font-size: 20px;
+    display: flex;
+    justify-content: center; /* Horizontal centering */
+    align-items: center; /* Vertical centering */
     
   }
   .table_header{
@@ -233,18 +233,46 @@ root toolbar (WIP)
    
     padding: 5px;
    }
-   .addbutton{
-
+   .addProPopup_button_style{
+    background-color: var(--process-color);
+    color: var(--light-bg);
+    border: none;
+    border-radius: 5px;                     
+    padding: 10px 15px;                     
+    cursor: pointer;
+    width: auto;
+    font-size: 16px; 
    }
-   .Deletebutton{
-
+   .addProPopup_button_style:hover {
+    background-color: var(--light-bg);
+    color: var(--process-color);
+    border: white 5px solid;
+    border-radius: 5px;
+    width: auto;
+    font-size: 16px; 
+   }
+   .search-button{
+      margin: 10px;
    }
 
    /*popup styles*/
-   .popup {
+   .addProPopup {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1000000000000; /* Sit on top */
+    z-index: 100; /* Sit on top */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); /* Center the popup */
+    width: 300px; /* Adjust width as needed */
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #888;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  }
+  .confirmationPopup{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 100; /* Sit on top */
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%); /* Center the popup */
@@ -268,4 +296,12 @@ root toolbar (WIP)
     color: black;
     text-decoration: none;
     cursor: pointer;
+  }
+  .filter_value_style{
+    width: 30%;
+  }
+  .filter_div{
+    display: inline;
+    width: 30%;
+    margin-left: 15%;
   }

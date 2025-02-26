@@ -94,3 +94,11 @@ function confirmationPopup(){
 function closeconfirmationPopup(){
     document.getElementById("confirmationPopup_display").style.display= "none";
 }
+document.getElementById('addProPopup_button').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent form submission
+    addProPopup();
+});
+document.getElementById('remove_product_button').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent form submission
+    confirmationPopup();
+});

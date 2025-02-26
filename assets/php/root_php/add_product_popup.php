@@ -1,4 +1,4 @@
-<div id="addProPopup_display" class="popup">
+<div id="addProPopup_display" class="addProPopup">
         <span class="close" onclick="closeaddProPopup()">&times;</span>
         <form name="add_product_form" id="addProduct_form" method="post" action="index.php">
             <div id="add_display" class="AddProduct">

@@ -1,15 +1,16 @@
 <div id="EditProduct" class="content">
-    <button id="addProPopup_button" class="addProPopup_button" onclick="addProPopup()">Add</button>
-    <form name="Product_queries" method="post" action="index.php">
-        <!-- or root_product.php-->
+    
+    <form name="Product_queries" id="Product_queries" method="post" action="index.php">
         <div class="search_div">
             <input class="search-field" name="search_field" id="search_field" type="text" placeholder="Search" />
             <input class="search-button" name="search_button" id="search_button" type="submit" value="Search" />
+            <button id="addProPopup_button" class="addProPopup_button_style">Add</button>
         </div>
+        
         <div class="filter_div">
-            <label>Filter: </label>
-            <select name="filter_value" id="filter_value" placeholder="Chose a value">
-                <option value="" disabled selected>Choose a value</option>
+            <label style="width: 10%; display:inline;">Filter: </label>
+            <select name="filter_value" id="filter_value" class="filter_value_style" placeholder="Chose a value">
+                <option value="">None</option>
                 <option name="f_category" value="category">Category</option>
                 <option name="f_price" value="price">Price</option>
                 <option name="f_stock" value="stock">Stock</option>
@@ -40,11 +41,12 @@
                         <td>Category</td>
                         <td>Updated Date</td>
                         <th><div id="buttons_table" class="buttons_table">
-                            <button name="remove_product_button" id="remove_product_button" onclick="confirmationpopup()">Remove</button>
-                            <button name="edit_product_button" id="edit_product_button">Edit</button> </div></th>
+                            <button name="remove_product_button" id="remove_product_button">Remove</button>
+                            <button name="edit_product_button" id="edit_product_button">Edit</button></div></th>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <?php include('..\assets\php\root_php\confirmation.php');?> <!-- <- submit button-->
     </form>
 </div>
