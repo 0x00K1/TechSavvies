@@ -13,11 +13,11 @@
         <?php include('..\assets\php\header.php'); ?>
     <div class="Boss">
         <!-- Toolbar -->
-        <?php include('..\assets\php\toolbar.php'); ?>
+        <?php include('..\assets\php\root_php\toolbar.php'); ?>
         <!-- functions section -->
-        <?php include('..\assets\php\funcarea.php'); ?>
+        <?php include('..\assets\php\root_php\funcarea.php'); ?>
         </div>
-        <?php include('..\assets\php\add_product_popup.php')?>
+        <?php include('..\assets\php\root_php\add_product_popup.php')?>
 
 
         <script src="../assets/js/root.js"></script>  <!-- keep last in body so all html elemnts are loaded-->
