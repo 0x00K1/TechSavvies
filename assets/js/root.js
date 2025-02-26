@@ -10,14 +10,17 @@ document.addEventListener('DOMContentLoaded', function() {
     /* forms*/
     const addProduct_form =document.getElementById('addProduct_form');
     const editUser_form =document.getElementById('editUser_form');
+    const viewUser_form= document.getElementById('viewUser_form');
+
     /*first time loading page */
     EditProduct.style.display = 'block';
-    EditPro_button.classList.add('active');
+    EditPro_button.classList.add('active');/*for button styles*/
     
-    /*on click*/
-    /*1st diale the other form*/
-    EditPro_button.addEventListener('click', disableForm(Product_queries));
-    /*second some styling*/
+    
+    /*diale the other form*/
+    disableForm(editUser_form);
+    disableForm(viewUser_form);
+    /* second on clicksome styling*/
     EditPro_button.addEventListener('click', function() {
         EditProduct.style.display = 'block';
         EditUser.style.display = 'none';
@@ -50,6 +53,15 @@ function disableForm(formToDiable) {
     if (form) {
         for (let i = 0; i < form.elements.length; i++) {
             form.elements[i].disabled = true;
+        }
+    }
+}
+function enableForm(formToEnable) {
+    const form = document.getElementById(formToEnable); // Replace with your form's ID
+
+    if (form) {
+        for (let i = 0; i < form.elements.length; i++) {
+            form.elements[i].disabled = false;
         }
     }
 }
