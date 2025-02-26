@@ -9,7 +9,6 @@
   --text-color: #000000;
   --header-bg: #000; /* Changed from rgba(34, 34, 34, 0.9) to black */
   --gradient: linear-gradient(135deg, #667eea, #764ba2);
-  --links-color: linear-gradient(135deg, #d42d2d, #8d07cc, #0117ff); /*moved it from a:hover to use it again in root buttons @anana0dev*/
 }
 
 html {
@@ -36,7 +35,7 @@ a {
 }
 
 a:hover {
-  background: var(--links-color);
+  background: linear-gradient(135deg, #d42d2d, #8d07cc, #0117ff);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -61,9 +60,9 @@ header {
 }
 
 .logo img {
-  height: 60px; /* Increase the size */
+  height: 120px; /* Increase the size */
   width: auto;
-  max-width: 150px; /* Ensures it doesn't exceed */
+  max-width: 376px; /* Ensures it doesn't exceed */
   object-fit: contain;
   display: block;
 }
