@@ -1,7 +1,3 @@
-body {
-    font-family: Arial, sans-serif;
-}
-
 /* Filter Menu Icon Styling */
 .filter-menu-icon {
     font-size: 36px;
@@ -252,4 +248,118 @@ button::before {
 button:hover::before {
     -webkit-transform: translate3d(100%, 0, 0);
     transform: translate3d(100%, 0, 0);
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Menu Icon Styling */
+.menu-icon {
+    font-size: 36px;
+    cursor: pointer;
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 2;
+    color: #000;
+}
+
+/* Hide the checkbox input */
+#menu-toggle {
+    display: none;
+}
+
+#menu-toggle:checked + .menu-icon {
+    /*after clicking menu icon it become white */
+    color: #fff;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -250px;
+    /* Hidden by default */
+    width: 250px;
+    height: 100%;
+    background-color: #333;
+    padding-top: 60px;
+    -webkit-transition: left 0.3s ease-in-out;
+    transition: left 0.3s ease-in-out;
+    z-index: 1;
+}
+
+/* When the checkbox is checked, reveal the sidebar */
+#menu-toggle:checked + .menu-icon + .sidebar {
+    left: 0;
+}
+
+.sidebar-logo {
+    width: 100%;
+    padding: 20px 0;
+    text-align: center;
+    /* Reserve space for logo - adjust height if needed */
+}
+
+.sidebar-logo img {
+    max-width: 80%;
+    /* adjust as needed */
+    height: auto;
+}
+
+
+/* Sidebar list styling */
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li {
+    position: relative;
+    overflow: hidden;
+    padding: 15px;
+    text-align: center;
+}
+
+/* Hover Slide Effect */
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    position: relative;
+    z-index: 1;
+    -webkit-transition: color 0.3s ease;
+    transition: color 0.3s ease;
+}
+
+.sidebar ul li a::before {
+    content: '';
+    position: absolute;
+    left: -100%;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #555;
+    border-right: solid 5px #8d07cc;
+    -webkit-transition: left 0.3s ease;
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.sidebar ul li:hover a {
+    color: #fff;
+}
+
+.sidebar ul li:hover a::before {
+    left: 0;
+}
+
+/* Default State: Show guest menu and hide user menu */
+.admin-menu {
+    display: block;
+}
+
+.user-menu {
+    display: block;
 }

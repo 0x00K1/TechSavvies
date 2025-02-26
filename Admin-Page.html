@@ -2,12 +2,44 @@
 <html lang="en">
 
 <head>
-    <meta name="viewport" charset="UTF-8">
-    <title>Filtering</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Shopping Page</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
 <body>
+
+
+    <!-- Hidden checkbox for toggling sidebar -->
+    <input type="checkbox" id="menu-toggle">
+    <label for="menu-toggle" class="menu-icon">&#9776;</label>
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <!-- Logo Section -->
+        <div class="sidebar-logo">
+            <img src="logo.webp" alt="Brand Logo">
+        </div>
+
+        <!-- Menu Container -->
+        <div class="menu-container">
+            <!-- Admin Menu -->
+            <ul class="admin-menu">
+                <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
+                <li><a href="#"><i class="fa fa-box"></i> Manage Products</a></li>
+                <li><a href="#"><i class="fa fa-list"></i> Categories</a></li>
+                <li><a href="#"><i class="fa fa-shopping-cart"></i> Orders</a></li>
+                <li><a href="#"><i class="fa fa-users"></i> Users</a></li>
+                <li><a href="#"><i class="fa fa-envelope"></i> Messages</a></li>
+                <li><a href="#"><i class="fa fa-chart-bar"></i> Reports &amp; Analytics</a></li>
+                <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
     <div class="container">
         <!-- Right Sidebar (Filters Form) -->
         <aside class="filter-sidebar">
@@ -101,6 +133,8 @@
             </form>
         </aside>
     </div>
+
+
 </body>
 
 </html>
