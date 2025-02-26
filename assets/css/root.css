@@ -176,8 +176,9 @@ root toolbar (WIP)
 /*   v All Search Related CSS v */
 /*Container*/  
 .search-div {
-    display: flex;
-    justify-content: space-between; /* This aligns items to the start and end with space in between */
+  display: flex;
+  justify-content: center; /* Horizontal centering */
+  align-items: center; /* Vertical centering */
 }
 /*Text Field*/
   .search-field {
@@ -301,7 +302,7 @@ root toolbar (WIP)
     width: 30%;
   }
   .filter_div{
-    display: inline;
-    width: 30%;
-    margin-left: 15%;
+    display: flex;
+    justify-content: center; /* Horizontal centering */
+    align-items: center; /* Vertical centering */
   }
