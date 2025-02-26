@@ -182,7 +182,7 @@ root toolbar (WIP)
 }
 /*Text Field*/
   .search-field {
-    width: 48%;
+    width: auto;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;

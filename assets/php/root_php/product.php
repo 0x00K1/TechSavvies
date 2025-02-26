@@ -8,7 +8,7 @@
         </div>
         
         <div class="filter_div">
-            <label style="width: 10%; display:inline;">Filter: </label>
+            <label>Filter: </label>
             <select name="filter_value" id="filter_value" class="filter_value_style" placeholder="Chose a value">
                 <option value="">None</option>
                 <option name="f_category" value="category">Category</option>
