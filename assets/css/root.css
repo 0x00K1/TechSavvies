@@ -209,6 +209,7 @@ root toolbar (WIP)
 /*button icons*/
 .b-icon{
   margin: 2px;
+  margin-right: 0.5rem;
   max-height: 1.5rem;
 }
 
