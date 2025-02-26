@@ -29,8 +29,8 @@
                 <div class="content">
                     <form name="Product_queries" method="post" action="root.php"><!-- or root_product.php-->
                         <div class="search_div">
-                            <input name="search_field" id="search_field" type="text" placeholder="Search" />
-                            <input name="search_button" id="search_button" type="submit" value="Search"/> 
+                            <input class="search-field" name="search_field" id="search_field" type="text" placeholder="Search" />
+                            <input class="search-button" name="search_button" id="search_button" type="submit" value="Search"/> 
                         </div>
                         <button id="Delete_button">Delete</button><!--same button repeated for easy user experience
                         in the popup window ___> <input name="Delete" id="Delete" type="submit" value="Delete Selected"/>-->
