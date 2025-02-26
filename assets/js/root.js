@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     /* div or displays*/
     const EditProduct = document.getElementById('EditProduct');
     const EditUser = document.getElementById('EditUser');
-    
+    const orders_display=document.getElementById('orders_display');
     /* forms*/
     const addProduct_form =document.getElementById('addProduct_form');
     const editUser_form =document.getElementById('editUser_form');
@@ -15,7 +15,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /*first time loading page */
     EditProduct.style.display = 'block';
+    EditUser.style.display = 'none';
+    orders_display.style.display= 'none';
     managePro_button.classList.add('active');/*for button styles*/
+    
     
     
     /*diale the other form*/
@@ -26,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     managePro_button.addEventListener('click', function() {
         EditProduct.style.display = 'block';
         EditUser.style.display = 'none';
+        orders_display.style.display= 'none';
         managePro_button.classList.add('active');
         manageUser_button.classList.remove('active');
         Orders_button.classList.remove('active'); 
@@ -34,14 +38,16 @@ document.addEventListener('DOMContentLoaded', function() {
     manageUser_button.addEventListener('click', function() {
         EditProduct.style.display = 'none';
         EditUser.style.display = 'block';
+        orders_display.style.display= 'none';
         managePro_button.classList.remove('active');
         manageUser_button.classList.add('active');
         Orders_button.classList.remove('active'); 
     });
 
     Orders_button.addEventListener('click',function(){
-
-
+        EditProduct.style.display = 'none';
+        EditUser.style.display = 'none';
+        orders_display.style.display= 'block';
         managePro_button.classList.remove('active');
         manageUser_button.classList.remove('active');
         Orders_button.classList.add('active');
@@ -49,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
    
 
     search_button.addEventListener('click', function(){
-        /*Retreives user data from DATABASe and fills it into the fields*/
+        /*Retreives user data from DATABASe and fills it into the tabel*/
     })
 
 
