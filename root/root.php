@@ -11,10 +11,7 @@
 
 <body>
     <!-- Header Section -->
-   <?php include('..\assets\php\header.php'); ?>
-    <script>
-    <?php include('..\assets\js\root.js'); ?>
-    </script>
+    <?php include('..\assets\php\header.php'); ?>
 
     <!-- functions section -->
     <section class="Boss">
@@ -26,13 +23,16 @@
         </div>
         <div class="funcarea">
             <div class="content-container">
-                <div class="content">
-                    <form name="Product_queries" method="post" action="root.php"><!-- or root_product.php-->
+                <div id="EditProduct" class="content">
+                <button id="Addpupup" class="addbutton" onclick="openPopup()">Add</button>
+                    <form name="Product_queries" method="post" action="root.php">
+                        <!-- or root_product.php-->
                         <div class="search_div">
                             <input name="search_field" id="search_field" type="text" placeholder="Search" />
-                            <input name="search_button" id="search_button" type="submit" value="Search"/> 
+                            <input name="search_button" id="search_button" type="submit" value="Search" />
                         </div>
-                        <button id="Delete_button">Delete</button><!--same button repeated for easy user experience
+                        <button id="Delete_button" class="Deletebutton">Delete</button>
+                        <!--same button repeated for easy user experience
                         in the popup window ___> <input name="Delete" id="Delete" type="submit" value="Delete Selected"/>-->
                         <div class="filter_div">
                             <label>Filter: </label>
@@ -44,13 +44,15 @@
                                 <option name="f_size" value="size">Size</option>
                                 <option name="f_update_date" value="update_date">update Date</option>
                             </select>
-                            <button name="order_toggler" id="order_toggler">^</button> <!-- some crazy js for ico change-->
+                            <button name="order_toggler" id="order_toggler">^</button>
+                            <!-- some crazy js for ico change-->
                         </div>
                         <div class="table_div">
                             <table border="1">
                                 <thead class="table_header">
                                     <tr>
-                                        <th><input name="selectall" id="selectall" type="checkbox"/></th> <!-- this is a toggle better-->
+                                        <th><input name="selectall" id="selectall" type="checkbox" /></th>
+                                        <!-- this is a toggle better-->
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Price</th>
@@ -61,7 +63,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><input name="select_one" id="select_one" type="checkbox"/></td>
+                                        <td><input name="select_one" id="select_one" type="checkbox" /></td>
                                         <td>ID</td>
                                         <td>Name</td>
                                         <td>Price</td>
@@ -71,62 +73,17 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div><!--table_div-->
-                        <button id="Delete_button">Delete</button><!--same button repeated for easy user experience
+                        </div>
+                        <!--table_div-->
+                        <button id="Delete_button">Delete</button>
+                        <!--same button repeated for easy user experience
                         in the popup window ___> <input name="Delete" id="Delete" type="submit" value="Delete Selected"/>-->
                     </form>
                 </div>
-                <div id="EditProduct" class="content">
-                    <form id="addProduct_form">
-                        <div id="add_display" class="AddProduct">
-                            <p>
-                                <label for="product_name">Product Name:</label>
-                                <input type="text" name="product_name" id="product_name"
-                                    placeholder="Enter the product's name" maxlength="255" required>
-                            </p>
-                            <p>
-                                <label for="categoryList">Category:</label>
-                                <input id="categoryList" type="text" placeholder="Choose a category..."
-                                    list="Pro_category">
-                                <datalist id="Pro_category">
-                                    <option value="test1"></option>
-                                    <option value="test2"></option>
-                                </datalist>
-                            </p>
-                            <div id="imageContainer">
-                                <label for="imageUpload">Upload Image:</label>
-                                <input id="imageUpload" type="file" name="image" accept="image/*">
-                            </div>
-                            <p>
-                                <label for="ProductDescreption">Product Description:</label>
-                                <textarea id="ProductDescreption" placeholder="Product description" required></textarea>
-                            </p>
-                            <p>
-                                <label for="product_color">Product Color:</label>
-                                <input type="text" name="product_color" id="product_color"
-                                    placeholder="Enter the product's color" maxlength="255" required>
-                            </p>
-                            <p>
-                                <label for="product_size">Product Size:</label>
-                                <input type="text" name="product_size" id="product_size"
-                                    placeholder="Enter the product's size" maxlength="50" required>
-                            </p>
-                            <p>
-                                <label for="product_price">Product Price:</label>
-                                <input type="number" name="product_price" id="product_price"
-                                    placeholder="Enter the product's price" step="0.01" required>
-                            </p>
-                            <p>
-                                <label for="product_stock">Product Stock:</label>
-                                <input type="number" name="product_stock" id="product_stock"
-                                    placeholder="Enter the product's stock" step="1" required>
-                            </p>
-                        </div>
-                    </form>
-                </div>
+
                 <!-- Edit User -->
                 <div id="EditUser" class="content" style="display: none;">
-                    <form id="editUser_form">
+                    <form name="editUser_form" id="editUser_form">
                         <div class="EditUser_bar">
                             <button type="button" id="Add_user">Add</button>
                             <button type="button" id="Edit_User">Edit</button>
@@ -164,6 +121,58 @@
             </div>
         </div>
     </section>
+    <div id="myPopup" class="popup">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <form name="add_product" id="addProduct_form" method="post" action="test popup.html">
+            <div id="add_display" class="AddProduct">
+                <p>
+                    <label for="product_name">Product Name:</label>
+                    <input type="text" name="product_name" id="product_name" placeholder="Enter the product's name"
+                        maxlength="255" required>
+                </p>
+                <p>
+                    <label for="categoryList">Category:</label>
+                    <input id="categoryList" type="text" name="Pro_category" placeholder="Choose a category..." list="Pro_category">
+                    <datalist id="Pro_category">
+                        <option value="test1"></option>
+                        <option value="test2"></option>
+                    </datalist>
+                </p>
+                <div id="imageContainer">
+                    <label for="imageUpload">Upload Image:</label>
+                    <input id="imageUpload" type="file" name="image" accept="image/*">
+                </div>
+                <p>
+                    <label for="ProductDescreption">Product Description:</label>
+                    <textarea id="ProductDescreption" placeholder="Product description" naem="ProductDescreption" required></textarea>
+                </p>
+                <p>
+                    <label for="product_color">Product Color:</label>
+                    <input type="text" name="product_color" id="product_color" placeholder="Enter the product's color"
+                        maxlength="255" required>
+                </p>
+                <p>
+                    <label for="product_size">Product Size:</label>
+                    <input type="text" name="product_size" id="product_size" placeholder="Enter the product's size"
+                        maxlength="50" required>
+                </p>
+                <p>
+                    <label for="product_price">Product Price:</label>
+                    <input type="number" name="product_price" id="product_price" placeholder="Enter the product's price"
+                        step="0.01" required>
+                </p>
+                <p>
+                    <label for="product_stock">Product Stock:</label>
+                    <input type="number" name="product_stock" id="product_stock" placeholder="Enter the product's stock"
+                        step="1" required>
+                </p>
+                <input style="z-index:10000000000000000000;" name="submit_add_product" id="submit_add_product" type="submit" value="Add"/>
+            </div>
+        </form>
+    </div>
+
+
+    <script src="../assets/js/root.js"></script>  <!-- keep last in body so all html elemnts are loaded-->
 </body>
 
 </html>

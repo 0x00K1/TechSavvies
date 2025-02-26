@@ -342,3 +342,39 @@ root toolbar (WIP)
    
     padding: 5px;
    }
+   .addbutton{
+
+   }
+   .Deletebutton{
+
+   }
+
+   /*popup styles*/
+   .popup {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000000000000; /* Sit on top */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); /* Center the popup */
+    width: 300px; /* Adjust width as needed */
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #888;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
