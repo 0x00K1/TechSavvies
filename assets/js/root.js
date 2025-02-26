@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     /*buttons*/
     const managePro_button = document.getElementById('managePro_button');
     const manageUser_button = document.getElementById('manageUser_button');
-    const search_button= document.getElementById('search_button')
+    const Orders_button= document.getElementById('Orders_button');
+    const search_button= document.getElementById('search_button');
     /* div or displays*/
     const EditProduct = document.getElementById('EditProduct');
     const EditUser = document.getElementById('EditUser');
@@ -21,12 +22,13 @@ document.addEventListener('DOMContentLoaded', function() {
     disableForm(editUser_form);
     disableForm(viewUser_form);
     disableForm(addProduct_form);
-    /* second on clicksome styling*/
+    /* second on click some styling*/
     managePro_button.addEventListener('click', function() {
         EditProduct.style.display = 'block';
         EditUser.style.display = 'none';
         managePro_button.classList.add('active');
-        manageUser_button.classList.remove('active'); 
+        manageUser_button.classList.remove('active');
+        Orders_button.classList.remove('active'); 
     });
 
     manageUser_button.addEventListener('click', function() {
@@ -34,8 +36,16 @@ document.addEventListener('DOMContentLoaded', function() {
         EditUser.style.display = 'block';
         managePro_button.classList.remove('active');
         manageUser_button.classList.add('active');
+        Orders_button.classList.remove('active'); 
     });
 
+    Orders_button.addEventListener('click',function(){
+
+
+        managePro_button.classList.remove('active');
+        manageUser_button.classList.remove('active');
+        Orders_button.classList.add('active');
+    });
    
 
     search_button.addEventListener('click', function(){
