@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     /*buttons*/
-    const EditPro_button = document.getElementById('EditPro_button');
-    const EditUser_button = document.getElementById('EditUser_button');
+    const managePro_button = document.getElementById('managePro_button');
+    const manageUser_button = document.getElementById('manageUser_button');
     const search_button= document.getElementById('search_button')
     /* div or displays*/
     const EditProduct = document.getElementById('EditProduct');
@@ -14,28 +14,26 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /*first time loading page */
     EditProduct.style.display = 'block';
-    EditPro_button.classList.add('active');/*for button styles*/
+    managePro_button.classList.add('active');/*for button styles*/
     
     
     /*diale the other form*/
     disableForm(editUser_form);
     disableForm(viewUser_form);
+    disableForm(addProduct_form);
     /* second on clicksome styling*/
-    EditPro_button.addEventListener('click', function() {
+    managePro_button.addEventListener('click', function() {
         EditProduct.style.display = 'block';
         EditUser.style.display = 'none';
-        EditPro_button.classList.add('active');
-        EditUser_button.classList.remove('active');
-        
+        managePro_button.classList.add('active');
+        manageUser_button.classList.remove('active'); 
     });
 
-    EditUser_button.addEventListener('click', function() {
-        Product_queries.SubmitEvent.disable;
+    manageUser_button.addEventListener('click', function() {
         EditProduct.style.display = 'none';
         EditUser.style.display = 'block';
-        EditPro_button.classList.remove('active');
-        EditUser_button.classList.add('active');
-
+        managePro_button.classList.remove('active');
+        manageUser_button.classList.add('active');
     });
 
    

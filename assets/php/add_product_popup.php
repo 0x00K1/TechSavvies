@@ -1,6 +1,6 @@
 <div id="myPopup" class="popup">
         <span class="close" onclick="closePopup()">&times;</span>
-        <form name="add_product" id="addProduct_form" method="post" action="test popup.html">
+        <form name="add_product_form" id="addProduct_form" method="post" action="test popup.html">
             <div id="add_display" class="AddProduct">
                 <p>
                     <label for="product_name">Product Name:</label>

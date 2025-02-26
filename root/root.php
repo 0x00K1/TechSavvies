@@ -11,7 +11,6 @@
     <body>
         <!-- Header Section -->
         <?php include('..\assets\php\header.php'); ?>
-
         <!-- functions section -->
         <?php include('..\assets\php\funcarea.php'); ?>
         <?php include('..\assets\php\add_product_popup.php')?>

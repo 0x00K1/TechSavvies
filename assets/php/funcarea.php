@@ -1,8 +1,8 @@
 <section class="Boss">
         <div class="toolbar">
             <nav class="nav">
-                <button id="EditPro_button">Edit Products</button>
-                <button id="EditUser_button">Edit User</button>
+                <button id="managePro_button">Edit Products</button>
+                <button id="manageUser_button">Edit User</button>
             </nav>
         </div>
         <div class="funcarea">
