@@ -89,8 +89,8 @@ function closeaddProPopup() {
 }
 
 function confirmationPopup(){
-    document.getElementById("confirm_input").style.display= "block";
+    document.getElementById("confirmationPopup").style.display= "block";
 }
 function closeconfirmationPopup(){
-    document.getElementById("confirm_input").style.display= "none";
+    document.getElementById("confirmationPopup").style.display= "none";
 }

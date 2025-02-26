@@ -1,5 +1,5 @@
 <div id="EditProduct" class="content">
-    <button id="addProPopup_button" class="addProPopup_button" onclick="addProPopup();">Add</button>
+    <button id="addProPopup_button" class="addProPopup_button" onclick="addProPopup()">Add</button>
     <form name="Product_queries" method="post" action="index.php">
         <!-- or root_product.php-->
         <div class="search_div">
