@@ -3,9 +3,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const managePro_button = document.getElementById('managePro_button');
     /*const manageUser_button = document.getElementById('manageUser_button');*/
     const Orders_button= document.getElementById('Orders_button');
-    const search_button= document.getElementById('search_button');
     const transaction_button= document.getElementById('transactions_button');
     const review_button= document.getElementById('Reviews_button');
+
+    const search_button= document.getElementById('search_button');
 
     /* div or displays*/
     const EditProduct = document.getElementById('EditProduct');
@@ -13,10 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const orders_display=document.getElementById('orders_display');
     const Transaction_display = document.getElementById('Transactions_display'); // New div for transactions
     const Reviews_display = document.getElementById('Reviews_Display'); // New div for reviews
-    /* forms*/
+    /* forms*//*
     const addProduct_form =document.getElementById('addProduct_form');
     const editUser_form =document.getElementById('editUser_form');
-    const viewUser_form= document.getElementById('viewUser_form');
+    const viewUser_form= document.getElementById('viewUser_form');*/
 
     /*first time loading page */
     EditProduct.style.display = 'block';
@@ -27,11 +28,12 @@ document.addEventListener('DOMContentLoaded', function() {
     managePro_button.classList.add('active');/*for button styles*/
     
     
-    
-    /*diale the other form*/
+   
+    /*diale the other form*/ /*
     disableForm(editUser_form);
     disableForm(viewUser_form);
     disableForm(addProduct_form);
+    */
     /* second on click some styling*/
     managePro_button.addEventListener('click', function() {
         EditProduct.style.display = 'block';
@@ -41,7 +43,9 @@ document.addEventListener('DOMContentLoaded', function() {
         Reviews_display.style.display = 'none';
         managePro_button.classList.add('active');
         /*manageUser_button.classList.remove('active');*/
-        Orders_button.classList.remove('active'); 
+        Orders_button.classList.remove('active');
+        transaction_button.classList.remove('active');
+        review_button.classList.remove('active');
     });
 
     /*manageUser_button.addEventListener('click', function() {
@@ -64,6 +68,8 @@ document.addEventListener('DOMContentLoaded', function() {
         managePro_button.classList.remove('active');
         /*manageUser_button.classList.remove('active');*/
         Orders_button.classList.add('active');
+        transaction_button.classList.remove('active');
+        review_button.classList.remove('active');
     });
    
     transaction_button.addEventListener('click', function() {
@@ -75,6 +81,8 @@ document.addEventListener('DOMContentLoaded', function() {
         managePro_button.classList.remove('active');
         /*manageUser_button.classList.remove('active');*/
         Orders_button.classList.remove('active');
+        transaction_button.classList.add('active');
+        review_button.classList.remove('active');
     });
 
     review_button.addEventListener('click', function() {
@@ -86,6 +94,8 @@ document.addEventListener('DOMContentLoaded', function() {
         managePro_button.classList.remove('active');
         /*manageUser_button.classList.remove('active');*/
         Orders_button.classList.remove('active');
+        transaction_button.classList.remove('active');
+        review_button.classList.add('active');
     });
 
     search_button.addEventListener('click', function(){
@@ -95,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 });
+/*
 function disableForm(formToDiable) {
     const form = document.getElementById(formToDiable); // Replace with your form's ID
 
@@ -112,7 +123,7 @@ function enableForm(formToEnable) {
             form.elements[i].disabled = false;
         }
     }
-}
+}*/
 
 function addProPopup() {
         document.getElementById("addProPopup_display").style.display = "block";
@@ -128,6 +139,7 @@ function confirmationPopup(){
 function closeconfirmationPopup(){
     document.getElementById("confirmationPopup_display").style.display= "none";
 }
+/*
 document.getElementById('addProPopup_button').addEventListener('click', function(event) {
     event.preventDefault(); // Prevent form submission
     addProPopup();
@@ -135,4 +147,4 @@ document.getElementById('addProPopup_button').addEventListener('click', function
 document.getElementById('remove_product_button').addEventListener('click', function(event) {
     event.preventDefault(); // Prevent form submission
     confirmationPopup();
-});
+});*/
