@@ -199,10 +199,12 @@ Form field styles
 =================== */
 
 /*Container*/  
-.search-div {
+.search_div {
+  width: 100%;
   display: flex;
   justify-content: center; /* Horizontal centering */
   align-items: center; /* Vertical centering */
+  gap: 10px;              /* Optional: Adds space between items */
 }
 /*Text Field*/
   .search-field {
@@ -211,7 +213,6 @@ Form field styles
     border: 1px solid #ccc;
     border-radius: 5px;
     transition: border-color 0.3s;
-    margin-left: 15%;
 }
 /*Button*/
 .search-button {
@@ -231,7 +232,6 @@ Form field styles
     transform: scale(1.025);                  /* Slightly grow the button */
 }
 
-
 /*button icons*/
 .b-icon{
   margin: 2px;
@@ -240,13 +240,9 @@ Form field styles
 }
 /*filter*/
 .filter_value_style{
-  width: 30%;
+  width: auto;
 }
-.filter_div{
-  display: flex;
-  justify-content: center; /* Horizontal centering */
-  align-items: center; /* Vertical centering */
-}
+
 /* ==================
  table
 =================== */
