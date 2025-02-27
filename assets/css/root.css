@@ -22,7 +22,9 @@
 
   /* Links color, should be distinct but not overly bright to avoid eye strain */
   --links-color: #30332E;
+  /* for buttons much */
   --process-color: #0091ff;
+  --alert-color:rgb(255, 0, 0);
 }
 
 /* ==================
@@ -201,9 +203,8 @@ Form field styles
 /*Container*/  
 .search_div {
   width: 100%;
-  display: flex;
-  justify-content: center; /* Horizontal centering */
-  align-items: center; /* Vertical centering */
+  justify-content: left; /* Horizontal centering */
+  align-items: left; /* Vertical centering */
   gap: 10px;              /* Optional: Adds space between items */
 }
 /*Text Field*/
@@ -293,6 +294,16 @@ Form field styles
     width: auto;
     font-size: 16px; 
 }
+.remove_product_button{
+  background-color: var(--alert-color);
+    color: var(--light-bg);
+    border: none;
+    border-radius: 5px;                     
+    padding: 10px 15px;                     
+    cursor: pointer;
+    width: auto;
+    font-size: 16px; 
+}
 
 /* ==================
  buttons
@@ -308,10 +319,8 @@ Form field styles
     font-size: 16px; 
    }
    .addProPopup_button_style:hover {
-    background-color: var(--light-bg);
+    background-color: #fff;
     color: var(--process-color);
-    border: white 5px solid;
-    border-radius: 5px;
     width: auto;
     font-size: 16px; 
    }

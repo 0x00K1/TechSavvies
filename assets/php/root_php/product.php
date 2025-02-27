@@ -1,10 +1,9 @@
 <div id="EditProduct" class="content">
-    
     <form name="Product_queries" id="Product_queries" method="post" action="index.php">
+    <button id="addProPopup_button" class="addProPopup_button_style">Add</button>
         <div class="search_div">
             <input class="search-field" name="search_field" id="search_field" type="text" placeholder="Search" />
             <input class="search-button" name="search_button" id="search_button" type="submit" value="Search" />
-            <button id="addProPopup_button" class="addProPopup_button_style">Add</button>
             <span>Filter:</span>
             <select name="filter_value" id="filter_value" class="filter_value_style" placeholder="Chose a value">
                 <option value="">None</option>
@@ -38,7 +37,7 @@
                         <td>Category</td>
                         <td>Updated Date</td>
                         <td><div id="buttons_table" class="buttons_table">
-                            <button name="remove_product_button" id="remove_product_button">Remove</button>
+                            <button name="remove_product_button" id="remove_product_button" class="remove_product_button">Remove</button>
                             <button name="edit_product_button" id="edit_product_button" class="edit_product_button">Edit</button></div></td>
                     </tr>
                 </tbody>
