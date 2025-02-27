@@ -20,9 +20,9 @@
             <button name="order_toggler" id="order_toggler">^</button>
             <!-- some crazy js for ico change-->
         </div>
-        <div class="table_div">
-            <table border="1">
-                <thead class="table_header">
+        <div class="div">
+            <table>
+                <thead">
                     <tr>
                         <th>ID</th>
                         <th>Name</th>

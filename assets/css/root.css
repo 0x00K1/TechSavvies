@@ -158,14 +158,12 @@ popup
 /* ==================
 Form field styles
 =================== */
-  .AddProduct,
-  .EditUser {
+  .AddProduct{
     display: flex;
     flex-direction: column;
   }
   
-  .AddProduct p,
-  .EditUser p {
+  .AddProduct p{
     margin-bottom: 15px;
   }
   
@@ -287,6 +285,17 @@ Form field styles
 }
   .div th {
     background-color: #f2f2f2;
+}
+/*in table buttons*/
+.edit_product_button{
+  background-color: var(--process-color);
+    color: var(--light-bg);
+    border: none;
+    border-radius: 5px;                     
+    padding: 10px 15px;                     
+    cursor: pointer;
+    width: auto;
+    font-size: 16px; 
 }
 
 /* ==================
