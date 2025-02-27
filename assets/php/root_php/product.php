@@ -40,9 +40,9 @@
                         <td>Stock</td>
                         <td>Category</td>
                         <td>Updated Date</td>
-                        <th><div id="buttons_table" class="buttons_table">
+                        <td><div id="buttons_table" class="buttons_table">
                             <button name="remove_product_button" id="remove_product_button">Remove</button>
-                            <button name="edit_product_button" id="edit_product_button">Edit</button></div></th>
+                            <button name="edit_product_button" id="edit_product_button" class="edit_product_button">Edit</button></div></td>
                     </tr>
                 </tbody>
             </table>

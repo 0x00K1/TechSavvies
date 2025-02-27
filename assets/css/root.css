@@ -26,7 +26,7 @@
 }
 
 /* ==================
-root toolbar (WIP)
+ main area
 =================== */
 
 .Boss{
@@ -43,7 +43,10 @@ root toolbar (WIP)
   border-radius: 5px;
   overflow-y: auto; /* Enable vertical scrolling if content exceeds the height */
   }
-  
+ 
+  /* ==================
+toolbar
+=================== */
 /* Base toolbar styling */
 .toolbar {
   width: 15%;
@@ -98,7 +101,9 @@ root toolbar (WIP)
   box-shadow: 0 0 0 3px rgba(var(--accent-color-rgb), 0.4);
 }
 
-
+/* ==================
+popup
+=================== */
   .content-container {
     margin: 20px;    
   }
@@ -108,159 +113,7 @@ root toolbar (WIP)
     padding: 20px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
-  
-  /* Button styles */
-  .EditProduct_bar,
-  .EditUser_bar {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-  }
-  
-  .EditProduct_bar button,
-  .EditUser_bar button {
-    background: var(--primary-color);
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  .EditProduct_bar button:hover,
-  .EditUser_bar button:hover {
-    background: var(--accent-color);
-  }
-  
-  /* Form field styles */
-  .AddProduct,
-  .EditUser {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .AddProduct p,
-  .EditUser p {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
-  
-  input,
-  textarea,
-  select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    transition: border-color 0.3s;
-  }
-  
-  input:focus,
-  textarea:focus,
-  select:focus {
-    border-color: var(--accent-color);
-  }
-  
-  textarea {
-    resize: vertical;
-    height: 100px;
-  }
-
-
-/*   v All Search Related CSS v */
-/*Container*/  
-.search-div {
-  display: flex;
-  justify-content: center; /* Horizontal centering */
-  align-items: center; /* Vertical centering */
-}
-/*Text Field*/
-  .search-field {
-    width: auto;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    transition: border-color 0.3s;
-    margin-left: 15%;
-}
-/*Button*/
-.search-button {
-    background-color: var(--primary-color); /* Use primary color */
-    color: #fff;                             /* Text color */
-    border: none;                            /* No border */
-    border-radius: 5px;                     /* Rounded corners */
-    padding: 10px 15px;                     /* Padding for size */
-    cursor: pointer;                         /* Pointer cursor on hover */
-    transition: background 0.3s, transform 0.2s; /* Smooth transitions */
-    font-size: 16px;                        /* Font size */
-    width: auto;                            /* Let the width adjust based on content or other layout influences */
-}
-/*Button Effect*/
-.search-button:hover {
-    background-color: var(--accent-color);  /* Change background on hover */
-    transform: scale(1.025);                  /* Slightly grow the button */
-}
-
-
-/*button icons*/
-.b-icon{
-  margin: 2px;
-  margin-right: 0.5rem;
-  max-height: 1.5rem;
-}
-
-  /*@ananas0dev :)*/
-  .table_div{
-    text-align: center;
-    font-size: 20px;
-    display: flex;
-    justify-content: center; /* Horizontal centering */
-    align-items: center; /* Vertical centering */
-    
-  }
-  .table_div table{
-    width: 90%;
-  }
-  .table_header{
-    position: sticky;
-  }
-  .table_header th{
-    padding: 5px;
-   }
-   .table_div td{
-   
-    padding: 5px;
-   }
-   .addProPopup_button_style{
-    background-color: var(--process-color);
-    color: var(--light-bg);
-    border: none;
-    border-radius: 5px;                     
-    padding: 10px 15px;                     
-    cursor: pointer;
-    width: auto;
-    font-size: 16px; 
-   }
-   .addProPopup_button_style:hover {
-    background-color: var(--light-bg);
-    color: var(--process-color);
-    border: white 5px solid;
-    border-radius: 5px;
-    width: auto;
-    font-size: 16px; 
-   }
-   .search-button{
-      margin: 10px;
-   }
-
-   /*popup styles*/
-   .addProPopup {
+  .addProPopup {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 100; /* Sit on top */
@@ -301,18 +154,127 @@ root toolbar (WIP)
     text-decoration: none;
     cursor: pointer;
   }
-  .filter_value_style{
-    width: 30%;
+
+/* ==================
+Form field styles
+=================== */
+  .AddProduct,
+  .EditUser {
+    display: flex;
+    flex-direction: column;
   }
-  .filter_div{
+  
+  .AddProduct p,
+  .EditUser p {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  input,
+  textarea,
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+  }
+  
+  input:focus,
+  textarea:focus,
+  select:focus {
+    border-color: var(--accent-color);
+  }
+  
+  textarea {
+    resize: vertical;
+    height: 100px;
+  }
+
+/* ==================
+ v All Search Related CSS v
+=================== */
+
+/*Container*/  
+.search-div {
+  display: flex;
+  justify-content: center; /* Horizontal centering */
+  align-items: center; /* Vertical centering */
+}
+/*Text Field*/
+  .search-field {
+    width: auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+    margin-left: 15%;
+}
+/*Button*/
+.search-button {
+    background-color: var(--primary-color); /* Use primary color */
+    color: #fff;                             /* Text color */
+    border: none;                            /* No border */
+    border-radius: 5px;                     /* Rounded corners */
+    padding: 10px 15px;                     /* Padding for size */
+    cursor: pointer;                         /* Pointer cursor on hover */
+    transition: background 0.3s, transform 0.2s; /* Smooth transitions */
+    font-size: 16px;                        /* Font size */
+    width: auto;                            /* Let the width adjust based on content or other layout influences */
+}
+/*Button Effect*/
+.search-button:hover {
+    background-color: var(--accent-color);  /* Change background on hover */
+    transform: scale(1.025);                  /* Slightly grow the button */
+}
+
+
+/*button icons*/
+.b-icon{
+  margin: 2px;
+  margin-right: 0.5rem;
+  max-height: 1.5rem;
+}
+/*filter*/
+.filter_value_style{
+  width: 30%;
+}
+.filter_div{
+  display: flex;
+  justify-content: center; /* Horizontal centering */
+  align-items: center; /* Vertical centering */
+}
+/* ==================
+ table
+=================== */
+/* product table*/
+  .table_div{
+    text-align: center;
+    font-size: 20px;
     display: flex;
     justify-content: center; /* Horizontal centering */
     align-items: center; /* Vertical centering */
+    
   }
-
-
-
-  /* Orders Table */
+  .table_div table{
+    width: 90%;
+  }
+  .table_header{
+    position: sticky;
+  }
+  .table_header th{
+    padding: 5px;
+   }
+   .table_div td{
+   
+    padding: 5px;
+   }
+   /* Orders Table */
   
   .div table {
     width: 100%;
@@ -323,6 +285,31 @@ root toolbar (WIP)
     padding: 8px;
     text-align: left;
 }
-.div th {
+  .div th {
     background-color: #f2f2f2;
 }
+
+/* ==================
+ buttons
+=================== */
+   .addProPopup_button_style{
+    background-color: var(--process-color);
+    color: var(--light-bg);
+    border: none;
+    border-radius: 5px;                     
+    padding: 10px 15px;                     
+    cursor: pointer;
+    width: auto;
+    font-size: 16px; 
+   }
+   .addProPopup_button_style:hover {
+    background-color: var(--light-bg);
+    color: var(--process-color);
+    border: white 5px solid;
+    border-radius: 5px;
+    width: auto;
+    font-size: 16px; 
+   }
+   .search-button{
+      margin: 10px;
+   }
