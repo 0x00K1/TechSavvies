@@ -5,10 +5,7 @@
             <input class="search-field" name="search_field" id="search_field" type="text" placeholder="Search" />
             <input class="search-button" name="search_button" id="search_button" type="submit" value="Search" />
             <button id="addProPopup_button" class="addProPopup_button_style">Add</button>
-        </div>
-        
-        <div class="filter_div">
-            <label>Filter: </label>
+            <span>Filter:</span>
             <select name="filter_value" id="filter_value" class="filter_value_style" placeholder="Chose a value">
                 <option value="">None</option>
                 <option name="f_category" value="category">Category</option>

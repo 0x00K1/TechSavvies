@@ -233,7 +233,6 @@ Form field styles
     transform: scale(1.025);                  /* Slightly grow the button */
 }
 
-
 /*button icons*/
 .b-icon{
   margin: 2px;
@@ -242,13 +241,9 @@ Form field styles
 }
 /*filter*/
 .filter_value_style{
-  width: 30%;
+  width: auto;
 }
-.filter_div{
-  display: flex;
-  justify-content: center; /* Horizontal centering */
-  align-items: center; /* Vertical centering */
-}
+
 /* ==================
  table
 =================== */
