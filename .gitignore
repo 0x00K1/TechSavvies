@@ -19,5 +19,3 @@ Thumbs.db
 .settings/
 /vendor/
 composer.lock
-.phcode.json
-/assets/images/LogoName.webp
