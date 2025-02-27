@@ -22,8 +22,8 @@
             <nav class="nav">
                 <button id="managePro_button"><img class="b-icon" src="..\assets\icons\Product.svg"><span>Products
                         Management</span></button>
-                <button id="manageUser_button"><img class="b-icon" src="..\assets\icons\User.svg"><span>Users
-                        Management</span></button>
+               <!-- <button id="manageUser_button"><img class="b-icon" src="..\assets\icons\User.svg"><span>Users
+                        Management</span></button> -->
                 <button id="Orders_button"><img class="b-icon"
                         src="..\assets\icons\Orders.svg"><span>Orders</span></button>
                 <button id="transactions_button"><img class="b-icon"
@@ -38,7 +38,7 @@
         <div class="funcarea">
             <div class="content-container">
                 <?php include('..\assets\php\root_php\product.php');?>
-                <!--        <?php include('..\assets\php\root_php\users.php');?>        -->
+                <!--php include('..\assets\php\root_php\users.php');-->
                 <?php include('..\assets\php\root_php\orders.php');?>
                 <?php include('..\assets\php\root_php\transactions.php');?>
                 <?php include('..\assets\php\root_php\reviews.php');?>

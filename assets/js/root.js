@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     /*buttons*/
     const managePro_button = document.getElementById('managePro_button');
-    const manageUser_button = document.getElementById('manageUser_button');
+    /*const manageUser_button = document.getElementById('manageUser_button');*/
     const Orders_button= document.getElementById('Orders_button');
     const search_button= document.getElementById('search_button');
     const transaction_button= document.getElementById('transactions_button');
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /* div or displays*/
     const EditProduct = document.getElementById('EditProduct');
-    const EditUser = document.getElementById('EditUser');
+    /*const EditUser = document.getElementById('EditUser');*/
     const orders_display=document.getElementById('orders_display');
     const Transaction_display = document.getElementById('Transactions_display'); // New div for transactions
     const Reviews_display = document.getElementById('Reviews_Display'); // New div for reviews
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     /*first time loading page */
     EditProduct.style.display = 'block';
-    EditUser.style.display = 'none';
+    /*EditUser.style.display = 'none';*/
     orders_display.style.display= 'none';
     Transaction_display.style.display = 'none'; // Initially hide
     Reviews_display.style.display = 'none'; // Initially hide
@@ -35,16 +35,16 @@ document.addEventListener('DOMContentLoaded', function() {
     /* second on click some styling*/
     managePro_button.addEventListener('click', function() {
         EditProduct.style.display = 'block';
-        EditUser.style.display = 'none';
+        /*EditUser.style.display = 'none';*/
         orders_display.style.display= 'none';
         Transaction_display.style.display = 'none';
         Reviews_display.style.display = 'none';
         managePro_button.classList.add('active');
-        manageUser_button.classList.remove('active');
+        /*manageUser_button.classList.remove('active');*/
         Orders_button.classList.remove('active'); 
     });
 
-    manageUser_button.addEventListener('click', function() {
+    /*manageUser_button.addEventListener('click', function() {
         EditProduct.style.display = 'none';
         EditUser.style.display = 'block';
         orders_display.style.display= 'none';
@@ -53,38 +53,38 @@ document.addEventListener('DOMContentLoaded', function() {
         managePro_button.classList.remove('active');
         manageUser_button.classList.add('active');
         Orders_button.classList.remove('active'); 
-    });
+    });*/
 
     Orders_button.addEventListener('click',function(){
         EditProduct.style.display = 'none';
-        EditUser.style.display = 'none';
+        /*EditUser.style.display = 'none';*/
         orders_display.style.display= 'block';
         Transaction_display.style.display = 'none';
         Reviews_display.style.display = 'none';
         managePro_button.classList.remove('active');
-        manageUser_button.classList.remove('active');
+        /*manageUser_button.classList.remove('active');*/
         Orders_button.classList.add('active');
     });
    
     transaction_button.addEventListener('click', function() {
         EditProduct.style.display = 'none';
-        EditUser.style.display = 'none';
+        /*EditUser.style.display = 'none';*/
         orders_display.style.display = 'none';
         Transaction_display.style.display = 'block'; // Show reviews div
         Reviews_display.style.display = 'none'; // Hide transactions div
         managePro_button.classList.remove('active');
-        manageUser_button.classList.remove('active');
+        /*manageUser_button.classList.remove('active');*/
         Orders_button.classList.remove('active');
     });
 
     review_button.addEventListener('click', function() {
         EditProduct.style.display = 'none';
-        EditUser.style.display = 'none';
+        /*EditUser.style.display = 'none';*/
         orders_display.style.display = 'none';
         Transaction_display.style.display = 'none'; // Hide reviews div
         Reviews_display.style.display = 'block'; // Show transactions div
         managePro_button.classList.remove('active');
-        manageUser_button.classList.remove('active');
+        /*manageUser_button.classList.remove('active');*/
         Orders_button.classList.remove('active');
     });
 

@@ -1,4 +1,4 @@
-<div id="EditUser" class="content">
+<!--    <div id="EditUser" class="content">
     <form name="viewUser_form" id="viewUser_form">
         <div class="EditUser_bar">
             <button type="button" id="Add_user">Add</button>
@@ -26,4 +26,4 @@
                 </select>
             </p>
         </div>
-</div>
+</div>  -->
