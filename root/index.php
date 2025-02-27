@@ -38,7 +38,7 @@
         <div class="funcarea">
             <div class="content-container">
                 <?php include('..\assets\php\root_php\product.php');?>
-                <?php include('..\assets\php\root_php\users.php');?>
+                <!--        <?php include('..\assets\php\root_php\users.php');?>        -->
                 <?php include('..\assets\php\root_php\orders.php');?>
                 <?php include('..\assets\php\root_php\transactions.php');?>
                 <?php include('..\assets\php\root_php\reviews.php');?>
