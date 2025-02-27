@@ -201,10 +201,12 @@ Form field styles
 =================== */
 
 /*Container*/  
-.search-div {
+.search_div {
+  width: 100%;
   display: flex;
   justify-content: center; /* Horizontal centering */
   align-items: center; /* Vertical centering */
+  gap: 10px;              /* Optional: Adds space between items */
 }
 /*Text Field*/
   .search-field {
@@ -213,7 +215,6 @@ Form field styles
     border: 1px solid #ccc;
     border-radius: 5px;
     transition: border-color 0.3s;
-    margin-left: 15%;
 }
 /*Button*/
 .search-button {
