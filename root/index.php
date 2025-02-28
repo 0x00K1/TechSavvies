@@ -1,6 +1,7 @@
 <!-- devolped by @ananas0dev , @HameedJHD
  notes for improvment
- the popup windows should make the full webpage disabled-->
+ the popup windows should make the full webpage disabled
+ fix the edit button and make a textfield for the editable sections-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +11,7 @@
     <link rel="stylesheet" href="..\assets\css\main.css">
     <link rel="stylesheet" href="..\assets\css\root.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <title>root</title>
+    <title>Root</title>
 </head>
 
 <body>
