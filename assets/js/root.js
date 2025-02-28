@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     search_button.addEventListener('click', function(){
         /*Retreives user data from DATABASe and fills it into the tabel*/
-    })
+    });
 
 
 
@@ -90,14 +90,5 @@ function confirmationPopup(){
 }
 function closeconfirmationPopup(){
     document.getElementById("confirmationPopup_display").style.display= "none";
-}
-function product_cancel_edit(){
-    document.getElementById('product_edit_display').style.display= "block";
-    document.getElementById('buttons_table_display').style.display= "none";
-}
-
-function product_edit_button(){
- document.getElementById('product_edit_display').style.display= "block";
- document.getElementById('buttons_table_display').style.display= "none";
 }
 

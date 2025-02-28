@@ -284,8 +284,8 @@ Form field styles
     background-color: #f2f2f2;
 }
 /*in table buttons*/
-.edit_product_button{
-  background-color: var(--process-color);
+.edit_product_button_style{
+    background-color: var(--process-color);
     color: var(--light-bg);
     border: none;
     border-radius: 5px;                     
@@ -294,8 +294,8 @@ Form field styles
     width: auto;
     font-size: 16px; 
 }
-.remove_product_button{
-  background-color: var(--alert-color);
+.remove_product_button_style{
+    background-color: var(--alert-color);
     color: var(--light-bg);
     border: none;
     border-radius: 5px;                     
@@ -306,9 +306,7 @@ Form field styles
 }
 
 /*product_edit_display*/
-.product_edit_display{
-  
-}
+
 /* ==================
  buttons
 =================== */
