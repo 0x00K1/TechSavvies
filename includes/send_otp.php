@@ -50,13 +50,13 @@ $message = "Hello,\n\nYour OTP is: $otp\nIf you did not request OTP from TechSav
 $mail = new PHPMailer(true);
 try {
     $mail->isSMTP();
-    $mail->Host       = 'smtp.mailersend.net';
+    $mail->Host       = getenv('SMTP_HOST');
     $mail->SMTPAuth   = true;
-    $mail->Username   = ""; // getenv 
-    $mail->Password   = ""; // getenv 
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    $mail->Port       = 587;
-    $mail->setFrom("" /*getenv*/ , 'TechSavvies');
+    $mail->Username   = getenv('SMTP_USERNAME');
+    $mail->Password   = getenv('SMTP_PASSWORD');
+    $mail->SMTPSecure = getenv('SMTP_ENCRYPTION');
+    $mail->Port       = getenv('SMTP_PORT');
+    $mail->setFrom(getenv('SMTP_FROM_EMAIL'), getenv('SMTP_FROM_NAME'));
     $mail->addAddress($email);
     $mail->isHTML(false);
     $mail->Subject = $subject;
