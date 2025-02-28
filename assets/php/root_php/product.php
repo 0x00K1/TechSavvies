@@ -1,6 +1,6 @@
 <div id="EditProduct" class="content">
     <form name="Product_queries" id="Product_queries" method="post" action="index.php">
-    <button id="addProPopup_button" class="addProPopup_button_style">Add</button>
+    <button id="addProPopup_button" class="addProPopup_button_style" type="button" onclick="addProPopup()">Add</button>
         <div class="search_div">
             <input class="search-field" name="search_field" id="search_field" type="text" placeholder="Search" />
             <input class="search-button" name="search_button" id="search_button" type="submit" value="Search" />
@@ -36,13 +36,20 @@
                         <td>Stock</td>
                         <td>Category</td>
                         <td>Updated Date</td>
-                        <td><div id="buttons_table" class="buttons_table">
-                            <button name="remove_product_button" id="remove_product_button" class="remove_product_button">Remove</button>
-                            <button name="edit_product_button" id="edit_product_button" class="edit_product_button">Edit</button></div></td>
+                        <td><div id="buttons_table_display" class="buttons_table" style="display:block;">
+                            <button name="remove_product_button" id="remove_product_button" class="remove_product_button" type="button" onclick="confirmationPopup()">Remove</button>
+                            <button name="edit_product_button" id="edit_product_button" class="edit_product_button" type="button" onclick="product_edit_button()">Edit</button>
+                            </div>
+                            <div id="product_edit_display" class="product_edit_display" style="display:none;">
+                                <input id="product_confirm_edit" class="product_confirm_edit" type="submit" value="Confirm"/>
+                                <button id="product_cancel_edit" class="product_cancel_edit" type="button" onclick="product_cancel_edit()">Cancel</button>
+                            </div>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        
         <?php include('..\assets\php\root_php\confirmation.php');?> <!-- <- submit button-->
     </form>
 </div>

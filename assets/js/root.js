@@ -125,8 +125,9 @@ function enableForm(formToEnable) {
     }
 }*/
 
-function addProPopup() {
-        document.getElementById("addProPopup_display").style.display = "block";
+
+function addProPopup(){
+    document.getElementById("addProPopup_display").style.display = "block";
 }
 
 function closeaddProPopup() {
@@ -140,11 +141,12 @@ function closeconfirmationPopup(){
     document.getElementById("confirmationPopup_display").style.display= "none";
 }
 
-document.getElementById('addProPopup_button').addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent form submission
-    addProPopup();
-});
-document.getElementById('remove_product_button').addEventListener('click', function(event) {
-    event.preventDefault(); // Prevent form submission
-    confirmationPopup();
-});
+function product_edit_button(){
+ document.getElementById('product_edit_display').style.display= "block";
+ document.getElementById('buttons_table_display').style.display= "none";
+}
+
+function product_cancel_edit(){
+    document.getElementById('product_edit_display').style.display= "none";
+    document.getElementById('buttons_table_display').style.display= "block";
+}
