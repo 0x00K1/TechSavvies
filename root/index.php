@@ -116,9 +116,6 @@
         <!-- ##################################
             script Section 
     ####################################-->
-        <script>
-        
-        </script>
         <script src="../assets/js/root.js"></script> <!-- keep last in body so all html elemnts are loaded-->
 </body>
 
