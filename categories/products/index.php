@@ -1,23 +1,17 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?php require_once __DIR__ . '/../../assets/php/main.php'; ?>
+    <link rel="stylesheet" href="assets/css/main.css">
     <title>Product Page</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-            background-color: #ffffff;
-        }
+        
         .product-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding-top: 5px;
             border-radius: 10px;
         }
         .product-content {
@@ -64,25 +58,18 @@
         .add-to-cart:hover {
             background: #8119b2;
         }
-        .product-description {
-            
-            width: 45%;
-            max-height: 150px;
-            overflow-y: auto;
-            margin-top: 20px;
-            padding: 10px;
-            background: #ffffff;
-        }
     </style>
 </head>
 <body>
+<?php require_once __DIR__ . '/../../assets/php/header.php'; ?>
     <div class="product-container">
         <div class="product-content">
             <div class="product-image">
-                <img src="categories\image.jpg" alt="Product Image">
+                <img src="../../assets/images/backpacks.png" alt="Product Image">
             </div>
             <div class="product-info">
                 <h2>Product name: snsnsnnsnsn ssnjsjsj</h2>
+                <p>Description goes here</p>
                 <p><strong>Color:</strong></p>
                 <select>
                     <option>Black</option>
@@ -101,9 +88,8 @@
                 <a href="#" class="add-to-cart">Add to Cart</a>
             </div>
         </div>
-        <div class="product-description">
-            <p>This is a great product with excellent features and high durability. It is designed to meet your needs and expectations, offering top-notch performance and reliability. The sleek design makes it a perfect fit for various occasions. Whether you need it for daily use or special events, this product will not disappoint. Experience comfort and convenience like never before.</p>
-        </div>
     </div>
+   
 </body>
+
 </html>

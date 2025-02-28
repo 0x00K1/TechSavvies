@@ -12,6 +12,7 @@
 
   <!-- Header Section -->
   <?php require_once __DIR__ . '/../assets/php/header.php'; ?>
+  <!DOCTYPE html>
 
   <!-- Authentication Modal -->
   <?php require_once __DIR__ . '/../assets/php/auth.php'; ?>
