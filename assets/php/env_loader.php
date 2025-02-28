@@ -1,29 +1,41 @@
 <?php
-function loadEnv() {
-    $envFile = __DIR__ . '/../../.env';
-    if (file_exists($envFile)) {
-        $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        foreach ($lines as $line) {
-            if (strpos($line, '=') !== false && strpos($line, '#') !== 0) {
-                list($key, $value) = explode('=', $line, 2);
-                $key = trim($key);
-                $value = trim($value);
-                putenv("$key=$value");
-            }
-        }
-    }
+/**
+ * env_loader.php
+ *
+ * Loads your .env file using vlucas/phpdotenv,
+ * sets them as environment variables, and provides a helper
+ * function to dynamically check for required env vars.
+ */
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+/**
+ * 1) Create Dotenv instance & load .env
+ */
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv->safeLoad();
+
+/**
+ * 2) Convert $_ENV to environment variables
+ */
+foreach ($_ENV as $key => $value) {
+    putenv("$key=$value");
 }
 
-function checkRequiredEnv($required) {
-    loadEnv();
-    $missing = [];
-    foreach ($required as $var) {
-        if (getenv($var) === false) {
-            $missing[] = $var;
+/**
+ * 3) Dynamic env var checker
+ * 
+ * @param string[] $vars
+ * @return void (or throws exit)
+ */
+function checkRequiredEnv(array $vars = []): void
+{
+    foreach ($vars as $var) {
+        if (!getenv($var)) {
+            error_log("Missing required environment variable: $var");
+            exit("Error: Missing required environment variable: $var. Check your .env file.");
         }
-    }
-    if (!empty($missing)) {
-        error_log('Missing required environment variables: ' . implode(', ', $missing));
-        exit('Error: Missing required environment variables. Check error log for details.');
     }
 }
