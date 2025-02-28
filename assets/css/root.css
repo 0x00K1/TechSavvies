@@ -206,17 +206,20 @@ Form field styles
   justify-content: left; /* Horizontal centering */
   align-items: left; /* Vertical centering */
   gap: 10px;              /* Optional: Adds space between items */
+  margin-bottom: 30px;
+  margin-top: 30px;
 }
 /*Text Field*/
-  .search-field {
-    width: auto;
+  .search-field_style {
+    width: 40%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     transition: border-color 0.3s;
+    margin-right: 10px;
 }
 /*Button*/
-.search-button {
+.search-button_style {
     background-color: var(--primary-color); /* Use primary color */
     color: #fff;                             /* Text color */
     border: none;                            /* No border */
@@ -225,10 +228,11 @@ Form field styles
     cursor: pointer;                         /* Pointer cursor on hover */
     transition: background 0.3s, transform 0.2s; /* Smooth transitions */
     font-size: 16px;                        /* Font size */
-    width: auto;                            /* Let the width adjust based on content or other layout influences */
+    width: auto;    
+    margin-right: 40px;                        /* Let the width adjust based on content or other layout influences */
 }
 /*Button Effect*/
-.search-button:hover {
+.search-button_style:hover {
     background-color: var(--accent-color);  /* Change background on hover */
     transform: scale(1.025);                  /* Slightly grow the button */
 }
@@ -291,8 +295,10 @@ Form field styles
     border-radius: 5px;                     
     padding: 10px 15px;                     
     cursor: pointer;
-    width: auto;
+    width: 100px;
     font-size: 16px; 
+    margin: 5px;
+    height: 40px;
 }
 .remove_product_button_style{
     background-color: var(--alert-color);
@@ -301,11 +307,36 @@ Form field styles
     border-radius: 5px;                     
     padding: 10px 15px;                     
     cursor: pointer;
-    width: auto;
+    width: 100px;
     font-size: 16px; 
+    margin: 5px;
+    height: 40px;
+}
+.product_cancel_edit_style{
+  background-color: var(--alert-color);
+  color: var(--light-bg);
+  border: none;
+  border-radius: 5px;                     
+    padding: 10px 15px;                     
+    cursor: pointer;
+    width: 100px;
+    font-size: 16px; 
+    margin: 5px;
+    height: 40px;
+}
+.product_confirm_edit_style{
+  background-color: var(--process-color);
+  color: var(--light-bg);
+  border: none;
+  border-radius: 5px;                     
+  padding: 10px 15px;                     
+  cursor: pointer;
+  width: 100px;
+  font-size: 16px; 
+  margin: 5px;
+  height: 40px;
 }
 
-/*product_edit_display*/
 
 /* ==================
  buttons
