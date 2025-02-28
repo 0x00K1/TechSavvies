@@ -49,9 +49,9 @@ try {
             $mail->addReplyTo($email, $name);
 
             $mail->isHTML(true);
-            $mail->Subject = 'New Contact Form Message from ' . htmlspecialchars($name);
+            $mail->Subject = 'New Support Message' . htmlspecialchars($name);
             $mail->Body = "
-                <h3>New Contact Form Message</h3>
+                <h3>New Support Message</h3>
                 <p><strong>Name:</strong> " . htmlspecialchars($name) . "</p>
                 <p><strong>Email:</strong> " . htmlspecialchars($email) . "</p>
                 <p><strong>Message:</strong><br>" . nl2br(htmlspecialchars($message)) . "</p>
