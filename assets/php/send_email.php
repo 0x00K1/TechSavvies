@@ -49,7 +49,7 @@ try {
             $mail->addReplyTo($email, $name);
 
             $mail->isHTML(true);
-            $mail->Subject = 'New Support Message' . htmlspecialchars($name);
+            $mail->Subject = 'New Support Message';
             $mail->Body = "
                 <h3>New Support Message</h3>
                 <p><strong>Name:</strong> " . htmlspecialchars($name) . "</p>
