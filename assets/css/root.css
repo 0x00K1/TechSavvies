@@ -118,16 +118,18 @@ popup
   .addProPopup {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 100; /* Sit on top */
+    z-index: 99999999999999; /* Sit on top */
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%); /* Center the popup */
-    width: 300px; /* Adjust width as needed */
+    width: auto; /* Adjust width as needed */
     background-color: white;
     padding: 20px;
     border: 1px solid #888;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   }
+
+  
   .confirmationPopup{
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
