@@ -92,3 +92,24 @@ function closeconfirmationPopup(){
     document.getElementById("confirmationPopup_display").style.display= "none";
 }
 
+// Define these functions in the global scope
+window.product_edit_button = function() {
+    document.getElementById('product_edit_display').style.display = "block";
+    document.getElementById('buttons_table_display').style.display = "none";
+};
+
+window.product_cancel_edit = function() {
+    document.getElementById('product_edit_display').style.display = "none";
+    document.getElementById('buttons_table_display').style.display = "block";
+};
+
+// Make sure the buttons have the correct onclick handlers after the page loads
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('edit_product_button')) {
+        document.getElementById('edit_product_button').onclick = window.product_edit_button;
+    }
+
+    if (document.getElementById('product_cancel_edit')) {
+        document.getElementById('product_cancel_edit').onclick = window.product_cancel_edit;
+    }
+});

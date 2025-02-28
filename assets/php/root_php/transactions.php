@@ -1,5 +1,4 @@
-<div class="div" id="Reviews_Display">
-                    <div class="content">
+<div class="content" id="Transactions_display">
                     <div class="search_div">
                         <input class="search-field_style" name="product_search_field" id="search_field" type="text"
                             placeholder="Search.. attribute:key ex(name:mustafa)" />
@@ -18,43 +17,43 @@
                         <button name="order_toggler" id="order_toggler">^</button>
                         <!-- some crazy js for ico change-->
                     </div>
+                    <div class="div">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Review ID</th>
+                                    <th>Payment ID</th>
+                                    <th>Order ID</th>
                                     <th>User ID</th>
                                     <th>Username</th>
-                                    <th>Product ID</th>
-                                    <th>Product Name</th>
-                                    <th>Rating</th>
-                                    <th>Review Text</th>
+                                    <th>Payment Method</th>
+                                    <th>Payment Status</th>
+                                    <th>Transaction ID</th>
+                                    <th>Amount</th>
                                     <th>Created At</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <!-- COMMENT FOR DATABSE FILL (REMOVE FROM LINE 17 AND LINE 36 WHEN READY FOR IMPLEMENTING)
-                <?php if ($reviews): ?>
-                    <?php foreach ($reviews as $review): ?>
-                        <tr>
-                            <td><?php echo htmlspecialchars($review['review_id']); ?></td>
-                            <td><?php echo htmlspecialchars($review['user_id']); ?></td>
-                            <td><?php echo htmlspecialchars($review['username']); ?></td>
-                            <td><?php echo htmlspecialchars($review['product_id']); ?></td>
-                            <td><?php echo htmlspecialchars($review['product_name']); ?></td>
-                            <td><?php echo htmlspecialchars($review['rating']); ?></td>
-                            <td><?php echo htmlspecialchars($review['review_text']); ?></td>
-                            <td><?php echo htmlspecialchars($review['created_at']); ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
+            <?php if ($transactions): ?>
+                <?php foreach ($transactions as $transaction): ?>
                     <tr>
-                        <td colspan="8">No recent reviews found.</td>
+                        <td><?php echo htmlspecialchars($transaction['payment_id']); ?></td>
+                        <td><?php echo htmlspecialchars($transaction['order_id']); ?></td>
+                        <td><?php echo htmlspecialchars($transaction['user_id']); ?></td>
+                        <td><?php echo htmlspecialchars($transaction['username']); ?></td>
+                        <td><?php echo htmlspecialchars($transaction['payment_method']); ?></td>
+                        <td><?php echo htmlspecialchars($transaction['payment_status']); ?></td>
+                        <td><?php echo htmlspecialchars($transaction['transaction_id']); ?></td>
+                        <td><?php echo htmlspecialchars(number_format($transaction['amount'], 2)); ?></td>
+                        <td><?php echo htmlspecialchars($transaction['created_at']); ?></td>
                     </tr>
-                <?php endif; ?>
-                -->
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="9">No recent transactions found.</td>
+                </tr>
+            <?php endif; ?> -->
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>
-        </div>
