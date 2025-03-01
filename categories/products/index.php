@@ -69,6 +69,39 @@
             background: #8119b2;
             color: white !important;
         }
+        .reviews-section {
+            width: 80%;
+            max-width: 600px;
+            margin-top: 50px;
+            padding: 20px;
+            border-radius: 10px;
+            background: #f9f9f9;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .reviews-section h2 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .reviews-container {
+            max-height: 250px; /* Limit height to 3 reviews */
+            overflow-y: auto; /* Enable vertical scrolling */
+            padding-right: 10px;
+        }
+
+        .review {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 5px solid #8d07cc;
+        }
+
+        .review strong {
+            color: #8d07cc;
+        }
+
     </style>
 </head>
 <body>
@@ -99,12 +132,47 @@
         
             </div>
         </div>
-    </div>
+    
+
 
     <div class="add-to-cart-container">
         <a href="#" class="add-to-cart">Add to Cart</a>
     </div>
-        
+    <div class="reviews-section">
+            <h2>User Reviews</h2>
+            <div class="reviews-container">
+                <div class="review">
+                    <strong>Emily R.</strong> ⭐⭐⭐⭐⭐
+                    <p>Absolutely love this backpack! It's stylish and fits everything I need. Highly recommend!</p>
+                </div>
+
+                <div class="review">
+                    <strong>John D.</strong> ⭐⭐⭐⭐☆
+                    <p>Great quality and very comfortable to wear. The only downside is that I wish it had more compartments.</p>
+                </div>
+
+                <div class="review">
+                    <strong>Sophia M.</strong> ⭐⭐⭐⭐⭐
+                    <p>This backpack exceeded my expectations! The material is durable and the design is sleek.</p>
+                </div>
+
+                <div class="review">
+                    <strong>Michael B.</strong> ⭐⭐⭐☆☆
+                    <p>Good overall, but the straps could be more padded for extra comfort.</p>
+                </div>
+
+                <div class="review">
+                    <strong>Alex T.</strong> ⭐⭐⭐⭐⭐
+                    <p>Amazing product! I use it daily, and it still looks brand new.</p>
+                </div>
+
+                <div class="review">
+                    <strong>Linda G.</strong> ⭐⭐⭐⭐☆
+                    <p>Very spacious and lightweight. Perfect for traveling.</p>
+                </div>
+            </div>
+        </div> 
+    </div>
     <?php require_once __DIR__ . '/../../assets/php/footer.php'; ?>
 
 <!-- Authentication Modal -->
