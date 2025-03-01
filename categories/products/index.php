@@ -3,7 +3,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php require_once __DIR__ . '/../../assets/php/main.php'; ?>
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="/../../assets/css/main.css">
     <title>Product Page</title>
     <style>
         
@@ -11,7 +11,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 5px;
+            padding-top: 100px;
             border-radius: 10px;
         }
         .product-content {
@@ -27,6 +27,7 @@
             padding: 20px;
             border: 1px solid#fefbfb;
             border-radius: 10px;
+            max-width: 400px; /* Limit width for better layout */
         }
         .product-info h2 {
             flex-direction: row;
@@ -44,8 +45,16 @@
             border-radius: 5px;
             border: 1px solid #ddd;
         }
+        .add-to-cart-container {
+            width: 100%; /* Full width */
+            display: flex;
+            justify-content: center; /* Center the button */
+            margin-top: 20px; /* Space from product content */
+        }
         .add-to-cart {
+
             display: inline-block;
+            width: 200px; /* Fixed button width */
             padding: 10px 20px;
             margin-top: 10px;
             background: #8d07cc;
@@ -56,7 +65,9 @@
             text-align: center;
         }
         .add-to-cart:hover {
+            -webkit-text-fill-color: white !important;
             background: #8119b2;
+            color: white !important;
         }
     </style>
 </head>
@@ -85,11 +96,19 @@
                     <option>XL</option>
                 </select>
                 <p><strong>Price:</strong> $49.99</p>
-                <a href="#" class="add-to-cart">Add to Cart</a>
+        
             </div>
         </div>
     </div>
-   
-</body>
 
+    <div class="add-to-cart-container">
+        <a href="#" class="add-to-cart">Add to Cart</a>
+    </div>
+        
+    <?php require_once __DIR__ . '/../../assets/php/footer.php'; ?>
+
+<!-- Authentication Modal -->
+    <?php require_once __DIR__ . '/../../assets/php/auth.php'; ?>
+
+</body>
 </html>
