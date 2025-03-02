@@ -43,7 +43,7 @@
                 <!-- _________________________________________
                     Products page
                     ________________________________________-->
-                <?php include('..\assets\php\root_php\product.php')?>
+                <?php include('..\assets\php\root_php\products.php')?>  <!-- our filr:product.php-->
                 <!-- _________________________________________
                     orders page
                     ________________________________________-->
