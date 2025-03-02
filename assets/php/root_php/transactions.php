@@ -1,59 +1,51 @@
 <div class="content" id="Transactions_display">
-                    <div class="search_div">
-                        <input class="search-field_style" name="product_search_field" id="search_field" type="text"
-                            placeholder="Search.. attribute:key ex(name:mustafa)" />
-                        <input class="search-button_style" name="search_button" id="search_button" type="submit"
-                            value="Search" />
-                        <span>Filter:</span>
-                        <select name="filter_value" id="filter_value" class="filter_value_style"
-                            placeholder="Chose a value">
-                            <option value="">None</option>
-                            <option name="f_category" value="category">Category</option>
-                            <option name="f_price" value="price">Price</option>
-                            <option name="f_stock" value="stock">Stock</option>
-                            <option name="f_size" value="size">Size</option>
-                            <option name="f_update_date" value="update_date">update Date</option>
-                        </select>
-                        <button name="order_toggler" id="order_toggler">^</button>
-                        <!-- some crazy js for ico change-->
-                    </div>
-                    <div class="div">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Payment ID</th>
-                                    <th>Order ID</th>
-                                    <th>User ID</th>
-                                    <th>Username</th>
-                                    <th>Payment Method</th>
-                                    <th>Payment Status</th>
-                                    <th>Transaction ID</th>
-                                    <th>Amount</th>
-                                    <th>Created At</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- COMMENT FOR DATABSE FILL (REMOVE FROM LINE 17 AND LINE 36 WHEN READY FOR IMPLEMENTING)
-            <?php if ($transactions): ?>
-                <?php foreach ($transactions as $transaction): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($transaction['payment_id']); ?></td>
-                        <td><?php echo htmlspecialchars($transaction['order_id']); ?></td>
-                        <td><?php echo htmlspecialchars($transaction['user_id']); ?></td>
-                        <td><?php echo htmlspecialchars($transaction['username']); ?></td>
-                        <td><?php echo htmlspecialchars($transaction['payment_method']); ?></td>
-                        <td><?php echo htmlspecialchars($transaction['payment_status']); ?></td>
-                        <td><?php echo htmlspecialchars($transaction['transaction_id']); ?></td>
-                        <td><?php echo htmlspecialchars(number_format($transaction['amount'], 2)); ?></td>
-                        <td><?php echo htmlspecialchars($transaction['created_at']); ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
+   <?php include("../assets/php/root_php/search_rows.php")?>
+    <div class="table-container">
+        <table id="transactions-table">
+            <thead>
                 <tr>
-                    <td colspan="9">No recent transactions found.</td>
+                    <th data-sort="Payment_ID">Payment ID <span class="sort-icon">↕</span></th>
+                    <th data-sort="Order_ID">Order ID <span class="sort-icon">↕</span></th>
+                    <th data-sort="User_ID">User ID <span class="sort-icon">↕</span></th>
+                    <th data-sort="Username">Username <span class="sort-icon">↕</span></th>
+                    <th data-sort="Payment_Method">Payment Method <span class="sort-icon">↕</span></th>
+                    <th data-sort="Payment_Status">Payment Status <span class="sort-icon">↕</span></th>
+                    <th data-sort="Transaction_ID">Transaction ID<span class="sort-icon">↕</span></th>
+                    <th data-sort="Amount">Amount <span class="sort-icon">↕</span></th>
+                    <th data-sort="Created_At">Created at <span class="sort-icon">↕</span></th>
+                    <th>Actions</th>
                 </tr>
-            <?php endif; ?> -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            </thead>
+            <tbody id="transactions-table-body">
+                <!-- Table rows will be added dynamically via JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="pagination">  <!-- keep here or refrence as a single php file?-->
+        <div class="pagination-info">
+            Showing <span id="showing-start">1</span> to <span id="showing-end">10</span> of <span
+                id="total-items">100</span> items
+        </div>
+        <div class="pagination-controls">
+            <button type="button" id="prev-page" class="pagination-button" disabled>&laquo; Previous</button>
+            <button type="button" id="next-page" class="pagination-button">Next &raquo;</button>
+        </div>
+    </div>
+    </form>
+</div>
+
+<script>
+const sampleProducts = [{
+        Payment_ID: 1,
+        Order_ID: 3,
+        User_ID: 2,
+        Username: "Afnan_3xx",
+        Payment_Method: "credit card",
+        Payment_Status: "Complete",
+        Transaction_ID: 12,
+        Amount: 12.75,
+        Created_At: "2025-02-27"
+    }]
+/* call initilize function*/
+</script>

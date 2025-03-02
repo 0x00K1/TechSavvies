@@ -77,9 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-function addProPopup(){
-    document.getElementById("addProPopup_display").style.display = "block";
-}
+
 
 function closeaddProPopup() {
         document.getElementById("addProPopup_display").style.display = "none";
