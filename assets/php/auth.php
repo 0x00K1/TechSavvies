@@ -4,7 +4,7 @@
     
     <!-- Step 1: Enter Email -->
     <div class="auth-step" id="authStep1">
-      <img src="../assets/images/logo.png" alt="Site Logo" />
+      <img src="/assets/images/logo.png" alt="Site Logo" />
       <p>Sign in/up for savvy shopping</p>
       <input type="email" id="authEmail" placeholder="Email Address" />
       <button id="sendOtpBtn">Send OTP</button>
