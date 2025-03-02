@@ -183,7 +183,7 @@
 .static-rating {
     display: inline-block;
     position: relative;
-    font-size: 36px;
+    font-size: 40px;
     color: #FFD700; /* Gold color for stars */
 }
 

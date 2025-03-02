@@ -283,7 +283,7 @@
                     </div>
                 </details>
 
-
+            <!---->
 
                 <div class="button-container">
                     <button class="button_top"><span>Apply Filters</span></button>
