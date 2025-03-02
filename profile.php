@@ -1,86 +1,8 @@
-<?php
-//session_start(); // Ensure session is started
-
-$db_hostname = "localhost";
-$db_name = "techsavvies";
-$db_username = "root";
-$db_password = "#TechSavvies01";
-
-$conn = new mysqli($db_hostname, $db_username, "", $db_name);
-
-if (!$conn) {
-    die("Database connection failed: " . mysqli_connect_error());
-} else {
-    echo "Connected successfully!";
-}
-
-// Initialize user details
-$username = "";
-$email = "";
-$phone = "";
-
-// Fetch user info
-if (isset($_SESSION['user_id'])) {
-
-    $sql = "SELECT username, email, phone FROM users WHERE user_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $_SESSION['user_id']);
-    $stmt->execute();
-    $stmt->bind_result($username, $email, $phone);
-    $stmt->fetch();
-    $stmt->close();
-
-    // Fetch Address Information
-    $address_id = null;
-    $address_line1 = "";
-    $address_line2 = "";
-    $city = "";
-    $state = "";
-    $postal_code = "";
-    $country = "";
-
-    // Handle profile update
-    if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_profile'])) {
-        $new_username = trim($_POST['username'] ?? "");
-        $new_password = trim($_POST['u_password'] ?? "");
-        $new_email = trim($_POST['email'] ?? "");
-        $new_phone = trim($_POST['phone'] ?? "");
-
-        $update_sql = "UPDATE users SET username = ?, u_password = ?, email = ?, phone = ? WHERE user_id = ?";
-        $update_stmt = $conn->prepare($update_sql);
-        $update_stmt->bind_param("ssssi", $new_username, $new_password, $new_email, $new_phone, $_SESSION['user_id']);
-
-        if ($update_stmt->execute()) {
-            header("Location: profile-page.php");
-            exit();
-        } else {
-            echo "Error updating profile: " . $update_stmt->error;
-        }
-        $update_stmt->close();
-    }
-
-    // Fetch all saved addresses for the user
-    $sql = "SELECT address_id, address_line1, address_line2, city, state, postal_code, country FROM addresses WHERE user_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $_SESSION['user_id']);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    while ($row = $result->fetch_assoc()) {
-        $addresses[] = $row;
-    }
-
-    $stmt->close();
-} //else {
-    //echo "User not logged in.";
-    //exit();}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Profile - TechSavvies</title>
   <?php require_once __DIR__ . '/assets/php/main.php'; ?>
+  <title>Profile</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/main.css" />
   <style>
