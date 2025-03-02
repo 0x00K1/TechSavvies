@@ -32,7 +32,6 @@
             <button type="button" id="next-page" class="pagination-button">Next &raquo;</button>
         </div>
     </div>
-    </form>
 </div>
 
 <script>

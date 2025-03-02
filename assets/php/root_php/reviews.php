@@ -1,4 +1,4 @@
-<div class="div" id="Reviews_Display">
+<div class="content" id="Reviews_Display">
     <?php include("../assets/php/root_php/search_rows.php")?>
     <div class="table-container">
         <table id="transactions-table">
@@ -32,5 +32,4 @@
             <button type="button" id="next-page" class="pagination-button">Next &raquo;</button>
         </div>
     </div>
-    </form>
 </div>
