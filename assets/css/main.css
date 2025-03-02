@@ -49,7 +49,7 @@ header {
   position: fixed;
   top: 0;
   width: 100%;
-  height: 60px; /* up down header height */
+  height: 60px; 
   background: var(--header-bg);
   padding: 10px 20px;
   display: flex;
