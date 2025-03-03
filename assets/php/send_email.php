@@ -1,24 +1,30 @@
 <?php
-header('Content-Type: application/json');
-
-if (!file_exists(__DIR__ . '/../../vendor/autoload.php')) {
-    echo json_encode([
-        'success' => false,
-        'message' => 'System configuration error.'
-    ]);
-    exit;
-}
-
-require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../../includes/secure_session.php';
+require_once __DIR__ . '/env_loader.php';
+require 'Exception.php';
+require 'PHPMailer.php';
+require 'SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-use Dotenv\Dotenv;
+
+header("Content-Type: application/json");
+header("X-Content-Type-Options: nosniff");
+header("X-Frame-Options: DENY");
+
+// Only require SMTP env vars
+checkRequiredEnv([
+    'SMTP_HOST', 
+    'SMTP_PORT', 
+    'SMTP_USERNAME', 
+    'SMTP_PASSWORD', 
+    'MAIL_FROM_ADDRESS', 
+    'MAIL_FROM_NAME',
+    'MAIL_TO_ADDRESS',
+    'MAIL_TO_NAME'
+]);
 
 try {
-    $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
-    $dotenv->load();
-
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $name = $_POST['name'] ?? '';
         $email = $_POST['email'] ?? '';
@@ -36,16 +42,19 @@ try {
 
         try {
             $mail->isSMTP();
-            $mail->Host = $_ENV['SMTP_HOST'];
-            $mail->SMTPAuth = true;
-            $mail->Username = $_ENV['SMTP_USERNAME'];
-            $mail->Password = $_ENV['SMTP_PASSWORD'];
-            $mail->SMTPSecure = $_ENV['SMTP_ENCRYPTION'];
-            $mail->Port = (int)$_ENV['SMTP_PORT'];
-            $mail->Timeout = 10;
+            $mail->Host       = getenv('SMTP_HOST');
+            $mail->SMTPAuth   = true;
+            $mail->Username   = getenv('SMTP_USERNAME');
+            $mail->Password   = getenv('SMTP_PASSWORD');
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = getenv('SMTP_PORT');
+            $mail->Timeout    = 10;
 
-            $mail->setFrom($_ENV['SMTP_FROM_EMAIL'], $_ENV['SMTP_FROM_NAME']);
-            $mail->addAddress($_ENV['SMTP_FROM_EMAIL'], $_ENV['SMTP_FROM_NAME']);
+            // Set the sender details from env vars
+            $mail->setFrom(getenv('MAIL_FROM_ADDRESS'), getenv('MAIL_FROM_NAME'));
+            // Send the feedback message to your email address, not the user's.
+            $mail->addAddress(getenv('MAIL_TO_ADDRESS'), getenv('MAIL_TO_NAME'));
+            // Add the user’s email as the reply-to address
             $mail->addReplyTo($email, $name);
 
             $mail->isHTML(true);
@@ -82,3 +91,4 @@ try {
         'message' => 'An error occurred. Please try again later.'
     ]);
 }
+?>

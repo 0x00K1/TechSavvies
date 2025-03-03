@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . '/assets/php/main.php';
 require_once __DIR__ . '/assets/php/get_popular_products.php';
 
 // Fetch popular products
@@ -9,6 +8,7 @@ $popularProducts = getPopularProducts(9);
 <html lang="en">
 <head>
   <title>TechSavvies - Home</title>
+  <?php require_once __DIR__ . '/assets/php/main.php'; ?>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -107,25 +107,62 @@ $popularProducts = getPopularProducts(9);
         </div>
     </section>
 
-    <!-- Testimonials Section [require logic] -->
+    <!-- Testimonials Section -->
     <section class="testimonials">
       <h2 class="section-title">What Our Customers Say</h2>
-      <div class="testimonial-container">
-        <div class="testimonial">
-          <p>"Amazing quality and fast delivery!" - فتحي</p>
+      <div class="testimonial-slider">
+        <div class="testimonial-track">
+          <!-- Simulated testimonials -->
+          <div class="testimonial">
+            <div class="testimonial-content">
+              <p class="testimonial-text">"Amazing quality and fast delivery!"</p>
+              <div class="testimonial-author">فتحي</div>
             </div>
-        <div class="testimonial">
-          <p>"The best tech products I've found online." - عبدالصمد ثلاجة</p>
-        </div>
-        </div>
+          </div>
+          <div class="testimonial">
+            <div class="testimonial-content">
+              <p class="testimonial-text">"The best tech products I've found online."</p>
+              <div class="testimonial-author">عبدالصمد ثلاجة</div>
+            </div>
+          </div>
+          <div class="testimonial">
+            <div class="testimonial-content">
+              <p class="testimonial-text">"Superb customer service and great prices!"</p>
+              <div class="testimonial-author">John Smith</div>
+            </div>
+          </div>
+          <div class="testimonial">
+            <div class="testimonial-content">
+              <p class="testimonial-text">"I love the variety of products available!"</p>
+              <div class="testimonial-author">Sarah Johnson</div>
+            </div>
+          </div>
+          <div class="testimonial">
+            <div class="testimonial-content">
+              <p class="testimonial-text">"Fast shipping and well-packaged items."</p>
+              <div class="testimonial-author">Michael Brown</div>
+            </div>
+          </div>
+          <div class="testimonial">
+            <div class="testimonial-content">
+              <p class="testimonial-text">"Great deals and discounts, highly recommended!"</p>
+              <div class="testimonial-author">Emily Davis</div>
+            </div>
     </section>
-    <!-- Contact Section -->
+
+    <!-- Contact Section - Enhanced structure -->
     <section id="contact">
       <h2>Contact Us</h2>
       <form id="contactForm" action="assets/php/send_email.php" method="POST">
-        <input type="text" id="name" name="name" placeholder="Your Name" required />
-        <input type="email" id="email" name="email" placeholder="Your Email" required />
-        <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+        <div class="form-group">
+          <input type="text" id="name" name="name" placeholder="Your Name" required />
+        </div>
+        <div class="form-group">
+          <input type="email" id="email" name="email" placeholder="Your Email" required />
+        </div>
+        <div class="form-group">
+          <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+        </div>
         <button type="submit">Send Message</button>
       </form>
       <div id="messageStatus"></div>
