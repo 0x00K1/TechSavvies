@@ -44,7 +44,7 @@ if (isset($_SESSION['last_otp_time']) && (time() - $_SESSION['last_otp_time'] < 
 $email = $data['email'];
 
 // Function to generate a secure OTP
-function generateSecureOTP($length = 6) {
+function generateSecureOTP($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()';
     $otp = '';
     for ($i = 0; $i < $length; $i++) {
@@ -53,7 +53,7 @@ function generateSecureOTP($length = 6) {
     return $otp;
 }
 
-$otp = generateSecureOTP(6);
+$otp = generateSecureOTP(10);
 $_SESSION['otp'] = $otp;
 $_SESSION['otp_email'] = $email;
 $_SESSION['last_otp_time'] = time();

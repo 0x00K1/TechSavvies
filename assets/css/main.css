@@ -78,9 +78,27 @@ nav ul li {
 }
 
 #accountIcon {
-	width: 30px;
-	height: 30px;
-	cursor: pointer;
+  width: 26px;
+  height: 35px;
+  cursor: pointer;
+}
+
+#homeIcon {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+#cartIcon {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+#rootIcon {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
 }
 
 /* Container for the icon and text */
@@ -801,6 +819,33 @@ footer {
 
 .auth-modal-content input::placeholder {
 	color: #a0a0a0;
+}
+
+/* Spinner Container (flex alignment) */
+.button-spinner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Actual Spinner Circle */
+.button-spinner::after {
+  content: "";
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-left: 0.5em; /* gap between text and spinner */
+  border: 2px solid #f3f3f3;
+  border-top-color: #8d07cc;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Keyframes for continuous rotation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Email Input Icon */

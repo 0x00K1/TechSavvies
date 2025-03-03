@@ -14,7 +14,7 @@
     <div class="auth-step" id="authStep2" style="display: none;">
       <h2>Verify It's You</h2>
       <p>We've sent a code to your email</p>
-      <input type="text" id="authOTP" maxlength="6" />
+      <input type="text" id="authOTP" maxlength="10" />
       <button id="verifyOtpBtn">Verify & Continue</button>
     </div>
   </div>

@@ -19,6 +19,8 @@
  * FITNESS FOR A PARTICULAR PURPOSE.
  */
 
+// Json packages . . ["phpmailer/phpmailer": "^6.9", "phpmailer/phpmailer": "^5.5"]
+
 namespace PHPMailer\PHPMailer;
 
 /**
