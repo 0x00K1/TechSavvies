@@ -1,8 +1,14 @@
+<?php
+require_once __DIR__ . '/assets/php/main.php';
+require_once __DIR__ . '/assets/php/get_popular_products.php';
+
+// Fetch popular products
+$popularProducts = getPopularProducts(9);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <title>TechSavvies - Home</title>
-  <?php require_once __DIR__ . '/assets/php/main.php'; ?>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -78,25 +84,27 @@
       </div>
     </section>
 
-    <!-- Popular Products Slider (homepage-specific) [require logic] -->
+    <!-- Popular Products Slider -->
     <section class="popular-products">
-      <h2 class="section-title">Popular Products</h2>
-      <div class="slider">
-        <div class="slider-wrapper" id="sliderWrapper">
-          <div class="slide">
-            <img src="assets/images/popular-tshirt.png" alt="Popular T-shirt" />
-            <p>Tech T-shirt</p>
-          </div>
-          <div class="slide">
-            <img src="assets/images/popular-backpack.png" alt="Popular Backpack" />
-            <p>Stylish Backpack</p>
-          </div>
-          <div class="slide">
-            <img src="assets/images/popular-mug.png" alt="Popular Mug" />
-            <p>Coffee Mug</p>
-          </div>
+        <h2 class="section-title">Popular Products</h2>
+        <div class="slider">
+            <div class="slider-container">
+                <button class="prev">❮</button>
+                <div class="slider-wrapper">
+                    <?php foreach ($popularProducts as $product): ?>
+                        <div class="slide">
+                            <a href="product.php?id=<?= htmlspecialchars($product['product_id']) ?>" class="product-card">
+                                <img src="assets/images/<?= htmlspecialchars($product['picture']) ?>" alt="<?= htmlspecialchars($product['product_name']) ?>">
+                                <div class="product-info">
+                                    <h3><?= htmlspecialchars($product['product_name']) ?></h3>
+                                </div>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+                <button class="next">❯</button>
+            </div>
         </div>
-      </div>
     </section>
 
     <!-- Testimonials Section [require logic] -->
@@ -105,22 +113,22 @@
       <div class="testimonial-container">
         <div class="testimonial">
           <p>"Amazing quality and fast delivery!" - فتحي</p>
-        </div>
+            </div>
         <div class="testimonial">
           <p>"The best tech products I've found online." - عبدالصمد ثلاجة</p>
         </div>
-      </div>
+        </div>
     </section>
-
-    <!-- Contact Section [require logic]->[LATER] -->
+    <!-- Contact Section -->
     <section id="contact">
       <h2>Contact Us</h2>
-      <form id="contactForm">
+      <form id="contactForm" action="assets/php/send_email.php" method="POST">
         <input type="text" id="name" name="name" placeholder="Your Name" required />
         <input type="email" id="email" name="email" placeholder="Your Email" required />
         <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
         <button type="submit">Send Message</button>
       </form>
+      <div id="messageStatus"></div>
       <div id="map">
         <p>Address: 01 TechSavvies, Tech City</p>
       </div>
