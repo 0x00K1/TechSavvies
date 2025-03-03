@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/assets/php/get_popular_products.php';
+require_once __DIR__ . '/includes/get_popular_products.php';
 
 // Fetch popular products
 $popularProducts = getPopularProducts(9);

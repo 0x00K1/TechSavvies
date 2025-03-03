@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		const formData = new FormData(this);
 		const submitButton = this.querySelector('button[type="submit"]');
 		submitButton.disabled = true;
-		fetch("assets/php/send_email.php", {
+		fetch("includes/FB_email.php", {
 		  method: "POST",
 		  headers: {
 			Accept: "application/json"

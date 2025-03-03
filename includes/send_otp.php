@@ -102,7 +102,7 @@ $htmlMessage = <<<HTML
       <p>Holla, Your One Time Password is:</p>
       <p class="otp-code">$otp</p>
       <p>If you did not request this OTP, just ignore this email.</p>
-      <p class="footer">Thank you,<br>TechSavvies.shop Team</p>
+      <p class="footer">Thank you,<br>TechSavvies Team</p>
     </div>
   </div>
 </body>

@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../includes/db.php';
+require_once __DIR__ . '/db.php';
 
 function getPopularProducts($limit = 9) {
     global $pdo;
