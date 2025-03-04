@@ -1,13 +1,16 @@
 <!-- devolped by @ananas0dev , @HameedJHD
  notes for improvment
  the popup windows should make the full webpage disabled
- fix the edit button and make a textfield for the editable sections-->
+ fix the edit button and make a textfield for the editable sections
+ 
+ #Rootv0.1 Not stable
+ -->
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <link rel="icon" href="..\assets\icons\Logo.ico">
+    <?php require_once __DIR__ . '/../assets/php/main.php'; ?>
     <link rel="stylesheet" href="..\assets\css\main.css">
     <link rel="stylesheet" href="..\assets\css\root.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
