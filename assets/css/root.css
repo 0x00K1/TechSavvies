@@ -206,16 +206,15 @@ Form field styles
 
 /*Container*/  
 .search_div {
-  width: 100%;
-  justify-content: left; /* Horizontal centering */
-  align-items: left; /* Vertical centering */
+  display: block;
+  margin: 100% auto; 
   gap: 10px;              /* Optional: Adds space between items */
   margin-bottom: 30px;
   margin-top: 30px;
 }
 /*Text Field*/
   .search-field_style {
-    width: 40%;
+    width: 20em;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -384,18 +383,20 @@ tr:hover {
  buttons
 =================== */
    .addProPopup_button_style{
-    background-color: var(--process-color);
-    color: var(--light-bg);
+    background: linear-gradient(135deg, #d42d2d, #8d07cc, #0117ff);
+    color: white;
     border: none;
     border-radius: 5px;                     
     padding: 10px 15px;                     
     cursor: pointer;
     width: auto;
-    font-size: 16px; 
+    font-size: 16px;
+    display: block;
+    margin: 20px auto; 
    }
    .addProPopup_button_style:hover {
     background-color: #fff;
-    color: var(--process-color);
+    color: rgb(0, 0, 0);
     width: auto;
     font-size: 16px; 
    }

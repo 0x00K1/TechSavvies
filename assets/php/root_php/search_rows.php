@@ -1,7 +1,7 @@
 <div class="top-controls">
         <div class="search_div">
             <input class="search-field_style" name="product_search_field" id="search_field" type="text"
-                placeholder="Search... attribute:key ex(name:mustafa)" />
+                placeholder="Search... attribute:key ex(name:ft7y)" />
             <button class="search-button_style" name="search_button" id="search_button" type="submit">
                 Search
             </button>

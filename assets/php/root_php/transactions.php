@@ -1,5 +1,5 @@
 <div class="content" id="Transactions_display">
-   <?php include("../assets/php/root_php/search_rows.php")?>
+   <?php include("search_rows.php")?>
     <div class="table-container">
         <table id="transactions-table">
             <thead>

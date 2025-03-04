@@ -3,7 +3,7 @@
                 <button id="addProPopup_button" class="addProPopup_button_style" type="button" onclick="addProPopup()">
                     <i class="fas fa-plus"></i> Add Product
                 </button>
-                <?php include("../assets/php/root_php/search_rows.php")?>
+                <?php include("search_rows.php")?>
             
             <div class="table-container">
                 <table id="products-table">
