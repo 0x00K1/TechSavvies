@@ -43,11 +43,15 @@
     .add-button {
         background: linear-gradient(135deg, #d42d2d, #8d07cc, #0117ff);
         color: white;
+        display: block;
+        margin: 20px auto; /* Centers the button horizontally */
     }
 
     .cancel-button {
         background-color: #000000;
         color: white;
+        display: block;
+        margin: 20px auto; /* Centers the button horizontally */
     }
     
     .popup {
@@ -185,25 +189,17 @@
   <div class="main-content">
     <div class="profile">
     <h1>Profile</h1>
-    <p>Welcome, <?php echo htmlspecialchars($username) ?: 'Guest'; ?>! Here you can update your information, review your orders, and manage your account settings.</p>
-
-    <form action="profile-page.php" method="POST">
+    <form>
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" placeholder="Username" required>
-        
-        <label for="u_password">Password:</label>
-        <input type="password" id="u_password" name="u_password" placeholder="Password" required>
         
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" placeholder="Email" required>
         
-        <label for="phone">Phone Number:</label>
-        <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
-        
         <br><br>
 
-        <button type="submit" class="add-button">Save Profile</button>
-        <button type="button" class="cancel-button" onclick="window.location.href='profile-page.php';">Cancel</button>
+        <button type="submit" class="add-button">Update Profile</button>
+        <button type="button" class="cancel-button" onclick="window.location.href='/';">Cancel</button>
     </form>
     </div>
 
@@ -217,8 +213,8 @@
               <div class="form-container" onclick="event.stopPropagation()">
 
                 <h3>Add Address</h3>
-                <form method="post" action="save_address.php">
-                <input type="hidden" name="update_address">
+                <form>
+                    <input type="hidden" name="update_address">
 
                     <div class="form-row">
                     <label for="country">Country:</label>
