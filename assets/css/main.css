@@ -60,11 +60,11 @@ header {
 }
 
 .logo img {
-	height: 120px; /* Increase the size */
-	width: auto;
-	max-width: 376px; /* Ensures it doesn't exceed */
-	object-fit: contain;
-	display: block;
+  height: 60px; /* Increase the size */
+  width: auto;
+  max-width: 150px; /* Ensures it doesn't exceed */
+  object-fit: contain;
+  display: block;
 }
 
 nav ul {
