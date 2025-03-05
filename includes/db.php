@@ -4,8 +4,8 @@ require_once __DIR__ . '/../assets/php/env_loader.php';
 // Dynamically check for DB credentials
 checkRequiredEnv(['DB_HOST', 'DB_NAME', 'DB_USERNAME', 'DB_PASSWORD']);
 
-use PDO;
-use PDOException;
+// use PDO;
+// use PDOException;
 
 // Now we know these exist
 $host     = getenv('DB_HOST');
