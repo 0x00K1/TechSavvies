@@ -68,7 +68,7 @@
     <p>You agree to use our website for lawful purposes only and not to engage in any activity that may harm or disrupt the site.</p>
     
     <h2>Intellectual Property</h2>
-    <p>All content, including text, stolen images, and logos, is owned by TechSavvies and may not be reproduced without permission.</p>
+    <p>All content, including text, images, and logos, is owned by TechSavvies and may not be reproduced without permission.</p>
     
     <h2>Limitation of Liability</h2>
     <p>TechSavvies is not liable for any damages or losses resulting from the use of our website.</p>
