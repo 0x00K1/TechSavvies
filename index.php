@@ -7,7 +7,7 @@ $popularProducts = getPopularProducts(9);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>TechSavvies - Home</title>
+  <title>TechSavvies</title>
   <?php require_once __DIR__ . '/assets/php/main.php'; ?>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/main.css">
@@ -93,8 +93,8 @@ $popularProducts = getPopularProducts(9);
                 <div class="slider-wrapper">
                     <?php foreach ($popularProducts as $product): ?>
                         <div class="slide">
-                            <a href="product.php?id=<?= htmlspecialchars($product['product_id']) ?>" class="product-card">
-                                <img src="assets/images/<?= htmlspecialchars($product['picture']) ?>" alt="<?= htmlspecialchars($product['product_name']) ?>">
+                            <a href="categories/products/?product_id=<?= htmlspecialchars(urlencode($product['product_id']));?>" class="product-card">
+                                <img src="assets/images/Products/<?= htmlspecialchars($product['picture']) ?>" alt="<?= htmlspecialchars($product['product_name']) ?>">
                                 <div class="product-info">
                                     <h3><?= htmlspecialchars($product['product_name']) ?></h3>
                                 </div>

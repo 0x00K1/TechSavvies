@@ -258,6 +258,40 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  const cartSidebarHTML = `
+    <div id="cartSidebar">
+      <button id="closeCart">×</button>
+      <h2>Your Cart</h2>
+      <div id="cartContent">
+        <p>Your cart is currently empty.</p>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML("beforeend", cartSidebarHTML);
+
+  // Set up event listeners for toggling the sidebar
+  const cartLink = document.getElementById("cartLink");
+  const cartSidebar = document.getElementById("cartSidebar");
+  const closeCartBtn = document.getElementById("closeCart");
+
+  if (cartLink && cartSidebar && closeCartBtn) {
+    cartLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      cartSidebar.classList.add("active");
+    });
+    
+    closeCartBtn.addEventListener("click", function () {
+      cartSidebar.classList.remove("active");
+    });
+    
+    // Optional: hide sidebar when clicking outside it
+    document.addEventListener("click", function (e) {
+      if (!cartSidebar.contains(e.target) && !cartLink.contains(e.target)) {
+        cartSidebar.classList.remove("active");
+      }
+    });
+  }
+
   /**
    * Toggles a modern loading state for a button using CSS spinner.
    * @param {HTMLButtonElement} button - The button element.

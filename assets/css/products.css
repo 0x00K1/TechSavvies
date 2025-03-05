@@ -123,6 +123,25 @@
    color 0.3s, background-color 0.1s ;
 }
 
+a.card_grid {
+   display: block;
+   text-decoration: none;
+   color: inherit;
+}
+
+a.card_grid:hover,
+a.card_grid:hover * {
+    background: none !important;
+    background-clip: initial !important;
+    -webkit-background-clip: initial !important;
+    -webkit-text-fill-color: inherit !important;
+    transform: none !important;
+}
+
+a.card_grid:hover {
+   color: inherit;
+}
+
 .no-products {
     text-align: center;
     margin: 3rem auto;

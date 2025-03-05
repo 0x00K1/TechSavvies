@@ -1,77 +1,71 @@
+<?php
+require_once __DIR__ . '/../../includes/get_products.php';
+
+$productsById = [];
+foreach ($products as $prod) {
+    $productsById[$prod['product_id']] = $prod;
+}
+
+if (isset($_GET['product_id']) && array_key_exists($_GET['product_id'], $productsById)) {
+    $product = $productsById[$_GET['product_id']];
+} else {
+    echo "Product not found.";
+    exit;
+}
+?>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product</title>
     <?php require_once __DIR__ . '/../../assets/php/main.php'; ?>
     <link rel="stylesheet" href="/../../assets/css/main.css">
-    <title>Product Page</title>
     <style>
-
         .product-container {
-            /* Container for the entire product section */
             display: flex;
             flex-direction: column;
             align-items: center;
             padding-top: 100px;
             border-radius: 10px;
         }
-
-        /* Layout for product details */
         .product-content {
             display: flex;
         }
-
-        /* Product image styling */
         .product-image img {
             width: 300px;
             height: auto;
             border-radius: 10px;
         }
-
-        /* Styling for product information */
         .product-info {
             margin-left: 20px;
             padding: 20px;
-            border: 1px solid#fefbfb;
+            border: 1px solid #fefbfb;
             border-radius: 10px;
-            max-width: 400px; /* Limit width for better layout */
+            max-width: 400px;
         }
-
-        /* Product title styling */
         .product-info h2 {
-            flex-direction: row;
             margin: 0 0 10px;
-            overflow-x: auto;
             word-wrap: break-word;
         }
         .product-info p {
             margin: 5px 0;
         }
-
-        /* Dropdown select styling */
         select {
-            
             padding: 5px;
             margin-top: 5px;
             border-radius: 5px;
             border: 1px solid #ddd;
         }
-
-        /* Add to cart button container */
         .add-to-cart-container {
-            width: 100%; /* Full width */
+            width: 100%;
             display: flex;
-            justify-content: center; /* Center the button */
-            margin-top: 20px; /* Space from product content */
+            justify-content: center;
+            margin-top: 20px;
         }
-
-        /* Add to cart button styling */
         .add-to-cart {
             display: inline-block;
-            width: 200px; /* Fixed button width */
+            width: 200px;
             padding: 10px 20px;
             margin-top: 10px;
-            background: #8d07cc;
+            background: linear-gradient(135deg, #0117ff, #8d07cc, #d42d2d);
             color: white;
             text-decoration: none;
             border-radius: 5px;
@@ -79,12 +73,9 @@
             text-align: center;
         }
         .add-to-cart:hover {
+            background: linear-gradient(135deg, #0117ff, #8d07cc, #d42d2d);
             -webkit-text-fill-color: white !important;
-            background: #8119b2;
-            color: white !important;
         }
-
-        /* Reviews section styling */
         .reviews-section {
             width: 80%;
             max-width: 600px;
@@ -94,20 +85,15 @@
             background: #f9f9f9;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-
         .reviews-section h2 {
             text-align: center;
             margin-bottom: 15px;
         }
-
-        /* Reviews container - limits visible height */
         .reviews-container {
-            max-height: 250px; /* Limit height to 3 reviews */
-            overflow-y: auto; /* Enable vertical scrolling */
+            max-height: 250px;
+            overflow-y: auto;
             padding-right: 10px;
         }
-
-        /* Individual review styling */
         .review {
             background: white;
             padding: 15px;
@@ -115,30 +101,24 @@
             margin-bottom: 10px;
             border-left: 5px solid #8d07cc;
         }
-
         .review strong {
             color: #8d07cc;
         }
-        
-
-        /* Static rating star styling */
         .static-rating {
             display: inline-block;
             position: relative;
             font-size: 18px;
-            color: #FFD700; /* Gold color for stars */
+            color: #FFD700;
         }
-
         .static-rating::before {
-            content: '\2605\2605\2605\2605\2605'; /* Default 5 stars */
+            content: '\2605\2605\2605\2605\2605';
             letter-spacing: 3px;
-            color: #ddd; /* Gray background stars */
+            color: #ddd;
         }
-
         .static-rating::after {
-            content: '\2605\2605\2605\2605\2605'; /* Filled stars */
+            content: '\2605\2605\2605\2605\2605';
             letter-spacing: 3px;
-            color: #FFD700; /* Gold stars */
+            color: #FFD700;
             position: absolute;
             top: 0;
             left: 0;
@@ -146,7 +126,6 @@
             overflow: hidden;
             white-space: nowrap;
         }
-        
     </style>
 </head>
 <body>
@@ -157,12 +136,15 @@
     <div class="product-container">
         <div class="product-content">
             <div class="product-image">
-                <img src="../../assets/images/backpacks.png" alt="Product Image">
+                <img src="<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
             </div>
             <div class="product-info">
-                <h2>High quality Backpack</h2>
-                <p>A Backpack made with the finest of fabrics, perfect for Tech-Savvies</p>
-                <label>Average rating:<div class="static-rating" style="--rating: 4.25"></div></label>
+                <h2><?php echo htmlspecialchars($product['name']); ?></h2>
+                <p><?php echo htmlspecialchars($product['description']); ?></p>
+                <label>Average rating:
+                    <div class="static-rating" style="--rating: <?php echo htmlspecialchars($product['rating']); ?>"></div>
+                </label>
+                <!-- Example select options; you might adjust them based on product type -->
                 <p><strong>Color:</strong></p>
                 <select>
                     <option>Black</option>
@@ -177,49 +159,35 @@
                     <option>Large</option>
                     <option>XL</option>
                 </select>
-                <p><strong>Price:</strong> $49.99</p>
-        
+                <p><strong>Price:</strong> $<?php echo htmlspecialchars($product['price']); ?></p>
             </div>
         </div>
     
+        <!-- Add to cart button -->
+        <div class="add-to-cart-container">
+            <a href="#" class="add-to-cart">Add to Cart</a>
+        </div>
 
-    <!-- Add to cart button -->
-    <div class="add-to-cart-container">
-        <a href="#" class="add-to-cart">Add to Cart</a>
-    </div>
-
-    <!-- Reviews section -->
-    <div class="reviews-section">
+        <!-- Reviews section -->
+        <div class="reviews-section">
             <h2>User Reviews</h2>
             <div class="reviews-container">
+                <!-- Static reviews for demonstration -->
                 <div class="review">
                     <strong>Emily R.</strong> <div class="static-rating" style="--rating: 5.0"></div>
-                    <p>Absolutely love this backpack! It's stylish and fits everything I need. Highly recommend!</p>
+                    <p>Absolutely love this product! Highly recommend!</p>
                 </div>
-
                 <div class="review">
                     <strong>John D.</strong> <div class="static-rating" style="--rating: 4.0"></div>
-                    <p>Great quality and very comfortable to wear. The only downside is that I wish it had more compartments.</p>
+                    <p>Great quality and very comfortable to use.</p>
                 </div>
-
                 <div class="review">
                     <strong>Sophia M.</strong> <div class="static-rating" style="--rating: 5.0"></div>
                     <p>This backpack exceeded my expectations! The material is durable and the design is sleek.</p>
                 </div>
-
                 <div class="review">
                     <strong>Michael B.</strong> <div class="static-rating" style="--rating: 3.0"></div>
                     <p>Good overall, but the straps could be more padded for extra comfort.</p>
-                </div>
-
-                <div class="review">
-                    <strong>Alex T.</strong> <div class="static-rating" style="--rating: 5.0"></div>
-                    <p>Amazing product! I use it daily, and it still looks brand new.</p>
-                </div>
-
-                <div class="review">
-                    <strong>Linda G.</strong> <div class="static-rating" style="--rating: 4.0"></div>
-                    <p>Very spacious and lightweight. Perfect for traveling.</p>
                 </div>
             </div>
         </div> 
@@ -230,6 +198,7 @@
 
     <!-- Authentication Modal -->
     <?php require_once __DIR__ . '/../../assets/php/auth.php'; ?>
-
+    
+    <script src="/assets/js/main.js"></script>
 </body>
 </html>

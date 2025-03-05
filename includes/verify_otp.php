@@ -1,9 +1,8 @@
 <?php
-require_once __DIR__ . '/secure_session.php';
 header("Content-Type: application/json");
 ob_start(); // Start output buffering
 
-require_once "db.php";
+require_once __DIR__ . '/db.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
 

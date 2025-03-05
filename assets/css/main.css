@@ -1183,4 +1183,34 @@ footer {
 .product-image:hover .hover-overlay {
   opacity: 1;
 }
-/* ... */
+
+/* Cart Sidebar Panel */
+#cartSidebar {
+  position: fixed;
+  top: 0;
+  left: -50%; /* Hidden off-screen initially */
+  width: 30%;
+  height: 100%;
+  background: #fff;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+  transition: left 0.3s ease;
+  z-index: 1500;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Active state: slide in from the left */
+#cartSidebar.active {
+  left: 0;
+}
+
+/* Close button styling */
+#closeCart {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  font-size: 28px;
+  cursor: pointer;
+}
