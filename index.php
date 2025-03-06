@@ -9,7 +9,6 @@ $popularProducts = getPopularProducts(9);
 <head>
   <title>TechSavvies</title>
   <?php require_once __DIR__ . '/assets/php/main.php'; ?>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
