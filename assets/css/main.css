@@ -307,6 +307,16 @@ nav ul li {
 	padding: 120px 20px 30px;
 }
 
+/* Add specific class for policy/terms/about pages to make the footer sticky to the bottom of the apge */
+.main-content.document-page {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 140px 40px 40px;
+	background-color: #ffffff;
+	border-radius: 10px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	line-height: 1.8;
+}
 .section-title {
 	text-align: center;
 	margin-bottom: 40px;
@@ -399,7 +409,7 @@ nav ul li {
 .slider {
 	position: relative;
 	overflow: hidden;
-	padding: 40px 40px; /* Increased vertical padding */
+	padding: 40px 40px;
 	margin: 0 auto;
 	max-width: 1000px;
 }
@@ -415,6 +425,46 @@ nav ul li {
 	flex: 0 0 300px;
 	display: flex;
 	justify-content: center;
+}
+
+/* Add responsive styles */
+@media (max-width: 768px) {
+	.slider {
+		padding: 20px 40px;
+		max-width: 340px;
+	}
+
+	.slide {
+		flex: 0 0 100%;
+		min-width: 260px; /* Ensure minimum width */
+	}
+
+	.product-card {
+		width: 100%;
+		max-width: 260px;
+		margin: 0 auto;
+	}
+
+	.prev {
+		left: 5px;
+		z-index: 20;
+	}
+
+	.next {
+		right: 5px;
+		z-index: 20;
+	}
+}
+
+@media (max-width: 480px) {
+	.slider {
+		padding: 20px 0;
+	}
+
+	.product-card img {
+		width: 180px;
+		height: 180px;
+	}
 }
 
 /* Product Card */

@@ -5,6 +5,22 @@
   <?php require_once __DIR__ . '/assets/php/main.php'; ?>
   <link rel="stylesheet" href="assets/css/main.css" />
   <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .main-content {
+      flex: 1;
+      max-width: 800px;
+      margin: 140px auto;
+      padding: 40px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      line-height: 1.8;
+    }
+
     .team-section {
       padding: 60px 20px;
       background: var(--light-bg);
@@ -58,10 +74,7 @@
       height: 24px;
       vertical-align: middle;
     }
-    /* Adjust main content top padding so header doesn't overlap */
-    .main-content {
-      padding-top: 120px;
-    }
+     
     /* Navigation styling adjustments (if needed) */
     nav ul {
       list-style: none;
@@ -83,7 +96,7 @@
   <?php require_once __DIR__ . '/assets/php/header.php'; ?>
 
   <!-- Main Content -->
-  <div class="main-content">
+  <div class="main-content document-page">
     <!-- Team Section -->
     <section class="team-section">
       <h2 class="section-title">TechSavvies Team ^.^</h2>
@@ -166,6 +179,9 @@
 
   <!-- Authentication Modal -->
   <?php require_once __DIR__ . '/assets/php/auth.php'; ?>
+  
+  <!-- Footer Section -->
+  <?php require_once __DIR__ . '/assets/php/footer.php'; ?>
   
   <script src="assets/js/main.js"></script>
 </body>

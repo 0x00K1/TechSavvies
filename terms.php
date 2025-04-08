@@ -6,7 +6,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/main.css" />
   <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
     .main-content {
+      flex: 1;
       max-width: 800px;
       margin: 140px auto;
       padding: 40px;
@@ -60,7 +66,7 @@
   <?php require_once __DIR__ . '/assets/php/header.php'; ?>
 
   <!-- Terms of Service Content -->
-  <div class="main-content">
+  <div class="main-content document-page">
     <h1>Terms of Service</h1>
     <p>By using TechSavvies, you agree to the following terms and conditions.</p>
     
