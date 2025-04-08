@@ -53,7 +53,7 @@ toolbar
 =================== */
 /* Base toolbar styling */
 .toolbar {
-  width: 15%;
+  width: 17%;
   min-width: 200px;
   background-color: var(--light-bg);
   padding: 1.5rem;

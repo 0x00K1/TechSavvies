@@ -29,6 +29,8 @@
             <nav class="nav">
                 <button id="managePro_button"><img class="b-icon" src="..\assets\icons\Product.svg"><span>Products
                         Management</span></button>
+                <button id="manageUser_button"><img class="b-icon" src="..\assets\icons\User.svg"><span>Users
+                        Management</span></button>
                 <button id="Orders_button"><img class="b-icon"
                         src="..\assets\icons\Orders.svg"><span>Orders</span></button>
                 <button id="transactions_button"><img class="b-icon"
@@ -48,6 +50,10 @@
                     Products page
                     ________________________________________-->
                 <?php include('..\assets\php\root_php\products.php')?>  <!-- our filr:product.php-->
+                <!-- _________________________________________
+                    users page
+                    ________________________________________-->
+                <?php include('..\assets\php\root_php\users.php')?>  
                 <!-- _________________________________________
                     orders page
                     ________________________________________-->
