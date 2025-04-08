@@ -168,3 +168,49 @@ a.card_grid:hover {
 .external_grid > .no-products {
   grid-column: 1 / -1;
 }
+
+/* make the design responsive */
+@media screen and (max-width: 1200px) {
+    .external_grid {
+        grid-template-columns: repeat(2, 0.75fr);
+        margin: 8%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .external_grid {
+        grid-template-columns: repeat(1, 1fr);
+        margin: 5%;
+        grid-gap: 30px;
+    }
+
+    .product {
+        width: 70%;
+        margin: 0 auto;
+    }
+
+    .product h1 {
+        font-size: 24px;
+    }
+
+    .product h5 {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .external_grid {
+        margin: 3%;
+        grid-gap: 20px;
+    }
+
+    .product {
+        width: 90%;
+        height: auto;
+        min-height: 400px;
+    }
+
+    .product img {
+        min-height: 175px;
+    }
+}
