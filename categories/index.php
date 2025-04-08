@@ -39,8 +39,8 @@ if ($type) {
         <?php foreach ($filteredProducts as $id => $product): ?>
         <!-- Wrap the product card with a link to the product details page -->
         <a href="/categories/products/?product_id=<?php echo htmlspecialchars(urlencode($product['product_id'])); ?>" class="card_grid">
-          <div class="product">
-            <img src="<?php echo $product['image']; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
+          <div class="product"> <!--placeholder image for products-->
+            <img src="../assets/images/Products/Front.png" alt="<?= htmlspecialchars($product['name']) ?>"> // 
             <h1><?php echo htmlspecialchars($product['name']); ?></h1>
             <h5><?php echo htmlspecialchars($product['description']); ?></h5>
             <div class="static-rating" style="--rating: <?php echo htmlspecialchars($product['rating']); ?>;"></div>
@@ -53,6 +53,9 @@ if ($type) {
 
   <!-- Authentication Modal -->
   <?php require_once __DIR__ . '/../assets/php/auth.php'; ?>
+
+  <!-- Footer Section -->
+  <?php require_once __DIR__ . '/../assets/php/footer.php'; ?>
 
   <script src="/assets/js/main.js"></script>
 </body>

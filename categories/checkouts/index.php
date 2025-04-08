@@ -5,12 +5,20 @@
   <?php require_once __DIR__ . '/../../assets/php/main.php'; ?>
   <link rel="stylesheet" href="../../assets/css/main.css">
   <style>
+    /*To make the footer sticky */
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+    }
     :root {
       --secondary-color: #f4f4f4;
       --button-bg: linear-gradient(135deg, #0117ff, #8d07cc, #d42d2d);
     }
     
     .checkout-container {
+      flex: 1;                           /* to make the footer stick to the bottom */
       max-width: 1200px;
       margin: 50px auto;
       padding: 0 20px;
@@ -392,7 +400,7 @@
 
         <div class="cart-item">
           <img
-            src="../assets/images/Products/Brand/T-shirt/Front.png"
+            src="/TechSavvies/assets/images/Products/Brand/T-shirt/Front.png"
             alt="Black T-shirt with Logo"
           />
           <div class="cart-item-info">
@@ -432,7 +440,10 @@
 
   <!-- Authentication Modal -->
   <?php require_once __DIR__ . '/../../assets/php/auth.php'; ?>
-  
+ 
+  <!-- Footer Section -->
+  <?php require_once __DIR__ . '/../../assets/php/footer.php'; ?>
+
   <script src="../../assets/js/main.js"></script>
 </body>
 </html>

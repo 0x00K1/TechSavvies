@@ -22,7 +22,7 @@
   <!-- Logout Message -->
   <div class="main-content" style="text-align: center; padding: 50px;">
     <img
-      src="/assets/images/logout.png"
+      src="/TechSavvies/assets/images/logout.png"
       alt="Logged Out"
       style="max-width:200px; margin-top:100px; margin-bottom:20px; display:block; margin-left:auto; margin-right:auto;"
     />
