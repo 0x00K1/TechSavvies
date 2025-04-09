@@ -1,5 +1,5 @@
 <?php 
-include ('E:\Repsitries\TechSavvies\includes\db.php');
+include ('..\..\includes\db.php');
 // SQL query to fetch data (example: fetch all from 'users' table)
 $sql = "SELECT * FROM customers";   //database got update and users is customers
 $stmt = $pdo->prepare($sql);
