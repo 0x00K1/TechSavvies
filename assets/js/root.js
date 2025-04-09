@@ -525,13 +525,15 @@ class tableFetcher {
     
         const prevButton = paginationContainer.querySelector('#prev-page');
         const nextButton = paginationContainer.querySelector('#next-page');
+        const pageNumberInput = paginationContainer.querySelector('#current-page');
         const paginationInfo = paginationContainer.querySelector('.pagination-info');
         const rowsPerPageInput = document.getElementById(this.rowsPerPageInputId); // Get it directly by ID
     
-        if (!prevButton || !nextButton  || !paginationInfo || !rowsPerPageInput) {
+        if (!prevButton || !nextButton || !pageNumberInput || !paginationInfo || !rowsPerPageInput) {
             console.warn('One or more pagination control elements are missing in the DOM.'); // Changed to warn as rowsPerPageInput might be outside
             if (!prevButton) console.warn('#prev-page missing');
             if (!nextButton) console.warn('#next-page missing');
+            if (!pageNumberInput) console.warn('#current-page missing');
             if (!paginationInfo) console.warn('.pagination-info missing');
             if (!rowsPerPageInput) console.warn(`#${this.rowsPerPageInputId} missing`);
             return;
@@ -541,9 +543,8 @@ class tableFetcher {
     
         prevButton.disabled = this.currentPage === 1;
         nextButton.disabled = this.currentPage === totalPages;
-        
-
-        var pageNumberInput = this.currentPage;
+    
+        pageNumberInput.value = this.currentPage;
         rowsPerPageInput.value = this.rowsPerPage; // Set the initial value of the input
     
         const startItem = (this.currentPage - 1) * this.rowsPerPage + 1;
