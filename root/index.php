@@ -10,12 +10,13 @@
 <html lang="en">
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <?php require_once __DIR__ . '/../assets/php/main.php'; ?>
     <link rel="stylesheet" href="..\assets\css\main.css">
     <link rel="stylesheet" href="..\assets\css\root.css">
     <title>Root</title>
 </head>
-
 <body>
     <!-- ##################################
             Header Section 
@@ -35,8 +36,8 @@
                         src="..\assets\icons\transaction.svg"><span>Transactions</span></button>
                 <button id="Reviews_button"><img class="b-icon"
                         src="..\assets\icons\review.svg"><span>Reviews</span></button>
-                <button id="Logout_button"><svg class="b-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14 4L17.5 4C20.5577 4 20.5 8 20.5 12C20.5 16 20.5577 20 17.5 20H14M3 12L15 12M3 12L7 8M3 12L7 16" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                <span>Logout</span></button>
+                <button id="Logout_button"><img class="b-icon" 
+                src="..\assets\images\logout.png"><span>Logout</span></button>
             </nav>
         </div>
         <!-- ##################################
@@ -62,14 +63,17 @@
                     reviews page
                     ________________________________________-->
                 <?php include('..\assets\php\root_php\reviews.php')?>
+            </div> 
+        </div>  
+
         <!-- ##################################
             popup_forms Section 
-    ####################################-->
+        ####################################-->
         <div id="addProPopup_display" class="addProPopup">
             <span class="close" onclick="closeaddProPopup()">&times;</span>
             <form name="add_product_form" id="addProduct_form" method="post" action="index.php">
                 <div id="add_display" class="AddProduct">
-                    <div style="display: inline;">
+                    <div class="form-row">
                         <label for="product_name">Product Name:</label>
                         <input type="text" name="product_name" id="product_name" placeholder="Enter the product's name"
                             maxlength="255" required>
@@ -81,30 +85,29 @@
                             <option value="test1"></option>
                             <option value="test2"></option>
                         </datalist>
+                    </div>
 
-                    <div id="imageContainer">
+                    <div id="imageContainer" class="form-row">
                         <label for="imageUpload">Upload Image:</label>
                         <input id="imageUpload" type="file" name="image" accept="image/*">
 
-  
                         <label for="ProductDescreption">Product Description:</label>
-                        <textarea id="ProductDescreption" placeholder="Product description" naem="ProductDescreption"
+                        <textarea id="ProductDescreption" placeholder="Product description" name="ProductDescreption"
                             required></textarea>
 
                         <label for="product_color">Product Color:</label>
                         <input type="text" name="product_color" id="product_color"
                             placeholder="Enter the product's color" maxlength="255" required>
                     </div>
-                    <div style="display: inline;">
+                    
+                    <div class="form-row">
                         <label for="product_size">Product Size:</label>
                         <input type="text" name="product_size" id="product_size" placeholder="Enter the product's size"
                             maxlength="50" required>
 
-
                         <label for="product_price">Product Price:</label>
                         <input type="number" name="product_price" id="product_price"
                             placeholder="Enter the product's price" step="0.01" required>
-
 
                         <label for="product_stock">Product Stock:</label>
                         <input type="number" name="product_stock" id="product_stock"
@@ -114,11 +117,11 @@
                 </div>
             </form>
         </div>
+    </div>  
 
-        <!-- ##################################
-            script Section 
+    <!-- ##################################
+        script Section 
     ####################################-->
-        <script src="../assets/js/root.js"></script> <!-- keep last in body so all html elemnts are loaded-->
+    <script src="../assets/js/root.js"></script>
 </body>
-
 </html>

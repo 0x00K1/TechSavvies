@@ -1,4 +1,5 @@
 <div class="content" id="Reviews_Display">
+    <h2 class="page-title">Reviews</h2>
     <?php include("search_rows.php")?>
     <div class="table-container">
         <table id="transactions-table">
