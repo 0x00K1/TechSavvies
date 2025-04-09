@@ -50,11 +50,38 @@ document.addEventListener('DOMContentLoaded', function() {
      // Implementation for manageUser_button
      manageUser_button.addEventListener('click', function() {
          setActiveTab(users_display, manageUser_button);
+         const userTable = new tableFetcher({
+            url: 'http://techsavvies.local/api/users/list.php',
+            connectionType: 'api',
+            tableName: 'customers',  //name in database
+            columnNames: ['customer_id','email','username','created_at'], // names in the database
+            currentPage: 1,
+            rowsPerPage: 2,
+            sortColumn: 'customer_id',
+            sortDirection: 'asc'
+        }); 
+
+        const usersTableBody = document.getElementById('users-table-body');
+        userTable.fetchData();
+        userTable.renderTable(usersTableBody);
      });
  
      Orders_button.addEventListener('click', function() {
          setActiveTab(orders_display, Orders_button);
-         
+         const ordersTable = new tableFetcher({
+            url: 'http://techsavvies.local/api/orders/list.php',
+            connectionType: 'api',
+            tableName: 'orders',  //name in database
+            columnNames: ['order_id','customer_id','status','total_amount'], // names in the database
+            currentPage: 1,
+            rowsPerPage: 2,
+            sortColumn: 'order_id',
+            sortDirection: 'asc'
+        }); 
+
+        const ordersTableBody = document.getElementById('orders-table-body');
+        ordersTable.fetchData();
+        ordersTable.renderTable(ordersTableBody);
         
      });
  
