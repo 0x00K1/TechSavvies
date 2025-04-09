@@ -7,7 +7,7 @@
                     Search
                 </button>
                 <span class="rows_label">Rows:</span>
-                <input type="number" name="rows_per_page" id="users_rows_per_page" class="filter_value_style" onchange="changeRowsPerPage()" list="rowsPerPageOptions">
+                <input type="number" name="rows_per_page" id="users_rows_per_page" class="filter_value_style"  list="rowsPerPageOptions">
                 <datalist id="rowsPerPageOptions">
                     <option value="25">25</option>
                     <option value="50">50</option>
@@ -20,8 +20,8 @@
     <table id="users-table">
         <thead>
             <tr><th data-sort="customer_id">customer_id <span class="sort-icon">↕</span></th>
-                <th data-sort="user_name">User name<span class="sort-icon">↕</span></th>
-                <th data-sort="country">Country<span class="sort-icon">↕</span></th>
+                <th data-sort="email">email<span class="sort-icon">↕</span></th>
+                <th data-sort="username">username<span class="sort-icon">↕</span></th>
                 <th data-sort="created_at">Created at<span class="sort-icon">↕</span></th>
 
                 <th>Actions</th>
@@ -33,13 +33,12 @@
         </table>
     </div>
 
-    <div class="pagination">
-        <!-- keep here or refrence as a single php file?-->
-        <div class="pagination-info">
+    <div class="users-pagination" id="users-pagination">
+        <div class="pagination-info" id="pagination-info">
             Showing <span id="showing-start">1</span> to <span id="showing-end">10</span> of <span
                 id="total-items">100</span> items
         </div>
-        <div class="pagination-controls">
+        <div class="pagination-controls" id="pagination-controls">
             <button type="button" id="prev-page" class="pagination-button" disabled>&laquo; Previous</button>
             <button type="button" id="next-page" class="pagination-button">Next &raquo;</button>
         </div>

@@ -68,20 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
  
      Orders_button.addEventListener('click', function() {
          setActiveTab(orders_display, Orders_button);
-         const ordersTable = new tableFetcher({
-            url: '../../api/orders/list.php',
-            connectionType: 'api',
-            tableName: 'orders',  //name in database
-            columnNames: ['order_id','customer_id','status','total_amount'], // names in the database
-            currentPage: 1,
-            rowsPerPage: 2,
-            sortColumn: 'order_id',
-            sortDirection: 'asc'
-        }); 
-
-        const ordersTableBody = document.getElementById('orders-table-body');
-        ordersTable.fetchData();
-        ordersTable.renderTable(ordersTableBody);
+         
         
      });
  
@@ -94,9 +81,8 @@ document.addEventListener('DOMContentLoaded', function() {
      });
  
      //search functionality
-     search_button.addEventListener('click', function() {
-         //nothing for now
-     });
+   //  search_button.addEventListener('click', function() {    
+    // });
  
      logout_button.addEventListener('click', function() {
          const confirmLogout = confirm("Are you sure you want to log out?");
@@ -344,14 +330,9 @@ class tableFetcher {
         this.rowsPerPage = options.rowsPerPage || 100;
         this.sortColumn = options.sortColumn || (this.columnNames.length > 0 ? this.columnNames[0] : null);
         this.sortDirection = options.sortDirection || 'asc';
-        this.data = []; // To store the fetched data
-
-        // Optional: Initialize connection based on connectionType
-        if (this.connectionType === 'api') {
-            console.log('Fetching data from API...');
-        } else {
-            console.log('Using local data...');
-        }
+        this.data = []; // To use data in array
+        this.paginationContainerId = options.paginationContainerId || 'users-pagination'; // Default for pagination container
+        this.rowsPerPageInputId = options.rowsPerPageInputId || 'users_rows_per_page'; // Default for rows per page input
     }
 
     // Method to set the data (for local data or after fetching from API/DB)
@@ -364,7 +345,7 @@ class tableFetcher {
     fetchData() {
         if (this.connectionType === 'api') {
             console.log(`Workspaceing data from API endpoint: ${this.url}`);
-            fetch(this.url)
+            fetch(`${this.url}?page=${this.currentPage}&limit=${this.rowsPerPage}&sort=${this.sortColumn}&order=${this.sortDirection}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
@@ -372,14 +353,16 @@ class tableFetcher {
                     return response.json();
                 })
                 .then(data => {
-                    if (data && Array.isArray(data)) {
+                    if (Array.isArray(data)) { // Check if the data is an array
                         this.setData(data);
+                        this.renderPaginationControls(data.length); // Total rows is the length of the array
                     } else if (data && data.error) {
                         console.error('API Error:', data.error);
                         // Optionally display an error message to the user
                     } else {
-                        console.warn('API response is not an array:', data);
+                        console.warn('API response is not in the expected format:', data);
                         this.setData([]); // Set to empty array if data is not in expected format
+                        this.renderPaginationControls(0);
                     }
                 })
                 .catch(error => {
@@ -388,9 +371,10 @@ class tableFetcher {
                 });
         } else {
             console.log('No API endpoint specified or connection type is not set to "api".');
+            this.renderPaginationControls(this.data.length); // For local data, use the length of the data array
+            this.renderTable(this.tableBodyElement);
         }
     }
-
     updateSort(column) {
         if (this.sortColumn === column) {
             this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
@@ -399,18 +383,30 @@ class tableFetcher {
             this.sortDirection = 'asc';
         }
         this.currentPage = 1; // Reset to the first page after sorting
-        this.renderTable(this.tableBodyElement);
+        if (this.connectionType === 'api') {
+            this.fetchData(); // Re-fetch data from API with updated sorting
+        } else {
+            this.renderTable(this.tableBodyElement);
+        }
     }
 
     updatePagination(pageNumber) {
         this.currentPage = pageNumber;
-        this.renderTable(this.tableBodyElement);
+        if (this.connectionType === 'api') {
+            this.fetchData(); // Re-fetch data from API for the new page
+        } else {
+            this.renderTable(this.tableBodyElement);
+        }
     }
 
     updateRowsPerPage(rows) {
         this.rowsPerPage = rows;
         this.currentPage = 1; // Reset to the first page after changing rows per page
-        this.renderTable(this.tableBodyElement);
+        if (this.connectionType === 'api') {
+            this.fetchData(); // Re-fetch data from API with updated rows per page
+        } else {
+            this.renderTable(this.tableBodyElement);
+        }
     }
 
     renderTable(tableBody) {
@@ -421,10 +417,13 @@ class tableFetcher {
         this.tableBodyElement = tableBody; // Store the table body element
         tableBody.innerHTML = '';
 
-        const sortedData = this.sortData();
-        const paginatedData = this.paginateData(sortedData);
+        let dataToRender = this.data;
+        if (this.connectionType !== 'api') {
+            const sortedData = this.sortData();
+            dataToRender = this.paginateData(sortedData);
+        }
 
-        paginatedData.forEach(item => {
+        dataToRender.forEach(item => {
             const row = document.createElement('tr');
             row.setAttribute('data-id', item.id); // Assuming each item has an 'id'
 
@@ -463,7 +462,10 @@ class tableFetcher {
         });
 
         this.updateSortIndicators();
-        this.renderPaginationControls(this.data.length); // Use the total number of fetched data for pagination
+        if (this.connectionType !== 'api') {
+            this.renderPaginationControls(this.data.length); // Use the total number of fetched data for pagination
+        }
+        // For API, renderPaginationControls is called after fetching data
     }
 
     sortData() {
@@ -515,70 +517,71 @@ class tableFetcher {
     }
 
     renderPaginationControls(totalRows) {
-        const paginationContainerId = 'pagination-controls'; // You might want to make this configurable
-        let paginationContainer = document.getElementById(paginationContainerId);
-
+        const paginationContainer = document.getElementById(this.paginationContainerId);
         if (!paginationContainer) {
-            // Create the container if it doesn't exist
-            paginationContainer = document.createElement('div');
-            paginationContainer.id = paginationContainerId;
-            if (this.tableBodyElement && this.tableBodyElement.parentNode) {
-                this.tableBodyElement.parentNode.insertBefore(paginationContainer, this.tableBodyElement.nextSibling);
-            } else {
-                console.warn('Could not find a suitable place to render pagination controls.');
-                return;
-            }
+            console.error(`Pagination container with ID "${this.paginationContainerId}" not found.`);
+            return;
         }
-
-        paginationContainer.innerHTML = ''; // Clear previous controls
-
+    
+        const prevButton = paginationContainer.querySelector('#prev-page');
+        const nextButton = paginationContainer.querySelector('#next-page');
+        const paginationInfo = paginationContainer.querySelector('.pagination-info');
+        const rowsPerPageInput = document.getElementById(this.rowsPerPageInputId); // Get it directly by ID
+    
+        if (!prevButton || !nextButton  || !paginationInfo || !rowsPerPageInput) {
+            console.warn('One or more pagination control elements are missing in the DOM.'); // Changed to warn as rowsPerPageInput might be outside
+            if (!prevButton) console.warn('#prev-page missing');
+            if (!nextButton) console.warn('#next-page missing');
+            if (!paginationInfo) console.warn('.pagination-info missing');
+            if (!rowsPerPageInput) console.warn(`#${this.rowsPerPageInputId} missing`);
+            return;
+        }
+    
         const totalPages = Math.ceil(totalRows / this.rowsPerPage);
-
-        if (totalPages <= 1) return; // No need for pagination if only one page
-
-        const prevButton = document.createElement('button');
-        prevButton.textContent = 'Previous';
+    
         prevButton.disabled = this.currentPage === 1;
+        nextButton.disabled = this.currentPage === totalPages;
+        
+
+        var pageNumberInput = this.currentPage;
+        rowsPerPageInput.value = this.rowsPerPage; // Set the initial value of the input
+    
+        const startItem = (this.currentPage - 1) * this.rowsPerPage + 1;
+        const endItem = Math.min(this.currentPage * this.rowsPerPage, totalRows);
+    
+        paginationInfo.innerHTML = `Showing <span id="showing-start">${startItem}</span> to <span id="showing-end">${endItem}</span> of <span id="total-items">${totalRows}</span> items`;
+    
+        // Update event listeners
         prevButton.onclick = () => {
             if (this.currentPage > 1) {
                 this.updatePagination(this.currentPage - 1);
             }
         };
-        paginationContainer.appendChild(prevButton);
-
-        // Display page numbers (you can customize this based on the number of pages)
-        for (let i = 1; i <= totalPages; i++) {
-            const pageButton = document.createElement('button');
-            pageButton.textContent = i;
-            pageButton.className = i === this.currentPage ? 'active' : '';
-            pageButton.onclick = () => this.updatePagination(i);
-            paginationContainer.appendChild(pageButton);
-        }
-
-        const nextButton = document.createElement('button');
-        nextButton.textContent = 'Next';
-        nextButton.disabled = this.currentPage === totalPages;
+    
         nextButton.onclick = () => {
             if (this.currentPage < totalPages) {
                 this.updatePagination(this.currentPage + 1);
             }
         };
-        paginationContainer.appendChild(nextButton);
-
-        // Add rows per page selector (optional)
-        const rowsPerPageLabel = document.createElement('label');
-        rowsPerPageLabel.textContent = 'Rows per page: ';
-        const rowsPerPageSelect = document.createElement('select');
-        [10, 50, 100, 200].forEach(optionValue => {
-            const option = document.createElement('option');
-            option.value = optionValue;
-            option.textContent = optionValue;
-            option.selected = this.rowsPerPage === optionValue;
-            rowsPerPageSelect.appendChild(option);
+    
+        pageNumberInput.onchange = (event) => {
+            const page = parseInt(event.target.value);
+            if (!isNaN(page) && page >= 1 && page <= totalPages) {
+                this.updatePagination(page);
+            } else {
+                pageNumberInput.value = this.currentPage; // Reset to current page if invalid input
+            }
+        };
+    
+        // Attach event listener to the existing rows per page input
+        rowsPerPageInput.addEventListener('change', (event) => {
+            const rows = parseInt(event.target.value);
+            if (!isNaN(rows) && rows > 0) {
+                this.updateRowsPerPage(rows);
+            } else {
+                rowsPerPageInput.value = this.rowsPerPage; // Reset to current value if invalid input
+            }
         });
-        rowsPerPageSelect.onchange = (event) => this.updateRowsPerPage(parseInt(event.target.value));
-        paginationContainer.appendChild(rowsPerPageLabel);
-        paginationContainer.appendChild(rowsPerPageSelect);
     }
 
     // Example methods for row actions (you would implement these based on your needs)

@@ -51,25 +51,3 @@
     </div>
 </div>
 
-<script>
-const ordersTable = new tableFetcher({
-    tableElement: document.getElementById('orders-table'),
-    url: 'http://techsavvies.local/api/orders/list.php',
-    connectionType: 'api',
-    tableName: 'orders', //name in database
-    columnNames: ['order_id', 'customer_id', 'status', 'total_amount'], // names in the database
-    currentPage: 1,
-    rowsPerPage: 100,
-    sortColumn: 'order_id',
-    sortDirection: 'asc'
-    paginationInfoElement: document.querySelector('#orders_display .pagination-info');
-    prevPageButton: document.querySelector('#orders_display #prev-page');
-    nextPageButton: document.querySelector('#orders_display #next-page');
-    paginationControlsElement: document.querySelector('#orders_display .pagination-controls');
-    rowsPerPageInput: document.getElementById('orders_rows_per_page');
-});
-
-const ordersTableBody = document.getElementById('orders-table-body');
-ordersTable.fetchData();
-ordersTable.renderTable(ordersTableBody);
-</script>
