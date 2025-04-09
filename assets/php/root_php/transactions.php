@@ -1,5 +1,5 @@
 <div class="content" id="Transactions_display">
-   <?php include("search_rows.php")?>
+  <!-- <?php include("search_rows.php")?> -->
     <div class="table-container">
         <table id="transactions-table">
             <thead>
@@ -34,17 +34,3 @@
     </div>
 </div>
 
-<script>
-const sampleProducts = [{
-        Payment_ID: 1,
-        Order_ID: 3,
-        User_ID: 2,
-        Username: "Afnan_3xx",
-        Payment_Method: "credit card",
-        Payment_Status: "Complete",
-        Transaction_ID: 12,
-        Amount: 12.75,
-        Created_At: "2025-02-27"
-    }]
-/* call initilize function*/
-</script>

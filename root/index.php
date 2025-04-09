@@ -13,6 +13,7 @@
     <?php require_once __DIR__ . '/../assets/php/main.php'; ?>
     <link rel="stylesheet" href="..\assets\css\main.css">
     <link rel="stylesheet" href="..\assets\css\root.css">
+    <script src="../assets/js/root.js"></script>
     <title>Root</title>
 </head>
 
@@ -120,11 +121,6 @@
                 </div>
             </form>
         </div>
-
-        <!-- ##################################
-            script Section 
-    ####################################-->
-        <script src="../assets/js/root.js"></script> <!-- keep last in body so all html elemnts are loaded-->
 </body>
 
 </html>

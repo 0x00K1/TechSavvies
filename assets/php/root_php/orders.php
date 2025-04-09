@@ -1,23 +1,40 @@
 <div id="orders_display" class="content">
-    <?php include("search_rows.php")?>
+    <div class="top-controls">
+        <div class="search_div">
+            <input class="search-field_style" name="orders_search_field" id="orders_search_field" type="text"
+                placeholder="Search... attribute:key ex(name:ft7y)" />
+            <button class="search-button_style" name="search_button" id="orders_search_button" type="submit">
+                Search
+            </button>
+            <span class="rows_label">Rows:</span>
+            <input type="number" name="rows_per_page" id="orders_rows_per_page" class="filter_value_style"
+                onchange="changeRowsPerPage('orders')" list="rowsPerPageOptions">
+            <datalist id="rowsPerPageOptions">
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="250">250</option>
+            </datalist>
+        </div>
+    </div>
     <div class="table-container">
-    <table id="products-table">
-        <thead>
-            <tr>
-                <th data-sort="Order_ID">Order ID <span class="sort-icon">↕</span></th>
-                <th data-sort="Order_Date">Order Date<span class="sort-icon">↕</span></th>
-                <th data-sort="Product_ID">Product ID <span class="sort-icon">↕</span></th>
-                <th data-sort="Product_Name">Product Name<span class="sort-icon">↕</span></th>
-                <th data-sort="Quantity">Quantity <span class="sort-icon">↕</span></th>
-                <th data-sort="Price_per_Unit">Price per Unit<span class="sort-icon">↕</span></th>
-                <th data-sort="Total_Price">Total Price<span class="sort-icon">↕</span></th>
+        <table id="orders-table">
+            <thead>
+                <tr>
+                    <th data-sort="Order_ID">Order ID <span class="sort-icon">↕</span></th>
+                    <th data-sort="Order_Date">Order Date<span class="sort-icon">↕</span></th>
+                    <th data-sort="Product_ID">Product ID <span class="sort-icon">↕</span></th>
+                    <th data-sort="Product_Name">Product Name<span class="sort-icon">↕</span></th>
+                    <th data-sort="Quantity">Quantity <span class="sort-icon">↕</span></th>
+                    <th data-sort="Price_per_Unit">Price per Unit<span class="sort-icon">↕</span></th>
+                    <th data-sort="Total_Price">Total Price<span class="sort-icon">↕</span></th>
 
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="transactions-table-body">
-            <!-- Table rows will be added dynamically via JavaScript -->
-        </tbody>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="orders-table-body">
+                <!-- Table rows will be added dynamically via JavaScript -->
+            </tbody>
         </table>
     </div>
 
@@ -33,3 +50,26 @@
         </div>
     </div>
 </div>
+
+<script>
+const ordersTable = new tableFetcher({
+    tableElement: document.getElementById('orders-table'),
+    url: 'http://techsavvies.local/api/orders/list.php',
+    connectionType: 'api',
+    tableName: 'orders', //name in database
+    columnNames: ['order_id', 'customer_id', 'status', 'total_amount'], // names in the database
+    currentPage: 1,
+    rowsPerPage: 100,
+    sortColumn: 'order_id',
+    sortDirection: 'asc'
+    paginationInfoElement: document.querySelector('#orders_display .pagination-info');
+    prevPageButton: document.querySelector('#orders_display #prev-page');
+    nextPageButton: document.querySelector('#orders_display #next-page');
+    paginationControlsElement: document.querySelector('#orders_display .pagination-controls');
+    rowsPerPageInput: document.getElementById('orders_rows_per_page');
+});
+
+const ordersTableBody = document.getElementById('orders-table-body');
+ordersTable.fetchData();
+ordersTable.renderTable(ordersTableBody);
+</script>

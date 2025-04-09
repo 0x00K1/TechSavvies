@@ -1,5 +1,5 @@
 <div class="content" id="Reviews_Display">
-    <?php include("search_rows.php")?>
+   <!-- <?php include("search_rows.php")?> -->
     <div class="table-container">
         <table id="transactions-table">
             <thead>

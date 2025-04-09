@@ -1,10 +1,25 @@
 <div id="users_display" class="content">
-    <?php include("search_rows.php")?>
+    <div class="top-controls">
+            <div class="search_div">
+                <input class="search-field_style" name="product_search_field" id="users_search_field" type="text"
+                    placeholder="Search... attribute:key ex(name:ft7y)" />
+                <button class="search-button_style" name="search_button" id="users_search_button" type="submit">
+                    Search
+                </button>
+                <span class="rows_label">Rows:</span>
+                <input type="number" name="rows_per_page" id="users_rows_per_page" class="filter_value_style" onchange="changeRowsPerPage()" list="rowsPerPageOptions">
+                <datalist id="rowsPerPageOptions">
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="250">250</option>
+                </datalist>
+            </div>
+    </div>
     <div class="table-container">
     <table id="users-table">
         <thead>
-            <tr><th data-sort="role">Role <span class="sort-icon">↕</span></th>
-                <th data-sort="user_ID">User ID <span class="sort-icon">↕</span></th>
+            <tr><th data-sort="customer_id">customer_id <span class="sort-icon">↕</span></th>
                 <th data-sort="user_name">User name<span class="sort-icon">↕</span></th>
                 <th data-sort="country">Country<span class="sort-icon">↕</span></th>
                 <th data-sort="created_at">Created at<span class="sort-icon">↕</span></th>
@@ -30,8 +45,3 @@
         </div>
     </div>
 </div>
-
-
-<script>
-       
-</script>
