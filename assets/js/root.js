@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
      manageUser_button.addEventListener('click', function() {
          setActiveTab(users_display, manageUser_button);
          const userTable = new tableFetcher({
-            url: 'http://techsavvies.local/api/users/list.php',
+            url: '../../api/users/list.php',
             connectionType: 'api',
             tableName: 'customers',  //name in database
             columnNames: ['customer_id','email','username','created_at'], // names in the database
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
      Orders_button.addEventListener('click', function() {
          setActiveTab(orders_display, Orders_button);
          const ordersTable = new tableFetcher({
-            url: 'http://techsavvies.local/api/orders/list.php',
+            url: '../../api/orders/list.php',
             connectionType: 'api',
             tableName: 'orders',  //name in database
             columnNames: ['order_id','customer_id','status','total_amount'], // names in the database
