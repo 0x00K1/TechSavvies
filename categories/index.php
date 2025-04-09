@@ -15,15 +15,6 @@
   <div class="page_grid">
 
 
-<!--Cart Sticky Button Section -->
-<div class="div_cartStickyButton">
-    <div class="cart_stickyButton">
-        <img class="cart_icon" src="..\assets\images\cart-large-svgrepo.jpg" alt="cart icon">
-    </div>
-    <div class="num_of_items_cart_background">
-        <p class="num_of_items">1</p>
-    </div>
-</div>
 
 <div class="external_grid">
     <!-- First card -->
@@ -116,7 +107,7 @@
         <!-- Eighth card -->
         <div class="card_grid">
             <div class="product"><img src="..\assets\images\Products\Non-Brand\T-shirts\il_794xN.4342291955_pirs.png" alt="Just Put a ticket in T-shirt Light Gray">
-                <h1>Just Put a ticket in T-shirt</h1>
+                <h1>Just Put a ticket in T-shirt light gray t shirt</h1>
                 <h5>Made of pure cutton 100%,
                     YOU SHOULD NOT THINK THIS
                     IS REAL!
@@ -148,50 +139,38 @@
 
 <!-- Sidebar Navigation -->
 <nav class="sidebar">
-    <!-- Logo Section -->
-    <div class="sidebar-logo">
-        <img src="..\assets\images\logo.webp" alt="Brand Logo">
-    </div>
-
     <!-- Menu Container -->
     <div class="menu-container">
         <!-- User Menu -->
         <ul class="user-menu">
-            <li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-            <li><a href="#"><i class="fa fa-store"></i> Shop</a></li>
-            <li><a href="#"><i class="fa fa-star"></i> Popular Products</a></li>
-            <li><a href="#"><i class="fa fa-cart-shopping"></i> Cart</a></li>
-            <li><a href="#"><i class="fa fa-box"></i> Orders</a></li>
-            <li><a href="#"><i class="fa fa-envelope"></i> Contact Us</a></li>
+            <li></li><li></li><li></li><li></li><li></li>
+            <li><a href="index.php" style="color: #ffff;"><i class="fa fa-home"></i> Home</a></li>
+            <li><a href="index.php#shop" style="color: #ffff;"><i class="fa fa-store"></i> Shop</a></li>
+            <li><a href="index.php#popular" style="color: #ffff;"><i class="fa fa-star"></i> Popular Products</a></li>
+            <li><a href="#" style="color: #ffff;"><i class="fa fa-cart-shopping"></i> Cart</a></li>
+            <li><a href="index.php#contact" style="color: #ffff;"><i class="fa fa-envelope"></i> Contact Us</a></li>
+        </ul>
+    </div>
+    <div class="menu-container" hidden>
+        <ul class="admin-menu">
+        <li></li><li></li><li></li>
+            <li><a href="#" style="color: #ffff;"><i class="fa fa-tachometer-alt"></i> Dashboard</a></li>
+            <li><a href="#" style="color: #ffff;"><i class="fa fa-users"></i> Manage Users</a></li>
+            <li><a href="#" style="color: #ffff;"><i class="fa fa-box"></i> Manage Products</a></li>
+            <li><a href="#" style="color: #ffff;"><i class="fa fa-shopping-cart"></i> Orders</a></li>
+            <li><a href="#" style="color: #ffff;"><i class="fa fa-chart-line"></i> Reports</a></li>
+            <li><a href="#" style="color: #ffff;"><i class="fa fa-cogs"></i> Settings</a></li>
         </ul>
     </div>
 </nav>
 
-<!-- Admin Sidebar (Initially Hidden) -->
-<nav class="sidebar" hidden>
-<div class="sidebar-logo">
- <img src="..\assets\images\logo.webp" alt="Admin Logo">
-</div>
-<div class="menu-container">
-  <ul class="admin-menu">
-      <li><a href="#"><i class="fa fa-tachometer-alt"></i> Dashboard</a></li>
-      <li><a href="#"><i class="fa fa-users"></i> Manage Users</a></li>
-      <li><a href="#"><i class="fa fa-box"></i> Manage Products</a></li>
-      <li><a href="#"><i class="fa fa-shopping-cart"></i> Orders</a></li>
-      <li><a href="#"><i class="fa fa-chart-line"></i> Reports</a></li>
-      <li><a href="#"><i class="fa fa-cogs"></i> Settings</a></li>
-</ul>
-</div>
-</nav>
+
 
 
 
 <!-- Sidebar Navigation -->
 <nav class="sidebar">
-    <!-- Logo Section -->
-    <div class="sidebar-logo">
-        <img src="logo.webp" alt="Brand Logo">
-    </div>
+
 
     <div class="container">
         <!-- Right Sidebar (Filters Form) -->

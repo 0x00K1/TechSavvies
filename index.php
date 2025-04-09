@@ -85,7 +85,7 @@ $popularProducts = getPopularProducts(9);
     </section>
 
     <!-- Popular Products Slider -->
-    <section class="popular-products">
+    <section class="popular-products" id="popular">
         <h2 class="section-title">Popular Products</h2>
         <div class="slider">
             <div class="slider-container">

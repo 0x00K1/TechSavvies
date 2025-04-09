@@ -38,7 +38,7 @@ CREATE TABLE categories (
     FOREIGN KEY (created_by) REFERENCES roots(root_id) ON DELETE SET NULL
 );
 
-CREATE TABLE products (
+CREATE TABLE products ( -- Add more categories for ex: color and size for t-shirts any thing else will be null. Need to add more categories for different products like books should have color&size=null but add more for books like publish year.`
     product_id INT AUTO_INCREMENT PRIMARY KEY,
     category_id INT NOT NULL,
     product_name VARCHAR(255) NOT NULL,
