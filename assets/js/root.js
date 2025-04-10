@@ -182,20 +182,50 @@ class fetchTable{
         })
         .then(data => {
             console.log('Data from PHP:', data);
-            setdata(data);
             this.data = data;
-            this.renderTable(this.tableBodyElement);
+            this.renderTable();
         })
         .catch(error => {
             // Handle any errors that occurred during the fetch operation
             console.error('Error fetching data:', error);
         });
     };//fetchdata
-    renderTable(tableBodyElement){
-        if (!tableBodyElement) {
+    renderTable(){
+        const tableBodyE= this.tableBodyElement;
+        if (!tableBodyE) {
             console.error('Table body element is not provided.');
             return;
         }
+        tableBodyE.innerHTML = '';
+
+        //creating the table head
+        const header = document.createElement('thead');
+        const hrow = document.createElement('tr'); 
+        
+       //fill table head
+        tableBodyE.appendChild(header);
+        header.appendChild(hrow);
+
+        this.columnName.forEach(column => {
+            const hdata = document.createElement('th');
+            hdata.innerHTML = column +'<span class="sort-icon">↕</span>';
+            hrow.appendChild(hdata);
+        });
+
+        //create and fill table body
+        const tbody = document.createElement('tbody');
+        tableBodyE.appendChild(tbody);
+        this.data.forEach(data =>{
+            const brow = document.createElement('tr');
+            tbody.appendChild(brow);
+
+            this.columnName.forEach( bcolumn => {           //for(int i=0 ; i < columnName.length; i++)
+                const bdata = document.createElement('td');
+                bdata.textContent = data[bcolumn];
+                brow.appendChild(bdata);
+            })
+        })
+        
     }//renderTable
     
 }//class
