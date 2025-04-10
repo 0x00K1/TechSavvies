@@ -551,7 +551,7 @@ class tableFetcher {
         const endItem = Math.min(this.currentPage * this.rowsPerPage, totalRows);
     
         paginationInfo.innerHTML = `Showing <span id="showing-start">${startItem}</span> to <span id="showing-end">${endItem}</span> of <span id="total-items">${totalRows}</span> items`;
-    
+        pageNumberInput.innerHTML=`page ${this.currentPage} out of ${totalPages}`;
         // Update event listeners
         prevButton.onclick = () => {
             if (this.currentPage > 1) {

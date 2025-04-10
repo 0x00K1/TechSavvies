@@ -40,6 +40,7 @@
         </div>
         <div class="pagination-controls" id="pagination-controls">
             <button type="button" id="prev-page" class="pagination-button" disabled>&laquo; Previous</button>
+            <span id="current-page" >1</span>
             <button type="button" id="next-page" class="pagination-button">Next &raquo;</button>
         </div>
     </div>
