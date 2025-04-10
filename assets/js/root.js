@@ -1,3 +1,5 @@
+//Responsive code needs refactoring, organizing.
+
 document.addEventListener("DOMContentLoaded", function () {
 	/*buttons*/
 	const managePro_button = document.getElementById("managePro_button");
@@ -89,9 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	function initMobileMenu() {
 		const toolbar = document.querySelector(".toolbar");
 		const menuToggle = document.createElement("button");
-		menuToggle.classList.add("menu-toggle");
-		menuToggle.innerHTML = "☰ Menu";
-		menuToggle.style.display = "none";
+
 
 		toolbar.parentNode.insertBefore(menuToggle, toolbar);
 
@@ -144,9 +144,7 @@ function handleResponsiveTables() {
 function initMobileMenu() {
 	const toolbar = document.querySelector(".toolbar");
 	const menuToggle = document.createElement("button");
-	menuToggle.classList.add("menu-toggle");
-	menuToggle.innerHTML = "☰ Menu";
-	menuToggle.style.display = "none";
+
 
 	toolbar.parentNode.insertBefore(menuToggle, toolbar);
 
@@ -192,8 +190,123 @@ window.product_cancel_edit = function () {
 	document.getElementById("buttons_table_display").style.display = "block";
 };
 
-document.getElementById('rows_per_page').addEventListener('change', function() {
-    rowsPerPage = parseInt(this.value);
-    currentPage = 1;
-    loadProducts();
+document
+	.getElementById("rows_per_page")
+	.addEventListener("change", function () {
+		rowsPerPage = parseInt(this.value);
+		currentPage = 1;
+		loadProducts();
+	});
+
+document.addEventListener("DOMContentLoaded", function () {
+	// Function to convert tables to card view
+	function initCardView() {
+		const tables = document.querySelectorAll("table");
+
+		tables.forEach((table) => {
+			// Create card container
+			const cardView = document.createElement("div");
+			cardView.className = "card-view";
+
+			// Get table headers
+			const headers = Array.from(table.querySelectorAll("th")).map((th) =>
+				th.textContent.trim()
+			);
+
+			// Process each row
+			const rows = table.querySelectorAll("tbody tr");
+			rows.forEach((row) => {
+				const cells = row.querySelectorAll("td");
+				if (cells.length === 0) return;
+
+				// Create card
+				const card = document.createElement("div");
+				card.className = "data-card";
+
+				// Create card header (using first or second column as title)
+				const titleIndex = headers.includes("Name")
+					? headers.indexOf("Name")
+					: 1;
+				const idIndex = headers.includes("ID") ? headers.indexOf("ID") : 0;
+
+				const cardHeader = document.createElement("div");
+				cardHeader.className = "card-header";
+				cardHeader.innerHTML = `
+									<div>
+											<h3>${cells[titleIndex].textContent.trim()}</h3>
+											<span class="card-id">#${cells[idIndex].textContent.trim()}</span>
+									</div>
+									<span class="card-toggle">▼</span>
+							`;
+
+				// Create card body
+				const cardBody = document.createElement("div");
+				cardBody.className = "card-body";
+
+				// Add data rows
+				for (let i = 0; i < cells.length - 1; i++) {
+					// Skip the title column in the body
+					if (i === titleIndex) continue;
+
+					const cardRow = document.createElement("div");
+					cardRow.className = "card-row";
+					cardRow.innerHTML = `
+											<span class="card-label">${headers[i]}</span>
+											<span class="card-value">${cells[i].textContent.trim()}</span>
+									`;
+					cardBody.appendChild(cardRow);
+				}
+
+				// Add action buttons
+				const actionsCell = cells[cells.length - 1];
+				const cardActions = document.createElement("div");
+				cardActions.className = "card-actions";
+
+				// Clone the buttons from the table
+				if (actionsCell.querySelector("button")) {
+					const buttons = actionsCell.querySelectorAll("button");
+					buttons.forEach((button) => {
+						cardActions.appendChild(button.cloneNode(true));
+					});
+				} else {
+					// Default buttons if none found
+					cardActions.innerHTML = `
+											<button class="edit_product_button_style">Edit</button>
+											<button class="remove_product_button_style">Remove</button>
+									`;
+				}
+
+				cardBody.appendChild(cardActions);
+
+				// Add click event to toggle card body
+				cardHeader.addEventListener("click", function () {
+					cardBody.classList.toggle("active");
+					cardHeader.querySelector(".card-toggle").classList.toggle("active");
+				});
+
+				// Assemble card
+				card.appendChild(cardHeader);
+				card.appendChild(cardBody);
+				cardView.appendChild(card);
+			});
+
+			// Insert card view after table
+			table.parentNode.insertBefore(cardView, table.nextSibling);
+		});
+	}
+
+	// Initialize card view
+	initCardView();
+
+	// Re-initialize on window resize
+	let resizeTimeout;
+	window.addEventListener("resize", function () {
+		clearTimeout(resizeTimeout);
+		resizeTimeout = setTimeout(function () {
+			// Remove existing card views
+			document.querySelectorAll(".card-view").forEach((view) => view.remove());
+			// Re-initialize
+			initCardView();
+		}, 250);
+	});
 });
