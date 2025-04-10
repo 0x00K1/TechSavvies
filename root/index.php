@@ -13,15 +13,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <?php require_once __DIR__ . '/../assets/php/main.php'; ?>
-    <link rel="stylesheet" href="..\assets\css\main.css">
-    <link rel="stylesheet" href="..\assets\css\root.css">
+    // Change relative paths to absolute
+    <link rel="stylesheet" href="/TechSavvies/assets/css/main.css">
+    <link rel="stylesheet" href="/TechSavvies/assets/css/root.css">
     <title>Root</title>
 </head>
 <body>
     <!-- ##################################
             Header Section 
     ####################################-->
-    <?php include('..\assets\php\header.php'); ?>
+    <?php include('/TechSavvies/assets/php/header.php'); ?>
     <div class="Boss">
         <!-- ##################################
             toolbar Section 

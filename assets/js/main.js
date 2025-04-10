@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Track OTP verification failures
   let otpFailureCount = 0;
 
-  fetch("/includes/check_session.php", {
+  fetch("/TechSavvies/includes/check_session.php", {
     credentials: "include"
   })
     .then(response => response.json())
@@ -92,11 +92,11 @@ document.addEventListener("DOMContentLoaded", function () {
           <i class="fa fa-caret-down"></i>
         </div>
         <div class="account-dropdown" id="accountDropdown">
-          <a href="/profile.php">
+          <a href="/TechSavvies/profile.php">
             <i class="fa fa-user-circle"></i>
             Profile
           </a>
-          <a href="/includes/cls.php">
+          <a href="/TechSavvies/includes/cls.php">
             <i class="fa fa-sign-out-alt"></i>
             Log Out
           </a>
@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // 1) Show loading state (spinner)
         toggleButtonLoading(verifyOtpBtn, true);
     
-        fetch("/includes/verify_otp.php", {
+        fetch("/TechSavvies/includes/verify_otp.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
