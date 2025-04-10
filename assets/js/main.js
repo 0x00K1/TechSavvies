@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // 1) Show loading state (spinner)
         toggleButtonLoading(sendOtpBtn, true);
     
-        fetch("/includes/send_otp.php", {
+        fetch("/TechSavvies/includes/send_otp.php", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: email, csrf_token: csrfToken }),
