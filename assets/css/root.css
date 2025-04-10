@@ -717,6 +717,10 @@ tr:hover {
 
 /* Desktop and Larger Screens */
 @media screen and (max-width: 1024px) {
+	.content {
+		margin-right: -1rem;
+	}
+
 	.top-controls {
 		display: flex;
 		align-items: center;
@@ -802,6 +806,11 @@ tr:hover {
 		padding: 0.5rem;
 		padding-top: 2.5rem;
 	}
+
+	.funcarea {
+		padding: 0px;
+		margin-left: -10px;
+	}
 }
 
 /* Tablet and Mobile Devices */
@@ -851,12 +860,27 @@ tr:hover {
 
 	.funcarea {
 		width: 100%;
+		margin: 0px auto;
+		overflow-y: auto; /* Enable vertical scrolling */
+		overflow-x: hidden; /* Hide horizontal scrolling */
+		scrollbar-width: none; /* Firefox */
+		-ms-overflow-style: none; /* IE and Edge */
+		padding: 20px;
+		padding-bottom: 0px;
+	}
+
+	/* .funcarea {
+		width: 100%;
 		margin: 10px auto;
 		/*padding-bottom: 70px;  Add extra padding to prevent content from being hidden behind toolbar */
-	}
+	/*overflow-y: hidden; /* Disable vertical scrolling for mobile/tablet */
+	/*overflow-x: hidden; /* hide Horizontal scrolling for mobile/tablet */
+	/*} */
 
 	.content {
 		padding: 1rem;
+		/*padding: 1px 1px;*/
+		border-radius: 2px;
 	}
 
 	/* .addProPopup_button_style {
@@ -880,11 +904,6 @@ tr:hover {
 		margin-bottom: 1rem;
 		margin-top: 0.25rem;
 		margin-left: 0.25rem;
-	}
-
-	.content {
-		padding: 1px 1px;
-		border-radius: 2px;
 	}
 
 	.content-container {
