@@ -22,8 +22,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 // Rating logic [LATER]
 foreach ($products as &$product) {
     $product['rating'] = 4.0; // Default rating [TEMP]
-    //in this branch we are using placeholder picture to test make the responsive design work,
-    //$product['image'] = '/assets/images/Products/' . $product['image']; // Removed leading slash and fixed Products capitalization
+    $product['image'] = '/assets/images/products/' . $product['image']; 
 }
 unset($product);
 ?>

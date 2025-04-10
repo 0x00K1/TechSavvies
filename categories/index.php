@@ -23,13 +23,22 @@ if ($type) {
   <?php require_once __DIR__ . '/../assets/php/main.php'; ?>
   <link rel="stylesheet" href="../assets/css/main.css">
   <link rel="stylesheet" href="../assets/css/products.css">
+  <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .main-content {
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
   <!-- Header Section -->
   <?php require_once __DIR__ . '/../assets/php/header.php'; ?>
-
-  <!-- Products Grid -->
-  <div class="external_grid">
+<!-- Products Grid -->
+<div class="external_grid">
     <?php if (empty($filteredProducts)): ?>
         <div class="no-products">
           <h2>No Products Found!</h2>
@@ -39,8 +48,8 @@ if ($type) {
         <?php foreach ($filteredProducts as $id => $product): ?>
         <!-- Wrap the product card with a link to the product details page -->
         <a href="/categories/products/?product_id=<?php echo htmlspecialchars(urlencode($product['product_id'])); ?>" class="card_grid">
-          <div class="product"> <!--placeholder image for products-->
-            <img src="../assets/images/Products/Front.png" alt="<?= htmlspecialchars($product['name']) ?>"> // 
+          <div class="product">
+            <img src="<?php echo $product['image']; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
             <h1><?php echo htmlspecialchars($product['name']); ?></h1>
             <h5><?php echo htmlspecialchars($product['description']); ?></h5>
             <div class="static-rating" style="--rating: <?php echo htmlspecialchars($product['rating']); ?>;"></div>
@@ -50,7 +59,6 @@ if ($type) {
         <?php endforeach; ?>
     <?php endif; ?>
   </div>
-
   <!-- Authentication Modal -->
   <?php require_once __DIR__ . '/../assets/php/auth.php'; ?>
 
