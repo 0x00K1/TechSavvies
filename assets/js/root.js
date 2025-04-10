@@ -92,7 +92,6 @@ document.addEventListener("DOMContentLoaded", function () {
 		const toolbar = document.querySelector(".toolbar");
 		const menuToggle = document.createElement("button");
 
-
 		toolbar.parentNode.insertBefore(menuToggle, toolbar);
 
 		menuToggle.addEventListener("click", () => {
@@ -144,7 +143,6 @@ function handleResponsiveTables() {
 function initMobileMenu() {
 	const toolbar = document.querySelector(".toolbar");
 	const menuToggle = document.createElement("button");
-
 
 	toolbar.parentNode.insertBefore(menuToggle, toolbar);
 
@@ -243,38 +241,109 @@ document.addEventListener("DOMContentLoaded", function () {
 				const cardBody = document.createElement("div");
 				cardBody.className = "card-body";
 
+				// Inside the initCardView function, update the card creation code:
+
 				// Add data rows
 				for (let i = 0; i < cells.length - 1; i++) {
-					// Skip the title column in the body
 					if (i === titleIndex) continue;
 
 					const cardRow = document.createElement("div");
 					cardRow.className = "card-row";
 					cardRow.innerHTML = `
-											<span class="card-label">${headers[i]}</span>
-											<span class="card-value">${cells[i].textContent.trim()}</span>
-									`;
+				        <span class="card-label">${headers[i]}</span>
+				        <span class="card-value" data-original="${cells[
+									i
+								].textContent.trim()}">${cells[i].textContent.trim()}</span>
+				    `;
 					cardBody.appendChild(cardRow);
 				}
 
 				// Add action buttons
-				const actionsCell = cells[cells.length - 1];
 				const cardActions = document.createElement("div");
 				cardActions.className = "card-actions";
 
-				// Clone the buttons from the table
-				if (actionsCell.querySelector("button")) {
-					const buttons = actionsCell.querySelectorAll("button");
-					buttons.forEach((button) => {
-						cardActions.appendChild(button.cloneNode(true));
+				// Create buttons container
+				const buttonsContainer = document.createElement("div");
+				buttonsContainer.className = "buttons_table";
+				buttonsContainer.id = "buttons_table_display";
+
+				// Create edit and remove buttons
+				const editButton = document.createElement("button");
+				editButton.className = "edit_product_button_style";
+				editButton.textContent = "Edit";
+
+				const removeButton = document.createElement("button");
+				removeButton.className = "remove_product_button_style";
+				removeButton.textContent = "Remove";
+
+				// Create edit form container
+				const editContainer = document.createElement("div");
+				editContainer.className = "buttons_table";
+				editContainer.id = "product_edit_display";
+				editContainer.style.display = "none";
+
+				// Create save and cancel buttons
+				const saveButton = document.createElement("button");
+				saveButton.className = "product_confirm_edit_style";
+				saveButton.textContent = "Save";
+
+				const cancelButton = document.createElement("button");
+				cancelButton.className = "product_cancel_edit_style";
+				cancelButton.textContent = "Cancel";
+
+				// Add click handlers
+				editButton.addEventListener("click", function (e) {
+					e.stopPropagation(); // Prevent card from toggling
+					buttonsContainer.style.display = "none";
+					editContainer.style.display = "flex";
+
+					// Make values editable
+					const values = cardBody.querySelectorAll(".card-value");
+					values.forEach((value) => {
+						const originalText = value.textContent;
+						value.classList.add("editable");
+						value.contentEditable = true;
 					});
-				} else {
-					// Default buttons if none found
-					cardActions.innerHTML = `
-											<button class="edit_product_button_style">Edit</button>
-											<button class="remove_product_button_style">Remove</button>
-									`;
-				}
+				});
+
+				cancelButton.addEventListener("click", function (e) {
+					e.stopPropagation(); // Prevent card from toggling
+					buttonsContainer.style.display = "flex";
+					editContainer.style.display = "none";
+
+					// Restore original values and make non-editable
+					const values = cardBody.querySelectorAll(".card-value");
+					values.forEach((value) => {
+						value.textContent = value.dataset.original;
+						value.classList.remove("editable");
+						value.contentEditable = false;
+					});
+				});
+
+				saveButton.addEventListener("click", function (e) {
+					e.stopPropagation(); // Prevent card from toggling
+					buttonsContainer.style.display = "flex";
+					editContainer.style.display = "none";
+
+					// Save new values and make non-editable
+					const values = cardBody.querySelectorAll(".card-value");
+					values.forEach((value) => {
+						value.dataset.original = value.textContent;
+						value.classList.remove("editable");
+						value.contentEditable = false;
+					});
+					// Here you would typically send the updated data to your server
+				});
+
+				// Assemble the buttons
+				buttonsContainer.appendChild(editButton);
+				buttonsContainer.appendChild(removeButton);
+				editContainer.appendChild(saveButton);
+				editContainer.appendChild(cancelButton);
+
+				cardActions.appendChild(buttonsContainer);
+				cardActions.appendChild(editContainer);
+				cardBody.appendChild(cardActions);
 
 				cardBody.appendChild(cardActions);
 

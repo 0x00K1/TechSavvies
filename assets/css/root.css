@@ -615,21 +615,121 @@ tr:hover {
 
 	.card-actions {
 		display: flex;
-		justify-content: space-between;
+		justify-content: center;
 		padding: 12px 16px;
+		gap: 10px;
+		border-top: 1px solid #f0f0f0;
+	}
+
+	.buttons_table {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		width: 100%;
+		gap: 10px;
+	}
+
+	.edit_product_button_style,
+	.remove_product_button_style,
+	.product_confirm_edit_style,
+	.product_cancel_edit_style {
+		flex: 1;
+		max-width: 120px;
+		height: 40px;
+		font-size: 14px;
+		border-radius: 4px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0 15px;
+	}
+
+	/* Add icons to buttons */
+	.edit_product_button_style::before {
+		content: "✏️";
+		margin-right: 5px;
+	}
+
+	.remove_product_button_style::before {
+		content: "🗑️";
+		margin-right: 5px;
+	}
+
+	.product_confirm_edit_style::before {
+		content: "✓";
+		margin-right: 5px;
+	}
+
+	.product_cancel_edit_style::before {
+		content: "✕";
+		margin-right: 5px;
+	}
+
+	/* Ensure proper spacing between button containers */
+	#buttons_table_display,
+	#product_edit_display {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		gap: 12px;
+		margin: 0 auto;
+	}
+
+	.card-actions {
+		display: flex;
+		justify-content: flex-start;
+		padding: 12px 16px;
+		gap: 8px;
+		border-top: 1px solid #f0f0f0;
 	}
 
 	.card-actions button {
+		flex: 0 1 auto;
+		min-width: 100px;
+		height: 36px;
+		font-size: 14px;
+		padding: 8px 16px;
+		margin: 0;
+	}
+
+	.buttons_table {
+		display: flex;
+		gap: 8px;
+		width: 100%;
+	}
+
+	/* Make card values editable */
+	.card-value.editable {
+		background-color: #fff;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		padding: 4px 8px;
+	}
+
+	.edit_product_button_style,
+	.remove_product_button_style,
+	.product_confirm_edit_style,
+	.product_cancel_edit_style {
 		flex: 1;
-		margin: 0 4px;
+		min-width: 130px;
+		height: 40px;
+		font-size: 14px;
+		border-radius: 4px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0 20px;
 	}
 
-	.card-actions button:first-child {
-		margin-left: 0;
+	/* Ensure buttons have consistent styling */
+	.product_confirm_edit_style {
+		background-color: #28a745;
+		color: white;
 	}
 
-	.card-actions button:last-child {
-		margin-right: 0;
+	.product_cancel_edit_style {
+		background-color: #6c757d;
+		color: white;
 	}
 
 	.card-toggle {
@@ -651,18 +751,6 @@ tr:hover {
 	cursor: pointer;
 	font-weight: 500;
 	transition: background-color 0.2s;
-}
-
-.edit_product_button_style,
-.remove_product_button_style,
-.product_cancel_edit_style,
-.product_confirm_edit_style {
-	width: auto;
-	min-width: 70px;
-	height: 30px;
-	padding: 0.25rem 0.75rem;
-	font-size: 12px;
-	margin: 2px;
 }
 
 .edit_product_button_style {
@@ -694,6 +782,16 @@ tr:hover {
 
 .product_confirm_edit_style:hover {
 	background-color: #218838;
+}
+
+/* Ensure proper spacing between button containers */
+#buttons_table_display,
+#product_edit_display {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	gap: 12px;
+	margin: 0 auto;
 }
 
 .page-title {
@@ -764,20 +862,6 @@ tr:hover {
 		padding: 10px 20px;
 	}
 
-	/* .filter_value_style {
-		width: 70px;
-		min-width: unset;
-		margin: 0;
-		flex-shrink: 0;
-		padding: 8px;
-	} */
-
-	/* .addProPopup_button_style {
-		display: flex;
-		margin-left: 4px;
-		flex-shrink: 0;
-		padding: 8px 12px;
-	} */
 
 	/*Container*/
 	.search_div {
@@ -787,16 +871,7 @@ tr:hover {
 		margin: 0;
 		margin-bottom: 20px;
 	}
-
-	/* Search section styles */
-	/* .search-section {
-		display: flex;
-		align-items: center;
-		gap: 4px;
-		flex: 1;
-		flex-wrap: nowrap;
-	} */
-
+ 
 	.search-button_style {
 		margin-right: 4px;
 	}
@@ -868,28 +943,12 @@ tr:hover {
 		padding: 20px;
 		padding-bottom: 0px;
 	}
-
-	/* .funcarea {
-		width: 100%;
-		margin: 10px auto;
-		/*padding-bottom: 70px;  Add extra padding to prevent content from being hidden behind toolbar */
-	/*overflow-y: hidden; /* Disable vertical scrolling for mobile/tablet */
-	/*overflow-x: hidden; /* hide Horizontal scrolling for mobile/tablet */
-	/*} */
-
+ 
 	.content {
 		padding: 1rem;
 		/*padding: 1px 1px;*/
 		border-radius: 2px;
 	}
-
-	/* .addProPopup_button_style {
-		position: absolute;
-		right: 1rem;
-		top: 1rem;
-		padding: 8px 12px;
-		font-size: 14px;
-	} */
 
 	.addProPopup_button_style {
 		position: absolute;
@@ -957,6 +1016,37 @@ tr:hover {
 	.buttons_table {
 		gap: 0.15rem;
 	}
+
+	/* Adjust search section spacing */
+	.search-section {
+		width: auto;
+		flex: 1;
+	}
+
+	.search-field_style {
+		width: 235px;
+		min-width: 80px;
+		flex: 2;
+		margin-right: 0;
+		margin-left: 0.25rem;
+		padding: 10px 20px;
+		padding-left: 8px;
+		padding-right: 8px;
+	}
+
+	/* Hide pagination info and controls on mobile */
+	.pagination-info,
+	.pagination {
+		display: none !important;
+	}
+
+	/* Hide rows per page filter on mobile/tablet */
+	select[name="rows_per_page"],
+	label[for="rows_per_page"],
+	.rows_per_page_container,
+	.rows_label {
+		display: none !important;
+	}
 }
 
 /* Small Mobile Devices */
@@ -983,9 +1073,9 @@ tr:hover {
 	}
 
 	.addProPopup_button_style {
-		font-size: 12px;
+		font-size: 14px;
 		padding: 9px 9px;
-		margin-bottom: 120px;
+		margin-bottom: 25px;
 	}
 }
 
@@ -994,5 +1084,20 @@ tr:hover {
 		font-size: 1rem;
 		margin-bottom: 0.8rem;
 		margin-right: 80px; /* Make space for the add button */
+	}
+
+	.addProPopup_button_style {
+		font-size: 11px;
+		padding: 9px 9px;
+		margin-bottom: 25px;
+	}
+
+	.search-field_style {
+		width: auto;
+		min-width: 80px;
+		flex: 2;
+		margin-right: -9px;
+		margin-left: 0.25rem;
+		padding: 9px 9px;
 	}
 }
