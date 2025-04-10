@@ -14,6 +14,9 @@
   <?php require_once __DIR__ . '/../assets/php/header.php'; ?>
   <div class="page_grid">
 
+<!-- Connection to DB done just change USERNAME and PASSWORD.  -->
+<!--  Need fix coloumns and rows when adding product now it all become in same column. -->
+<!--  Add more products into DataBase. Also neeed seperation of products T-shirts should not appear in other categories, but it does. -->
 
 
 <div class="external_grid">
