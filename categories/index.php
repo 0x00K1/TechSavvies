@@ -17,121 +17,82 @@
 
 
 <div class="external_grid">
-    <!-- First card -->
-    <div class="card_grid">
-        <div class="product"><img src="..\assets\images\Products\Brand\T-shirt\Front-1.png" alt="Whtie T-shirt Picture">
-            <h1>White T-shirt with Logo</h1>
-            <h5>Made of pure cutton 100%,
-                YOU SHOULD NOT THINK THIS
-                IS REAL!
-            </h5>
-            <div class="static-rating" style="--rating: 3.5;"></div>
-            <h2>$100</h2>
-        </div>
+<?php
+// Database connection parameters
+$host = 'localhost'; // or the IP address of your database server
+$dbname = 'techsavvies';
+$username = 'root';  // or your database username
+$password = '1234567';      // or your database password
 
-    </div>
-    <!-- Second card -->
-    <div class="card_grid">
-        <div class="product"><img src="..\assets\images\Products\Brand\T-shirt\Front.png" alt="Black T-shirt Picture">
-            <h1>Black T-shirt with Logo</h1>
-            <h5>Made of pure cutton 100%,
-                YOU SHOULD NOT THINK THIS
-                IS REAL!
-            </h5>
-            <div class="static-rating" style="--rating: 5;"></div>
-            <h2>$100</h2>
-        </div>
-    </div>
+try {
+    // Create a PDO instance for database connection
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    
+    // Set PDO error mode to exception for better error handling
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+} catch (PDOException $e) {
+    // Handle any connection error
+    echo "Connection failed: " . $e->getMessage();
+    exit();
+}
+?>
 
-    <!-- Third card -->
-    <div class="card_grid">
-        <div class="product"><img src="..\assets\images\Products\Non-Brand\T-shirts\mockup-7f7164bd_720x.png" alt="I need a &lt;br/&gt; T-shirt Picture">
-            <h1>I need a &lt;br/&gt; T-shirt</h1>
-            <h5>Made of pure cutton 100%,
-                YOU SHOULD NOT THINK THIS
-                IS REAL!
-            </h5>
-            <div class="static-rating" style="--rating: 4.2;"></div>
-            <h2>$75</h2>
-        </div>
-    </div>
-    <!-- Fourth card -->
-    <div class="card_grid">
-        <div class="product"><img src="..\assets\images\Products\Non-Brand\T-shirts\il_794xN.5281097748_2ufp.png" alt="I are Programmer T-shirt">
-            <h1>I are Programmer T-shirt</h1>
-            <h5>Made of pure cutton 100%,
-                YOU SHOULD NOT THINK THIS
-                IS REAL!
-            </h5>
-            <div class="static-rating" style="--rating: 2.75;"></div>
-            <h2>$75</h2>
-        </div>
-    </div>
-    <!-- Fifth card -->
-    <div class="card_grid">
-        <div class="product"><img src="..\assets\images\Products\Non-Brand\T-shirts\unisex-staple-t-shirt-black-front-66eaef158d4ea_720x.png" alt="Choose Your Weapon T-shirt">
-            <h1>Choose Your Weapon T-shirt</h1>
-            <h5>Made of pure cutton 100%,
-                YOU SHOULD NOT THINK THIS
-                IS REAL!
-            </h5>
-            <div class="static-rating" style="--rating: 4.0;"></div>
-            <h2>$75</h2>
-        </div>
+<?php
+// Assuming the database connection $pdo has already been established
 
-    </div>
-    <!-- Sixth card -->
-    <div class="card_grid">
-        <div class="product"><img src="..\assets\images\Products\Non-Brand\T-shirts\il_794xN.5785303495_59t7.png" alt="CTRL + PURR T-shirt">
-            <h1>CTRL + PURR T-shirt</h1>
-            <h5>Made of pure cutton 100%,
-                YOU SHOULD NOT THINK THIS
-                IS REAL!
-            </h5>
-            <div class="static-rating" style="--rating: 4.5;"></div>
-            <h2>$75</h2>
-        </div>
-        </div>
-    <!-- Seventh card -->
+// Query to get all products
+$query = 'SELECT * FROM products';
+$stmt = $pdo->query($query);
+$products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<!-- HTML Output for displaying products -->
+<div class="product-list">
+    <?php foreach ($products as $product): ?>
         <div class="card_grid">
-            <div class="product"><img src="..\assets\images\Products\Non-Brand\T-shirts\il_794xN.4294904508_t966.png" alt="Just Put a ticket in T-shirt Dark Gray">
-                <h1>Just Put a ticket in T-shirt</h1>
-                <h5>Made of pure cutton 100%,
-                    YOU SHOULD NOT THINK THIS
-                    IS REAL!
-                </h5>
-                <div class="static-rating" style="--rating: 4.1;"></div>
-                <h2>$75</h2>
-            </div>
-        </div>
-        <!-- Eighth card -->
-        <div class="card_grid">
-            <div class="product"><img src="..\assets\images\Products\Non-Brand\T-shirts\il_794xN.4342291955_pirs.png" alt="Just Put a ticket in T-shirt Light Gray">
-                <h1>Just Put a ticket in T-shirt light gray t shirt</h1>
-                <h5>Made of pure cutton 100%,
-                    YOU SHOULD NOT THINK THIS
-                    IS REAL!
-                </h5>
-                <div class="static-rating" style="--rating: 3.9;"></div>
-                <h2>$75</h2>
-            </div>
-        </div>
-         <!-- ninth card -->
-         <div class="card_grid">
-            <div class="product"><img src="..\assets\images\Products\Non-Brand\T-shirts\il_794xN.5394430315_qarj.png" alt="Call me tech wizard T-shirt">
-                <h1>Call me tech wizard T-shirt</h1>
-                <h5>Made of pure cutton 100%,
-                    YOU SHOULD NOT THINK THIS
-                    IS REAL!
-                </h5>
-                <div class="static-rating" style="--rating: 3.3;"></div>
-                <h2>$75</h2>
-            </div>
-        </div>
-    </div>
-    <!-- Animation for BODY section -->
+            <div class="product">
+                <!-- Use the correct path stored in the database -->
+                <img src="<?php echo '../' . htmlspecialchars($product['picture']); ?>" alt="<?php echo htmlspecialchars($product['product_name']); ?> Image">
 
+                <h1><?php echo htmlspecialchars($product['product_name']); ?></h1>
+                <h5><?php echo htmlspecialchars($product['description']); ?></h5>
+                <div class="static-rating" style="--rating: <?php echo htmlspecialchars($product['rating']); ?>;"></div>
+                <h2>$<?php echo number_format($product['price'], 2); ?></h2>
+            </div>
+        </div>
+    <?php endforeach; ?>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <!-- Hidden checkbox for toggling sidebar -->
 <input type="checkbox" id="menu-toggle">
@@ -151,7 +112,7 @@
             <li><a href="index.php#contact" style="color: #ffff;"><i class="fa fa-envelope"></i> Contact Us</a></li>
         </ul>
     </div>
-    <div class="menu-container" hidden>
+    <!-- <div class="menu-container" hidden>
         <ul class="admin-menu">
         <li></li><li></li><li></li>
             <li><a href="#" style="color: #ffff;"><i class="fa fa-tachometer-alt"></i> Dashboard</a></li>
@@ -161,7 +122,7 @@
             <li><a href="#" style="color: #ffff;"><i class="fa fa-chart-line"></i> Reports</a></li>
             <li><a href="#" style="color: #ffff;"><i class="fa fa-cogs"></i> Settings</a></li>
         </ul>
-    </div>
+    </div> -->
 </nav>
 
 
@@ -178,7 +139,7 @@
             <h2>Filters</h2>
             <form action="#" method="GET">
 
-                <!-- Category Filter (Collapsible) -->
+                <!-- Category Filter (Collapsible)
                 <details class="filter-group">
                     <summary>Category</summary>
                     <label><input type="radio" name="categories" value="Tshirts" checked> T-shirts</label><br>
@@ -191,7 +152,7 @@
                     <label><input type="radio" name="categories" value="Mugs"> Mugs</label><br>
                     <label><input type="radio" name="categories" value="PhoneCases"> Phone Cases</label><br>
                     <label><input type="radio" name="categories" value="Games"> Games</label>
-                </details>
+                </details> -->
 
                 <details class="filter-group">
                     <summary>Size</summary>
@@ -241,7 +202,7 @@
                         </label>
                         <label>
                             Max:
-                            <input type="number" id="maxPrice" name="maxPrice" value="10000" min="1" step="1">
+                            <input type="number" id="maxPrice" name="maxPrice" value="1000" min="1" step="1">
                         </label>
                     </div>
                 </details>

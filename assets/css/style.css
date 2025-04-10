@@ -479,7 +479,7 @@ in the page */
    z-index: 2;
    display: grid;
    
-   grid-template-columns: repeat(3, 0.75fr);
+   grid-template-columns: repeat(3, 1fr);
    grid-gap: 40px;
    justify-self: center;
    background-color: hsl(0, 0%, 100%);
@@ -510,6 +510,7 @@ and it's button*/
    background-color: #ffffff;
    align-items: center;
    justify-content: center;
+   
 
    /* Text */
    text-align: center;
