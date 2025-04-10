@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
             url : '../../api/users/list.php',
             tableBodyElement : document.getElementById('users-table'), 
             tableName : 'customers',
-            columnName : ['customer_id','email','username','created_at'],
+            columnName : ['email','customer_id','username','created_at','iamfakeandbad'],
             paginationContainerId : 'users-pagination', 
             rowsPerPageInputId : 'users_rows_per_page', 
             //currentPage : 1, DEFAULT
@@ -181,7 +181,7 @@ class fetchTable{
             return response.json();
         })
         .then(data => {
-            console.log('Data from PHP:', data);
+           // console.log('Data from PHP:', data); //uncomment for console output of the data
             this.data = data;
             this.renderTable();
         })
@@ -221,7 +221,13 @@ class fetchTable{
 
             this.columnName.forEach( bcolumn => {           //for(int i=0 ; i < columnName.length; i++)
                 const bdata = document.createElement('td');
-                bdata.textContent = data[bcolumn];
+                bdata.textContent = data[bcolumn] ;
+                
+                if (data[bcolumn] === undefined) {
+                    bdata.textContent= 'not found'; bdata.style.color = 'orange';
+                }else if (data[bcolumn] === null) {
+                    bdata.textContent= '-'; bdata.style.color = 'orange';
+                }
                 brow.appendChild(bdata);
             })
         })
