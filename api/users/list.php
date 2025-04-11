@@ -1,7 +1,7 @@
 <?php 
 $rowNumber = $_GET["rowNumber"];
 $rowOffset = $_GET["rowOffset"];
-
+$totalRecord;
 include ('..\..\includes\db.php');
 // SQL query to fetch data (example: fetch all from 'users' table)
 $sql = "SELECT * FROM customers
@@ -12,6 +12,13 @@ $stmt = $pdo->prepare($sql);
 $stmt ->bindParam(':rowNumber',$rowNumber ,PDO::PARAM_INT);
 $stmt ->bindParam(':rowOffset',$rowOffset, PDO::PARAM_INT);
 $stmt->execute();
+
+$sqlTotalRecord= "SELECT COUNT(*) FROM Customers;";
+$stmtTotal = $pdo->prepare($sqlTotalRecord);
+$stmtTotal -> execute();
+$totalResult = $stmtTotal->fetch(PDO::FETCH_ASSOC);
+$totalRecords = $totalResult['total'];
+echo "<input type='hidden' id='totalRecordsHidden' value='$totalRecords'>";
 
 // Fetch all rows as an associative array
 $data = $stmt->fetchAll(PDO::FETCH_ASSOC);

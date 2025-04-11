@@ -62,24 +62,9 @@ document.addEventListener('DOMContentLoaded', function() {
             idNamingSuffix :'users',    // to locate the next prev current page ids following the standard suffix-next-page so on
         //this.sortColumn = options.sortColumn || (this.columnName.length > 0 ? this.columnName[0] : null); default
         //this.sortDirection = options.sortDirection || 'asc'; default
-         })
+         });
          userTable.fetchData();
 
-
-        /* const userTable = new tableFetcher({
-            url: '../../api/users/list.php',
-            connectionType: 'api',
-            tableName: 'customers',  //name in database
-            columnNames: ['customer_id','email','username','created_at'], // names in the database
-            currentPage: 1,
-            rowsPerPage: 2,
-            sortColumn: 'customer_id',
-            sortDirection: 'asc'
-        }); 
-
-        const usersTableBody = document.getElementById('users-table-body');
-        userTable.fetchData();
-        //userTable.renderTable(usersTableBody);*/
      });
  
      Orders_button.addEventListener('click', function() {
@@ -175,10 +160,14 @@ class fetchTable{
         this.sortDirection = options.sortDirection || 'asc';
         this.data = options.data||[]; // if using an array data with no connection use it
         this.idNamingSuffix = options.idNamingSuffix||'';
+        this.totalRecords= options.totalRecords|| 0;
+        this.paginationControls();
     }
     fetchData(){
+       
+        const pageOffset = Math.max(0, (this.currentPage - 1) * this.rowsPerPage);// ((this.currentPage-1)* this.rowsPerPage)>-1?(this.currentPage-1)* this.rowsPerPage : 0 ; // make sure its positive
+        if(this.currentPage ==1){this.currentPage++;}
         
-        const pageOffset = ((this.currentPage-1)* this.rowsPerPage)>-1?(this.currentPage-1)* this.rowsPerPage : 0 ; // make sure its positive
         fetch(`${this.url}?rowNumber=${this.rowsPerPage}&rowOffset=${pageOffset}`)
         .then(response => {
             if (!response.ok) {
@@ -190,6 +179,21 @@ class fetchTable{
            // console.log('Data from PHP:', data); //uncomment for console output of the data
             this.data = data;
             this.renderTable();
+            //UPDATE PAGINATION STUFF
+            if(document.getElementById('totalRecordsHidden')){
+            this.totalRecords = parseInt(document.getElementById('totalRecordsHidden').value) || 0;}
+            else{
+                console.log('cant find document.getElementById(\'totalRecordsHidden\')');
+            }
+            const nextPageElement = document.getElementById(`${this.idNamingSuffix}-next-page`);
+            const totalPages = Math.ceil(this.totalRecords / this.rowsPerPage);
+            console.log(totalPages);
+            // Disable next button if on last page or no more data
+            if (nextPageElement) {
+                nextPageElement.disabled =  totalPages <2;
+            }
+            
+            
         })
         .catch(error => {
             // Handle any errors that occurred during the fetch operation
@@ -198,6 +202,7 @@ class fetchTable{
     };//fetchdata
     renderTable(){
         const tableBodyE= this.tableBodyElement;
+         
         if (!tableBodyE) {
             console.error('Table body element is not provided.');
             return;
@@ -225,7 +230,7 @@ class fetchTable{
         this.data.forEach(data =>{
             const brow = document.createElement('tr');
             tbody.appendChild(brow);
-
+            totalRecords++;
             this.columnName.forEach( bcolumn => {           //for(int i=0 ; i < columnName.length; i++)
                 const bdata = document.createElement('td');
                 bdata.textContent = data[bcolumn] ;
@@ -240,53 +245,55 @@ class fetchTable{
         })
 
         
-        /******************************************************************
-                                event listeners
-    ******************************************************************/
-        const nextPageElement = document.getElementById((this.idNamingSuffix+'-next-page'));
-        const prevPageElement = document.getElementById((this.idNamingSuffix+'-prev-page'));
-        const currentPageElement = document.getElementById((this.idNamingSuffix+'-current-page')); 
-        // console.log(nextPageElement+' '+prevPageElement+' '+currentPageElement+' '+this.idNamingSuffix+'-next-page');
-        //console.log('rowDropdown element:', this.rowsPerPageElement);
-        nextPageElement.addEventListener('click',(event) =>{
-            console.log('this.currentPage'+this.currentPage);
+        
+        
+    }//renderTable 
+    paginationControls(){
+
+        const nextPageElement = document.getElementById(`${this.idNamingSuffix}-next-page`);
+        const prevPageElement = document.getElementById(`${this.idNamingSuffix}-prev-page`);
+        const currentPageElement = document.getElementById(`${this.idNamingSuffix}-current-page`);
+        
+        if (!nextPageElement || !prevPageElement || !currentPageElement) {
+            console.error('Pagination elements not found. Make sure they have the correct IDs.');
+            return;
+        }
+        
+        // Set initial page display
+        currentPageElement.textContent = this.currentPage;
+        
+        // Disable prev button initially if on first page
+        prevPageElement.disabled = this.currentPage <= 1;
+        
+        nextPageElement.addEventListener('click', () => {
             this.currentPage++;
             this.fetchData();
-            // Enable prev button if not on the first page
-            if (this.currentPage > 1) {
+            
+            // Update buttons state
             prevPageElement.disabled = false;
-            }
-            // Disable next button if on the last page
-            const totalPages = Math.ceil(this.totalRecords / this.rowsPerPage);
-            if (this.currentPage >= totalPages) {
-            nextPageElement.disabled = true;
-            }
-            
             currentPageElement.textContent = this.currentPage;
-        })
-        prevPageElement.addEventListener('click', () => {
-            this.currentPage--;
-            this.fetchData();
-            // Enable next button (it might have been disabled)
-            
-              nextPageElement.disabled = false;
-            
-            // Disable prev button if on the first page
-            if (this.currentPage <= 1) {
-              prevPageElement.disabled = true;
-            }
-            
-              currentPageElement.textContent = this.currentPage;
-            
-          });
-        // console.log(this.rowsPerPageElement);
-        this.rowsPerPageElement.addEventListener('input', (event)=>{
-            const testElement = document.createElement('span');
-            testElement.innerHTML='yay working go fuck yoursels!!!';
-            currentPageElement.appendChild(testElement);
-           // this.rowsPerPage = this.value;
-            this.fetchData();
-        })
+        });
         
-    }//renderTable  
+        prevPageElement.addEventListener('click', () => {
+            if (this.currentPage > 1) {
+                this.currentPage--;
+                this.fetchData();
+                
+                // Update buttons state
+                prevPageElement.disabled = this.currentPage <= 1;
+                currentPageElement.textContent = this.currentPage;
+            }
+        });
+        
+        // Handle rows per page change
+        if (this.rowsPerPageElement) {
+            this.rowsPerPageElement.addEventListener('change', (event) => {
+                this.rowsPerPage = parseInt(event.target.value);
+                this.currentPage = 1; // Reset to first page when changing rows per page
+                this.fetchData();
+                currentPageElement.textContent = this.currentPage;
+                prevPageElement.disabled = true; // Disable prev button when on page 1
+            });
+        }
+    } //pagination
 }//class
