@@ -7,13 +7,13 @@
                     Search
                 </button>
                 <span class="rows_label">Rows:</span>
-                <input type="number" name="rows_per_page" id="users_rows_per_page" class="filter_value_style"  list="rowsPerPageOptions">
-                <datalist id="rowsPerPageOptions">
+                
+                <select id="users_rows_per_page" class="filter_value_style" name="rows_per_page"">
                     <option value="25">25</option>
                     <option value="50">50</option>
                     <option value="100">100</option>
                     <option value="250">250</option>
-                </datalist>
+                </select>
             </div>
     </div>
     <div class="table-container">
@@ -39,9 +39,9 @@
                 id="total-items">100</span> items
         </div>
         <div class="pagination-controls" id="pagination-controls">
-            <button type="button" id="prev-page" class="pagination-button" disabled>&laquo; Previous</button>
-            <span id="current-page" >1</span>
-            <button type="button" id="next-page" class="pagination-button">Next &raquo;</button>
+            <button type="button" id="users-prev-page" class="pagination-button" disabled>&laquo; Previous</button>
+            <span id="users-current-page" >1</span>
+            <button type="button" id="users-next-page" class="pagination-button">Next &raquo;</button>
         </div>
     </div>
 </div>

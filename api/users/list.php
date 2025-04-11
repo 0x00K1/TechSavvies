@@ -1,8 +1,16 @@
 <?php 
+$rowNumber = $_GET["rowNumber"];
+$rowOffset = $_GET["rowOffset"];
+
 include ('..\..\includes\db.php');
 // SQL query to fetch data (example: fetch all from 'users' table)
-$sql = "SELECT * FROM customers";   //database got update and users is customers
+$sql = "SELECT * FROM customers
+Limit :rowNumber
+OFFSET :rowOffset";   //database got update and users is customers
+
 $stmt = $pdo->prepare($sql);
+$stmt ->bindParam(':rowNumber',$rowNumber ,PDO::PARAM_INT);
+$stmt ->bindParam(':rowOffset',$rowOffset, PDO::PARAM_INT);
 $stmt->execute();
 
 // Fetch all rows as an associative array

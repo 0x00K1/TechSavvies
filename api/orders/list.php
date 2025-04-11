@@ -1,7 +1,9 @@
 <?php 
 include ('E:\Repsitries\TechSavvies\includes\db.php');
 // SQL query to fetch data (example: fetch all from 'users' table)
-$sql = "SELECT * FROM orders";   //database got update and users is customers
+$sql = "SELECT * FROM orders
+LIMIT 2
+OFFSET 0;";   //database got update and users is customers
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 

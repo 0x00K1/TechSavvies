@@ -56,9 +56,10 @@ document.addEventListener('DOMContentLoaded', function() {
             tableName : 'customers',
             columnName : ['email','customer_id','username','created_at','iamfakeandbad'],
             paginationContainerId : 'users-pagination', 
-            rowsPerPageInputId : 'users_rows_per_page', 
+            rowsPerPageElement: document.getElementById('users_rows_per_page'), 
             //currentPage : 1, DEFAULT
             rowsPerPage :3,
+            idNamingSuffix :'users',    // to locate the next prev current page ids following the standard suffix-next-page so on
         //this.sortColumn = options.sortColumn || (this.columnName.length > 0 ? this.columnName[0] : null); default
         //this.sortDirection = options.sortDirection || 'asc'; default
          })
@@ -158,22 +159,27 @@ sortDirection	    string	        'asc'	                        The initial sorti
 
 
 _________________________________________________________________________________________________________*/
+
 class fetchTable{
+    
     constructor (options){
         this.url = options.url;
         this.tableBodyElement = options.tableBodyElement ; 
         this.tableName = options.tableName;   // name in DB
         this.columnName = options.columnName || []; // name in DB
         this.paginationContainerId = options.paginationContainerId ; 
-        this.rowsPerPageInputId = options.rowsPerPageInputId ; 
+        this.rowsPerPageElement = options.rowsPerPageElement ; 
         this.currentPage = options.currentPage || 1;
         this.rowsPerPage = options.rowsPerPage || 100;
         this.sortColumn = options.sortColumn || (this.columnName.length > 0 ? this.columnName[0] : null);
         this.sortDirection = options.sortDirection || 'asc';
         this.data = options.data||[]; // if using an array data with no connection use it
+        this.idNamingSuffix = options.idNamingSuffix||'';
     }
     fetchData(){
-        fetch(`${this.url}`)
+        
+        const pageOffset = ((this.currentPage-1)* this.rowsPerPage)>-1?(this.currentPage-1)* this.rowsPerPage : 0 ; // make sure its positive
+        fetch(`${this.url}?rowNumber=${this.rowsPerPage}&rowOffset=${pageOffset}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
@@ -215,6 +221,7 @@ class fetchTable{
         //create and fill table body
         const tbody = document.createElement('tbody');
         tableBodyE.appendChild(tbody);
+
         this.data.forEach(data =>{
             const brow = document.createElement('tr');
             tbody.appendChild(brow);
@@ -231,294 +238,55 @@ class fetchTable{
                 brow.appendChild(bdata);
             })
         })
+
         
-    }//renderTable
-    
-}//class
-class tableFetcher {
-    constructor(options) {
-        this.url = options.url || 'http://techsavvies.local';
-        this.connectionType = options.connectionType || 'local'; // 'mysql' or 'api'
-        this.tableName = options.tableName || '';
-        this.columnNames = options.columnNames || [];
-        this.currentPage = options.currentPage || 1;
-        this.rowsPerPage = options.rowsPerPage || 100;
-        this.sortColumn = options.sortColumn || (this.columnNames.length > 0 ? this.columnNames[0] : null);
-        this.sortDirection = options.sortDirection || 'asc';
-        this.data = []; // To use data in array
-        this.paginationContainerId = options.paginationContainerId || 'users-pagination'; // Default for pagination container
-        this.rowsPerPageInputId = options.rowsPerPageInputId || 'users_rows_per_page'; // Default for rows per page input
-    }
-
-    // Method to set the data (for local data or after fetching from API/DB)
-    setData(data) {
-        this.data = data;
-        this.renderTable(this.tableBodyElement); // Re-render if data is updated
-    }
-
-    // Method to fetch data from the API
-    fetchData() {
-        if (this.connectionType === 'api') {
-            console.log(`Workspaceing data from API endpoint: ${this.url}`);
-            fetch(`${this.url}?page=${this.currentPage}&limit=${this.rowsPerPage}&sort=${this.sortColumn}&order=${this.sortDirection}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (Array.isArray(data)) { // Check if the data is an array
-                        this.setData(data);
-                        this.renderPaginationControls(data.length); // Total rows is the length of the array
-                    } else if (data && data.error) {
-                        console.error('API Error:', data.error);
-                        // Optionally display an error message to the user
-                    } else {
-                        console.warn('API response is not in the expected format:', data);
-                        this.setData([]); // Set to empty array if data is not in expected format
-                        this.renderPaginationControls(0);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching data from API:', error);
-                    // Optionally display an error message to the user
-                });
-        } else {
-            console.log('No API endpoint specified or connection type is not set to "api".');
-            this.renderPaginationControls(this.data.length); // For local data, use the length of the data array
-            this.renderTable(this.tableBodyElement);
-        }
-    }
-    updateSort(column) {
-        if (this.sortColumn === column) {
-            this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            this.sortColumn = column;
-            this.sortDirection = 'asc';
-        }
-        this.currentPage = 1; // Reset to the first page after sorting
-        if (this.connectionType === 'api') {
-            this.fetchData(); // Re-fetch data from API with updated sorting
-        } else {
-            this.renderTable(this.tableBodyElement);
-        }
-    }
-
-    updatePagination(pageNumber) {
-        this.currentPage = pageNumber;
-        if (this.connectionType === 'api') {
-            this.fetchData(); // Re-fetch data from API for the new page
-        } else {
-            this.renderTable(this.tableBodyElement);
-        }
-    }
-
-    updateRowsPerPage(rows) {
-        this.rowsPerPage = rows;
-        this.currentPage = 1; // Reset to the first page after changing rows per page
-        if (this.connectionType === 'api') {
-            this.fetchData(); // Re-fetch data from API with updated rows per page
-        } else {
-            this.renderTable(this.tableBodyElement);
-        }
-    }
-
-    renderTable(tableBody) {
-        if (!tableBody) {
-            console.error('Table body element is not provided.');
-            return;
-        }
-        this.tableBodyElement = tableBody; // Store the table body element
-        tableBody.innerHTML = '';
-
-        let dataToRender = this.data;
-        if (this.connectionType !== 'api') {
-            const sortedData = this.sortData();
-            dataToRender = this.paginateData(sortedData);
-        }
-
-        dataToRender.forEach(item => {
-            const row = document.createElement('tr');
-            row.setAttribute('data-id', item.id); // Assuming each item has an 'id'
-
-            this.columnNames.forEach(column => {
-                const cell = document.createElement('td');
-                cell.textContent = item[column];
-                row.appendChild(cell);
-            });
-
-            // Add action buttons if needed
-            if (this.columnNames.includes('actions')) {
-                const actionsCell = document.createElement('td');
-                const buttonsDiv = document.createElement('div');
-                buttonsDiv.className = 'buttons_table';
-                buttonsDiv.id = `buttons_table_${item.id}`;
-
-                const editButton = document.createElement('button');
-                editButton.type = 'button';
-                editButton.className = 'edit_product_button_style';
-                editButton.textContent = 'Edit';
-                editButton.onclick = () => this.editRow(item.id); // Example action
-                buttonsDiv.appendChild(editButton);
-
-                const removeButton = document.createElement('button');
-                removeButton.type = 'button';
-                removeButton.className = 'remove_product_button_style';
-                removeButton.textContent = 'Remove';
-                removeButton.onclick = () => this.confirmRemove(item.id); // Example action
-                buttonsDiv.appendChild(removeButton);
-
-                actionsCell.appendChild(buttonsDiv);
-                row.appendChild(actionsCell);
-            }
-
-            tableBody.appendChild(row);
-        });
-
-        this.updateSortIndicators();
-        if (this.connectionType !== 'api') {
-            this.renderPaginationControls(this.data.length); // Use the total number of fetched data for pagination
-        }
-        // For API, renderPaginationControls is called after fetching data
-    }
-
-    sortData() {
-        if (!this.sortColumn) {
-            return [...this.data]; // Return a copy if no sort column is defined
-        }
-
-        return [...this.data].sort((a, b) => {
-            let valA = a[this.sortColumn];
-            let valB = b[this.sortColumn];
-
-            // Attempt to handle numeric sorts
-            if (!isNaN(parseFloat(valA)) && isFinite(valA) && !isNaN(parseFloat(valB)) && isFinite(valB)) {
-                valA = parseFloat(valA);
-                valB = parseFloat(valB);
-            } else if (typeof valA === 'string' && typeof valB === 'string') {
-                valA = valA.toLowerCase();
-                valB = valB.toLowerCase();
-            }
-
-            if (this.sortDirection === 'asc') {
-                return valA > valB ? 1 : (valA < valB ? -1 : 0);
-            } else {
-                return valA < valB ? 1 : (valA > valB ? -1 : 0);
-            }
-        });
-    }
-
-    paginateData(data) {
-        const startIndex = (this.currentPage - 1) * this.rowsPerPage;
-        const endIndex = Math.min(startIndex + this.rowsPerPage, data.length);
-        return data.slice(startIndex, endIndex);
-    }
-
-    updateSortIndicators() {
-        const headers = document.querySelectorAll('th[data-sort]');
-        headers.forEach(header => {
-            const column = header.getAttribute('data-sort');
-            const sortIcon = header.querySelector('.sort-icon');
-
-            if (sortIcon) {
-                if (column === this.sortColumn) {
-                    sortIcon.textContent = this.sortDirection === 'asc' ? '↑' : '↓';
-                } else {
-                    sortIcon.textContent = '↕';
-                }
-            }
-        });
-    }
-
-    renderPaginationControls(totalRows) {
-        const paginationContainer = document.getElementById(this.paginationContainerId);
-        if (!paginationContainer) {
-            console.error(`Pagination container with ID "${this.paginationContainerId}" not found.`);
-            return;
-        }
-
-        const prevButton = paginationContainer.querySelector('#prev-page');
-        const nextButton = paginationContainer.querySelector('#next-page');
-        const pageNumberInput = paginationContainer.querySelector('#current-page');
-        const paginationInfo = paginationContainer.querySelector('.pagination-info');
-        const rowsPerPageInput = document.getElementById(this.rowsPerPageInputId); // Get it directly by ID
-
-        if (!prevButton || !nextButton || !pageNumberInput || !paginationInfo || !rowsPerPageInput) {
-            console.warn('One or more pagination control elements are missing in the DOM.'); // Changed to warn as rowsPerPageInput might be outside
-            if (!prevButton) console.warn('#prev-page missing');
-            if (!nextButton) console.warn('#next-page missing');
-            if (!pageNumberInput) console.warn('#current-page missing');
-            if (!paginationInfo) console.warn('.pagination-info missing');
-            if (!rowsPerPageInput) console.warn(`#${this.rowsPerPageInputId} missing`);
-            return;
-        }
-
-        const totalPages = Math.ceil(totalRows / this.rowsPerPage);
-
-        prevButton.disabled = this.currentPage === 1;
-        nextButton.disabled = this.currentPage === totalPages;
-
-        pageNumberInput.value = this.currentPage;
-        rowsPerPageInput.value = this.rowsPerPage; // Set the initial value of the input
-
-        const startItem = (this.currentPage - 1) * this.rowsPerPage + 1;
-        const endItem = Math.min(this.currentPage * this.rowsPerPage, totalRows);
-
-        paginationInfo.innerHTML = `Showing <span id="showing-start">${startItem}</span> to <span id="showing-end">${endItem}</span> of <span id="total-items">${totalRows}</span> items`;
-        pageNumberInput.innerHTML=`page ${this.currentPage} out of ${totalPages}`;
-        // Update event listeners
-        prevButton.onclick = () => {
+        /******************************************************************
+                                event listeners
+    ******************************************************************/
+        const nextPageElement = document.getElementById((this.idNamingSuffix+'-next-page'));
+        const prevPageElement = document.getElementById((this.idNamingSuffix+'-prev-page'));
+        const currentPageElement = document.getElementById((this.idNamingSuffix+'-current-page')); 
+        // console.log(nextPageElement+' '+prevPageElement+' '+currentPageElement+' '+this.idNamingSuffix+'-next-page');
+        //console.log('rowDropdown element:', this.rowsPerPageElement);
+        nextPageElement.addEventListener('click',(event) =>{
+            console.log('this.currentPage'+this.currentPage);
+            this.currentPage++;
+            this.fetchData();
+            // Enable prev button if not on the first page
             if (this.currentPage > 1) {
-                this.updatePagination(this.currentPage - 1);
+            prevPageElement.disabled = false;
             }
-        };
-
-        nextButton.onclick = () => {
-            if (this.currentPage < totalPages) {
-                this.updatePagination(this.currentPage + 1);
+            // Disable next button if on the last page
+            const totalPages = Math.ceil(this.totalRecords / this.rowsPerPage);
+            if (this.currentPage >= totalPages) {
+            nextPageElement.disabled = true;
             }
-        };
-
-        pageNumberInput.onchange = (event) => {
-            const page = parseInt(event.target.value);
-            if (!isNaN(page) && page >= 1 && page <= totalPages) {
-                this.updatePagination(page);
-            } else {
-                pageNumberInput.value = this.currentPage; // Reset to current page if invalid input
+            
+            currentPageElement.textContent = this.currentPage;
+        })
+        prevPageElement.addEventListener('click', () => {
+            this.currentPage--;
+            this.fetchData();
+            // Enable next button (it might have been disabled)
+            
+              nextPageElement.disabled = false;
+            
+            // Disable prev button if on the first page
+            if (this.currentPage <= 1) {
+              prevPageElement.disabled = true;
             }
-        };
-
-        // Attach event listener to the input event for rows per page
-        rowsPerPageInput.addEventListener('input', (event) => { // Changed from 'change' to 'input'
-            const rows = parseInt(event.target.value);
-            if (!isNaN(rows) && rows > 0) {
-                this.updateRowsPerPage(rows);
-            } else if (event.target.value === '') {
-                this.updateRowsPerPage(this.rowsPerPage); // Optionally reset to the previous value if the input is cleared
-            }
-            // Note: You might want to add debouncing here to avoid excessive updates as the user types quickly.
-        });
-
-        // Optionally, keep the 'change' listener for when the input loses focus after a selection from the datalist
-        rowsPerPageInput.addEventListener('change', (event) => {
-            const rows = parseInt(event.target.value);
-            if (!isNaN(rows) && rows > 0) {
-                this.updateRowsPerPage(rows);
-            } else {
-                rowsPerPageInput.value = this.rowsPerPage; // Reset to current value if invalid input
-            }
-        });
-    }
-
-    // Example methods for row actions (you would implement these based on your needs)
-    editRow(id) {
-        console.log(`Editing row with ID: ${id}`);
-        // Implement your edit logic here
-    }
-
-    confirmRemove(id) {
-        console.log(`Confirming removal of row with ID: ${id}`);
-        // Implement your confirmation and removal logic here
-    }
-}
+            
+              currentPageElement.textContent = this.currentPage;
+            
+          });
+        // console.log(this.rowsPerPageElement);
+        this.rowsPerPageElement.addEventListener('input', (event)=>{
+            const testElement = document.createElement('span');
+            testElement.innerHTML='yay working go fuck yoursels!!!';
+            currentPageElement.appendChild(testElement);
+           // this.rowsPerPage = this.value;
+            this.fetchData();
+        })
+        
+    }//renderTable  
+}//class
