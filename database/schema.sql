@@ -134,13 +134,66 @@ SHOW CREATE TABLE categories;
 
 -- Insert into 'products' table
 INSERT INTO products (category_id, product_name, picture, description, color, size, price, rating, stock, created_by) VALUES
-(1, 'Brand T-shirt White', '../assets/images/Products/T-shirts/Brand_T-shirt_White.png', 'White branded T-shirt made from 100% cotton. Lightweight and comfortable.', 'White', 'M', 49.99, 4.2, 100, 1);
-INSERT INTO products (category_id, product_name, picture, description, color, size, price, rating, stock, created_by) VALUES
-(1, 'Brand T-shirt Black', '../assets/images/Products/T-shirts/Brand_T-shirt_Black.png', 'Black branded T-shirt made from 100% cotton. Lightweight and comfortable.', 'Black', 'M', 59.99, 4.2, 100, 1);
-INSERT INTO products (category_id, product_name, picture, description, color, size, price, rating, stock, created_by) VALUES
-(1, 'CHATGPT T-shirt', '../assets/images/Products/T-shirts/CHATGPT_T-shirt.png', 'CHATGPT T-shirt made from 100% cotton. Lightweight and comfortable.', 'White', 'S', 30.00, 2.75, 500, 1);
+(1, 'Brand T-shirt White', '../assets/images/Products/T-shirts/Brand_T-shirt_White.png', 'White branded T-shirt made from 100% cotton. Lightweight and comfortable.', 'White', 'M', 49.99, 4.2, 100, 1),
+(1, 'Brand T-shirt Black', '../assets/images/Products/T-shirts/Brand_T-shirt_Black.png', 'Black branded T-shirt made from 100% cotton. Lightweight and comfortable.', 'Black', 'M', 59.99, 4.2, 100, 1),
+(1, 'CHATGPT T-shirt', '../assets/images/Products/T-shirts/CHATGPT_T-shirt.png', 'CHATGPT T-shirt made from 100% cotton. Lightweight and comfortable.', 'White', 'S', 30.00, 2.75, 500, 1),
+(1, 'CTRL+PURR T-shirt Mauve', '../assets/images/Products/T-shirts/CTRL+PURR_T-shirt_Mauve.png', 'CTRL+PURR T-shirt made from 100% cotton. Lightweight and comfortable.', 'Mauve', 'L', 42.50, 4.0, 80, 1),
+(1, 'CTRL+PURR T-shirt White', '../assets/images/Products/T-shirts/CTRL+PURR_T-shirt_White.png', 'CTRL+PURR T-shirt made from 100% cotton. Lightweight and comfortable.', 'White', 'M', 39.99, 3.9, 120, 1),
+(1, 'I Are Programmer T-shirt', '../assets/images/Products/T-shirts/I_Are_Programmer_T-shirt.png', 'Funny programmer-themed T-shirt made from soft cotton.', 'Black', 'XL', 35.00, 4.5, 90, 1),
+(1, 'I need br T-shirt', '../assets/images/Products/T-shirts/I_need_br_T-shirt.png', 'Humorous coding reference T-shirt made from premium cotton.', 'White', 'XXL', 37.49, 4.3, 70, 1),
+(1, 'Just put a ticket in T-shirt', '../assets/images/Products/T-shirts/Just put a ticket in T-shirt Dark Gray.png', 'Support humor T-shirt made from 100% cotton.', 'Dark Gray', 'M', 40.00, 3.8, 60, 1),
+(1, 'Just put a ticket in T-shirt', '../assets/images/Products/T-shirts/Just put a ticket in T-shirt Light Gray.png', 'Support humor T-shirt made from 100% cotton.', 'Light Gray', 'L', 40.00, 4.1, 110, 1),
+(1, 'Just put a ticket in T-shirt', '../assets/images/Products/T-shirts/Just put a ticket in T-shirt White.png', 'Support humor T-shirt made from 100% cotton.', 'White', 'S', 40.00, 4.0, 95, 1),
+(1, 'Tech Wizard T-shirt', '../assets/images/Products/T-shirts/Tech Wizard T-shirt.png', 'Tech Wizard themed T-shirt made from soft, breathable cotton.', 'Black', 'XL', 44.95, 4.6, 100, 1),
+(1, 'Weapon T-shirt', '../assets/images/Products/T-shirts/Weapon T-shirt.png', 'Cool tech-themed T-shirt labeled “Weapon” – for coders.', 'Black', 'XXL', 41.00, 3.7, 85, 1);
 
 
-
+INSERT INTO products (category_id, product_name, picture, description, color, material, price, rating, stock, created_by) VALUES
+(2, 'Brand Backpack Black', '../assets/images/Products/Backpacks/Brand_Backpack_Black.png', 'Black branded Backpack made from 100% cotton. Lightweight and comfortable.', 'Black', 'cotton', 45.29, 4.75, 250, 1);
 
 select * from products;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- T-shirts:
+-- Size
+-- Color
+-- Backpacks:
+-- Color
+-- Material
+-- Books:
+-- Release Date
+-- Laptops:
+-- Brand
+-- Hard Drive Capacity
+-- Stickers:
+-- Material
+-- Software Tools:
+-- Platform (e.g., Windows, macOS, Linux)
+-- License Type (e.g., Free, Paid)
+-- Hardware Tools (e.g., Arduino):
+-- Type (e.g., Microcontroller, Sensor, Kit)
+-- Brand (e.g., Arduino, Adafruit, Raspberry Pi)
+-- Mugs:
+-- Material
+-- Color
+-- Phone Cases:
+-- Color
+-- Material
+-- Games:
+-- Genre
+-- Platform

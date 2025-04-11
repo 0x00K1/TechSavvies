@@ -17,6 +17,7 @@
 <!-- Connection to DB done just change USERNAME and PASSWORD.  -->
 <!--  Need fix coloumns and rows when adding product now it all become in same column. -->
 <!--  Add more products into DataBase. Also neeed seperation of products T-shirts should not appear in other categories, but it does. -->
+<!-- Make every entry into a seperate DIV -->
 
 
 <div class="external_grid">
@@ -50,82 +51,50 @@ $stmt = $pdo->query($query);
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<!-- HTML Output for displaying products -->
-<div class="product-list">
+
+
+<div class="page_grid">
+  <div class="external_grid">
     <?php foreach ($products as $product): ?>
-        <div class="card_grid">
-            <div class="product">
-                <!-- Use the correct path stored in the database -->
-                <img src="<?php echo '../' . htmlspecialchars($product['picture']); ?>" alt="<?php echo htmlspecialchars($product['product_name']); ?> Image">
-
-                <h1><?php echo htmlspecialchars($product['product_name']); ?></h1>
-                <h5><?php echo htmlspecialchars($product['description']); ?></h5>
-                <div class="static-rating" style="--rating: <?php echo htmlspecialchars($product['rating']); ?>;"></div>
-                <h2>$<?php echo number_format($product['price'], 2); ?></h2>
-            </div>
+      <div class="card_grid">
+        <div class="product">
+          <img class="product_img" src="<?php echo '../' . htmlspecialchars($product['picture']); ?>" 
+               alt="<?php echo htmlspecialchars($product['product_name']) . ' Picture'; ?>">
+          
+          <h1 class="product_h1"><?php echo htmlspecialchars($product['product_name']); ?></h1>
+          
+          <h5 class="product_h5"><?php echo nl2br(htmlspecialchars($product['description'])); ?></h5>
+          
+          <div class="static-rating" 
+               style="--rating: <?php echo floatval($product['rating']); ?>;"></div>
+          
+          <h2 class="product_h2">$<?php echo number_format($product['price'], 2); ?></h2>
         </div>
+      </div>
     <?php endforeach; ?>
+  </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <!-- Hidden checkbox for toggling sidebar -->
 <input type="checkbox" id="menu-toggle">
 <label for="menu-toggle" class="menu-icon">&#9776;</label>
 
+
 <!-- Sidebar Navigation -->
 <nav class="sidebar">
     <!-- Menu Container -->
-    <div class="menu-container">
+    <div>
         <!-- User Menu -->
         <ul class="user-menu">
             <li></li><li></li><li></li><li></li><li></li>
-            <li><a href="index.php" style="color: #ffff;"><i class="fa fa-home"></i> Home</a></li>
-            <li><a href="index.php#shop" style="color: #ffff;"><i class="fa fa-store"></i> Shop</a></li>
-            <li><a href="index.php#popular" style="color: #ffff;"><i class="fa fa-star"></i> Popular Products</a></li>
-            <li><a href="#" style="color: #ffff;"><i class="fa fa-cart-shopping"></i> Cart</a></li>
-            <li><a href="index.php#contact" style="color: #ffff;"><i class="fa fa-envelope"></i> Contact Us</a></li>
+            <li class="sidebar-anchor"><a href="index.php" class="sidebar-anchor" ><i class="fa fa-home"></i> Home</a></li>
+            <li class="sidebar-anchor"><a href="index.php#shop"><i class="fa fa-store"></i> Shop</a></li>
+            <li class="sidebar-anchor"><a href="index.php#popular"><i class="fa fa-star"></i> Popular Products</a></li>
+            <li class="sidebar-anchor"><a href="#"><i class="fa fa-cart-shopping"></i> Cart</a></li>
+            <li class="sidebar-anchor"><a href="index.php#contact" ><i class="fa fa-envelope"></i> Contact Us</a></li>
         </ul>
     </div>
-    <!-- <div class="menu-container" hidden>
-        <ul class="admin-menu">
-        <li></li><li></li><li></li>
-            <li><a href="#" style="color: #ffff;"><i class="fa fa-tachometer-alt"></i> Dashboard</a></li>
-            <li><a href="#" style="color: #ffff;"><i class="fa fa-users"></i> Manage Users</a></li>
-            <li><a href="#" style="color: #ffff;"><i class="fa fa-box"></i> Manage Products</a></li>
-            <li><a href="#" style="color: #ffff;"><i class="fa fa-shopping-cart"></i> Orders</a></li>
-            <li><a href="#" style="color: #ffff;"><i class="fa fa-chart-line"></i> Reports</a></li>
-            <li><a href="#" style="color: #ffff;"><i class="fa fa-cogs"></i> Settings</a></li>
-        </ul>
-    </div> -->
 </nav>
 
 
@@ -133,29 +102,13 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 <!-- Sidebar Navigation -->
-<nav class="sidebar">
+    <nav class="sidebar">
 
-
-    <div class="container">
+         <div>
         <!-- Right Sidebar (Filters Form) -->
         <aside class="filter-sidebar">
             <h2>Filters</h2>
             <form action="#" method="GET">
-
-                <!-- Category Filter (Collapsible)
-                <details class="filter-group">
-                    <summary>Category</summary>
-                    <label><input type="radio" name="categories" value="Tshirts" checked> T-shirts</label><br>
-                    <label><input type="radio" name="categories" value="BackPacks"> BackPacks</label><br>
-                    <label><input type="radio" name="categories" value="Books"> Books</label><br>
-                    <label><input type="radio" name="categories" value="Laptops"> Laptops</label><br>
-                    <label><input type="radio" name="categories" value="Stickers"> Stickers</label><br>
-                    <label><input type="radio" name="categories" value="SoftwareTools"> Software Tools</label><br>
-                    <label><input type="radio" name="categories" value="HardwareTools"> Hardware Tools</label><br>
-                    <label><input type="radio" name="categories" value="Mugs"> Mugs</label><br>
-                    <label><input type="radio" name="categories" value="PhoneCases"> Phone Cases</label><br>
-                    <label><input type="radio" name="categories" value="Games"> Games</label>
-                </details> -->
 
                 <details class="filter-group">
                     <summary>Size</summary>
@@ -165,7 +118,6 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <label><input type="checkbox" name="size" value="XL"> XL</label>
                     <label><input type="checkbox" name="size" value="XXL"> XXL</label>
                 </details>
-
 
                 <!-- Color Filter -->
                 <details class="filter-group">
@@ -194,7 +146,6 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                 </details>
 
-
                 <!-- Price Range Filter -->
                 <details class="filter-group">
                     <summary>Price Range (in $)</summary>
@@ -205,7 +156,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </label>
                         <label>
                             Max:
-                            <input type="number" id="maxPrice" name="maxPrice" value="1000" min="1" step="1">
+                            <input type="number" id="maxPrice" name="maxPrice" value="100" min="1" step="1">
                         </label>
                     </div>
                 </details>
@@ -226,8 +177,6 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                 </details>
 
-            <!---->
-
                 <div class="button-container">
                     <button class="button_top"><span>Apply Filters</span></button>
                     <button class="clear-filters"><span>Clear Filters</span></button>
@@ -235,6 +184,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </form>
         </aside>
     </div>
+
   <!-- Authentication Modal -->
   <?php require_once __DIR__ . '/../assets/php/auth.php'; ?>
 

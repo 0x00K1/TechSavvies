@@ -362,19 +362,19 @@ body {
     text-align: center;
 }
 
-Hover Slide Effect
+/* Hover Slide Effect */
 .sidebar ul li a {
     color: #fff;
     text-decoration: none;
     display: block;
     position: relative;
-    z-index: 1;
+    z-index: -5;
     -webkit-transition: color 0.3s ease;
     transition: color 0.3s ease;
 }
 
 .sidebar ul li a::before {
-    content: '';
+    
     position: absolute;
     left: -100%;
     top: 0;
@@ -384,7 +384,7 @@ Hover Slide Effect
     border-right: solid 5px #8d07cc;
     -webkit-transition: left 0.3s ease;
     transition: left 0.3s ease;
-    z-index: -1;
+    z-index: -5;
     
 }
 .sidebar ul li a::after {
@@ -411,24 +411,26 @@ Hover Slide Effect
 
 /* Hover Slide Effect for sidebar anchors */
 .sidebar-anchor::before {
-    content: '';
+    
     position: absolute;
     left: -100%;
     top: 0;
     width: 100%;
     height: 100%;
-    background: #555;
+    background: linear-gradient(135deg, #d42d2d, #8d07cc, #0117ff);
     border-right: solid 5px #8d07cc;
     transition: left 0.3s ease;
-    z-index: -1;
+    z-index: -100;
 }
 
 .sidebar-anchor:hover::after {
     color: #fff;
+    
 }
 
 .sidebar-anchor:hover::before {
     left: 0;
+    
 }
 
 /* Default State: Show guest menu and hide user menu */
@@ -467,158 +469,119 @@ Hover Slide Effect
 
 /*Page grid is for centring the content(Products)
 in the page */
-.page_grid{
-   height: 100%;
-   display: grid;
-   grid-gap: 30px 30px;
+.page_grid {
+    height: 100%;
+    display: grid;
+    margin-left: 100px;
 }
 
-.external_grid{
-   position: relative;
-   margin: 10%;
-   z-index: 2;
-   display: grid;
-   
-   grid-template-columns: repeat(3, 1fr);
-   grid-gap: 40px;
-   justify-self: center;
-   background-color: hsl(0, 0%, 100%);
+.external_grid {
+    position: relative;
+    margin: 4.5%;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(3, 0.75fr);
+    grid-gap: 40px;
+    justify-self: center;
+    background-color: hsl(0, 0%, 100%);
+    
 }
 
-/* Card grid is for combining the card product
-and it's button*/
-.card_grid{
-   display: grid;
-   grid-auto-flow: row;
-   grid-gap: 4px;
-   align-content: center;
-   justify-self: left;
-   background-color: #ffffff;
+/* Card grid is for combining the card product and its button */
+.card_grid {
+    display: grid;
+    grid-auto-flow: row;
+    grid-gap: 4px;
+    align-content: center;
+    justify-self: left;
+    background-color: #ffffff;
+    
+    
+}
+
+.product {
+    z-index: 2;
+    width: 400px;
+    /* min-width: fit-content; */
+    height: 650px;
+    /* min-height: fit-content; */
+    box-shadow: 0px 0px 3px #8d07cc;
+    background-color: #ffffff;
+    align-items: center;
+    justify-content: center;
+
+    /* Text */
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    transition: scale 0.3s, border-radius 0.3s, border-color 0.3s, box-shadow 0.3s, color 0.3s, background-color 0.3s;
+}
+
+/* Product Image */
+.product_img {
+    width: 80%;
+    height: 50%;
+    object-fit: cover;
+    margin: 10px;
+    transition: box-shadow 0.3s;
+    box-shadow: 0px 0px 0px #8d07cc;
 }
 
 
-.product{
-   z-index: 2;
-   width: 50%;
-   min-width: fit-content;
-   height: 440px;
-   min-height: fit-content;
-   /*border: 2px;
-   border-style: solid;
-   border-color: #000000;*/
-   box-shadow: 0px 0px 3px #8d07cc;
-   background-color: #ffffff;
-   align-items: center;
-   justify-content: center;
-   
-
-   /* Text */
-   text-align: center;
-   font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-   transition: scale 0.3s, border-radius 0.3s,
-   border-color 0.3s, box-shadow 0.3s, color 0.3s,
-   background-color 0.3s;
-   /* Product Image */
-   img {
-       max-width: 350px;
-       max-height: 275px;
-       min-width: 175px;
-       min-height: 225px;
-       margin: 10px;
-       /*border: 4px;
-       border-style: solid;
-       border-color: #000000;*/
-       transition: box-shadow 0.3s; 
-       box-shadow: 0px 0px 0px #8d07cc;
-   }
-
-   /* Product Name Header */
-   h1{
-       margin: 4%;
-       text-align: left;
-       font-size: 28px;
-       
-   }
-
-   /* Product description*/
-   h5{
-       margin: 4%;
-       text-align: left;
-       align-items: left;
-       font-size: 18px;
-   }
-   /* Product Price */
-   h2{
-       padding-top: 15%;
-       margin: 4%;
-       text-align: left;
-       color: #000000;
-       transition: color 1s ;
-   }
-   /* Product Rate */
-   h4{
-       font-size: 20px;
-       margin: 5%;
-       text-align: right;
-       color: #0117ff;
-       border: 1px dotted black;
-       transition: color 1s;
-   }
-   
-}
-.product:hover{
-   z-index: 3;
-   cursor: pointer;
-   scale: 1.05;
-   border-radius: 0px;
-   border-color: #000000;
-   box-shadow: 0px 0px 10px #8d07cc;
+/* Product Name Header */
+.product_h1 {
+    margin: 4%;
+    text-align: center;
+    font-size: 28px;
 }
 
-.product:active{
-   z-index: 2;
-   scale: 1.075;
-   color: #ffffff;
-   background-color: #000000;
-   box-shadow: 14px 9px 4px #6c6c6c;
-   img{
-       box-shadow: 7.5px 8px 0px #ffffff;
-   } 
-   h2{
-       color: #ffffff;
-       transition: color 0.3s ;
+.product_h5 {
+    margin: 4%;
+    text-align: center;
+    font-size: 18px;
+}
 
-   }
-   transition: scale 0.3s, border-radius 0.3s,
-   border-color 0.3s, box-shadow 0.3s,
-   color 0.3s, background-color 0.1s ;
+.product_h2 {
+    padding-top: 5%;
+    margin: 4%;
+    text-align: center;
+    color: #000000;
+    transition: color 1s;
 }
-/*
-.div_rating_star_and_price{
-   display: grid;
-   grid-template-columns: 90%;
-   position: relative;
-   justify-items: baseline;
-   top: 0%;
-   width: 100%;
-   height: 20%;
 
+/* Hover Effects */
+.product:hover {
+    z-index: 3;
+    cursor: pointer;
+    scale: 1.05;
+    border-radius: 0px;
+    border-color: #000000;
+    box-shadow: 0px 0px 10px #8d07cc;
 }
-.rating_star{
-   position: relative;
-   left: 80%;
-   width:fit-content;
-   bottom: 140%;
-   
-   height: fit-content;
-   text-align: center;
-   font-size: 120%;
-   text-decoration: bold;
-   box-shadow: 0 0 5px #ff0000;
+
+/* Active Effects */
+.product:active {
+    z-index: 2;
+    scale: 1.075;
+    color: #ffffff;
+    background-color: #000000;
+    box-shadow: 14px 9px 4px #6c6c6c;
+    transition: scale 0.3s, border-radius 0.3s, border-color 0.3s, box-shadow 0.3s, color 0.3s, background-color 0.1s;
 }
-.rating_star__icon{
-   
-}*/
+
+.product:active img {
+    box-shadow: 7.5px 8px 0px #ffffff;
+}
+
+.product:active h2 {
+    color: #ffffff;
+    transition: color 0.3s;
+}
+
+
+
+
+
+
 .add_to_cart_button{
        z-index: 0;
        width: 50%;
