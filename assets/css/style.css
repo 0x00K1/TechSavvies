@@ -769,3 +769,57 @@ in the page */
 .cart-button:active {
     transform: scale(0.95);
 }
+
+
+a.buttons {
+    font-size: 12px;
+    padding: 4px 8px;
+    background: linear-gradient(135deg, #d42d2d, #8d07cc, #0117ff);
+    color: white; /* solid text color */
+    border: 0px solid #A0AEC0;
+    margin: 2px;
+    transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 0 0.5em rgba(141, 7, 204, 0.5); /* use rgba for glow effect */
+    position: relative;
+    top: 85px;
+    left: 176.5px;
+    width: 121.55px;
+  display: inline-block;
+  text-align: center;
+
+  }
+  
+  a.buttons:first-of-type {
+    border-radius: .5em 0 0 .5em;
+  }
+  
+  a.buttons:last-of-type {
+    border-radius: 0 .5em .5em 0;
+  }
+  
+  .buttons i {
+    color: #E2E8F0; /* light solid color */
+    margin-right: .3em;
+    transition: all .2s ease-out;
+  }
+  
+  .multi-button:hover button {
+    color: #E2E8F0; /* solid hover text color */
+  }
+  
+  .multi-button:hover button:hover {
+    background: linear-gradient(135deg, #d42d2d, #8d07cc, #0117ff);
+    color: #fff;
+    box-shadow: 0 0 0.8em rgba(213, 63, 140, 0.8);
+    transform: translateY(-.2em);
+  }
+  
+  .multi-button:hover button i {
+    color: #CBD5E0;
+  }
+  
+  .multi-button:hover button:hover i {
+    color: #FED7E2;
+    transform: rotate(-10deg);
+  }
+

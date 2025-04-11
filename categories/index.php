@@ -8,16 +8,32 @@
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@flaticon/flaticon-uicons/css/all/all.css">
+
 </head>
 <body>
   <!-- Header Section -->
   <?php require_once __DIR__ . '/../assets/php/header.php'; ?>
   <div class="page_grid">
 
-<!-- Connection to DB done just change USERNAME and PASSWORD.  -->
-<!--  Need fix coloumns and rows when adding product now it all become in same column. -->
-<!--  Add more products into DataBase. Also neeed seperation of products T-shirts should not appear in other categories, but it does. -->
-<!-- Make every entry into a seperate DIV -->
+
+
+  <div class="multi-button">
+  <a href="categories?type=tshirts" class="buttons"><i class="fi fi-ss-tshirt"></i>T-shirts</a>
+  <a href="categories?type=backpacks" class="buttons"><i class="fi fi-ss-backpack"></i>Backpacks</a>
+  <a href="categories?type=books" class="buttons"><i class="fi fi-ss-books"></i>Books</a>
+  <a href="categories?type=laptops" class="buttons"><i class="fa-solid fa-laptop"></i>Laptops</a>
+  <a href="categories?type=stickers" class="buttons"><i class="fa-regular fa-note-sticky"></i>Stickers</a>
+  <a href="categories?type=hardware-tools" class="buttons"><i class="fi fi-ss-microchip"></i>Hardware Tools</a>
+  <a href="categories?type=software-tools" class="buttons"><i class="fi fi-ss-api"></i>Software Tools</a>
+  <a href="categories?type=mugs" class="buttons"><i class="fi fi-ss-mug"></i>Mugs</a>
+  <a href="categories?type=phone-cases" class="buttons"><i class="fi fi-ss-mobile-button"></i>Phone Cases</a>
+  <a href="categories?type=games" class="buttons"><i class="fi fi-ss-gamepad"></i>Games</a>
+</div>
+
+
+
+
 
 
 <div class="external_grid">
@@ -43,11 +59,37 @@ try {
 ?>
 
 <?php
-// Assuming the database connection $pdo has already been established
+$type_to_category_id = [
+  't-shirts' => 1,      // T-shirts
+  'backpacks' => 2,     // Backpacks
+  'books' => 3,         // Books
+  'laptops' => 4,       // Laptops
+  'stickers' => 5,      // Stickers
+  'hardware-tools' => 6,     // Hardware Tools
+  'software-tools' => 7,     // Software Tools
+  'mugs' => 8,          // Mugs
+  'phone-cases' => 9,   // Phone Cases
+  'games' => 10         // Games
+];
 
-// Query to get all products
-$query = 'SELECT * FROM products';
-$stmt = $pdo->query($query);
+// Check if the 'type' parameter is set in the query string, otherwise default to 't-shirt'
+$type = $_GET['type'] ?? 't-shirt'; // Default to 't-shirt' if no type is specified
+
+// Get the corresponding category_id, defaulting to 1 (T-shirts) if the type doesn't exist in the map
+$category_id = $type_to_category_id[$type] ?? 1; 
+
+// Prepare the query
+$query = 'SELECT p.*, c.category_name
+  FROM products p
+  LEFT JOIN categories c ON p.category_id = c.category_id
+  WHERE p.category_id = ?
+  ORDER BY p.product_id';
+
+// Execute the query with the dynamic category_id
+$stmt = $pdo->prepare($query);
+$stmt->execute([$category_id]);
+
+// Fetch the results
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
@@ -189,5 +231,8 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <?php require_once __DIR__ . '/../assets/php/auth.php'; ?>
 
   <script src="/assets/js/main.js"></script>
+
+
+
 </body>
 </html>
