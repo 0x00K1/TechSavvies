@@ -161,41 +161,45 @@ class fetchTable{
         this.data = options.data||[]; // if using an array data with no connection use it
         this.idNamingSuffix = options.idNamingSuffix||'';
         this.totalRecords= options.totalRecords|| 0;
+        this.pageOffset = options.pageOffset;
+        this.totalPages = options.totalPages;
+        this.flagPage = options.flagPage ||true;
         this.paginationControls();
     }
     fetchData(){
-       
-        const pageOffset = Math.max(0, (this.currentPage - 1) * this.rowsPerPage);// ((this.currentPage-1)* this.rowsPerPage)>-1?(this.currentPage-1)* this.rowsPerPage : 0 ; // make sure its positive
-        if(this.currentPage ==1){this.currentPage++;}
         
-        fetch(`${this.url}?rowNumber=${this.rowsPerPage}&rowOffset=${pageOffset}`)
+        this.pageOffset = Math.max(0, (this.currentPage - 1) * this.rowsPerPage);//posiive
+
+        //fetch data
+        fetch(`${this.url}?rowNumber=${this.rowsPerPage}&rowOffset=${this.pageOffset}`)
         .then(response => {
             if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+              throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response.json();
-        })
-        .then(data => {
-           // console.log('Data from PHP:', data); //uncomment for console output of the data
-            this.data = data;
-            this.renderTable();
-            //UPDATE PAGINATION STUFF
-            if(document.getElementById('totalRecordsHidden')){
-            this.totalRecords = parseInt(document.getElementById('totalRecordsHidden').value) || 0;}
-            else{
-                console.log('cant find document.getElementById(\'totalRecordsHidden\')');
+          })
+          .then(response => {
+            this.data = response.records;
+            if(this.flagPage){  // change flag if rows changed
+                this.totalRecords = response.totalRecords;
+                this.totalPages = Math.ceil(this.totalRecords / this.rowsPerPage);
+                this.flagPage = false;
             }
+            
+            this.renderTable();
+            this.updatePaginationInfo();
+            
+            // UPDATE PAGINATION STUFF
             const nextPageElement = document.getElementById(`${this.idNamingSuffix}-next-page`);
-            const totalPages = Math.ceil(this.totalRecords / this.rowsPerPage);
-            console.log(totalPages);
+            
+
+            
             // Disable next button if on last page or no more data
             if (nextPageElement) {
-                nextPageElement.disabled =  totalPages <2;
+              nextPageElement.disabled = this.currentPage >= this.totalPages;
             }
-            
-            
-        })
-        .catch(error => {
+          })
+          .catch(error => {
             // Handle any errors that occurred during the fetch operation
             console.error('Error fetching data:', error);
         });
@@ -230,7 +234,6 @@ class fetchTable{
         this.data.forEach(data =>{
             const brow = document.createElement('tr');
             tbody.appendChild(brow);
-            totalRecords++;
             this.columnName.forEach( bcolumn => {           //for(int i=0 ; i < columnName.length; i++)
                 const bdata = document.createElement('td');
                 bdata.textContent = data[bcolumn] ;
@@ -248,23 +251,37 @@ class fetchTable{
         
         
     }//renderTable 
+    updatePaginationInfo(){
+        const paginationInfo = document.getElementById(`${this.idNamingSuffix}-pagination-info`);
+        const startItem = this.pageOffset + 1;
+        const endItem = Math.min(this.pageOffset + this.rowsPerPage, this.totalRecords);
+        if (!paginationInfo) {
+            console.error('Pagination elements not found. Make sure they have the correct IDs.');
+            return;
+            
+        } else {
+            paginationInfo.innerHTML = `Showing <span>${startItem}
+                </span> to <span >${endItem}
+                </span> of <span>${this.totalRecords}</span> items`;
+        }
+    }
     paginationControls(){
 
         const nextPageElement = document.getElementById(`${this.idNamingSuffix}-next-page`);
         const prevPageElement = document.getElementById(`${this.idNamingSuffix}-prev-page`);
         const currentPageElement = document.getElementById(`${this.idNamingSuffix}-current-page`);
         
+        
         if (!nextPageElement || !prevPageElement || !currentPageElement) {
             console.error('Pagination elements not found. Make sure they have the correct IDs.');
             return;
         }
-        
-        // Set initial page display
+
         currentPageElement.textContent = this.currentPage;
         
-        // Disable prev button initially if on first page
-        prevPageElement.disabled = this.currentPage <= 1;
-        
+
+
+        prevPageElement.disabled = this.currentPage <= 1;  
         nextPageElement.addEventListener('click', () => {
             this.currentPage++;
             this.fetchData();

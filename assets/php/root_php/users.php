@@ -34,9 +34,9 @@
     </div>
 
     <div class="users-pagination" id="users-pagination">
-        <div class="pagination-info" id="pagination-info">
-            Showing <span id="showing-start">1</span> to <span id="showing-end">10</span> of <span
-                id="total-items">100</span> items
+        <div class="pagination-info" id="users-pagination-info">
+            Showing <span id="users-showing-start">1</span> to <span id="users-showing-end">10</span> of <span
+                id="users-total-items">100</span> items
         </div>
         <div class="pagination-controls" id="pagination-controls">
             <button type="button" id="users-prev-page" class="pagination-button" disabled>&laquo; Previous</button>
