@@ -520,10 +520,11 @@ in the page */
 .product_img {
     width: 80%;
     height: 50%;
-    object-fit: cover;
+    object-fit: contain;
     margin: 10px;
     transition: box-shadow 0.3s;
     box-shadow: 0px 0px 0px #8d07cc;
+    background-color: #f0f0f0; /* Optional: makes gaps obvious */
 }
 
 
