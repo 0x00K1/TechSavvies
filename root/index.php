@@ -1,9 +1,10 @@
 <!-- devolped by @ananas0dev , @HameedJHD
  notes for improvment
  the popup windows should make the full webpage disabled
- fix the edit button and make a textfield for the editable sections
- 
- #Rootv0.1 Not stable
+ add product and sorting remain
+ extra feutures :
+ fetch column from diffrent tables make some cells clickable to see more data
+ add graphical dashboard piechart etc...
  -->
 
 <!DOCTYPE html>
