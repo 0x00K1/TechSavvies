@@ -164,7 +164,7 @@ class fetchTable{
         this.pageOffset = Math.max(0, (this.currentPage - 1) * this.rowsPerPage);//posiive
 
         //fetch data
-        fetch(`${this.url}?rowNumber=${this.rowsPerPage}&rowOffset=${this.pageOffset}`)
+        fetch(`${this.url}?tableName=${this.tableName}&rowNumber=${this.rowsPerPage}&rowOffset=${this.pageOffset}`)
         .then(response => {
             if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);

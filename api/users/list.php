@@ -4,22 +4,25 @@ header('Content-Type: application/json');
 
 $rowNumber = isset($_GET["rowNumber"])? $_GET["rowNumber"] : 4 ;
 $rowOffset = isset($_GET["rowOffset"])? $_GET["rowOffset"] : 0;
+$tableName = $_GET["tableName"];
 
 include('../../includes/db.php'); 
 
 // Get total records first
-$sqlTotalRecord = "SELECT COUNT(*) AS total FROM customers";
+$sqlTotalRecord = "SELECT COUNT(*) AS total FROM ?";
 $stmtTotal = $pdo->prepare($sqlTotalRecord);
+$stmtTotal-> bindParam(1,$tableName, PDO::PARAM_INT );
 $stmtTotal->execute();
 $totalResult = $stmtTotal->fetch(PDO::FETCH_ASSOC);
 $totalRecords = $totalResult['total']; 
 
 // SQL query to fetch paginated data
-$sql = "SELECT * FROM customers LIMIT ? OFFSET ?";
+$sql = "SELECT * FROM ? LIMIT ? OFFSET ?";
 
 $stmt = $pdo->prepare($sql);
-$stmt->bindParam(1, $rowNumber, PDO::PARAM_INT);
-$stmt->bindParam(2, $rowOffset, PDO::PARAM_INT);
+$stmt->bindParam(1,$tableName, PDO::PARAM_INT );
+$stmt->bindParam(2, $rowNumber, PDO::PARAM_INT);
+$stmt->bindParam(3, $rowOffset, PDO::PARAM_INT);
 $stmt->execute();
 
 // Fetch all rows as an associative array
