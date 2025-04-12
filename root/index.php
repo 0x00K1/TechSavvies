@@ -29,17 +29,17 @@
     ####################################-->
         <div class="toolbar">
             <nav class="nav">
-                <button id="managePro_button"><img class="b-icon" src="..\assets\icons\Product.svg"><span>Products
+                <button id="manageProbutton"><img class="b-icon" src="..\assets\icons\Product.svg"><span>Products
                         Management</span></button>
-                <button id="manageUser_button"><img class="b-icon" src="..\assets\icons\User.svg"><span>Users
+                <button id="manageUserbutton"><img class="b-icon" src="..\assets\icons\User.svg"><span>Users
                         Management</span></button>
-                <button id="Orders_button"><img class="b-icon"
+                <button id="Ordersbutton"><img class="b-icon"
                         src="..\assets\icons\Orders.svg"><span>Orders</span></button>
-                <button id="transactions_button"><img class="b-icon"
+                <button id="transactionsbutton"><img class="b-icon"
                         src="..\assets\icons\transaction.svg"><span>Transactions</span></button>
-                <button id="Reviews_button"><img class="b-icon"
+                <button id="Reviewsbutton"><img class="b-icon"
                         src="..\assets\icons\review.svg"><span>Reviews</span></button>
-                <button id="Logout_button"><svg class="b-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14 4L17.5 4C20.5577 4 20.5 8 20.5 12C20.5 16 20.5577 20 17.5 20H14M3 12L15 12M3 12L7 8M3 12L7 16" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                <button id="Logoutbutton"><svg class="b-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo-bgCarrier" stroke-width="0"></g><g id="SVGRepo-tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo-iconCarrier"> <path d="M14 4L17.5 4C20.5577 4 20.5 8 20.5 12C20.5 16 20.5577 20 17.5 20H14M3 12L15 12M3 12L7 8M3 12L7 16" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                 <span>Logout</span></button>
             </nav>
         </div>
@@ -48,44 +48,44 @@
     ####################################-->
         <div class="funcarea">
             <div class="content-container">
-                <!-- _________________________________________
+                <!-- -----------------------------------------
                     Products page
-                    ________________________________________-->
+                    ------------------------------------------>
                 <?php include('..\assets\php\root_php\products.php')?>  <!-- our filr:product.php-->
-                <!-- _________________________________________
+                <!-- -----------------------------------------
                     users page
-                    ________________________________________-->
+                    ------------------------------------------>
                 <?php include('..\assets\php\root_php\users.php')?>  
-                <!-- _________________________________________
+                <!-- -----------------------------------------
                     orders page
-                    ________________________________________-->
+                    ------------------------------------------>
 
                 <?php include('..\assets\php\root_php\orders.php')?> 
 
-                <!-- _________________________________________
+                <!-- -----------------------------------------
                     transactions page
-                    ________________________________________-->
+                    ------------------------------------------>
                 <?php include('..\assets\php\root_php\transactions.php')?>
-                <!-- _________________________________________
+                <!-- -----------------------------------------
                     reviews page
-                    ________________________________________-->
+                    ------------------------------------------>
                 <?php include('..\assets\php\root_php\reviews.php')?>
         <!-- ##################################
-            popup_forms Section 
+            popup-forms Section 
     ####################################-->
-        <div id="addProPopup_display" class="addProPopup">
+        <div id="addProPopupdisplay" class="addProPopup">
             <span class="close" onclick="closeaddProPopup()">&times;</span>
-            <form name="add_product_form" id="addProduct_form" method="post" action="index.php">
-                <div id="add_display" class="AddProduct">
+            <form name="add-product-form" id="addProductform" method="post" action="index.php">
+                <div id="add-display" class="AddProduct">
                     <div style="display: inline;">
-                        <label for="product_name">Product Name:</label>
-                        <input type="text" name="product_name" id="product_name" placeholder="Enter the product's name"
+                        <label for="product-name">Product Name:</label>
+                        <input type="text" name="product-name" id="productname" placeholder="Enter the product's name"
                             maxlength="255" required>
 
                         <label for="categoryList">Category:</label>
-                        <input id="categoryList" type="text" name="Pro_category" placeholder="Choose a category..."
-                            list="Pro_category">
-                        <datalist id="Pro_category">
+                        <input id="categoryList" type="text" name="Pro-category" placeholder="Choose a category..."
+                            list="Pro-category">
+                        <datalist id="Procategory">
                             <option value="test1"></option>
                             <option value="test2"></option>
                         </datalist>
@@ -99,26 +99,26 @@
                         <textarea id="ProductDescreption" placeholder="Product description" naem="ProductDescreption"
                             required></textarea>
 
-                        <label for="product_color">Product Color:</label>
-                        <input type="text" name="product_color" id="product_color"
+                        <label for="product-color">Product Color:</label>
+                        <input type="text" name="product-color" id="product-color"
                             placeholder="Enter the product's color" maxlength="255" required>
                     </div>
                     <div style="display: inline;">
-                        <label for="product_size">Product Size:</label>
-                        <input type="text" name="product_size" id="product_size" placeholder="Enter the product's size"
+                        <label for="product-size">Product Size:</label>
+                        <input type="text" name="product-size" id="product-size" placeholder="Enter the product's size"
                             maxlength="50" required>
 
 
-                        <label for="product_price">Product Price:</label>
-                        <input type="number" name="product_price" id="product_price"
+                        <label for="product-price">Product Price:</label>
+                        <input type="number" name="product-price" id="productprice"
                             placeholder="Enter the product's price" step="0.01" required>
 
 
-                        <label for="product_stock">Product Stock:</label>
-                        <input type="number" name="product_stock" id="product_stock"
+                        <label for="product-stock">Product Stock:</label>
+                        <input type="number" name="product-stock" id="productstock"
                             placeholder="Enter the product's stock" step="1" required>
                     </div>
-                    <input name="submit_add_product" id="submit_add_product" type="submit" value="Add" />
+                    <input name="submit-add-product" id="submitaddproduct" type="submit" value="Add" />
                 </div>
             </form>
         </div>

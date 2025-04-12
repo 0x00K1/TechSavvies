@@ -1,17 +1,17 @@
 <div id="EditProduct" class="content">
-        <form name="Product_queries" id="Product_queries" method="post" action="index.php">
-                <button id="addProPopup_button" class="addProPopup_button_style" type="button" onclick="addProPopup()">
+        <form name="Product-queries" id="Product-queries" method="post" action="index.php">
+                <button id="addProPopup-button" class="addProPopup-button-style" type="button" onclick="addProPopup()">
                     <i class="fas fa-plus"></i> Add Product
                 </button>
                 <div class="top-controls">
-            <div class="search_div">
-                <input class="search-field_style" name="product_search_field" id="users_search_field" type="text"
+            <div class="search-div">
+                <input class="search-field-style" name="product-search-field" id="users-search-field" type="text"
                     placeholder="Search... attribute:key ex(name:ft7y)" />
-                <button class="search-button_style" name="search_button" id="users_search_button" type="submit">
+                <button class="search-button-style" name="search-button" id="users-search-button" type="submit">
                     Search
                 </button>
-                <span class="rows_label">Rows:</span>
-                <input type="number" name="rows_per_page" id="users_rows_per_page" class="filter_value_style" onchange="changeRowsPerPage('users')" list="rowsPerPageOptions">
+                <span class="rows-label">Rows:</span>
+                <input type="number" name="rows-per-page" id="users-rows-per-page" class="filter-value-style" onchange="changeRowsPerPage('users')" list="rowsPerPageOptions">
                 <datalist id="rowsPerPageOptions">
                     <option value="25">25</option>
                     <option value="50">50</option>
@@ -30,7 +30,7 @@
                             <th data-sort="price">Price <span class="sort-icon">↕</span></th>
                             <th data-sort="stock">Stock <span class="sort-icon">↕</span></th>
                             <th data-sort="category">Category <span class="sort-icon">↕</span></th>
-                            <th data-sort="updated_date">Updated Date <span class="sort-icon">↕</span></th>
+                            <th data-sort="updated-date">Updated Date <span class="sort-icon">↕</span></th>
                             <th>Actions</th>
                         </tr>
                     </thead>

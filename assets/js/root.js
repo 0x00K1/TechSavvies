@@ -1,23 +1,23 @@
 document.addEventListener('DOMContentLoaded', function() {
      /*buttons*/
-     const managePro_button = document.getElementById('managePro_button');
-     const manageUser_button = document.getElementById('manageUser_button');
-     const Orders_button = document.getElementById('Orders_button');
-     const transaction_button = document.getElementById('transactions_button');
-     const review_button = document.getElementById('Reviews_button');
-     const logout_button = document.getElementById('Logout_button');
-     const search_button = document.getElementById('search_button');
+     const manageProbutton = document.getElementById('manageProbutton');
+     const manageUserbutton = document.getElementById('manageUserbutton');
+     const Ordersbutton = document.getElementById('Ordersbutton');
+     const transactionbutton = document.getElementById('transactionsbutton');
+     const reviewbutton = document.getElementById('Reviewsbutton');
+     const logoutbutton = document.getElementById('Logoutbutton');
+     const searchbutton = document.getElementById('searchbutton');
      
      /* div or displays*/
      const EditProduct = document.getElementById('EditProduct');
-     const users_display = document.getElementById('users_display');
-     const orders_display = document.getElementById('orders_display');
-     const Transaction_display = document.getElementById('Transactions_display');
-     const Reviews_display = document.getElementById('Reviews_Display'); 
+     const usersdisplay = document.getElementById('usersdisplay');
+     const ordersdisplay = document.getElementById('ordersdisplay');
+     const Transactiondisplay = document.getElementById('Transactionsdisplay');
+     const Reviewsdisplay = document.getElementById('Reviewsdisplay'); 
  
      // Function to hide all displays
      function hideAllDisplays() {
-         const displays = [EditProduct, users_display, orders_display, Transaction_display, Reviews_display];
+         const displays = [EditProduct, usersdisplay, ordersdisplay, Transactiondisplay, Reviewsdisplay];
          displays.forEach(display => {
              if(display) display.style.display = 'none';
          });
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
  
      // Function to remove active class from all buttons
      function removeAllActiveClasses() {
-         const buttons = [managePro_button, manageUser_button, Orders_button, transaction_button, review_button];
+         const buttons = [manageProbutton, manageUserbutton, Ordersbutton, transactionbutton, reviewbutton];
          buttons.forEach(button => {
              if(button) button.classList.remove('active');
          });
@@ -40,21 +40,21 @@ document.addEventListener('DOMContentLoaded', function() {
      }
  
      /* first time loading page */
-     setActiveTab(EditProduct, managePro_button);
+     setActiveTab(EditProduct, manageProbutton);
  
      /* Event Listeners for tab switching */
-     managePro_button.addEventListener('click', function() {
-         setActiveTab(EditProduct, managePro_button);
+     manageProbutton.addEventListener('click', function() {
+         setActiveTab(EditProduct, manageProbutton);
      });
  
-     // Implementation for manageUser_button
-     manageUser_button.addEventListener('click', function() {
-         setActiveTab(users_display, manageUser_button);
+     // Implementation for manageUserbutton
+     manageUserbutton.addEventListener('click', function() {
+         setActiveTab(usersdisplay, manageUserbutton);
          const userTable = new fetchTable({
             url : '../../api/users/list.php',
             tableBodyElement : document.getElementById('users-table'), 
             tableName : 'customers',
-            columnName : ['email','customer_id','username','created_at','iamfakeandbad'],
+            columnName : ['email','customer-id','username','created-at','iamfakeandbad'],
             rowsPerPage :3,
             idNamingSuffix :'users',    // to locate the next prev current page ids following the standard suffix-next-page so on
          });
@@ -62,25 +62,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
      });
  
-     Orders_button.addEventListener('click', function() {
-         setActiveTab(orders_display, Orders_button);
-         
+     Ordersbutton.addEventListener('click', function() {
+         setActiveTab(ordersdisplay, Ordersbutton);
+         const userTable = new fetchTable({
+            url : '../../api/users/list.php',
+            tableBodyElement : document.getElementById('orders-table'), 
+            tableName : 'orders',
+            columnName : ['order-id','customer-id','status','total-amount','orderdate'],
+            rowsPerPage :3,
+            idNamingSuffix :'orders',    // to locate the next prev current page ids following the standard suffix-next-page so on
+         });
+         userTable.fetchData();
         
      });
  
-     transaction_button.addEventListener('click', function() {
-         setActiveTab(Transaction_display, transaction_button);
+     transactionbutton.addEventListener('click', function() {
+         setActiveTab(Transactiondisplay, transactionbutton);
      });
  
-     review_button.addEventListener('click', function() {
-         setActiveTab(Reviews_display, review_button);
+     reviewbutton.addEventListener('click', function() {
+         setActiveTab(Reviewsdisplay, reviewbutton);
      });
  
      //search functionality
-   //  search_button.addEventListener('click', function() {    
+   //  searchbutton.addEventListener('click', function() {    
     // });
  
-     logout_button.addEventListener('click', function() {
+     logoutbutton.addEventListener('click', function() {
          const confirmLogout = confirm("Are you sure you want to log out?");
          if (confirmLogout) {
              window.location.href = "/includes/cls.php";
@@ -89,42 +97,42 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function closeaddProPopup() {
-    document.getElementById("addProPopup_display").style.display = "none";
+    document.getElementById("addProPopupdisplay").style.display = "none";
 }
 
 function confirmationPopup() {
-    document.getElementById("confirmationPopup_display").style.display = "block";
+    document.getElementById("confirmationPopupdisplay").style.display = "block";
 }
 
 function closeconfirmationPopup() {
-    document.getElementById("confirmationPopup_display").style.display = "none";
+    document.getElementById("confirmationPopupdisplay").style.display = "none";
 }
 
 // Define these functions in the global scope
-window.product_edit_button = function() {
-    document.getElementById('product_edit_display').style.display = "block";
-    document.getElementById('buttons_table_display').style.display = "none";
+window.product_editbutton = function() {
+    document.getElementById('product-editdisplay').style.display = "block";
+    document.getElementById('buttons-tabledisplay').style.display = "none";
 };
 
 window.product_cancel_edit = function() {
-    document.getElementById('product_edit_display').style.display = "none";
-    document.getElementById('buttons_table_display').style.display = "block";
+    document.getElementById('product-editdisplay').style.display = "none";
+    document.getElementById('buttons-tabledisplay').style.display = "block";
 };
 
 // Make sure the buttons have the correct onclick handlers after the page loads
 document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('edit_product_button')) {
-        document.getElementById('edit_product_button').onclick = window.product_edit_button;
+    if (document.getElementById('edit-productbutton')) {
+        document.getElementById('edit-productbutton').onclick = window.product-editbutton;
     }
 
-    if (document.getElementById('product_cancel_edit')) {
-        document.getElementById('product_cancel_edit').onclick = window.product_cancel_edit;
+    if (document.getElementById('product-cancel-edit')) {
+        document.getElementById('product-cancel-edit').onclick = window.product-cancel-edit;
     }
 });
 
-/*_______________________________________________________________________________________________________
+/*-------------------------------------------------------------------------------------------------------
 
-#######################################___Global table retriver___#######################################
+#######################################---Global table retriver---#######################################
 
 
 ------------------------------------------------Usage----------------------------------------------------
@@ -138,7 +146,7 @@ sortColumn	        string	        First                           column name in
 sortDirection	    string	        'asc'	                        The initial sorting direction. Possible values: 'asc' (ascending) or 'desc' (descending).
 
 
-_________________________________________________________________________________________________________*/
+---------------------------------------------------------------------------------------------------------*/
 
 class fetchTable{
     
@@ -198,8 +206,12 @@ class fetchTable{
         });
     };//fetchdata
     renderTable(){
+        const display = document.getElementById(`${this.idNamingSuffix}-table-display`);
         const tableBodyE= this.tableBodyElement;
-         
+
+        display.appendChild(tableContainer);
+        tableContainer.setAttribute(`class="table-container" ${this.idNamingSuffix}-table-container`) ;
+        tableContainer.appendChild(tableBodyE);
         if (!tableBodyE) {
             console.error('Table body element is not provided.');
             return;
@@ -211,6 +223,7 @@ class fetchTable{
         const hrow = document.createElement('tr'); 
         
        //fill table head
+        
         tableBodyE.appendChild(header);
         header.appendChild(hrow);
 
@@ -249,7 +262,7 @@ class fetchTable{
         const startItem = this.pageOffset + 1;
         const endItem = Math.min(this.pageOffset + this.rowsPerPage, this.totalRecords);
         if (!paginationInfo) {
-            console.error('Pagination elements not found. Make sure they have the correct IDs.');
+            console.error('Paginationinfo not found. Make sure they have the correct IDs.');
             return;
             
         } else {
@@ -266,7 +279,12 @@ class fetchTable{
         
         
         if (!nextPageElement || !prevPageElement || !currentPageElement) {
-            console.error('Pagination elements not found. Make sure they have the correct IDs.');
+            if(!nextPageElement)
+                console.error('nextPageElement not found. Make sure they have the correct IDs.');
+            if(!prevPageElement)
+                console.error('prevPageElement not found. Make sure they have the correct IDs.');
+            if(!currentPageElement)
+                console.error('currentPageElement not found. Make sure they have the correct IDs.');
             return;
         }
 

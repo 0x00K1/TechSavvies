@@ -1,18 +1,18 @@
-<div class="content" id="Transactions_display">
-  <!-- <?php include("search_rows.php")?> -->
+<div class="content" id="Transactions-display">
+  <!-- <?php include("search-rows.php")?> -->
     <div class="table-container">
         <table id="transactions-table">
             <thead>
                 <tr>
-                    <th data-sort="Payment_ID">Payment ID <span class="sort-icon">↕</span></th>
-                    <th data-sort="Order_ID">Order ID <span class="sort-icon">↕</span></th>
-                    <th data-sort="User_ID">User ID <span class="sort-icon">↕</span></th>
+                    <th data-sort="Payment-ID">Payment ID <span class="sort-icon">↕</span></th>
+                    <th data-sort="Order-ID">Order ID <span class="sort-icon">↕</span></th>
+                    <th data-sort="User-ID">User ID <span class="sort-icon">↕</span></th>
                     <th data-sort="Username">Username <span class="sort-icon">↕</span></th>
-                    <th data-sort="Payment_Method">Payment Method <span class="sort-icon">↕</span></th>
-                    <th data-sort="Payment_Status">Payment Status <span class="sort-icon">↕</span></th>
-                    <th data-sort="Transaction_ID">Transaction ID<span class="sort-icon">↕</span></th>
+                    <th data-sort="Payment-Method">Payment Method <span class="sort-icon">↕</span></th>
+                    <th data-sort="Payment-Status">Payment Status <span class="sort-icon">↕</span></th>
+                    <th data-sort="Transaction-ID">Transaction ID<span class="sort-icon">↕</span></th>
                     <th data-sort="Amount">Amount <span class="sort-icon">↕</span></th>
-                    <th data-sort="Created_At">Created at <span class="sort-icon">↕</span></th>
+                    <th data-sort="Created-At">Created at <span class="sort-icon">↕</span></th>
                     <th>Actions</th>
                 </tr>
             </thead>

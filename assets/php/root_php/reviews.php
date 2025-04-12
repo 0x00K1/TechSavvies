@@ -1,17 +1,17 @@
-<div class="content" id="Reviews_Display">
-   <!-- <?php include("search_rows.php")?> -->
+<div class="content" id="Reviews-Display">
+   <!-- <?php include("search-rows.php")?> -->
     <div class="table-container">
         <table id="transactions-table">
             <thead>
                 <tr>
-                    <th data-sort="Review_ID">Review ID <span class="sort-icon">↕</span></th>
-                    <th data-sort="User_ID">User ID <span class="sort-icon">↕</span></th>
+                    <th data-sort="Review-ID">Review ID <span class="sort-icon">↕</span></th>
+                    <th data-sort="User-ID">User ID <span class="sort-icon">↕</span></th>
                     <th data-sort="Username">Username <span class="sort-icon">↕</span></th>
-                    <th data-sort="Product_ID">Product ID <span class="sort-icon">↕</span></th>
-                    <th data-sort="Product_Name">Product Name <span class="sort-icon">↕</span></th>
+                    <th data-sort="Product-ID">Product ID <span class="sort-icon">↕</span></th>
+                    <th data-sort="Product-Name">Product Name <span class="sort-icon">↕</span></th>
                     <th data-sort="Rating">Rating<span class="sort-icon">↕</span></th>
-                    <th data-sort="Review_Text">Review Text <span class="sort-icon">↕</span></th>
-                    <th data-sort="Created_At">Created at <span class="sort-icon">↕</span></th>
+                    <th data-sort="Review-Text">Review Text <span class="sort-icon">↕</span></th>
+                    <th data-sort="Created-At">Created at <span class="sort-icon">↕</span></th>
                     <th>Actions</th>
                 </tr>
             </thead>
