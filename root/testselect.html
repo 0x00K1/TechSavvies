@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Element Event Listener Example</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        #output {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Choose an Option</h1>
+
+    <select id="mySelect">
+        <option value="">-- Please Select --</option>
+        <option value="apple">Apple</option>
+        <option value="banana">Banana</option>
+        <option value="orange">Orange</option>
+        <option value="grape">Grape</option>
+    </select>
+
+    <div id="output"></div>
+
+    <script>
+        // 1. Get a reference to the <select> element
+        const selectElement = document.getElementById('mySelect');
+
+        // 2. Get a reference to the output div
+        const outputDiv = document.getElementById('output');
+
+        // 3. Attach an event listener to the <select> element
+        selectElement.addEventListener('change', function(event) {
+            // This function will be executed when the selected option changes
+
+            // Get the selected value
+            const selectedValue = selectElement.value;
+            console.log('Selected value:', selectedValue);
+
+            // Get the selected option element
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            console.log('Selected option text:', selectedOption.text);
+
+            // Update the content of the output div
+            if (selectedValue) {
+                outputDiv.textContent = `You selected: ${selectedOption.text} (Value: ${selectedValue})`;
+            } else {
+                outputDiv.textContent = ""; // Clear the output if the default "-- Please Select --" is chosen
+            }
+
+            // You can perform other actions based on the selected value here
+            if (selectedValue === 'apple') {
+                console.log('Performing action for Apple...');
+                // Do something specific for Apple
+            } else if (selectedValue === 'banana') {
+                console.log('Performing action for Banana...');
+                // Do something specific for Banana
+            }
+        });
+    </script>
+
+</body>
+</html>

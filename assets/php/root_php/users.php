@@ -1,14 +1,16 @@
-<div id="users_display" class="content">
+<div id="users-display" class="content">
     <div class="top-controls">
             <div class="search_div">
-                <input class="search-field_style" name="product_search_field" id="users_search_field" type="text"
+                <input class="search-field_style" name="product-search-field" id="users-search-field" type="text"
                     placeholder="Search... attribute:key ex(name:ft7y)" />
-                <button class="search-button_style" name="search_button" id="users_search_button" type="submit">
+                <button class="search-button_style" name="search_button" id="users-search-button" type="submit">
                     Search
                 </button>
                 <span class="rows_label">Rows:</span>
                 
-                <select id="users_rows_per_page" class="filter_value_style" name="rows_per_page"">
+                <select id="users-rows-per-page" class="filter_value_style">
+                    <option >Rows to display</option>
+                    <option value="4">4</option>
                     <option value="25">25</option>
                     <option value="50">50</option>
                     <option value="100">100</option>

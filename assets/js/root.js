@@ -55,13 +55,8 @@ document.addEventListener('DOMContentLoaded', function() {
             tableBodyElement : document.getElementById('users-table'), 
             tableName : 'customers',
             columnName : ['email','customer_id','username','created_at','iamfakeandbad'],
-            paginationContainerId : 'users-pagination', 
-            rowsPerPageElement: document.getElementById('users_rows_per_page'), 
-            //currentPage : 1, DEFAULT
             rowsPerPage :3,
             idNamingSuffix :'users',    // to locate the next prev current page ids following the standard suffix-next-page so on
-        //this.sortColumn = options.sortColumn || (this.columnName.length > 0 ? this.columnName[0] : null); default
-        //this.sortDirection = options.sortDirection || 'asc'; default
          });
          userTable.fetchData();
 
@@ -152,8 +147,6 @@ class fetchTable{
         this.tableBodyElement = options.tableBodyElement ; 
         this.tableName = options.tableName;   // name in DB
         this.columnName = options.columnName || []; // name in DB
-        this.paginationContainerId = options.paginationContainerId ; 
-        this.rowsPerPageElement = options.rowsPerPageElement ; 
         this.currentPage = options.currentPage || 1;
         this.rowsPerPage = options.rowsPerPage || 100;
         this.sortColumn = options.sortColumn || (this.columnName.length > 0 ? this.columnName[0] : null);
@@ -303,14 +296,20 @@ class fetchTable{
         });
         
         // Handle rows per page change
-        if (this.rowsPerPageElement) {
-            this.rowsPerPageElement.addEventListener('change', (event) => {
-                this.rowsPerPage = parseInt(event.target.value);
-                this.currentPage = 1; // Reset to first page when changing rows per page
-                this.fetchData();
-                currentPageElement.textContent = this.currentPage;
-                prevPageElement.disabled = true; // Disable prev button when on page 1
+        const rowsPerPage = document.getElementById(`${this.idNamingSuffix}-rows-per-page`);
+            rowsPerPage.addEventListener('change', (event) =>{ // Use an arrow function here
+                this.rowsPerPage = parseInt(rowsPerPage.value); // Get the value and parse it as an integer
+                this.currentPage = 1; // Reset to the first page when rows per page changes
+                this.fetchData(); // Fetch data with the new rows per page
+    
+                // Update pagination elements (you might want to move this to a separate function if it gets complex)
+                const currentPageElement = document.getElementById(`${this.idNamingSuffix}-current-page`);
+                if(currentPageElement) currentPageElement.textContent = this.currentPage;
+                const prevPageElement = document.getElementById(`${this.idNamingSuffix}-prev-page`);
+                if(prevPageElement) prevPageElement.disabled = true;
+                this.flagPage = true; // Reset the flag so total records are fetched again
             });
-        }
-    } //pagination
+    } //paginationControls
+
+
 }//class
