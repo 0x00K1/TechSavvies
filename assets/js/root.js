@@ -1,4 +1,4 @@
-//Responsive code needs refactoring, organizing.
+//Responsive code needs refactoring, organizing. and remove duplicate code.
 
 document.addEventListener("DOMContentLoaded", function () {
 	/*buttons*/
@@ -76,6 +76,13 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 	});
 
+	/*
+======================================
+== Responsive design code           ==
+== Needs refactoring and organizing ==
+======================================
+*/
+
 	// Add responsive table handling
 	function handleResponsiveTables() {
 		const tables = document.querySelectorAll("table");
@@ -113,20 +120,361 @@ document.addEventListener("DOMContentLoaded", function () {
 		handleMobileMenu();
 	}
 
+	// // Remove the nested DOMContentLoaded event and move tableConfigs and functions here
+	// const tableConfigs = {
+	// 	products: {
+	// 		titleField: "Name",
+	// 		idField: "ID", // This matches your table header
+	// 		excludeFields: ["Actions"],
+	// 		buttonConfig: {
+	// 			edit: true,
+	// 			remove: true,
+	// 			custom: [] // Empty array for no custom buttons
+	// 		}
+	// 	},
+	// 	orders: {
+	// 		titleField: "Order ID",
+	// 		idField: "Customer",
+	// 		excludeFields: ["Actions"],
+	// 		buttonConfig: {
+	// 			edit: false,
+	// 			remove: false,
+	// 			// Add custom buttons if needed
+	// 			custom: [
+	// 				{
+	// 					text: "Process",
+	// 					class: "process-order-button",
+	// 					icon: "📦",
+	// 				},
+	// 			],
+	// 		},
+	// 	},
+	// 	transactions: {
+	// 		titleField: "Transaction ID",
+	// 		idField: "Date",
+	// 		excludeFields: ["Actions"],
+	// 		buttonConfig: {
+	// 			edit: false,
+	// 			remove: false,
+	// 		},
+	// 	},
+	// 	reviews: {
+	// 		titleField: "Product",
+	// 		idField: "Customer",
+	// 		excludeFields: ["Actions"],
+	// 		buttonConfig: {
+	// 			edit: false,
+	// 			remove: true,
+	// 		},
+	// 	},
+	// };
+
+	// function initCardView() {
+	// 	const tables = document.querySelectorAll("table[data-table-type]");
+
+	// 	tables.forEach((table) => {
+	// 		const tableType = table.getAttribute('data-table-type');
+	// 		const config = tableConfigs[tableType];
+
+	// 		if (!config) return;
+
+	// 		// Create card container
+	// 		const cardView = document.createElement("div");
+	// 		cardView.className = "card-view";
+	// 		cardView.setAttribute('data-table-type', tableType);
+
+	// 		// Get table headers and data
+	// 		const headers = Array.from(table.querySelectorAll("th")).map(th => {
+	// 			const headerText = th.textContent.replace('↕', '').trim();
+	// 			return headerText;
+	// 		});
+
+	// 		const rows = table.querySelectorAll("tbody tr");
+
+	// 		if (rows.length === 0) {
+	// 			const noDataCard = document.createElement("div");
+	// 			noDataCard.className = "data-card";
+	// 			noDataCard.innerHTML = `<div class="card-header">
+	// 				<h3>No data available</h3>
+	// 			</div>`;
+	// 			cardView.appendChild(noDataCard);
+	// 		} else {
+	// 			rows.forEach((row) => {
+	// 				const card = createCard(row, headers, config);
+	// 				cardView.appendChild(card);
+	// 			});
+	// 		}
+
+	// 		// Insert card view after table
+	// 		table.parentNode.insertBefore(cardView, table.nextSibling);
+	// 	});
+	// }
+
+	// Update createCard function to handle order-specific formatting
+	// Add this near the tableConfigs object
+	const tableConfigs = {
+	    products: {
+	        titleField: "Name",
+	        idField: "ID", // This matches your table header
+	        excludeFields: ["Actions"],
+	        buttonConfig: {
+	            edit: true,
+	            remove: true,
+	            custom: [], // Empty array for no custom buttons
+	        },
+	    },
+	    orders: {
+	        displayFields: [
+	            { field: 'Order_ID', label: 'Order ID' },
+	            { field: 'Order_Date', label: 'Order Date' },
+	            { field: 'Product_ID', label: 'Product ID' },
+	            { field: 'Product_Name', label: 'Product Name' },
+	            { field: 'Quantity', label: 'Quantity' },
+	            { field: 'Price_per_Unit', label: 'Price per Unit' },
+	            { field: 'Total_Price', label: 'Total Price' }
+	        ],
+	        actions: [
+	            { label: 'View', class: 'edit_product_button_style', action: 'viewOrder' },
+	            { label: 'Process', class: 'product_confirm_edit_style', action: 'processOrder' }
+	        ]
+	    }
+	};
+
+	function initCardView() {
+		const tables = document.querySelectorAll("table[data-table-type]");
+
+		tables.forEach((table) => {
+			const tableType = table.getAttribute("data-table-type");
+			const config = tableConfigs[tableType];
+
+			if (!config) return;
+
+			// Create card container
+			const cardView = document.createElement("div");
+			cardView.className = "card-view";
+			cardView.setAttribute("data-table-type", tableType);
+
+			// Get table headers and data
+			const headers = Array.from(table.querySelectorAll("th")).map((th) => {
+				const headerText = th.textContent.replace("↕", "").trim();
+				return headerText;
+			});
+
+			const rows = table.querySelectorAll("tbody tr");
+
+			if (rows.length === 0) {
+				const noDataCard = document.createElement("div");
+				noDataCard.className = "data-card";
+				noDataCard.innerHTML = `<div class="card-header">
+					<h3>No data available</h3>
+				</div>`;
+				cardView.appendChild(noDataCard);
+			} else {
+				rows.forEach((row) => {
+					const card = createCard(row, headers, config);
+					cardView.appendChild(card);
+				});
+			}
+
+			// Insert card view after table
+			table.parentNode.insertBefore(cardView, table.nextSibling);
+		});
+	}
+
+	// Update createCard function to properly handle buttons
+	// Update createCard function to fix ID display and button handling
+	// Update the createCard function's button section
+	function createCard(row, headers, config) {
+		const card = document.createElement("div");
+		card.className = "data-card";
+
+		const cells = row.querySelectorAll("td");
+		const cellData = Array.from(cells).map((cell) => cell.textContent.trim());
+		const productId = cellData[0]; // Get ID from first column
+
+		// Add data-id attribute to the card
+		card.setAttribute("data-id", productId);
+
+		// Create card header
+		const cardHeader = document.createElement("div");
+		cardHeader.className = "card-header";
+		cardHeader.innerHTML = `
+	        <div>
+	            <h3>${cellData[1] || "N/A"}</h3>
+	            <div class="card-id">ID: ${productId}</div>
+	        </div>
+	        <span class="card-toggle">▼</span>
+	    `;
+
+		// Create card body
+		const cardBody = document.createElement("div");
+		cardBody.className = "card-body";
+
+		// Add data rows (skip Name since it's in header)
+		headers.forEach((header, index) => {
+			if (!config.excludeFields.includes(header) && header !== "Name") {
+				const cardRow = document.createElement("div");
+				cardRow.className = "card-row";
+				cardRow.innerHTML = `
+	                <div class="card-label">${header}</div>
+	                <div class="card-value" data-field="${header.toLowerCase()}">${
+					cellData[index] || "N/A"
+				}</div>
+	            `;
+				cardBody.appendChild(cardRow);
+			}
+		});
+
+		// Add action buttons
+		const cardActions = document.createElement("div");
+		cardActions.className = "card-actions";
+
+		// Regular buttons
+		const buttonsTable = document.createElement("div");
+		buttonsTable.className = "buttons_table";
+		buttonsTable.id = `buttons_table_${productId}`; // Unique ID for each product
+		buttonsTable.innerHTML = `
+	        <button type="button" class="edit_product_button_style" onclick="product_edit_button('${productId}')">Edit</button>
+	        <button type="button" class="remove_product_button_style" onclick="confirmationPopup('${productId}')">Remove</button>
+	    `;
+
+		// Edit buttons (initially hidden)
+		const editButtons = document.createElement("div");
+		editButtons.className = "buttons_table";
+		editButtons.id = `product_edit_${productId}`; // Unique ID for each product
+		editButtons.style.display = "none";
+		editButtons.innerHTML = `
+	        <button type="button" class="product_cancel_edit_style" onclick="product_cancel_edit('${productId}')">Cancel</button>
+	        <button type="button" class="product_confirm_edit_style" onclick="saveProductChanges('${productId}')">Save</button>
+	    `;
+
+		cardActions.appendChild(buttonsTable);
+		cardActions.appendChild(editButtons);
+		cardBody.appendChild(cardActions);
+
+		card.appendChild(cardHeader);
+		card.appendChild(cardBody);
+
+		// Add click handler for expanding/collapsing
+		cardHeader.addEventListener("click", () => {
+			cardBody.classList.toggle("active");
+			cardHeader.querySelector(".card-toggle").classList.toggle("active");
+		});
+
+		return card;
+	}
+
+	// Update editProduct function to handle card view
+	function editProduct(productId) {
+		// Handle both table and card view
+		const row = document.querySelector(`tr[data-id="${productId}"]`);
+		const card = document.querySelector(
+			`.card-view .data-card[data-id="${productId}"]`
+		);
+
+		if (row) {
+			// Table view editing
+			editingRow = productId;
+			document.getElementById(`buttons_table_${productId}`).style.display =
+				"none";
+			document.getElementById(`edit_buttons_${productId}`).style.display =
+				"flex";
+
+			const editableCells = row.querySelectorAll(".editable-cell");
+			editableCells.forEach((cell) => {
+				const field = cell.getAttribute("data-field");
+				const value = cell.textContent;
+				cell.innerHTML = `<input type="text" name="${field}" value="${value}" />`;
+				cell.classList.add("editable");
+			});
+		}
+
+		if (card) {
+			// Card view editing
+			editingRow = productId;
+			card.querySelector(`#buttons_table_${productId}`).style.display = "none";
+			card.querySelector(`#edit_buttons_${productId}`).style.display = "flex";
+
+			const editableValues = card.querySelectorAll(".card-value[data-field]");
+			editableValues.forEach((value) => {
+				const field = value.getAttribute("data-field");
+				const currentValue = value.textContent;
+				value.innerHTML = `<input type="text" name="${field}" value="${currentValue}" />`;
+				value.classList.add("editable");
+			});
+		}
+	}
+
 	// Initialize responsive features
 	handleResponsiveTables();
 	initMobileMenu();
 
-	// Initialize button handlers
-	if (document.getElementById("edit_product_button")) {
-		document.getElementById("edit_product_button").onclick =
-			window.product_edit_button;
+	// Initialize card view after data is loaded
+	function initializeTableView() {
+		// First clear any existing card views
+		document.querySelectorAll(".card-view").forEach((view) => view.remove());
+		// Then initialize new card view
+		initCardView();
 	}
 
-	if (document.getElementById("product_cancel_edit")) {
-		document.getElementById("product_cancel_edit").onclick =
-			window.product_cancel_edit;
-	}
+	// Call initializeTableView after switching tabs
+	managePro_button.addEventListener("click", function () {
+		EditProduct.style.display = "block";
+		orders_display.style.display = "none";
+		Transaction_display.style.display = "none";
+		Reviews_display.style.display = "none";
+		managePro_button.classList.add("active");
+		Orders_button.classList.remove("active");
+		transaction_button.classList.remove("active");
+		review_button.classList.remove("active");
+		initializeTableView();
+	});
+
+	Orders_button.addEventListener("click", function () {
+		EditProduct.style.display = "none";
+		orders_display.style.display = "block";
+		Transaction_display.style.display = "none";
+		Reviews_display.style.display = "none";
+		managePro_button.classList.remove("active");
+		Orders_button.classList.add("active");
+		transaction_button.classList.remove("active");
+		review_button.classList.remove("active");
+		initializeTableView();
+	});
+
+	transaction_button.addEventListener("click", function () {
+		EditProduct.style.display = "none";
+		orders_display.style.display = "none";
+		Transaction_display.style.display = "block";
+		Reviews_display.style.display = "none";
+		managePro_button.classList.remove("active");
+		Orders_button.classList.remove("active");
+		transaction_button.classList.add("active");
+		review_button.classList.remove("active");
+		initializeTableView();
+	});
+
+	review_button.addEventListener("click", function () {
+		EditProduct.style.display = "none";
+		orders_display.style.display = "none";
+		Transaction_display.style.display = "none";
+		Reviews_display.style.display = "block";
+		managePro_button.classList.remove("active");
+		Orders_button.classList.remove("active");
+		transaction_button.classList.remove("active");
+		review_button.classList.add("active");
+		initializeTableView();
+	});
+
+	// Initialize card view for orders
+	initCardView();
+	
+	// Add click handler for Orders button
+	document.getElementById('Orders_button').addEventListener('click', function() {
+	    hideAllContent();
+	    document.getElementById('orders_display').style.display = 'block';
+	    loadOrders();
+	});
 });
 
 // Responsive handling functions
@@ -196,186 +544,100 @@ document
 		loadProducts();
 	});
 
-document.addEventListener("DOMContentLoaded", function () {
-	// Function to convert tables to card view
-	function initCardView() {
-		const tables = document.querySelectorAll("table");
+// Remove all previous declarations of these functions and add these at the bottom of your file:
 
-		tables.forEach((table) => {
-			// Create card container
-			const cardView = document.createElement("div");
-			cardView.className = "card-view";
+// Global edit functions
+window.product_edit_button = function (productId) {
+	const card = document.querySelector(`.data-card[data-id="${productId}"]`);
+	if (card) {
+		const buttonsTable = card.querySelector(`#buttons_table_${productId}`);
+		const editButtons = card.querySelector(`#product_edit_${productId}`);
 
-			// Get table headers
-			const headers = Array.from(table.querySelectorAll("th")).map((th) =>
-				th.textContent.trim()
-			);
+		// Toggle button visibility
+		buttonsTable.style.display = "none";
+		editButtons.style.display = "flex";
 
-			// Process each row
-			const rows = table.querySelectorAll("tbody tr");
-			rows.forEach((row) => {
-				const cells = row.querySelectorAll("td");
-				if (cells.length === 0) return;
-
-				// Create card
-				const card = document.createElement("div");
-				card.className = "data-card";
-
-				// Create card header (using first or second column as title)
-				const titleIndex = headers.includes("Name")
-					? headers.indexOf("Name")
-					: 1;
-				const idIndex = headers.includes("ID") ? headers.indexOf("ID") : 0;
-
-				const cardHeader = document.createElement("div");
-				cardHeader.className = "card-header";
-				cardHeader.innerHTML = `
-									<div>
-											<h3>${cells[titleIndex].textContent.trim()}</h3>
-											<span class="card-id">#${cells[idIndex].textContent.trim()}</span>
-									</div>
-									<span class="card-toggle">▼</span>
-							`;
-
-				// Create card body
-				const cardBody = document.createElement("div");
-				cardBody.className = "card-body";
-
-				// Inside the initCardView function, update the card creation code:
-
-				// Add data rows
-				for (let i = 0; i < cells.length - 1; i++) {
-					if (i === titleIndex) continue;
-
-					const cardRow = document.createElement("div");
-					cardRow.className = "card-row";
-					cardRow.innerHTML = `
-				        <span class="card-label">${headers[i]}</span>
-				        <span class="card-value" data-original="${cells[
-									i
-								].textContent.trim()}">${cells[i].textContent.trim()}</span>
-				    `;
-					cardBody.appendChild(cardRow);
-				}
-
-				// Add action buttons
-				const cardActions = document.createElement("div");
-				cardActions.className = "card-actions";
-
-				// Create buttons container
-				const buttonsContainer = document.createElement("div");
-				buttonsContainer.className = "buttons_table";
-				buttonsContainer.id = "buttons_table_display";
-
-				// Create edit and remove buttons
-				const editButton = document.createElement("button");
-				editButton.className = "edit_product_button_style";
-				editButton.textContent = "Edit";
-
-				const removeButton = document.createElement("button");
-				removeButton.className = "remove_product_button_style";
-				removeButton.textContent = "Remove";
-
-				// Create edit form container
-				const editContainer = document.createElement("div");
-				editContainer.className = "buttons_table";
-				editContainer.id = "product_edit_display";
-				editContainer.style.display = "none";
-
-				// Create save and cancel buttons
-				const saveButton = document.createElement("button");
-				saveButton.className = "product_confirm_edit_style";
-				saveButton.textContent = "Save";
-
-				const cancelButton = document.createElement("button");
-				cancelButton.className = "product_cancel_edit_style";
-				cancelButton.textContent = "Cancel";
-
-				// Add click handlers
-				editButton.addEventListener("click", function (e) {
-					e.stopPropagation(); // Prevent card from toggling
-					buttonsContainer.style.display = "none";
-					editContainer.style.display = "flex";
-
-					// Make values editable
-					const values = cardBody.querySelectorAll(".card-value");
-					values.forEach((value) => {
-						const originalText = value.textContent;
-						value.classList.add("editable");
-						value.contentEditable = true;
-					});
-				});
-
-				cancelButton.addEventListener("click", function (e) {
-					e.stopPropagation(); // Prevent card from toggling
-					buttonsContainer.style.display = "flex";
-					editContainer.style.display = "none";
-
-					// Restore original values and make non-editable
-					const values = cardBody.querySelectorAll(".card-value");
-					values.forEach((value) => {
-						value.textContent = value.dataset.original;
-						value.classList.remove("editable");
-						value.contentEditable = false;
-					});
-				});
-
-				saveButton.addEventListener("click", function (e) {
-					e.stopPropagation(); // Prevent card from toggling
-					buttonsContainer.style.display = "flex";
-					editContainer.style.display = "none";
-
-					// Save new values and make non-editable
-					const values = cardBody.querySelectorAll(".card-value");
-					values.forEach((value) => {
-						value.dataset.original = value.textContent;
-						value.classList.remove("editable");
-						value.contentEditable = false;
-					});
-					// Here you would typically send the updated data to your server
-				});
-
-				// Assemble the buttons
-				buttonsContainer.appendChild(editButton);
-				buttonsContainer.appendChild(removeButton);
-				editContainer.appendChild(saveButton);
-				editContainer.appendChild(cancelButton);
-
-				cardActions.appendChild(buttonsContainer);
-				cardActions.appendChild(editContainer);
-				cardBody.appendChild(cardActions);
-
-				cardBody.appendChild(cardActions);
-
-				// Add click event to toggle card body
-				cardHeader.addEventListener("click", function () {
-					cardBody.classList.toggle("active");
-					cardHeader.querySelector(".card-toggle").classList.toggle("active");
-				});
-
-				// Assemble card
-				card.appendChild(cardHeader);
-				card.appendChild(cardBody);
-				cardView.appendChild(card);
-			});
-
-			// Insert card view after table
-			table.parentNode.insertBefore(cardView, table.nextSibling);
+		// Make fields editable
+		const editableFields = card.querySelectorAll(".card-value[data-field]");
+		editableFields.forEach((field) => {
+			const currentValue = field.textContent.trim();
+			field.innerHTML = `<input type="text" value="${currentValue}" class="editable-input" />`;
+			field.classList.add("editable");
 		});
 	}
+};
 
-	// Initialize card view
-	initCardView();
 
-	// Re-initialize on window resize
-	let resizeTimeout;
-	window.addEventListener("resize", function () {
-		clearTimeout(resizeTimeout);
-		resizeTimeout = setTimeout(function () {
-			// Remove existing card views
-			document.querySelectorAll(".card-view").forEach((view) => view.remove());
-			// Re-initialize
-			initCardView();
-		}, 250);
-	});
-});
+window.product_cancel_edit = function (productId) {
+	const card = document.querySelector(`.data-card[data-id="${productId}"]`);
+	if (card) {
+		const buttonsTable = card.querySelector(`#buttons_table_${productId}`);
+		const editButtons = card.querySelector(`#product_edit_${productId}`);
+		const editableFields = card.querySelectorAll(".card-value.editable");
+
+		// Restore original text content without inputs
+		editableFields.forEach((field) => {
+			const input = field.querySelector(".editable-input");
+			if (input) {
+				field.textContent = input.defaultValue; // Use original value
+				field.classList.remove("editable");
+			}
+		});
+
+		// Toggle buttons
+		buttonsTable.style.display = "flex";
+		editButtons.style.display = "none";
+	}
+};
+
+window.saveProductChanges = function (productId) {
+	const card = document.querySelector(`.data-card[data-id="${productId}"]`);
+	if (card) {
+		const editedValues = {};
+		const editableFields = card.querySelectorAll(".card-value.editable");
+
+		// Save the values and restore display
+		editableFields.forEach((field) => {
+			const input = field.querySelector(".editable-input");
+			if (input) {
+				field.textContent = input.value;
+				field.classList.remove("editable");
+			}
+		});
+
+		// Toggle buttons back
+		const buttonsTable = card.querySelector(`#buttons_table_${productId}`);
+		const editButtons = card.querySelector(`#product_edit_${productId}`);
+
+		buttonsTable.style.display = "flex";
+		editButtons.style.display = "none";
+	}
+};
+
+function viewOrder(orderId) {
+    // Implement view order details functionality
+    console.log(`Viewing order ${orderId}`);
+}
+
+function processOrder(orderId) {
+    // Show confirmation modal
+    const modal = document.getElementById('confirmation-modal');
+    modal.style.display = 'block';
+    modal.setAttribute('data-order-id', orderId);
+}
+
+function confirmProcess() {
+    const modal = document.getElementById('confirmation-modal');
+    const orderId = modal.getAttribute('data-order-id');
+    
+    // Implement order processing logic here
+    console.log(`Processing order ${orderId}`);
+    
+    closeConfirmationModal();
+}
+
+function closeConfirmationModal() {
+    const modal = document.getElementById('confirmation-modal');
+    modal.style.display = 'none';
+    modal.removeAttribute('data-order-id');
+}

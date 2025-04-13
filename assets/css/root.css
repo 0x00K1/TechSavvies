@@ -648,7 +648,6 @@ tr:hover {
 		padding: 10px 20px;
 	}
 
-
 	/*Container*/
 	.search_div {
 		display: flex;
@@ -657,7 +656,7 @@ tr:hover {
 		margin: 0;
 		margin-bottom: 20px;
 	}
- 
+
 	.search-button_style {
 		margin-right: 4px;
 	}
@@ -676,323 +675,354 @@ tr:hover {
 
 /* Tablet and Mobile Screens */
 @media screen and (max-width: 768px) {
-  /* Rules from original Block 1 */
-  .content {
-    background-color: #f3f4f6;
-    padding: 1rem;
-    border-radius: 2px;
-  }
+	/* Rules from original Block 1 */
+	.content {
+		background-color: #f3f4f6;
+		padding: 1rem;
+		border-radius: 2px;
+	}
 
+	/*Table viewer for mobile/tablet devices*/
+	table {
+		display: none;
+	}
 
-  /*Table viewer for mobile/tablet devices*/
-  table {
-    display: none;
-  }
+	.card-view {
+		display: block;
+		width: 100%;
+	}
 
-  .card-view {
-    display: block;
-    width: 100%;
-  }
+	.data-card {
+		background-color: white;
+		border-radius: 8px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		margin-bottom: 12px;
+		overflow: hidden;
+	}
 
-  .data-card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 12px;
-    overflow: hidden;
-  }
+	.card-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 12px 16px;
+		background-color: #fff;
+		border-bottom: 1px solid var(--border-color);
+		cursor: pointer;
+	}
 
-  .card-header {
-    padding: 12px 16px;
-    background-color: #fff;
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-  }
+	.card-header h3 {
+		margin: 0;
+		margin-bottom: 4px;
+		font-size: 16px;
+		font-weight: 600;
+	}
 
-  .card-header h3 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 600;
-  }
+	.card-id {
+		font-size: 0.875rem;
+		color: #6c757d;
+	}
 
-  .card-header .card-id {
-    color: #6c757d;
-    font-size: 12px;
-  }
+	.card-header .card-id {
+		color: #6c757d;
+		font-size: 12px;
+	}
 
-  .card-body {
-    display: none;
-    padding: 0;
-  }
+	.card-body {
+		display: none;
+		padding: 0;
+	}
 
-  .card-body.active {
-    display: block;
-  }
+	.card-body.active {
+		display: block;
+	}
 
-  .card-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 16px;
-    border-bottom: 1px solid #f0f0f0;
-  }
+	.card-row {
+		display: flex;
+		justify-content: space-between;
+		padding: 10px 16px;
+		border-bottom: 1px solid #f0f0f0;
+	}
 
-  .card-label {
-    font-weight: 500;
-    color: #6c757d;
-  }
+	.card-label {
+		font-weight: 500;
+		color: #6c757d;
+	}
 
-  .card-value {
-    text-align: right;
-    font-weight: 400;
-  }
+	.card-value {
+		text-align: right;
+		font-weight: 400;
+	}
 
+	.buttons_table {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		width: 100%;
+		gap: 12px;
+		width: 100%;
+	}
 
-  .buttons_table {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-    gap: 0.15rem; 
-    width: 100%;  
-  }
+	/* Add icons to buttons */
+	.edit_product_button_style::before {
+		content: "✏️";
+		margin-right: 5px;
+	}
 
-  /* Add icons to buttons */
-  .edit_product_button_style::before {
-    content: "✏️";
-    margin-right: 5px;
-  }
+	.remove_product_button_style::before {
+		content: "🗑️";
+		margin-right: 5px;
+	}
 
-  .remove_product_button_style::before {
-    content: "🗑️";
-    margin-right: 5px;
-  }
+	.product_confirm_edit_style::before {
+		content: "✓";
+		margin-right: 5px;
+	}
 
-  .product_confirm_edit_style::before {
-    content: "✓";
-    margin-right: 5px;
-  }
+	.product_cancel_edit_style::before {
+		content: "✕";
+		margin-right: 5px;
+	}
 
-  .product_cancel_edit_style::before {
-    content: "✕";
-    margin-right: 5px;
-  }
+	/* Ensure proper spacing between button containers */
+	#buttons_table_display,
+	#product_edit_display {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		gap: 12px;
+		margin: 0 auto;
+	}
 
-  /* Ensure proper spacing between button containers */
-  #buttons_table_display,
-  #product_edit_display {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin: 0 auto;
-  }
+	.card-actions {
+		display: flex;
+		justify-content: center;
+		padding: 12px 16px;
+		gap: 10px;
+		border-top: 1px solid #f0f0f0;
+	}
 
-  .card-actions {
-    display: flex;
-    justify-content: center;
-    padding: 12px 16px;
-    gap: 10px;
-    border-top: 1px solid #f0f0f0;
-  }
+	.card-actions button {
+		flex: 0 1 auto;
+		min-width: 100px;
+		height: 36px;
+		font-size: 14px;
+		padding: 8px 16px;
+		margin: 0;
+	}
 
-  .card-actions button {
-    flex: 0 1 auto;
-    min-width: 100px;
-    height: 36px;
-    font-size: 14px;
-    padding: 8px 16px;
-    margin: 0;
-  }
+	/* Make card values editable */
+	/* .card-value.editable {
+		background-color: #fff;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		padding: 4px 8px;
+	}
 
+	.card-value .editable-input:focus {
+		border-color: #4caf50;
+		box-shadow: none;
+	} */
 
-  /* Make card values editable */
-  .card-value.editable {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 4px 8px;
-  }
+	.card-value.editable {
+		padding: 0;
+		background: none;
+		border: none;
+	}
 
+	.card-value .editable-input {
+		width: 100%;
+		padding: 8px;
+		border: 1px solid #ddd;
+		border-radius: 4px;
+		font-size: inherit;
+		background: #fff;
+	}
 
-  .edit_product_button_style,
-  .remove_product_button_style,
-  .product_confirm_edit_style,
-  .product_cancel_edit_style {
-    display: flex;
-    flex: 1;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    width: auto;  /*comment this if something wrong with the buttons UI */
-    min-width: 120px; 
-    height: 40px; 
-    padding: 0.25rem 0.5rem;  
-    font-size: 14px; 
-    margin: 1px; 
-  }
+	.card-value .editable-input:focus {
+		border-color: var(--process-color);
+		outline: none;
+		box-shadow: 0 0 0 2px rgba(0, 165, 253, 0.1);
+	}
 
+	.edit_product_button_style,
+	.remove_product_button_style,
+	.product_confirm_edit_style,
+	.product_cancel_edit_style {
+		display: flex;
+		flex: 1;
+		align-items: center;
+		justify-content: center;
+		border-radius: 4px;
+		width: auto; /*comment this if something wrong with the buttons UI */
+		min-width: 120px;
+		height: 40px;
+		padding: 0.25rem 0.5rem;
+		font-size: 14px;
+		margin: 1px;
+	}
 
-  /* Ensure buttons have consistent styling */
-  .product_confirm_edit_style {
-    background-color: #28a745;
-    color: white;
-  }
+	/* Ensure buttons have consistent styling */
+	.product_confirm_edit_style {
+		background-color: #28a745;
+		color: white;
+	}
 
-  .product_cancel_edit_style {
-    background-color: #6c757d;
-    color: white;
-  }
+	.product_cancel_edit_style {
+		background-color: #6c757d;
+		color: white;
+	}
 
-  .card-toggle {
-    transition: transform 0.3s ease;
-  }
+	.card-toggle {
+		font-size: 1rem;
+		transition: transform 0.3s ease;
+	}
 
-  .card-toggle.active {
-    transform: rotate(180deg);
-  }
+	.card-toggle.active {
+		transform: rotate(180deg);
+	}
 
-  /* Rules from original Block 2 */
-  .Boss {
-    flex-direction: column-reverse;
-    min-height: 100vh;
-    position: relative;
-    padding-bottom: 60px; /* Add space for the toolbar */
-  }
+	/* Rules from original Block 2 */
+	.Boss {
+		flex-direction: column-reverse;
+		min-height: 100vh;
+		position: relative;
+		padding-bottom: 60px; /* Add space for the toolbar */
+	}
 
-  .toolbar {
-    width: 100%;
-    min-width: auto;
-    padding: 0.75rem;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    background-color: #fff; /*var(--light-bg);*/
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-  }
+	.toolbar {
+		width: 100%;
+		min-width: auto;
+		padding: 0.75rem;
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		z-index: 1000;
+		background-color: #fff; /*var(--light-bg);*/
+		box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+	}
 
-  .nav {
-    display: flex;
-    flex-wrap: nowrap; /* Prevent wrapping */
-    gap: 5px;
-    justify-content: space-around;
-  }
+	.nav {
+		display: flex;
+		flex-wrap: nowrap; /* Prevent wrapping */
+		gap: 5px;
+		justify-content: space-around;
+	}
 
-  .toolbar button {
-    padding: 0.4rem;
-    font-size: 0.8rem;
-    min-width: auto;
-    flex: 0 1 auto;
-  }
+	.toolbar button {
+		padding: 0.4rem;
+		font-size: 0.8rem;
+		min-width: auto;
+		flex: 0 1 auto;
+	}
 
-  .toolbar button span {
-    display: none; /* Hide text */
-  }
+	.toolbar button span {
+		display: none; /* Hide text */
+	}
 
-  .toolbar button .b-icon {
-    max-height: 1.5rem;
-    margin-right: 0;
-    margin: 0 auto;
-  }
+	.toolbar button .b-icon {
+		max-height: 1.5rem;
+		margin-right: 0;
+		margin: 0 auto;
+	}
 
-  .funcarea {
-    width: 100%;
-    margin: 0px auto;
-    overflow-y: auto; /* Enable vertical scrolling */
-    overflow-x: hidden; /* Hide horizontal scrolling */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-    padding: 20px;
-    padding-bottom: 0px;
-  }
- 
+	.funcarea {
+		width: 100%;
+		margin: 0px auto;
+		overflow-y: auto; /* Enable vertical scrolling */
+		overflow-x: hidden; /* Hide horizontal scrolling */
+		scrollbar-width: none; /* Firefox */
+		-ms-overflow-style: none; /* IE and Edge */
+		padding: 20px;
+		padding-bottom: 0px;
+	}
 
-  .addProPopup_button_style {
-    position: absolute;
-    width: auto;
-    margin-left: auto;
-    right: 1rem;
-    margin-top: 0.25rem;
-  }
+	.addProPopup_button_style {
+		position: absolute;
+		width: auto;
+		margin-left: auto;
+		right: 1rem;
+		margin-top: 0.25rem;
+	}
 
-  .page-title {
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
-    margin-top: 0.25rem;
-    margin-left: 0.25rem;
-  }
+	.page-title {
+		font-size: 1.3rem;
+		margin-bottom: 1rem;
+		margin-top: 0.25rem;
+		margin-left: 0.25rem;
+	}
 
-  .content-container {
-    margin: 0px -20px;
-  }
+	.content-container {
+		margin: 0px -20px;
+	}
 
-  #EditProduct {
-    margin: 0;
-    width: 100%;
-    padding-left: 1em;
-  }
+	#EditProduct {
+		margin: 0;
+		width: 100%;
+		padding-left: 1em;
+	}
 
-  .top-controls {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
+	.top-controls {
+		flex-direction: row;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
 
+	.search-button_style {
+		display: none; /*Hide search button on mobile*/
+		margin-left: 0.25rem;
+	}
 
-  .search-button_style {
-    display: none; /*Hide search button on mobile*/
-    margin-left: 0.25rem;
-  }
+	th {
+		padding: 0.5rem;
+		font-size: 0.9rem;
+	}
 
-  th {
-    padding: 0.5rem;
-    font-size: 0.9rem;
-  }
+	th .sort-icon {
+		width: 12px;
+		height: 12px;
+	}
 
-  th .sort-icon {
-    width: 12px;
-    height: 12px;
-  }
+	.editable input {
+		padding: 0.4rem;
+		font-size: 13px;
+	}
 
-  .editable input {
-    padding: 0.4rem;
-    font-size: 13px;
-  }
+	/* Adjust search section spacing */
+	.search-section {
+		width: auto;
+		flex: 1;
+	}
 
+	.search-field_style {
+		width: 235px;
+		min-width: 80px;
+		flex: 2;
+		margin-right: 0;
+		margin-left: 0.25rem;
+		padding: 10px 20px;
+		padding-left: 8px;
+		padding-right: 8px;
+	}
 
-  /* Adjust search section spacing */
-  .search-section {
-    width: auto;
-    flex: 1;
-  }
+	/* Hide pagination info and controls on mobile */
+	.pagination-info,
+	.pagination {
+		display: none !important;
+	}
 
-  .search-field_style {
-    width: 235px;
-    min-width: 80px;
-    flex: 2;
-    margin-right: 0;
-    margin-left: 0.25rem;
-    padding: 10px 20px;
-    padding-left: 8px;
-    padding-right: 8px;
-  }
+	/* Hide rows per page filter on mobile/tablet */
+	select[name="rows_per_page"],
+	label[for="rows_per_page"],
+	.rows_per_page_container,
+	.rows_label {
+		display: none !important;
+	}
 
-  /* Hide pagination info and controls on mobile */
-  .pagination-info,
-  .pagination {
-    display: none !important;
-  }
-
-  /* Hide rows per page filter on mobile/tablet */
-  select[name="rows_per_page"],
-  label[for="rows_per_page"],
-  .rows_per_page_container,
-  .rows_label {
-    display: none !important;
-  }
+	/* Add any specific styles for different table types */
+	/* Example for the "orders" table type */
+	/* .card-view[data-table-type="orders"] .card-header {
+		background-color: #f8f9fa;
+	} */
 }
 
 /* Small Mobile Devices */

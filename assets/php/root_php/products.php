@@ -10,7 +10,7 @@
     </div>
     
     <div class="table-container">
-        <table id="products-table">
+        <table id="products-table" data-table-type="products">
             <thead>
                 <tr>
                     <th data-sort="id">ID <span class="sort-icon">↕</span></th>
@@ -61,26 +61,6 @@
             { id: 5, name: "Mechanical Keyboard", price: 129.99, stock: 55, category: "Accessories", updated_date: "2025-02-20" },
             { id: 6, name: "USB-C Hub", price: 49.99, stock: 120, category: "Accessories", updated_date: "2025-02-15" },
             { id: 7, name: "Smartphone X", price: 899.99, stock: 30, category: "Mobile", updated_date: "2025-03-01" },
-            { id: 8, name: "Wireless Headphones", price: 199.99, stock: 65, category: "Audio", updated_date: "2025-02-28" },
-            { id: 9, name: "External SSD", price: 159.99, stock: 85, category: "Storage", updated_date: "2025-02-27" },
-            { id: 10, name: "Gaming Mouse", price: 89.99, stock: 70, category: "Gaming", updated_date: "2025-03-01" },
-            { id: 1, name: "Laptop Pro", price: 1299.99, stock: 25, category: "Electronics", updated_date: "2025-02-28" },
-            { id: 2, name: "Wireless Mouse", price: 29.99, stock: 150, category: "Accessories", updated_date: "2025-03-01" },
-            { id: 31, name: "HD Monitor", price: 249.99, stock: 42, category: "Electronics", updated_date: "2025-02-25" },
-            { id: 4, name: "Bluetooth Speaker", price: 79.99, stock: 78, category: "Audio", updated_date: "2025-03-02" },
-            { id: 5, name: "Mechanical Keyboard", price: 129.99, stock: 55, category: "Accessories", updated_date: "2025-02-20" },
-            { id: 61, name: "USB-C Hub", price: 49.99, stock: 120, category: "Accessories", updated_date: "2025-02-15" },
-            { id: 71, name: "Smartphone X", price: 899.99, stock: 30, category: "Mobile", updated_date: "2025-03-01" },
-            { id: 81, name: "Wireless Headphones", price: 199.99, stock: 65, category: "Audio", updated_date: "2025-02-28" },
-            { id: 91, name: "External SSD", price: 159.99, stock: 85, category: "Storage", updated_date: "2025-02-27" },
-            { id: 101, name: "Gaming Mouse", price: 89.99, stock: 70, category: "Gaming", updated_date: "2025-03-01" },
-            { id: 1, name: "Laptop Pro", price: 1299.99, stock: 25, category: "Electronics", updated_date: "2025-02-28" },
-            { id: 21, name: "Wireless Mouse", price: 29.99, stock: 150, category: "Accessories", updated_date: "2025-03-01" },
-            { id: 31, name: "HD Monitor", price: 249.99, stock: 42, category: "Electronics", updated_date: "2025-02-25" },
-            { id: 42, name: "Bluetooth Speaker", price: 79.99, stock: 78, category: "Audio", updated_date: "2025-03-02" },
-            { id: 51, name: "Mechanical Keyboard", price: 129.99, stock: 55, category: "Accessories", updated_date: "2025-02-20" },
-            { id: 6, name: "USB-C Hub", price: 49.99, stock: 120, category: "Accessories", updated_date: "2025-02-15" },
-            { id: 72, name: "Smartphone X", price: 899.99, stock: 30, category: "Mobile", updated_date: "2025-03-01" },
             { id: 8, name: "Wireless Headphones", price: 199.99, stock: 65, category: "Audio", updated_date: "2025-02-28" },
             { id: 9, name: "External SSD", price: 159.99, stock: 85, category: "Storage", updated_date: "2025-02-27" },
             { id: 10, name: "Gaming Mouse", price: 89.99, stock: 70, category: "Gaming", updated_date: "2025-03-01" }
