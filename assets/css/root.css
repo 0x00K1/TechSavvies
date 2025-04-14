@@ -425,7 +425,7 @@ tr:hover {
           flex-wrap: wrap;
           gap: 1rem;
       }
-      .table-container {
+      .table_container {
         width: 100%;
         overflow-x: auto;
         margin-top: 1rem;
@@ -519,10 +519,7 @@ tr:hover {
       background-color: var(--danger-color);
       color: white;
   }
-  .buttons_table {
-    display: flex;
-    gap: 0.5rem;
-}
+
 
 .edit_product_button_style, .remove_product_button_style, .product_cancel_edit_style, .product_confirm_edit_style {
     padding: 0.4rem 0.75rem;
