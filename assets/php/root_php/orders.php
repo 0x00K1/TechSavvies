@@ -6,6 +6,7 @@
         </div>
     </div>
     
+    <!-- Table view (for desktop) -->
     <div class="table-container">
         <table id="orders-table" data-table-type="orders">
             <thead>
@@ -25,6 +26,9 @@
             </tbody>
         </table>
     </div>
+    
+    <!-- Card view will be injected here by JS -->
+    <div class="card-view"></div>
     
     <div class="pagination">
         <div class="pagination-info">
@@ -116,6 +120,15 @@
                 this.setupSortingListeners();
                 this.setupPaginationListeners();
                 
+                // Add page check before initializing card view
+                if (document.getElementById('orders_display')) {
+                    window.addEventListener('resize', () => {
+                        this.handleResponsiveView();
+                    });
+                    
+                    this.handleResponsiveView();
+                }
+                
                 const rowsSelect = document.getElementById('rows_per_page');
                 if (rowsSelect) {
                     rowsSelect.value = this.rowsPerPage;
@@ -126,10 +139,120 @@
                     });
                 }
             },
-            
+
+            init: function() {
+                this.data = [...this.sampleOrders];
+                this.loadOrders();
+                this.setupSortingListeners();
+                this.setupPaginationListeners();
+                
+                // Just add the resize listener
+                window.addEventListener('resize', () => {
+                    this.handleResponsiveView();
+                });
+                
+                // Call handleResponsiveView initially
+                this.handleResponsiveView();
+                
+                const container = document.querySelector('.content');
+                const cardView = document.createElement('div');
+                cardView.className = 'card-view';
+                container.appendChild(cardView);
+                
+                this.renderCards();
+            },
+
+            renderCards: function() {
+                const cardView = document.querySelector('.card-view');
+                cardView.innerHTML = '';
+                
+                const sortedData = [...this.data].sort((a, b) => {
+                    let valA = a[this.sortColumn];
+                    let valB = b[this.sortColumn];
+                    
+                    if (['Quantity', 'Price_per_Unit', 'Total_Price'].includes(this.sortColumn)) {
+                        valA = parseFloat(valA);
+                        valB = parseFloat(valB);
+                    }
+                    
+                    if (this.sortDirection === 'asc') {
+                        return valA > valB ? 1 : -1;
+                    } else {
+                        return valA < valB ? 1 : -1;
+                    }
+                });
+                
+                const startIndex = (this.currentPage - 1) * this.rowsPerPage;
+                const endIndex = Math.min(startIndex + this.rowsPerPage, sortedData.length);
+                const paginatedData = sortedData.slice(startIndex, endIndex);
+                
+                paginatedData.forEach(order => {
+                    const card = document.createElement('div');
+                    card.className = 'data-card';
+                    card.setAttribute('data-id', order.Order_ID);
+                    
+                    card.innerHTML = `
+                        <div class="card-header">
+                            <div>
+                                <h3>Order #${order.Order_ID}</h3>
+                                <div class="card-date">${order.Order_Date}</div>
+                            </div>
+                            <span class="card-toggle">▼</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="card-row">
+                                <div class="card-label">Product</div>
+                                <div class="card-value">${order.Product_Name} (${order.Product_ID})</div>
+                            </div>
+                            <div class="card-row">
+                                <div class="card-label">Quantity</div>
+                                <div class="card-value">${order.Quantity}</div>
+                            </div>
+                            <div class="card-row">
+                                <div class="card-label">Price per Unit</div>
+                                <div class="card-value">$${order.Price_per_Unit}</div>
+                            </div>
+                            <div class="card-row">
+                                <div class="card-label">Total Price</div>
+                                <div class="card-value">$${order.Total_Price}</div>
+                            </div>
+                            <div class="card-actions">
+                                <button type="button" class="edit_product_button_style" onclick="window.ordersModule.viewOrder('${order.Order_ID}')">View</button>
+                                <button type="button" class="product_confirm_edit_style" onclick="window.ordersModule.processOrder('${order.Order_ID}')">Process</button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Add click handler for expanding/collapsing
+                    const header = card.querySelector('.card-header');
+                    const body = card.querySelector('.card-body');
+                    header.addEventListener('click', () => {
+                        body.classList.toggle('active');
+                        header.querySelector('.card-toggle').classList.toggle('active');
+                    });
+                    
+                    cardView.appendChild(card);
+                });
+            },
+
+            handleResponsiveView: function() {
+                const width = window.innerWidth;
+                const tableContainer = document.querySelector('.table-container');
+                const cardView = document.querySelector('.card-view');
+                
+                if (width <= 768) {
+                    tableContainer.style.display = 'none';
+                    cardView.style.display = 'block';
+                } else {
+                    tableContainer.style.display = 'block';
+                    cardView.style.display = 'none';
+                }
+            },
+
             // Load orders to table
             loadOrders: function() {
                 this.renderTable();
+                this.renderCards(); // Move this before updatePaginationInfo
                 this.updatePaginationInfo();
             },
         
