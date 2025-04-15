@@ -119,7 +119,6 @@
 
                             <select id="users-rows-per-page" class="filter_value_style">
                                 <option>Rows to display</option>
-                                <option value="4">4</option>
                                 <option value="25">25</option>
                                 <option value="50">50</option>
                                 <option value="100">100</option>
@@ -149,18 +148,14 @@
                     ------------------------------------------>
 
                 <div id="ordersdisplay" class="content">
+
                     <div class="top-controls">
                         <div class="search_div">
-                            <input class="search-field_style" name="orders-search-field" id="orders-search-field"
-                                type="text" placeholder="Search... attribute:key ex(name:ft7y)" />
-                            <button class="search-button_style" name="search-button" id="orders-search-button"
-                                type="submit">
-                                Search
-                            </button>
+                            <input class="search-field_style" name="orders-search-field" id="orders-search-field" type="text" placeholder="Search... attribute:key ex(name:ft7y)" />
+                            <button class="search-button_style" name="search-button" id="orders-search-button" type="submit">Search</button>
                             <span>Rows:</span>
                             <select id="orders-rows-per-page" class="filter_value_style">
                                 <option>Rows to display</option>
-                                <option value="4">4</option>
                                 <option value="25">25</option>
                                 <option value="50">50</option>
                                 <option value="100">100</option>
@@ -185,14 +180,27 @@
                             <button type="button" id="orders-next-page" class="pagination-button">Next &raquo;</button>
                         </div>
                     </div>
+
                 </div>
 
                 <!-- -----------------------------------------
                     transactions page
                     ------------------------------------------>
                 <div class="content" id="Transactionsdisplay">
-                    <!-- <?php include("search-rows.php") ?> -->
-                    
+                    <div class="top-controls">
+                        <div class="search_div">
+                            <input class="search-field_style" name="transaction-search-field" id="transaction-search-field" type="text" placeholder="Search... attribute:key ex(name:ft7y)" />
+                            <button class="search-button_style" name="search-button" id="transaction-search-button" type="submit">Search</button>
+                            <span>Rows:</span>
+                            <select id="transaction-rows-per-page" class="filter_value_style">
+                                <option>Rows to display</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="250">250</option>
+                            </select>
+                        </div>
+                    </div>
                     
                     <div class="table_container">
                         <!-- TABLE AREA -->
@@ -213,7 +221,20 @@
                     reviews page
                     ------------------------------------------>
                 <div class="content" id="Reviewsdisplay">
-                    <!-- <?php include("search-rows.php") ?> -->
+                    <div class="top-controls">
+                        <div class="search_div">
+                            <input class="search-field_style" name="reviews-search-field" id="reviews-search-field" type="text" placeholder="Search... attribute:key ex(name:ft7y)" />
+                            <button class="search-button_style" name="search-button" id="reviews-search-button" type="submit">Search</button>
+                            <span>Rows:</span>
+                            <select id="reviews-rows-per-page" class="filter_value_style">
+                                <option>Rows to display</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="250">250</option>
+                            </select>
+                        </div>
+                    </div>
                     
                     <div class="table_container">
                         <!-- TABLE AREA -->
