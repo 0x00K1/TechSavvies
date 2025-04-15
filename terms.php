@@ -76,13 +76,10 @@
     <h2>Updates to Terms</h2>
     <p>We reserve the right to modify these terms at any time. Please review this page periodically for changes.</p>
   </div>
-  
-  <!-- Authentication Modal -->
-  <?php require_once __DIR__ . '/assets/php/auth.php'; ?>
 
   <!-- Footer Section -->
   <?php require_once __DIR__ . '/assets/php/footer.php'; ?>
 
-  <script src="assets/js/main.js"></script>
+  <script src="/assets/js/main.js"></script>
 </body>
 </html>

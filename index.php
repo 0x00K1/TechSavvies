@@ -174,10 +174,7 @@ $popularProducts = getPopularProducts(9);
   <!-- Footer Section -->
   <?php require_once __DIR__ . '/assets/php/footer.php'; ?>
 
-  <!-- Authentication Modal -->
-  <?php require_once __DIR__ . '/assets/php/auth.php'; ?>
-
-  <script src="assets/js/home1.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="/assets/js/home1.js"></script>
+  <script src="/assets/js/main.js"></script>
 </body>
 </html>
