@@ -400,9 +400,6 @@ tr:hover {
     width: auto;
     font-size: 16px; 
    }
-   .search-button{
-      margin: 10px;
-   }
    /*=====================
    added by AI for products
    ==========================*/
@@ -565,13 +562,3 @@ tr:hover {
 .product_confirm_edit_style:hover {
     background-color: #218838;
 }
-/* 
- .content {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-            */

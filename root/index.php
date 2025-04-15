@@ -11,36 +11,27 @@
 <html lang="en">
 
 <head>
-    <?php require_once __DIR__ . '/../assets/php/main.php'; ?>
+    <?php require_once __DIR__ . '\..\assets\php\main.php'; ?>
     <link rel="stylesheet" href="..\assets\css\main.css">
     <link rel="stylesheet" href="..\assets\css\root.css">
-    <script type="module" src="../assets/js/root.js"></script>
+    <script type="module" src="..\assets\js\root.js"></script>
     <title>Root</title>
 </head>
 
 <body>
-    <!-- ##################################
-            Header Section 
-    ####################################-->
+    <!-- Header section -->
     <?php include('..\assets\php\header.php'); ?>
     <div class="Boss">
-        <!-- ##################################
-            toolbar Section 
-    ####################################-->
+        <!-- toolbar Section -->
         <div class="toolbar">
             <nav class="nav">
-                <button id="manageProbutton"><img class="b-icon" src="..\assets\icons\Product.svg"><span>Products
-                        Management</span></button>
-                <button id="manageUserbutton"><img class="b-icon" src="..\assets\icons\User.svg"><span>Users
-                        Management</span></button>
-                <button id="Ordersbutton"><img class="b-icon"
-                        src="..\assets\icons\Orders.svg"><span>Orders</span></button>
-                <button id="transactionsbutton"><img class="b-icon"
-                        src="..\assets\icons\transaction.svg"><span>Transactions</span></button>
-                <button id="Reviewsbutton"><img class="b-icon"
-                        src="..\assets\icons\review.svg"><span>Reviews</span></button>
-                <button id="Logoutbutton"><svg class="b-icon" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
+                <button id="manageProbutton"><img class="b-icon" src="..\assets\icons\Product.svg"><span>Products Management</span></button>
+                <button id="manageUserbutton"><img class="b-icon" src="..\assets\icons\User.svg"><span>Users Management</span></button>
+                <button id="Ordersbutton"><img class="b-icon" src="..\assets\icons\Orders.svg"><span>Orders</span></button>
+                <button id="transactionsbutton"><img class="b-icon" src="..\assets\icons\transaction.svg"><span>Transactions</span></button>
+                <button id="Reviewsbutton"><img class="b-icon" src="..\assets\icons\review.svg"><span>Reviews</span></button>
+                <button id="Logoutbutton">
+                    <svg class="b-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="SVGRepo-bgCarrier" stroke-width="0"></g>
                         <g id="SVGRepo-tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                         <g id="SVGRepo-iconCarrier">
@@ -53,14 +44,10 @@
                     <span>Logout</span></button>
             </nav>
         </div>
-        <!-- ##################################
-            main area Section 
-    ####################################-->
+        <!-- main area Section -->
         <div class="funcarea">
             <div class="content-container">
-                <!-- -----------------------------------------
-                    Products page
-                    ------------------------------------------>
+                <!-- Products page -->
                 <div id="EditProduct" class="content">
                     <form name="Product-queries" id="Product-queries" method="post" action="index.php">
                         <button id="addProPopup-button" class="addProPopup_button_style" type="button"
@@ -69,41 +56,22 @@
                         </button>
                         <div class="top-controls">
                             <div class="search_div">
-                                <input class="search-field_style" name="product-search-field" id="users-search-field"
-                                    type="text" placeholder="Search... attribute:key ex(name:ft7y)" />
-                                <button class="search-button_style" name="search-button" id="users-search-button"
-                                    type="submit">
-                                    Search
-                                </button>
+                                <input class="search-field_style" name="product-search-field" id="users-search-field" type="text" placeholder="Search... attribute:key ex(name:ft7y)" />
+                                <button class="search-button_style" name="search-button" id="users-search-button" type="submit">Search</button>
                                 <span>Rows:</span>
                                 <select id="products-rows-per-page" class="filter_value_style">
-                                <option>Rows to display</option>
-                                <option value="4">4</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                                <option value="250">250</option>
-                            </select>
+                                    <option>Rows to display</option>
+                                    <option value="4">4</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                    <option value="250">250</option>
+                                </select>
                             </div>
                         </div>
 
                         <div class="table_container">
-                            <table id="products-table">
-                                <thead>
-                                    <tr>
-                                        <th data-sort="id">ID <span class="sort-icon">↕</span></th>
-                                        <th data-sort="name">Name <span class="sort-icon">↕</span></th>
-                                        <th data-sort="price">Price <span class="sort-icon">↕</span></th>
-                                        <th data-sort="stock">Stock <span class="sort-icon">↕</span></th>
-                                        <th data-sort="category">Category <span class="sort-icon">↕</span></th>
-                                        <th data-sort="updated-date">Updated Date <span class="sort-icon">↕</span></th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="products-table-body">
-                                    <!-- Table rows will be added dynamically via JavaScript -->
-                                </tbody>
-                            </table>
+                            
                         </div>
 
                         <div class="pagination">
@@ -159,7 +127,9 @@
                             </select>
                         </div>
                     </div>
-
+                    <div class="table_container">
+                        <!-- TABLE AREA -->
+                    </div>
 
                     <div class="users-pagination" id="users-pagination">
                         <div class="pagination-info" id="users-pagination-info">
@@ -198,25 +168,8 @@
                             </select>
                         </div>
                     </div>
-                    <div>
-                        <table id="orders-table">
-                            <thead>
-                                <tr>
-                                    <th data-sort="Order-ID">Order ID <span class="sort-icon">↕</span></th>
-                                    <th data-sort="Order-Date">Order Date<span class="sort-icon">↕</span></th>
-                                    <th data-sort="Product-ID">Product ID <span class="sort-icon">↕</span></th>
-                                    <th data-sort="Product-Name">Product Name<span class="sort-icon">↕</span></th>
-                                    <th data-sort="Quantity">Quantity <span class="sort-icon">↕</span></th>
-                                    <th data-sort="Price-per-Unit">Price per Unit<span class="sort-icon">↕</span></th>
-                                    <th data-sort="Total-Price">Total Price<span class="sort-icon">↕</span></th>
-
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="orders-table-body">
-                                <!-- Table rows will be added dynamically via JavaScript -->
-                            </tbody>
-                        </table>
+                    <div class="table_container">
+                        <!-- TABLE AREA -->
                     </div>
 
                     <div class="pagination">
@@ -239,36 +192,17 @@
                     ------------------------------------------>
                 <div class="content" id="Transactionsdisplay">
                     <!-- <?php include("search-rows.php") ?> -->
-                    <div>
-                        <table id="transactions-table">
-                            <thead>
-                                <tr>
-                                    <th data-sort="Payment-ID">Payment ID <span class="sort-icon">↕</span></th>
-                                    <th data-sort="Order-ID">Order ID <span class="sort-icon">↕</span></th>
-                                    <th data-sort="User-ID">User ID <span class="sort-icon">↕</span></th>
-                                    <th data-sort="Username">Username <span class="sort-icon">↕</span></th>
-                                    <th data-sort="Payment-Method">Payment Method <span class="sort-icon">↕</span></th>
-                                    <th data-sort="Payment-Status">Payment Status <span class="sort-icon">↕</span></th>
-                                    <th data-sort="Transaction-ID">Transaction ID<span class="sort-icon">↕</span></th>
-                                    <th data-sort="Amount">Amount <span class="sort-icon">↕</span></th>
-                                    <th data-sort="Created-At">Created at <span class="sort-icon">↕</span></th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="transactions-table-body">
-                                <!-- Table rows will be added dynamically via JavaScript -->
-                            </tbody>
-                        </table>
+                    
+                    
+                    <div class="table_container">
+                        <!-- TABLE AREA -->
                     </div>
 
                     <div class="pagination"> <!-- keep here or refrence as a single php file?-->
-                        <div class="pagination-info">
-                            Showing <span id="showing-start">1</span> to <span id="showing-end">10</span> of <span
-                                id="total-items">100</span> items
+                        <div class="pagination-info"> Showing <span id="showing-start">1</span> to <span id="showing-end">10</span> of <span id="total-items">100</span> items
                         </div>
                         <div class="pagination-controls">
-                            <button type="button" id="prev-page" class="pagination-button" disabled>&laquo;
-                                Previous</button>
+                            <button type="button" id="prev-page" class="pagination-button" disabled>&laquo;Previous</button>
                             <button type="button" id="next-page" class="pagination-button">Next &raquo;</button>
                         </div>
                     </div>
@@ -280,25 +214,9 @@
                     ------------------------------------------>
                 <div class="content" id="Reviewsdisplay">
                     <!-- <?php include("search-rows.php") ?> -->
-                    <div class="_">
-                        <table id="transactions-table">
-                            <thead>
-                                <tr>
-                                    <th data-sort="Review-ID">Review ID <span class="sort-icon">↕</span></th>
-                                    <th data-sort="User-ID">User ID <span class="sort-icon">↕</span></th>
-                                    <th data-sort="Username">Username <span class="sort-icon">↕</span></th>
-                                    <th data-sort="Product-ID">Product ID <span class="sort-icon">↕</span></th>
-                                    <th data-sort="Product-Name">Product Name <span class="sort-icon">↕</span></th>
-                                    <th data-sort="Rating">Rating<span class="sort-icon">↕</span></th>
-                                    <th data-sort="Review-Text">Review Text <span class="sort-icon">↕</span></th>
-                                    <th data-sort="Created-At">Created at <span class="sort-icon">↕</span></th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="transactions-table-body">
-                                <!-- Table rows will be added dynamically via JavaScript -->
-                            </tbody>
-                        </table>
+                    
+                    <div class="table_container">
+                        <!-- TABLE AREA -->
                     </div>
 
                     <div class="pagination">
@@ -366,6 +284,8 @@
                             </div>
                     </form>
                 </div>
+            </div>
+        </div>
 </body>
 
 </html>
