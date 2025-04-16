@@ -65,8 +65,7 @@
                                 id="productsSearchButton">Search</button>
                             <span>Rows:</span>
                             <select id="productsRowsPerPage" class="filter_value_style">
-                                <option>Rows to display</option>
-                                <option value="4">4</option>
+                                <option value="10">10</option>
                                 <option value="25">25</option>
                                 <option value="50">50</option>
                                 <option value="100">100</option>
@@ -122,7 +121,7 @@
                             <span class="rows-label">Rows:</span>
 
                             <select id="usersRowsPerPage" class="filter_value_style">
-                                <option>Rows to display</option>
+                                <option value="10">10</option>
                                 <option value="25">25</option>
                                 <option value="50">50</option>
                                 <option value="100">100</option>
@@ -160,7 +159,7 @@
                                 type="submit">Search</button>
                             <span>Rows:</span>
                             <select id="ordersRowsPerPage" class="filter_value_style">
-                                <option>Rows to display</option>
+                                <option value="10">10</option>  
                                 <option value="25">25</option>
                                 <option value="50">50</option>
                                 <option value="100">100</option>
@@ -197,7 +196,7 @@
                                 type="submit">Search</button>
                             <span>Rows:</span>
                             <select id="transactionsRowsPerPage" class="filter_value_style">
-                                <option>Rows to display</option>
+                                <option value="10">10</option>
                                 <option value="25">25</option>
                                 <option value="50">50</option>
                                 <option value="100">100</option>
@@ -235,7 +234,7 @@
                                 type="submit">Search</button>
                             <span>Rows:</span>
                             <select id="reviewsRowsPerPage" class="filter_value_style">
-                                <option>Rows to display</option>
+                                <option value="10">10</option>
                                 <option value="25">25</option>
                                 <option value="50">50</option>
                                 <option value="100">100</option>
