@@ -1,22 +1,34 @@
-<?php 
-// IMportant notes need to check  {$tableName} for any violation
+<?php
+//to avoid sql injection simply make a white list with column and table names
 header('Content-Type: application/json');
 
 $rowNumber = isset($_GET["rowNumber"])? $_GET["rowNumber"] : 4 ;
 $rowOffset = isset($_GET["rowOffset"])? $_GET["rowOffset"] : 0;
 $tableName = isset($_GET["tableName"])? $_GET["tableName"] : 'orders';
+$sortBy = $_GET['sortBy'] ?? null;
+$sortDirection = ($_GET['sortDirection'] ?? 'asc') === 'desc' ? 'DESC' : 'ASC';
 
-include('../../includes/db.php'); 
+include('../../../includes/db.php');
 
 // Get total records first
 $sqlTotalRecord = "SELECT COUNT(*) AS total FROM  {$tableName}";
 $stmtTotal = $pdo->prepare($sqlTotalRecord);
 $stmtTotal->execute();
 $totalResult = $stmtTotal->fetch(PDO::FETCH_ASSOC);
-$totalRecords = $totalResult['total']; 
+$totalRecords = $totalResult['total'];
 
-// SQL query to fetch paginated data
-$sql = "SELECT * FROM  {$tableName} LIMIT ? OFFSET  ?";
+// SQL query to fetch paginated data and sorting
+$sql = "SELECT * FROM  {$tableName}";
+
+// Add sorting if sortBy is provided
+if ($sortBy) {
+    // Sanitize the $sortBy value to prevent SQL injection
+    // This is a basic example; you might want a more robust method
+    $safeSortBy = preg_replace('/[^a-zA-Z0-9_]/', '', $sortBy);
+    $sql .= " ORDER BY " . $safeSortBy . " " . $sortDirection;
+}
+
+$sql .= " LIMIT ? OFFSET ?";
 
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(1, $rowNumber, PDO::PARAM_INT);

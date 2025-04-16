@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //### declaring them here within the document load to avoid reapeted fetch requests##
     //product
     const productTable = new fetchTable({  // generating the object OUTSIDE THE BUTTON SINCE products is the first page
-        url: '../../api/users/list.php',
+        url: '../assets/php/root_php/fetchTable.php',
         tableName: 'products', //must be like sql100%
         columnName: [`product_id`, `category_id`, `product_name`, `picture`, `description`, `color`, `size`, `price`,
             `stock`, `created_at`, `updated_at`, `created_by`],  //must be like sql100%
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     //users
     const userTable = new fetchTable({
-        url: '../../api/users/list.php',
+        url: '../assets/php/root_php/fetchTable.php',
         tableName: 'customers',
         columnName: ['email', 'customer_id', 'username', 'created_at', 'iamfakeandbad'],
         rowsPerPage: 10,
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     //orders
     const orderTable = new fetchTable({
-        url: '../../api/users/list.php',
+        url: '../assets/php/root_php/fetchTable.php',
         tableName: 'orders',
         columnName: ['order_id', 'customer_id', 'status', 'total_amount', 'order_date'],
         rowsPerPage: 10,
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     //transactions
     const transactionTable = new fetchTable({
-        url: '../../api/users/list.php',
+        url: '../assets/php/root_php/fetchTable.php',
         tableName: 'payments',
         columnName: [`payment_id`, `order_id`, `customer_id`, `payment_method`, `payment_status`, `transaction_id`, `amount`, `created_at`],
         rowsPerPage: 10,
@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     //review
     const reviewTable = new fetchTable({
-        url: '../../api/users/list.php',
+        url: '../assets/php/root_php/fetchTable.php',
         tableName: 'reviews',
         columnName: [`review_id`, `customer_id`, `product_id`, `rating`, `review_text`, `created_at`],
         rowsPerPage: 10,
@@ -229,6 +229,13 @@ class fetchTable {
 
         this.pageOffset = Math.max(0, (this.currentPage - 1) * this.rowsPerPage);//posiive
 
+        let fetchUrl = `${this.url}?tableName=${this.tableName}&rowNumber=${this.rowsPerPage}&rowOffset=${this.pageOffset}`;
+
+        // Add sorting parameters if a sort column is selected
+        if (this.sortColumn) {
+            fetchUrl += `&sortBy=${this.sortColumn}&sortDirection=${this.sortDirection}`;
+        }
+
         //uses the cashed data if exists
         if (this.cachedData[this.currentPage]) {
             this.renderTable();
@@ -238,7 +245,7 @@ class fetchTable {
         }
 
         //fetch data
-        fetch(`${this.url}?tableName=${this.tableName}&rowNumber=${this.rowsPerPage}&rowOffset=${this.pageOffset}`)
+        fetch(fetchUrl)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
@@ -294,25 +301,9 @@ class fetchTable {
             this.sortColumn = columnName;
             this.sortDirection = 'asc';
         }
-
-        this.cachedData[this.currentPage].sort((a, b) => {
-            const valueA = a[columnName];
-            const valueB = b[columnName];
-
-            let comparison = 0;
-            if (typeof valueA === 'string' && typeof valueB === 'string') {
-                comparison = valueA.localeCompare(valueB);
-            } else if (typeof valueA === 'number' && typeof valueB === 'number') {
-                comparison = valueA - valueB;
-            } else if (valueA > valueB) {
-                comparison = 1;
-            } else if (valueA < valueB) {
-                comparison = -1;
-            }
-
-            return this.sortDirection === 'asc' ? comparison : comparison * -1;
-        });
-        this.renderTable();
+        this.currentPage = 1; // Reset to first page on sort
+        this.cachedData = {}; // Clear cache to force refetch with new sort
+        this.fetchData(); // Fetch data with sorting parameters
     }//sort
     renderTable() {
         const display = document.getElementById(`${this.idNamingSuffix}TableDisplay`);
@@ -338,7 +329,7 @@ class fetchTable {
             hdata.innerHTML = column + `<span class="sort-icon" data-sort="${column}">↕</span>`;
             hdata.dataset.column = column; // Store column name for sorting
             hdata.style.cursor = 'pointer'; // Indicate it's clickable
-            hdata.addEventListener('click', (event) => {
+            hdata.addEventListener('click', (event) => { // the listener for table header
                 const clickedColumn = event.target.dataset.column;
                 if (clickedColumn) {
                     this.sortData(clickedColumn);
