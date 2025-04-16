@@ -62,15 +62,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // calling the table render and fetching and tab switch(toolbar) [TRFS]&
     manageUserbutton.addEventListener('click', function() {
-        setActiveTab(usersdisplay, manageUserbutton);//tab switch(toolbar)
-        const userTable = new fetchTable({  // generating the object
+        setActiveTab(usersdisplay, manageUserbutton);
+        const userTable = new fetchTable({ 
            url : '../../api/users/list.php',
-           tableName : 'customers', //must be like sql100%
-           columnName : ['email','customer_id','username','created_at','iamfakeandbad'],  //must be like sql100%
+           tableName : 'customers', 
+           columnName : ['email','customer_id','username','created_at','iamfakeandbad'], 
            rowsPerPage :3,
-           idNamingSuffix :'users',    // to locate the next prev current page ids following the standard suffix-next-page so on
+           idNamingSuffix :'users',  
         });
-        userTable.fetchData();  //calling the fetch methode
+        userTable.fetchData();  
 
     });
     
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
            tableName : 'orders',
            columnName : ['order_id','customer_id','status','total_amount','order_date'],
            rowsPerPage :19,
-           idNamingSuffix :'orders',    // to locate the next prev current page ids following the standard suffix-next-page so on
+           idNamingSuffix :'orders',
         });
         orderTable.fetchData();
        
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
             tableName : 'payments',
             columnName : [`payment_id`,`order_id`,`customer_id`,`payment_method`,`payment_status`,`transaction_id`,`amount`,`created_at`],
             rowsPerPage :19,
-            idNamingSuffix :'transactions',    // to locate the next prev current page ids following the standard suffix-next-page so on
+            idNamingSuffix :'transactions', 
          });
          transactionTable.fetchData();
     });
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', function() {
             tableName : 'reviews',
             columnName : [`review_id`,`customer_id`,`product_id`,`rating`,`review_text`,`created_at`],
             rowsPerPage :19,
-            idNamingSuffix :'reviews',    // to locate the next prev current page ids following the standard suffix-next-page so on
+            idNamingSuffix :'reviews',    
          });
          reviewTable.fetchData();
     });
@@ -170,17 +170,36 @@ closeProductPopUpButton.addEventListener('click',closeaddProPopup);
 #######################################---Global table retriver---#######################################
 
 
-------------------------------------------------Usage----------------------------------------------------
-Option	            Type	        Default Value	            Description
-connectionType  	string	        'local'	                        Specifies the type of data source. Possible values: 'local', 'mysql', or 'api'. This currently only serves as an indicator; you'll need to implement the actual fetching logic in WorkspaceData().
-tableName	        string	        ''	                            The name of the table in your database or the endpoint of your API. Used in the WorkspaceData() method (you need to implement the fetching logic).
-columnNames     	array	        []	                            An array of strings representing the names of the columns to be displayed in the table. The order in this array determines the order of the columns in the rendered table.
-currentPage	        number	        1	                            The initial page number to display.
-rowsPerPage	        number	        100	                            The number of rows to display on each page.
-sortColumn	        string	        First                           column name in columnNames (or null if columnNames is empty)	The name of the column to sort the table by initially.
-sortDirection	    string	        'asc'	                        The initial sorting direction. Possible values: 'asc' (ascending) or 'desc' (descending).
-
-
+-------------------------------------------------------------------------------------------------------------------------------------
+| Type     | Name                     | Description                                                                 | Default Value |
+| :------- | :------------------------| :-------------------------------------------------------------------------- | :------------ |
+| Variable | `url`                    | URL to fetch data from.(or path)                                            |               |
+| Variable | `tableName`              | Name of the table/data source. (must match database name)                   |               |
+| Variable | `columnName`             | Array of column names to display.  (must match database name)               | `[]`          |
+| Variable | `currentPage`            | Current page number.                                                        | `1`           |
+| Variable | `rowsPerPage`            | Number of rows per page.                                                    | `100`         |
+| Variable | `sortDirection`          | Sorting direction ('asc' or 'desc').                                        | `'asc'`       |
+| Variable | `data`                   | Array to store fetched data.                                                | `[]`          |
+| Variable | `idNamingSuffix`         | Suffix for generating unique HTML element IDs. ex(id= {suffix}Table)        | `''`          |
+| Variable | `totalRecords`           | Total number of records.(this fetched from database)                        | `0`           |
+| Variable | `pageOffset`             | Starting index of records for the current page.(for logic display of pages) |               |
+| Variable | `totalPages`             | Total number of pages.(calculated in the class)                             |               |
+| Variable | `flagPage`               | Flag to indicate if total records need to be fetched.                       | `true`        |
+| Method   | `constructor(options)`   | Initializes the `WorkspaceTable` with provided options.               
+| Method   | `WorkspaceData()`        | Fetches data from the `url` based on current pagination.                
+| Method   | `renderTable()`          | Renders the HTML table with the fetched `data`.                             
+| Method   | `updatePaginationInfo()` | Updates the display showing pagination information (e.g., "Showing..."). 
+| Method   | `paginationControls()`   | Sets up event listeners for pagination buttons and rows per page select. 
+-------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------Usage----------------------------------------------------------------
+const reviewTable = new fetchTable({              //create an object
+            url : '../../api/users/list.php',     //specify the URL
+            tableName : 'reviews',                // the table name from database
+            columnName : [`review_id`,`customer_id`,`product_id`,`rating`,`review_text`,`created_at`], //column names from database in any order wanted to be in the table
+            rowsPerPage :19,            //optional rowperpage
+            idNamingSuffix :'reviews',  //suffix that matches the html IDs  
+         });
+         reviewTable.fetchData();       //call fetchdata is a must to render table and call everything in the class
 ---------------------------------------------------------------------------------------------------------*/
 
 class fetchTable{
