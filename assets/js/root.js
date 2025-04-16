@@ -170,28 +170,29 @@ closeProductPopUpButton.addEventListener('click', closeaddProPopup);
 #######################################---Global table retriver---#######################################
 
 
--------------------------------------------------------------------------------------------------------------------------------------
-| Type     | Name                     | Description                                                                 | Default Value |
-| :------- | :------------------------| :-------------------------------------------------------------------------- | :------------ |
-| Variable | `url`                    | URL to fetch data from.(or path)                                            |               |
-| Variable | `tableName`              | Name of the table/data source. (must match database name)                   |               |
-| Variable | `columnName`             | Array of column names to display.  (must match database name)               | `[]`          |
-| Variable | `currentPage`            | Current page number.                                                        | `1`           |
-| Variable | `rowsPerPage`            | Number of rows per page.                                                    | `100`         |
-| Variable | `sortDirection`          | Sorting direction ('asc' or 'desc').                                        | `'asc'`       |                                           | `[]`          |
-| Variable | `idNamingSuffix`         | Suffix for generating unique HTML element IDs. ex(id= {suffix}Table)        | `''`          |
-| Variable | `totalRecords`           | Total number of records.(this fetched from database)                        | `0`           |
-| Variable | `pageOffset`             | Starting index of records for the current page.(for logic display of pages) |               |
-| Variable | `totalPages`             | Total number of pages.(calculated in the class)                             |               |
-| Variable | `flagPage`               | Flag to indicate if total records need to be fetched.                       | `true`        |
-| Variable | `cachedData`             | stores already fetched data to avoid repeated fetch requests                | `[]`          |
-| Method   | `constructor(options)`   | Initializes the `WorkspaceTable` with provided options.               
-| Method   | `WorkspaceData()`        | Fetches data from the `url` based on current pagination.                
-| Method   | `renderTable()`          | Renders the HTML table with the fetched `data`.                             
-| Method   | `updatePaginationInfo()` | Updates the display showing pagination information (e.g., "Showing..."). 
-| Method   | `paginationControls()`   | Sets up event listeners for pagination buttons and rows per page select. 
--------------------------------------------------------------------------------------------------------------------------------------
-----------------------------------------------------------------Usage----------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------(Better not means only if you know what you are doing)
+| Type     | Name                     | Description                                                                 | Default Value | Assignment                        |
+| :------- | :------------------------| :-------------------------------------------------------------------------- | :------------ |                                   |
+| Variable | `url`                    | URL to fetch data from.(or path)                                            |               | Must                              |
+| Variable | `tableName`              | Name of the table/data source. (must match database name)                   |               | Must                              |
+| Variable | `columnName`             | Array of column names to display.  (must match database name)               | `[]`          | Must                              |
+| Variable | `idNamingSuffix`         | Suffix for generating unique HTML element IDs. ex(id= {suffix}Table)        | `''`          | Must                              |
+| Variable | `rowsPerPage`            | Number of rows per page.                                                    | `100`         | Optional                          |
+| Variable | `sortDirection`          | Sorting direction ('asc' or 'desc').                                        | `'asc'`       | Optional                          |   
+| Variable | `cachedData`             | stores already fetched data to avoid repeated fetch requests                | `[]`          | Optional (use hardcoded data)     |
+| Variable | `sortColum`              | keep track of the column to sort                                            | null          | Optional                          |                         
+| Variable | `totalRecords`           | Total number of records.(this fetched from database)                        | `0`           | Better not                        |
+| Variable | `pageOffset`             | Starting index of records for the current page.(for logic display of pages) |               | Better not                        |
+| Variable | `totalPages`             | Total number of pages.(calculated in the class)                             |               | Better not                        |
+| Variable | `flagPage`               | Flag to indicate if total records need to be fetched.                       | `true`        | Better not                        |
+| Variable | `currentPage`            | Current page number.                                                        | `1`           | Better not                        |
+| Method   | `constructor(options)`   | Initializes the `WorkspaceTable` with provided options.                                                                         |
+| Method   | `WorkspaceData()`        | Fetches data from the `url` based on current pagination.                                                                        |
+| Method   | `renderTable()`          | Renders the HTML table with the fetched `data`.                                                                                 |
+| Method   | `updatePaginationInfo()` | Updates the display showing pagination information (e.g., "Showing...").                                                        |
+| Method   | `paginationControls()`   | Sets up event listeners for pagination buttons and rows per page select.                                                        |   
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+----------------------------------------------------------------Usage---------------------------------------------------------------------------------------------------|
 const reviewTable = new fetchTable({              //create an object
             url : '../../api/users/list.php',     //specify the URL
             tableName : 'reviews',                // the table name from database
@@ -199,7 +200,7 @@ const reviewTable = new fetchTable({              //create an object
             rowsPerPage :19,            //optional rowperpage
             idNamingSuffix :'reviews',  //suffix that matches the html IDs  
          });
-         reviewTable.fetchData();       //call fetchdata is a must to render table and call everything in the class
+       
 ---------------------------------------------------------------------------------------------------------*/
 
 class fetchTable {
