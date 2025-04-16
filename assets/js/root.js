@@ -49,6 +49,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // calling the table render and fetching and tab switch (toolbar)   [TRFS]*
     manageProbutton.addEventListener('click', function() {
         setActiveTab(EditProduct, manageProbutton);//tab switch(toolbar)
+        const productTable = new fetchTable({  // generating the object
+            url : '../../api/users/list.php',
+            tableName : 'products', //must be like sql100%
+            columnName : [`product_id`,`category_id`,`product_name`,`picture`,`description`,`color`,`size`,`price`,
+                `stock`,`created_at`,`updated_at`,`created_by`],  //must be like sql100%
+            rowsPerPage :3,
+            idNamingSuffix :'products',    // to locate the next prev current page ids following the standard suffix-next-page so on
+         });
+         productTable.fetchData();  //calling the fetch methode
     });
 
     // calling the table render and fetching and tab switch(toolbar) [TRFS]&
@@ -119,8 +128,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // edit remove in product table buttons [these gose in class better maybe]
-
-
 function confirmationPopup() {
    document.getElementById("confirmationPopupDisplay").style.display = "block";
 }
@@ -156,7 +163,7 @@ function closeaddProPopup(){
    document.getElementById("addProPopupDisplay").style.display = "none";
 }
 addProductButton.addEventListener('click', addProPopup);
-closeProductPopUpButton.addEventListener('click',closeaddProPopup());
+closeProductPopUpButton.addEventListener('click',closeaddProPopup);
 
 /*-------------------------------------------------------------------------------------------------------
 
