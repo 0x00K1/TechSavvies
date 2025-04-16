@@ -2,9 +2,9 @@
 // IMportant notes need to check  {$tableName} for any violation
 header('Content-Type: application/json');
 
-$rowNumber = isset($-GET["rowNumber"])? $-GET["rowNumber"] : 4 ;
-$rowOffset = isset($-GET["rowOffset"])? $-GET["rowOffset"] : 0;
-$tableName = isset($-GET["tableName"])? $-GET["tableName"] : 'orders';
+$rowNumber = isset($_GET["rowNumber"])? $_GET["rowNumber"] : 4 ;
+$rowOffset = isset($_GET["rowOffset"])? $_GET["rowOffset"] : 0;
+$tableName = isset($_GET["tableName"])? $_GET["tableName"] : 'orders';
 
 include('../../includes/db.php'); 
 
@@ -12,19 +12,19 @@ include('../../includes/db.php');
 $sqlTotalRecord = "SELECT COUNT(*) AS total FROM  {$tableName}";
 $stmtTotal = $pdo->prepare($sqlTotalRecord);
 $stmtTotal->execute();
-$totalResult = $stmtTotal->fetch(PDO::FETCH-ASSOC);
+$totalResult = $stmtTotal->fetch(PDO::FETCH_ASSOC);
 $totalRecords = $totalResult['total']; 
 
 // SQL query to fetch paginated data
 $sql = "SELECT * FROM  {$tableName} LIMIT ? OFFSET  ?";
 
 $stmt = $pdo->prepare($sql);
-$stmt->bindParam(1, $rowNumber, PDO::PARAM-INT);
-$stmt->bindParam(2, $rowOffset, PDO::PARAM-INT);
+$stmt->bindParam(1, $rowNumber, PDO::PARAM_INT);
+$stmt->bindParam(2, $rowOffset, PDO::PARAM_INT);
 $stmt->execute();
 
 // Fetch all rows as an associative array
-$data = $stmt->fetchAll(PDO::FETCH-ASSOC);
+$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Create a single response object with both the data and total count
 $response = [
@@ -38,7 +38,7 @@ if (empty($data)) {
 }
 
 // Output the complete JSON response
-echo json-encode($response);
+echo json_encode($response);
 
 // Close the database connection
 $pdo = null;
