@@ -1438,6 +1438,35 @@ footer {
 	margin: 30px auto 0 auto;
   }
 
+/* Empty cart */
+.empty-cart-btn {
+	display: block;       
+	margin: 20px auto 0; 
+	background: none;    
+	border: none;     
+	padding: 0;   
+	width: 30px;            /* size of the button */
+	height: 48px;
+	cursor: pointer;
+	transition: transform 0.2s, color 0.2s;
+	color: var(--primary-color); /* icon color */
+  }
+  
+  .empty-cart-btn svg {
+	width: 100%;
+	height: 100%;
+	fill: currentColor;   
+  }
+  
+  .empty-cart-btn:hover {
+	transform: scale(1.1);
+	color:#d42d2d
+  }
+  
+  .empty-cart-btn:active {
+	transform: scale(1);
+  }
+
   /* Responsive adjustments */
   @media (max-width: 600px) {
 	#cartSidebar {

@@ -383,19 +383,22 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   html += `
+    </div>
+    <div class="cart-footer">
+      <div class="cart-subtotal">
+        <span>Subtotal:</span>
+        <span>$${subtotal.toFixed(2)}</span>
       </div>
-      <div class="cart-footer">
-        <div class="cart-subtotal">
-          <span>Subtotal:</span>
-          <span>$${subtotal.toFixed(2)}</span>
-        </div>
-        <button id="checkoutBtn">
-          Proceed to Checkout
-        </button>
-        <a id="continue-shopping-a" class="continue-shopping-a" href="#">Continue Shopping</a>
-        <form id="checkoutForm" action="/includes/checkout_process.php" method="POST" style="display: none;"></form>
-      </div>
-    `;
+      <button id="checkoutBtn">Proceed to Checkout</button>
+      <a id="continue-shopping-a" class="continue-shopping-a" href="#">Continue Shopping</a>
+      <form id="checkoutForm" action="/includes/checkout_process.php" method="POST" style="display: none;"></form>
+      <button id="emptyCartBtn" class="empty-cart-btn" aria-label="Empty Cart">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20.5001 6H3.5" stroke="#000000" stroke-width="1.5" stroke-linecap="round"></path> <path d="M6.5 6C6.55588 6 6.58382 6 6.60915 5.99936C7.43259 5.97849 8.15902 5.45491 8.43922 4.68032C8.44784 4.65649 8.45667 4.62999 8.47434 4.57697L8.57143 4.28571C8.65431 4.03708 8.69575 3.91276 8.75071 3.8072C8.97001 3.38607 9.37574 3.09364 9.84461 3.01877C9.96213 3 10.0932 3 10.3553 3H13.6447C13.9068 3 14.0379 3 14.1554 3.01877C14.6243 3.09364 15.03 3.38607 15.2493 3.8072C15.3043 3.91276 15.3457 4.03708 15.4286 4.28571L15.5257 4.57697C15.5433 4.62992 15.5522 4.65651 15.5608 4.68032C15.841 5.45491 16.5674 5.97849 17.3909 5.99936C17.4162 6 17.4441 6 17.5 6" stroke="#000000" stroke-width="1.5"></path> <path d="M18.3735 15.3991C18.1965 18.054 18.108 19.3815 17.243 20.1907C16.378 21 15.0476 21 12.3868 21H11.6134C8.9526 21 7.6222 21 6.75719 20.1907C5.89218 19.3815 5.80368 18.054 5.62669 15.3991L5.16675 8.5M18.8334 8.5L18.6334 11.5" stroke="#000000" stroke-width="1.5" stroke-linecap="round"></path> </g>
+      </svg>
+    </button>
+    </div>
+  `;
 
   cartContent.innerHTML = html;
 
@@ -447,6 +450,20 @@ document.addEventListener("DOMContentLoaded", function () {
       checkoutForm.submit();
     });
   }
+
+
+  const emptyCartBtn = document.getElementById('emptyCartBtn');
+  if (emptyCartBtn) {
+    emptyCartBtn.addEventListener('click', () => {
+      // 1) Clear the cart
+      saveCartToCookie([]);
+      // 2) Update UI
+      renderCartItems();
+      updateCartBadgeNow();
+      // 3) Optional: show a toast/alert
+      showToast('Your cart has been emptied.', 'success');
+    });
+  }
 } 
 
   function updateItemQuantity(index, action) {
@@ -468,11 +485,8 @@ document.addEventListener("DOMContentLoaded", function () {
   
     // Check stock limit
     if (newQty > item.stock) {
-      // Show an error toast
       showToast(`Only ${item.stock} in stock for "${item.name}".`, 'error');
-      // Option 1: set newQty = item.stock;
-      // Option 2: do nothing (keep old quantity)
-      newQty = item.stock;  // or revert to item.quantity and return
+      newQty = item.stock;  // Revert to item.quantity and return
     }
   
     item.quantity = newQty;

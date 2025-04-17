@@ -1,6 +1,4 @@
 <?php
-// includes/get_customer_details.php
-
 require_once __DIR__ . '/secure_session.php';
 require_once __DIR__ . '/db.php';
 

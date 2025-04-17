@@ -4,14 +4,13 @@ if (session_status() === PHP_SESSION_NONE) {
     session_set_cookie_params([
         'lifetime' => 0,
         'path' => '/',
-        'domain' => 'localhost', // Change to techsavvies.shop in production
-        'secure' => false,       // Set to true when using HTTPS in production
+        'domain' => 'localhost', // techsavvies.shop
+        'secure' => false,       // Set to true when using HTTPS
         'httponly' => true,
         'samesite' => 'Strict'
     ]);
     session_start();
 } else {
-    // Optionally, log a message if you expect no session to be active here.
     error_log("Session already active; skipping session_set_cookie_params.");
 }
 
