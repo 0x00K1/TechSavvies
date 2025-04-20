@@ -133,7 +133,6 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <li class="sidebar-anchor"><a href="index.php" class="sidebar-anchor" ><i class="fa fa-home"></i> Home</a></li>
             <li class="sidebar-anchor"><a href="index.php#shop"><i class="fa fa-store"></i> Shop</a></li>
             <li class="sidebar-anchor"><a href="index.php#popular"><i class="fa fa-star"></i> Popular Products</a></li>
-            <li class="sidebar-anchor"><a href="#"><i class="fa fa-cart-shopping"></i> Cart</a></li>
             <li class="sidebar-anchor"><a href="index.php#contact" ><i class="fa fa-envelope"></i> Contact Us</a></li>
         </ul>
     </div>
@@ -144,7 +143,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 <!-- Sidebar Navigation -->
-    <nav class="sidebar">
+    <nav class="sidebar"> <!-- Need Fix next milestone st each page has its own Filters, Price and Rating for all rest is changed from database-->
 
          <div>
         <!-- Right Sidebar (Filters Form) -->

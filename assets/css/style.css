@@ -407,6 +407,7 @@ body {
     position: relative;
     z-index: 1;
     transition: color 0.3s ease;
+    font-size: 19.5px;
 }
 
 /* Hover Slide Effect for sidebar anchors */

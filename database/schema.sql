@@ -25,18 +25,19 @@ CREATE TABLE addresses (
     state VARCHAR(100),
     postal_code VARCHAR(20),
     country VARCHAR(100),
+    is_primary TINYINT(1) NOT NULL DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE
 );
 
 CREATE TABLE categories (
-    category_id INT AUTO_INCREMENT PRIMARY KEY, 
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
     category_name VARCHAR(255) NOT NULL,
     description TEXT,
     created_by INT,
     FOREIGN KEY (created_by) REFERENCES roots(root_id) ON DELETE SET NULL
-)AUTO_INCREMENT = 1; -- Auto increment Before starts from 10 so made default 1
+);
 
 CREATE TABLE products (
     product_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -106,9 +107,29 @@ CREATE TABLE reviews (
     FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
 );
 
-insert into roots (email,password,username) values
-('abdulrahmanqht@gmail.com','123','Abdulrahman');
+INSERT INTO roots (email, password, username, created_at) VALUES
+('root1@example.com', '$2y$10$A9a3nM6xFXXG1T6sXlXo1OB5jFNE9xwNjD1PXvKtOlKnB/72Y1LJe', 'Root1', NOW()),
+('root2@example.com', '$2y$10$P8Dme59A2YJwK3JhXyY2sO7QEMvN59kU2I1NWp5mIuT5zDL4mkhQ2', 'Root2', NOW()),
+('root3@example.com', '$2y$10$Y7Lke9rXWjVR7t6qBMHZBeBwBLy0rK3F4/Vq50WkBqT2X3smv3m5S', 'Root3', NOW()),
+('root4@example.com', '$2y$10$Z5Lk23bWQVR9t6qBNH4ZBsAdL2yT3XG4/Mq20VhBqT2X9ym5p5T6', 'Root4', NOW()),
+('root5@example.com', '$2y$10$C8Dme12A2YJwK3JhXyY2sO3QEMvL89kU2I1NWp5mIuT5zDL4mkhQ4', 'Root5', NOW());
 
+-- Insert into customers (Regular users)
+INSERT INTO customers (email, username, created_at) VALUES
+('customer1@example.com', 'savvyclient123456', NOW()),
+('customer2@example.com', 'savvyclient654321', NOW()),
+('customer3@example.com', 'savvyclient987654', NOW()),
+('customer4@example.com', 'techieexplorer', NOW()),
+('customer5@example.com', 'geekmaster999', NOW());
+
+
+-- Insert into addresses (Linked to customers)
+INSERT INTO addresses (customer_id, address_line1, city, state, postal_code, country, created_at) VALUES
+(1, '506 Tech Street', 'Qassim', '01', '011001', 'KSA', NOW()),
+(2, '456 Cyber Avenue', 'Alkhobar', 'SA', '90001', 'KSA', NOW()),
+(3, '789 Code Lane', 'San Francisco', 'CA', '94105', 'USA', NOW()),
+(4, '321 Silicon Valley', 'Riyadh', '02', '11564', 'KSA', NOW()),
+(5, '258 Innovation Drive', 'Dubai', 'DU', '50010', 'UAE', NOW());
 
 INSERT INTO categories (category_name, description, created_by) VALUES
 ('T-shirts', 'Cool tech-inspired apparel', 1),
@@ -211,3 +232,37 @@ INSERT INTO products (category_id, product_name, picture, description, color, pr
 (9, 'Node JS Phone Case', '../assets/images/Products/Phone Cases/Node JS Phone Case.png', 'Phone Case featuring the Node.js logo.', 'Black', 30.00, 4.70, 130, 1);
 
 
+
+
+
+-- Insert into orders (Only 3 orders)
+INSERT INTO orders (customer_id, order_date, status, total_amount) VALUES
+(1, NOW(), 'pending', 49.99),
+(2, NOW(), 'paid', 39.99),
+(3, NOW(), 'shipped', 1499.99),
+(4, NOW(), 'processing', 199.99),
+(5, NOW(), 'delivered', 79.99);
+
+-- Insert into order_items (Only 3 rows)
+INSERT INTO order_items (order_id, product_id, quantity, price_per_unit) VALUES
+(1, 1, 1, 49.99),
+(2, 2, 1, 39.99),
+(3, 3, 1, 1499.99),
+(4, 4, 1, 199.99),
+(5, 5, 1, 79.99);
+
+-- Insert into payments (Only 3 payments)
+INSERT INTO payments (order_id, customer_id, payment_method, payment_status, transaction_id, amount, created_at) VALUES
+(1, 1, 'credit_card', 'pending', 'TXN123456', 49.99, NOW()),
+(2, 2, 'paypal', 'completed', 'TXN654321', 39.99, NOW()),
+(3, 3, 'cash_on_delivery', 'pending', NULL, 1499.99, NOW()),
+(4, 4, 'bank_transfer', 'completed', 'TXN987654', 199.99, NOW()),
+(5, 5, 'apple_pay', 'completed', 'TXN777777', 79.99, NOW());
+
+-- Insert into reviews (Only 3 reviews, updated for Black Hat Python)
+INSERT INTO reviews (customer_id, product_id, rating, review_text, created_at) VALUES
+(1, 1, 5, 'Great hardware kit :)', NOW()),
+(2, 2, 5, 'Black Hat Python is a must-read for hackers!', NOW()),
+(3, 3, 5, 'Amazing laptop, super fast and great for tech people!', NOW()),
+(4, 4, 4, 'Windows 11 Pro License worked perfectly.', NOW()),
+(5, 5, 5, 'This mechanical keyboard is awesome for gaming!', NOW());
