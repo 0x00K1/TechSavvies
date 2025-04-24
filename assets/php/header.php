@@ -7,7 +7,7 @@ $hide_cart_on = ['/logout.php', '/categories/cart'];
 <header>
   <div class="logo">
     <a href="/">
-      <img src="/TechSavvies/assets/images/LogoName.webp" alt="TechSavvies Logo" />
+      <img src="/assets/images/LogoName.webp" alt="TechSavvies Logo" />
     </a>
   </div>
   <nav>
@@ -71,7 +71,7 @@ $hide_cart_on = ['/logout.php', '/categories/cart'];
       <?php if (!in_array($current_page, $hide_home_on)): ?>
         <li id="homelink">
           <a href="/">
-            <img src="/TechSavvies/assets/icons/home.svg" alt="Home" id="homeIcon">
+            <img src="/assets/icons/home.svg" alt="Home" id="homeIcon">
           </a>
         </li>
       <?php endif; ?>
