@@ -145,6 +145,12 @@
     border: 3px solid black !important;
 }
 
+
+.swatches input[type="radio"]:checked + .swatch[style*="background-color: black"] {
+    border: 3px solid rgb(255, 255, 255) !important; /* Inner white border */
+    box-shadow: 0 0 0 3px black; /* Outer black border */
+    border-radius: 50%; /* Ensure the swatch remains circular */}
+    
 .swatch:hover {
     -webkit-transform: scale(1.2);
     transform: scale(1.2);
@@ -205,9 +211,244 @@
     white-space: nowrap;
 }
 
+.cb1 input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+    border-radius: 5px;
+  }
+  
+  .cb1 {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-right: 1em;
+  }
+  .cb1 .checkmark {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: 1.3em;
+    width: 1.3em;
+    background-color: #ccc;
+    border-radius: 5px;
+    transition: all 0.2s;
+    box-shadow: 1px 1px 0px rgb(183, 183, 183);
+  }
+  
+  .cb1 input:checked ~ .checkmark {
+    box-shadow: 3px 3px 0px rgb(183, 183, 183);
+    opacity: 1;
+    background-image: linear-gradient(45deg, rgb(100, 61, 219) 0%, rgb(217, 21, 239) 100%);
+  }
+  
+  .cb1 .checkmark:after {
+    content: "";
+    position: absolute;
+    opacity: 0;
+    transition: all 0.2s;
+    left: 0.45em;
+    top: 0.25em;
+    width: 0.25em;
+    height: 0.5em;
+    border: solid white;
+    border-width: 0 0.15em 0.15em 0;
+    transform: rotate(45deg);
+  }
+  
+  .cb1 input:checked ~ .checkmark:after {
+    opacity: 1;
+  }
 
 
 
+/* Styles for the Price Input Container */
+.filter-sidebar .price-input-container {
+    width: 100%;
+    padding: 10px; /* Padding inside the container */
+    border-radius: 8px; /* Rounded corners */
+    margin-bottom: 15px; /* Space below the container */
+    background: none; /* Removed gray background */
+}
+
+/* Styles for the Price Input Fields */
+.filter-sidebar .price-input .price-field {
+    display: flex;
+    justify-content: space-between; /* Space between min and max inputs */
+    margin-bottom: 10px; /* Space below the input fields */
+}
+
+.filter-sidebar .price-field span {
+    display: flex;
+    font-size: 13px;
+    color: #333; 
+    font-weight: bold;
+}
+
+.filter-sidebar .price-field input {
+    flex: 1;
+    height: 25px; /* Smaller height for inputs */
+    font-size: 12px; /* Smaller font size for inputs */
+    font-family: "DM Sans", sans-serif;
+    border-radius: 5px; /* Rounded corners */
+    text-align: center;
+    border: 1px solid #ccc; /* Light border for visibility */
+    background: #fff; /* White background for inputs */
+    max-width: 80px; /* Limit the width of the inputs */
+}
+
+/* General Price Input Styling */
+.filter-sidebar .price-input {
+    width: 100%;
+    font-size: 14px; /* Adjusted font size */
+    color: #555;
+}
+
+/* Remove Arrows/Spinners for Number Inputs */
+.filter-sidebar input::-webkit-outer-spin-button,
+.filter-sidebar input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Adjust the Slider Container */
+.filter-sidebar .slider {
+    width: 100%; /* Ensure the slider spans the full width */
+    height: 2px; /* Height of the slider track */
+    position: relative;
+    background: none; /* Light gray background for the slider */
+    border-radius: 5px; /* Rounded corners for the slider */
+    margin: 0; /* Remove any margin that might offset the track */
+    overflow: hidden; /* Ensure the thumbs stay within the slider */
+    margin-top: -10px; /* Reduce the height from the top */
+}
+
+/* Styles for the Slider Progress Bar */
+.filter-sidebar .slider .price-slider {
+    height: 20px;
+    position: absolute;
+    border-radius: 5px; /* Rounded corners for the progress bar */
+    background: linear-gradient(135deg, #d42d2d, #8d07cc, #0117ff);
+}
+
+/* Adjust the Range Input */
+.filter-sidebar .range-input {
+    position: relative;
+    margin-top: -12px; /* Move the range input closer to the slider */
+}
+
+.filter-sidebar .range-input input {
+    position: absolute;
+    width: 100%;
+    height: 0; /* Keep the same height as before */
+    background: none;
+    pointer-events: none;
+    cursor: pointer;
+    -webkit-appearance: none;
+}
+
+/* Styles for the Range Thumb (Slider Handles) */
+.filter-sidebar input[type="range"] {
+    -webkit-appearance: none; /* Remove default styling */
+    width: 100%; /* Full width */
+    height: 6px; /* Match the slider track height */
+    background: transparent; /* Transparent background */
+    position: absolute;
+    top: 0;
+    pointer-events: none; /* Prevent interaction with the track */
+}
+
+.filter-sidebar input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Remove default styling */
+    height: 16px; /* Size of the slider thumb */
+    width: 16px;
+    border-radius: 50%; /* Circular thumb */
+    background: #555; /* Dark gray thumb color */
+    border: 2px solid #fff; /* White border for better visibility */
+    pointer-events: auto; /* Allow interaction with the thumb */
+    position: relative;
+    margin-top: -28px; /* Align the thumb vertically with the slider track */
+    transition: transform 0.2s ease-in-out, left 0.2s ease-in-out; 
+}
+
+.filter-sidebar input[type="range"]::-moz-range-thumb {
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background: #555;
+    border: 2px solid #fff;
+    pointer-events: auto;
+    margin-top: -28px; /* Align the thumb vertically with the slider track */
+    transition: transform 0.2s ease-in-out, left 0.2s ease-in-out; /* Smooth transition for movement */
+}
+
+/* Hover Effect for Slider Thumb */
+.filter-sidebar input[type="range"]::-webkit-slider-thumb:hover,
+.filter-sidebar input[type="range"]::-moz-range-thumb:hover {
+    background: #8d07cc; /* Change color on hover */
+    transform: scale(1.1); /* Slightly enlarge the thumb */
+    transition: all 0.2s ease-in-out; /* Smooth transition for hover effect */
+}
+
+
+/* Styles for Radio Buttons */
+.rb1 {
+    display: flex; /* Use flexbox for proper alignment */
+    align-items: center; /* Vertically align the radio button and label */
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #333;
+    position: relative; /* Ensure proper positioning */
+    gap: 10px; /* Add spacing between the radio button and label text */
+}
+
+.rb1 input[type="radio"] {
+    -webkit-appearance: none; /* Remove default styling */
+    display: block;
+    margin: 10px;
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    cursor: pointer;
+    vertical-align: middle;
+    box-shadow: hsla(0, 0%, 100%, 0.15) 0 1px 1px, inset hsla(0, 0%, 0%, 0.5) 0 0 0 1px;
+    background-color: hsla(0, 0%, 0%, 0.2);
+    background-image: linear-gradient(135deg, #d42d2d, #8d07cc, #0117ff);;
+    background-repeat: no-repeat;
+    -webkit-transition: background-position 0.15s cubic-bezier(0.8, 0, 1, 1),
+        -webkit-transform 0.25s cubic-bezier(0.8, 0, 1, 1);
+    outline: none;
+}
+
+.rb1 input[type="radio"]:checked {
+    -webkit-transition: background-position 0.2s 0.15s cubic-bezier(0, 0, 0.2, 1),
+        -webkit-transform 0.25s cubic-bezier(0, 0, 0.2, 1);
+}
+
+.rb1 input[type="radio"]:active {
+    -webkit-transform: scale(1.5);
+    -webkit-transition: -webkit-transform 0.1s cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* The up/down direction logic */
+.rb1 input[type="radio"],
+.rb1 input[type="radio"]:active {
+    background-position: 0 24px;
+}
+
+.rb1 input[type="radio"]:checked {
+    background-position: 0 0;
+}
+
+.rb1 input[type="radio"]:checked ~ input[type="radio"],
+.rb1 input[type="radio"]:checked ~ input[type="radio"]:active {
+    background-position: 0 -24px;
+}
+
+
+  
 
 button {
     outline: none;

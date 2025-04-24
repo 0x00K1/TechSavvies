@@ -173,7 +173,7 @@ INSERT INTO products (category_id, product_name, picture, description, color, ma
 (2, 'Brand Backpack White', '../assets/images/Products/Backpacks/Brand Backpack White.png', 'White branded Backpack made from 100% cotton. Lightweight and comfortable.', 'White', 'cotton', 45.29, 4.75, 250, 1),
 (2, 'Delrin Led Backpack', '../assets/images/Products/Backpacks/Delrin Led Backpack.png', 'High-tech LED display backpack with customizable messages.', 'Black', 'nylon', 89.99, 4.60, 120, 1),
 (2, 'Divoom Pixoo Backpack', '../assets/images/Products/Backpacks/Divoom Pixoo Pixel Art Laptop Backpack.png', 'Pixel art backpack with smart LED display. Eye-catching.', 'Dark Gray', 'polyester', 99.49, 4.80, 100, 1),
-(2, 'Hacker Man Backpack', '../assets/images/Products/Backpacks/Hacker Man Backpack.png', 'Stylish backpack inspired by hacker culture. Have a Laptop compartment.', 'Black', 'leather', 15.00, 4.50, 75, 1),
+(2, 'Hacker Man Backpack', '../assets/images/Products/Backpacks/Hacker Man Backpack.png', 'Stylish backpack inspired by hacker culture. Have a Laptop compartment.', 'Dark blue', 'Leather', 15.00, 4.50, 75, 1),
 (2, 'Led Backpack', '../assets/images/Products/Backpacks/Led Backpack.png', 'LED Backpack with smart lighting system. Perfect for night travel and events.', 'Black', 'Leather', 82.30, 4.65, 90, 1),
 (2, 'XDDesign Bobby Tech', '../assets/images/Products/Backpacks/XDDesign Bobby Tech.png', 'Anti-theft backpack with USB charging port and water-repellent fabric.', 'Dark Gray', 'Fabric', 110.00, 4.90, 60, 1);
 select * from products;

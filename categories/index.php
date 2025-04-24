@@ -38,11 +38,11 @@
 
 <div class="external_grid">
 <?php
-// Database connection parameters
-$host = 'localhost'; // or the IP address of your database server
+// Database connection
+$host = 'localhost';
 $dbname = 'techsavvies';
-$username = 'root';  // or your database username
-$password = '1234567';      // or your database password
+$username = 'root'; // Replace with your actual username
+$password = '1234567'; // Replace with your actual password
 
 try {
     // Create a PDO instance for database connection
@@ -72,11 +72,11 @@ $type_to_category_id = [
   'games' => 10         // Games
 ];
 
-// Check if the 'type' parameter is set in the query string, otherwise default to 't-shirt'
+// Check if the 'type' parameter is set.
 $type = $_GET['type'] ?? 't-shirt'; // Default to 't-shirt' if no type is specified
 
-// Get the corresponding category_id, defaulting to 1 (T-shirts) if the type doesn't exist in the map
-$category_id = $type_to_category_id[$type] ?? 1; 
+// Get the corresponding category_id, default is 1 't-shirt'.
+$category_id = $type_to_category_id[$type] ?? 1;
 
 // Prepare the query
 $query = 'SELECT p.*, c.category_name
@@ -85,7 +85,7 @@ $query = 'SELECT p.*, c.category_name
   WHERE p.category_id = ?
   ORDER BY p.product_id';
 
-// Execute the query with the dynamic category_id
+// Execute the query for category_id
 $stmt = $pdo->prepare($query);
 $stmt->execute([$category_id]);
 
@@ -100,7 +100,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php foreach ($products as $product): ?>
       <div class="card_grid">
         <div class="product">
-          <img class="product_img" src="<?php echo '../' . htmlspecialchars($product['picture']); ?>" 
+          <img class="product_img" src="<?php echo '../' . htmlspecialchars($product['picture']); ?>"
                alt="<?php echo htmlspecialchars($product['product_name']) . ' Picture'; ?>">
           
           <h1 class="product_h1"><?php echo htmlspecialchars($product['product_name']); ?></h1>
@@ -124,7 +124,7 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 <!-- Sidebar Navigation -->
-<nav class="sidebar">
+<nav class="sidebar" aria-label="Sidebar Navigation">
     <!-- Menu Container -->
     <div>
         <!-- User Menu -->
@@ -143,66 +143,202 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 <!-- Sidebar Navigation -->
-    <nav class="sidebar"> <!-- Need Fix next milestone st each page has its own Filters, Price and Rating for all rest is changed from database-->
+    <nav class="sidebar" aria-label="Filter Sidebar Navigation">
 
          <div>
         <!-- Right Sidebar (Filters Form) -->
         <aside class="filter-sidebar">
             <h2>Filters</h2>
             <form action="#" method="GET">
+                <!-- T-shirts Sizes Filter -->
+            <details class="filter-group" id="t-shirts-sizes" hidden>
+                <summary>Size</summary>
+                <label class="cb1" for="size-S">
+                    <input type="checkbox" name="size" value="S" id="size-S">
+                    <span class="checkmark"></span>S
+                </label>
+                <label class="cb1" for="size-M">
+                    <input type="checkbox" name="size" value="M" id="size-M">
+                    <span class="checkmark"></span>M
+                </label>
+                <label class="cb1" for="size-L">
+                    <input type="checkbox" name="size" value="L" id="size-L">
+                    <span class="checkmark"></span>L
+                </label>
+                <label class="cb1" for="size-XL">
+                    <input type="checkbox" name="size" value="XL" id="size-XL">
+                    <span class="checkmark"></span>XL
+                </label>
+                <label class="cb1" for="size-XXL">
+                    <input type="checkbox" name="size" value="XXL" id="size-XXL">
+                    <span class="checkmark"></span>XXL
+                </label>
+            </details>
 
-                <details class="filter-group">
-                    <summary>Size</summary>
-                    <label><input type="checkbox" name="size" value="S"> S</label>
-                    <label><input type="checkbox" name="size" value="M"> M</label>
-                    <label><input type="checkbox" name="size" value="L"> L</label>
-                    <label><input type="checkbox" name="size" value="XL"> XL</label>
-                    <label><input type="checkbox" name="size" value="XXL"> XXL</label>
-                </details>
-
-                <!-- Color Filter -->
-                <details class="filter-group">
+                <!-- T-shirts Colors Filter -->
+                <details class="filter-group" id="t-shirts-colors" hidden>
                     <summary>Color</summary>
                     <div class="swatches">
                         <label>
-                            <input type="radio" name="color" value="black">
+                            <input type="radio" name="color" value="black" id="black-tshirts">
                             <div class="swatch" style="background-color: black;"></div>
                         </label>
                         <label>
-                            <input type="radio" name="color" value="white">
+                            <input type="radio" name="color" value="white" id="white-tshirts">
                             <div class="swatch" style="background-color: white; border: 1px solid #ccc;"></div>
                         </label>
                         <label>
-                            <input type="radio" name="color" value="Mauve">
+                            <input type="radio" name="color" value="Mauve" id="mauve-tshirts">
                             <div class="swatch" style="background-color: #642d3d;"></div>
                         </label>
                         <label>
-                            <input type="radio" name="color" value="Warm Gray">
+                            <input type="radio" name="color" value="Warm Gray" id="warm-gray-tshirts">
                             <div class="swatch" style="background-color: #C9C6BE;"></div>
                         </label>
                         <label>
-                            <input type="radio" name="color" value="Dark Gray">
+                            <input type="radio" name="color" value="Dark Gray" id="dark-gray-tshirts">
                             <div class="swatch" style="background-color: #575551;"></div>
                         </label>
                     </div>
                 </details>
 
-                <!-- Price Range Filter -->
-                <details class="filter-group">
-                    <summary>Price Range (in $)</summary>
-                    <div class="price-range">
+            <!-- Backpacks Material Filter -->
+            <details class="filter-group" id="backpacks-material" hidden>
+                <summary>Material</summary>
+                <label class="cb1" for="cotton">
+                <input type="checkbox" name="material" value="cotton" id="cotton">
+                <span class="checkmark"></span>Cotton</label>
+                <label class="cb1" for="nylon">
+                <input type="checkbox" name="material" value="nylon" id="nylon">
+                <span class="checkmark"></span>Nylon</label>
+                <label class="cb1" for="Fabric">
+                <input type="checkbox" name="material" value="Fabric" id="Fabric">
+                <span class="checkmark"></span>Fabric</label>
+                <label class="cb1" for="leather">
+                <input type="checkbox" name="material" value="leather" id="leather">
+                <span class="checkmark"></span>Leather</label>
+                <label class="cb1" for="polyester">
+                <input type="checkbox" name="material" value="polyester" id="polyester">
+                <span class="checkmark"></span>Polyester</label>
+            </details>
+
+                <!-- Backpacks Colors Filter -->
+                <details class="filter-group" id="backpacks-colors" hidden>
+                    <summary>Color</summary>
+                    <div class="swatches">
                         <label>
-                            Min:
-                            <input type="number" id="minPrice" name="minPrice" value="1" min="1" step="1">
+                            <input type="radio" name="color" value="black" id="black-backpack">
+                            <div class="swatch" style="background-color: black;"></div>
                         </label>
                         <label>
-                            Max:
-                            <input type="number" id="maxPrice" name="maxPrice" value="100" min="1" step="1">
+                            <input type="radio" name="color" value="white" id="white-backpack">
+                            <div class="swatch" style="background-color: white; border: 1px solid #ccc;"></div>
+                        </label>
+                        <label>
+                            <input type="radio" name="color" value="Dark blue" id="dark-blue-backpack">
+                            <div class="swatch" style="background-color: #21384c;"></div>
+                        </label>
+                        <label>
+                            <input type="radio" name="color" value="Dark Gray" id="dark-gray-backpack">
+                            <div class="swatch" style="background-color: #575551;"></div>
                         </label>
                     </div>
                 </details>
 
-                <details class="filter-group">
+            <!-- Books Release Year Filter -->
+            <details class="filter-group" id="release-year" hidden>
+                <summary>Release Year</summary>
+                <label class="rb1" for="now-2020">
+                    <input type="radio" name="release-year" value="now-2020" id="now-2020">
+                    <span class="checkmark"></span>Now - 2020
+                </label>
+                <label class="rb1" for="2019-2010">
+                    <input type="radio" name="release-year" value="2019-2010" id="2019-2010">
+                    <span class="checkmark"></span>2019 - 2010
+                </label>
+                <label class="rb1" for="2009-2000">
+                    <input type="radio" name="release-year" value="2009-2000" id="2009-2000">
+                    <span class="checkmark"></span>2009 - 2000
+                </label>
+                <label class="rb1" for="before-2000">
+                    <input type="radio" name="release-year" value="before-2000" id="before-2000">
+                    <span class="checkmark"></span>Before 2000
+                </label>
+            </details>
+
+
+            <!-- Mugs Colors Filter -->
+            <details class="filter-group" id="mugs-colors" hidden>
+                    <summary>Color</summary>
+                    <div class="swatches">
+                        <label>
+                            <input type="radio" name="color" value="black" id="black-mugs">
+                            <div class="swatch" style="background-color: black;"></div>
+                        </label>
+                        <label>
+                            <input type="radio" name="color" value="white" id="white-mugs">
+                            <div class="swatch" style="background-color: white; border: 1px solid #ccc;"></div>
+                        </label>
+                    </div>
+                </details>
+
+                <!-- Phone Cases Colors Filter -->
+            <details class="filter-group" id="phone-cases-colors" hidden>
+                    <summary>Color</summary>
+                    <div class="swatches">
+                        <label>
+                            <input type="radio" name="color" value="black" id="black-phonecase">
+                            <div class="swatch" style="background-color: black;"></div>
+                        </label>
+                        <label>
+                            <input type="radio" name="color" value="white" id="white-phonecase">
+                            <div class="swatch" style="background-color: white; border: 1px solid #ccc;"></div>
+                        </label>
+                        <label>
+                            <input type="radio" name="color" value="Yellow" id="yellow-phonecase">
+                            <div class="swatch" style="background-color: yellow;"></div>
+                        </label>
+                        <label>
+                            <input type="radio" name="color" value="Gray" id="gray-phonecase">
+                            <div class="swatch" style="background-color: gray;"></div>
+                        </label>
+                    </div>
+                </details>
+
+
+                <!-- Price Range Filter For all Categories -->
+<details class="filter-group" id="price-range">
+    <summary>Price Range (in $)</summary>
+
+    
+        <div class="price-input-container">
+            <div class="price-input">
+                <div class="price-field">
+                    <span>Minimum Price</span>
+                    <input type="number" class="min-input" value="0">
+                </div>
+                <div class="price-field">
+                    <span>Maximum Price</span>
+                    <input type="number" class="max-input" value="1500">
+                </div>
+            </div>
+            <div class="slider">
+                <div class="price-slider progress"></div>
+            </div>
+            <!-- Slider -->
+            <div class="range-input">
+            <input type="range" class="min-range left-thumb" min="0" max="1500" value="0" step="1">
+            <input type="range" class="max-range right-thumb" min="0" max="1500" value="1500" step="1">
+            </div>
+            <button id="reset-slider" style="width: 75%; height:40px; text-align: center;font-size: 12px; font-weight: bold; margin-top: 20px; margin-left: 24px;"><span>Reset Slider</span></button>
+        </div>
+
+        
+    
+</details>
+
+                <!-- Rating Filter For all Categories -->
+                <details class="filter-group" id="rating">
                     <summary>Rating</summary>
                     <div class="rating">
                         <input value="5" name="rating" id="star5" type="radio">
@@ -231,7 +367,113 @@ $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   <script src="/assets/js/main.js"></script>
 
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const rangevalue = document.querySelector(".slider .price-slider");
+    const rangeInputvalue = document.querySelectorAll(".range-input input");
+    const priceInputvalue = document.querySelectorAll(".price-input input");
+    const resetButton = document.getElementById("reset-slider");
+
+    // Set the minimum price gap
+    let priceGap = 15; // Adjusted price gap
+
+    // Function to update the slider progress bar
+    const updateSlider = (minVal, maxVal, maxRange) => {
+        rangevalue.style.left = `${(minVal / maxRange) * 100}%`;
+        rangevalue.style.right = `${100 - (maxVal / maxRange) * 100}%`;
+    };
+
+    // Initialize the slider progress bar on page load
+    const initializeSlider = () => {
+        const minVal = parseInt(rangeInputvalue[0].value);
+        const maxVal = parseInt(rangeInputvalue[1].value);
+        const maxRange = parseInt(rangeInputvalue[0].max);
+        updateSlider(minVal, maxVal, maxRange);
+    };
+
+    // Event listener for price input fields
+    priceInputvalue.forEach((input, index) => {
+        input.addEventListener("input", () => {
+            let minp = parseInt(priceInputvalue[0].value);
+            let maxp = parseInt(priceInputvalue[1].value);
+
+            // Validate minimum and maximum values
+            if (minp < 0) {
+                priceInputvalue[0].value = 0;
+                minp = 0;
+            }
+
+            if (maxp > 1500) { // Adjusted max value
+                priceInputvalue[1].value = 1500;
+                maxp = 1500;
+            }
+
+            // Ensure the thumbs do not collide
+            if (minp > maxp - priceGap) {
+                minp = maxp - priceGap;
+                priceInputvalue[0].value = minp;
+            }
+
+            if (maxp - minp >= priceGap) {
+                rangeInputvalue[0].value = minp;
+                rangeInputvalue[1].value = maxp;
+
+                const maxRange = parseInt(rangeInputvalue[0].max);
+                updateSlider(minp, maxp, maxRange);
+            }
+        });
+    });
+
+    // Event listener for range input sliders
+    rangeInputvalue.forEach((input) => {
+        input.addEventListener("input", (e) => {
+            let minVal = parseInt(rangeInputvalue[0].value);
+            let maxVal = parseInt(rangeInputvalue[1].value);
+
+            // Ensure the thumbs do not collide
+            if (maxVal - minVal < priceGap) {
+                if (e.target.classList.contains("min-range")) {
+                    minVal = maxVal - priceGap;
+                    rangeInputvalue[0].value = minVal;
+                } else {
+                    maxVal = minVal + priceGap;
+                    rangeInputvalue[1].value = maxVal;
+                }
+            }
+
+            priceInputvalue[0].value = minVal;
+            priceInputvalue[1].value = maxVal;
+
+            const maxRange = parseInt(rangeInputvalue[0].max);
+            updateSlider(minVal, maxVal, maxRange);
+        });
+    });
+
+    // Reset Slider Button Functionality
+    resetButton.addEventListener("click", (event) => {
+        event.preventDefault(); // Prevent the default form submission behavior
+
+        const maxRange = parseInt(rangeInputvalue[0].max);
+
+        // Reset the slider values
+        rangeInputvalue[0].value = 0;
+        rangeInputvalue[1].value = maxRange;
+
+        // Reset the price input fields
+        priceInputvalue[0].value = 0;
+        priceInputvalue[1].value = maxRange;
+
+        // Update the slider progress bar
+        updateSlider(0, maxRange, maxRange);
+    });
+
+    // Call the initialize function on page load
+    initializeSlider();
+});
+</script>
 
 
 </body>
 </html>
+
+
