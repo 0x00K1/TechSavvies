@@ -1,13 +1,18 @@
 <?php
-session_set_cookie_params([
-    'lifetime' => 0,
-    'path' => '/',
-    'domain' => 'localhost',       // It should be techsavvies.shop :) 
-    'secure' => false,             // Only send cookies over HTTPS [TEMP=>FALSE]
-    'httponly' => true,            // Not accessible via JavaScript
-    'samesite' => 'Strict'         // Helps mitigate CSRF
-]);
-session_start();
+// Only set cookie parameters if no session is active
+if (session_status() === PHP_SESSION_NONE) {
+    session_set_cookie_params([
+        'lifetime' => 0,
+        'path' => '/',
+        'domain' => 'localhost', // techsavvies.shop
+        'secure' => false,       // Set to true when using HTTPS
+        'httponly' => true,
+        'samesite' => 'Strict'
+    ]);
+    session_start();
+} else {
+    error_log("Session already active; skipping session_set_cookie_params.");
+}
 
 // Generate a CSRF token if one doesn't exist
 if (!isset($_SESSION['csrf_token'])) {

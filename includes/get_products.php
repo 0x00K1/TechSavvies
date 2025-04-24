@@ -8,7 +8,8 @@ $query = "
         p.picture AS image,
         p.product_name AS name,
         p.description,
-        p.price
+        p.price,
+        p.stock 
     FROM products p
     JOIN categories c ON p.category_id = c.category_id
     WHERE p.stock > 0

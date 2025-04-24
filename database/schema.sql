@@ -25,6 +25,7 @@ CREATE TABLE addresses (
     state VARCHAR(100),
     postal_code VARCHAR(20),
     country VARCHAR(100),
+    is_primary TINYINT(1) NOT NULL DEFAULT 0,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE
