@@ -1,5 +1,4 @@
 <?php
-// Enforce secure session
 require_once __DIR__ . '/secure_session.php';
 require_once __DIR__ . '/db.php';
 
@@ -41,18 +40,29 @@ try {
             $stmt->execute([':order_id' => $orderId]);
         }
     } else {
+        // [!] Bug
+        // Guests can currently access any order details using only the order_id,
+        // which poses a security risk (e.g., enumeration, data exposure).
+        // Solution: Secure tracking_token and require it for all guest access.
+        // This way, only users with the unique tracking link can view their order.
+
         // For guest users with correct order ID
-        $stmt = $pdo->prepare("
-            SELECT o.order_id, o.customer_id, o.status, o.order_date, o.total_amount,
-                   COUNT(oi.product_id) as item_count,
-                   p.payment_method
-            FROM orders o
-            LEFT JOIN order_items oi ON o.order_id = oi.order_id
-            LEFT JOIN payments p ON o.order_id = p.order_id
-            WHERE o.order_id = :order_id
-            GROUP BY o.order_id, o.customer_id, o.status, o.order_date, o.total_amount, p.payment_method
-        ");
-        $stmt->execute([':order_id' => $orderId]);
+        // $stmt = $pdo->prepare("
+        //     SELECT o.order_id, o.customer_id, o.status, o.order_date, o.total_amount,
+        //            COUNT(oi.product_id) as item_count,
+        //            p.payment_method
+        //     FROM orders o
+        //     LEFT JOIN order_items oi ON o.order_id = oi.order_id
+        //     LEFT JOIN payments p ON o.order_id = p.order_id
+        //     WHERE o.order_id = :order_id
+        //     GROUP BY o.order_id, o.customer_id, o.status, o.order_date, o.total_amount, p.payment_method
+        // ");
+        // $stmt->execute([':order_id' => $orderId]);
+
+        // Order not found or access denied [TEMP]
+        http_response_code(404); // Not Found
+        echo json_encode(['error' => 'Order not found or access denied']);
+        exit;
     }
     
     $orderData = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -84,7 +94,6 @@ try {
         'state' => $shippingInfo['state'] ?? '',
         'zip' => $shippingInfo['zip'] ?? '',
         'country' => $shippingInfo['country'] ?? 'United States',
-        'phone' => '(Not available)'  // Your DB doesn't store phone in the addresses table
     ];
 
     // Create simulated tracking information based on order status

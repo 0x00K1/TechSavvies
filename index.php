@@ -2,7 +2,7 @@
 require_once __DIR__ . '/includes/get_popular_products.php';
 
 // Fetch popular products
-$popularProducts = getPopularProducts(9);
+$popularProducts = getPopularProducts(10);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -149,24 +149,15 @@ $popularProducts = getPopularProducts(9);
             </div>
     </section>
 
-    <!-- Contact Section - Enhanced structure -->
+    <!-- Contact Section -->
     <section id="contact">
       <h2>Contact Us</h2>
-      <form id="contactForm" action="assets/php/send_email.php" method="POST">
-        <div class="form-group">
-          <input type="text" id="name" name="name" placeholder="Your Name" required />
+      <div class="contact-cta">
+        <p>Have questions or feedback? We'd love to hear from you!</p>
+        <div class="contact-options">
+          <a href="contact.php" class="contact-button">Send Us a Message</a>
+          <p class="contact-info"><strong>01 TechSavvies, Tech City</strong></p>
         </div>
-        <div class="form-group">
-          <input type="email" id="email" name="email" placeholder="Your Email" required />
-        </div>
-        <div class="form-group">
-          <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
-        </div>
-        <button type="submit">Send Message</button>
-      </form>
-      <div id="messageStatus"></div>
-      <div id="map">
-        <p>Address: 01 TechSavvies, Tech City</p>
       </div>
     </section>
   </div>
