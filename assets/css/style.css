@@ -565,7 +565,7 @@ body {
     /* Hidden by default */
     width: 250px;
     height: 100%;
-    background-color: #333;
+    background-color: #000000;
     padding-top: 60px;
     -webkit-transition: left 0.3s ease-in-out;
     transition: left 0.3s ease-in-out;

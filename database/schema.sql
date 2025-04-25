@@ -47,13 +47,6 @@ CREATE TABLE products (
     description TEXT,
     color VARCHAR(50),
     size VARCHAR(50),
-    material VARCHAR(50),           -- Added for categories like T-shirts, Mugs, Phone Cases, etc.
-    release_year INT,               -- Added for Books
-    brand VARCHAR(50),              -- Added for Laptops, Hardware Tools, etc.
-    hard_drive_capacity VARCHAR(50),-- Added for Laptops
-    type VARCHAR(50),               -- Added for Hardware Tools (e.g., Microcontroller, Sensor, etc.)
-    platform VARCHAR(50),           -- Added for Software Tools, Games
-    license_type VARCHAR(50),       -- Added for Software Tools
     price DECIMAL(10,2) NOT NULL,
     rating DECIMAL(10,2) NOT NULL,
     stock INT DEFAULT 0,
@@ -168,27 +161,27 @@ INSERT INTO products (category_id, product_name, picture, description, color, si
 (1, 'Tech Wizard T-shirt', '../assets/images/Products/T-shirts/Tech Wizard T-shirt.png', 'Tech Wizard themed T-shirt made from soft, breathable cotton.', 'Black', 'XL', 44.95, 4.6, 100, 1),
 (1, 'Weapon T-shirt', '../assets/images/Products/T-shirts/Weapon T-shirt.png', 'Cool tech-themed T-shirt labeled “Weapon” – for coders.', 'Black', 'XXL', 41.00, 3.7, 85, 1);
 
-INSERT INTO products (category_id, product_name, picture, description, color, material, price, rating, stock, created_by) VALUES
-(2, 'Brand Backpack Black', '../assets/images/Products/Backpacks/Brand_Backpack_Black.png', 'Black branded Backpack made from 100% cotton. Lightweight and comfortable.', 'Black', 'cotton', 45.29, 4.75, 250, 1),
-(2, 'Brand Backpack White', '../assets/images/Products/Backpacks/Brand Backpack White.png', 'White branded Backpack made from 100% cotton. Lightweight and comfortable.', 'White', 'cotton', 45.29, 4.75, 250, 1),
-(2, 'Delrin Led Backpack', '../assets/images/Products/Backpacks/Delrin Led Backpack.png', 'High-tech LED display backpack with customizable messages.', 'Black', 'nylon', 89.99, 4.60, 120, 1),
-(2, 'Divoom Pixoo Backpack', '../assets/images/Products/Backpacks/Divoom Pixoo Pixel Art Laptop Backpack.png', 'Pixel art backpack with smart LED display. Eye-catching.', 'Dark Gray', 'polyester', 99.49, 4.80, 100, 1),
-(2, 'Hacker Man Backpack', '../assets/images/Products/Backpacks/Hacker Man Backpack.png', 'Stylish backpack inspired by hacker culture. Have a Laptop compartment.', 'Dark blue', 'Leather', 15.00, 4.50, 75, 1),
-(2, 'Led Backpack', '../assets/images/Products/Backpacks/Led Backpack.png', 'LED Backpack with smart lighting system. Perfect for night travel and events.', 'Black', 'Leather', 82.30, 4.65, 90, 1),
-(2, 'XDDesign Bobby Tech', '../assets/images/Products/Backpacks/XDDesign Bobby Tech.png', 'Anti-theft backpack with USB charging port and water-repellent fabric.', 'Dark Gray', 'Fabric', 110.00, 4.90, 60, 1);
+INSERT INTO products (category_id, product_name, picture, description, color,  price, rating, stock, created_by) VALUES
+(2, 'Brand Backpack Black', '../assets/images/Products/Backpacks/Brand_Backpack_Black.png', 'Black branded Backpack made from 100% cotton. Lightweight and comfortable.', 'Black',  45.29, 4.75, 250, 1),
+(2, 'Brand Backpack White', '../assets/images/Products/Backpacks/Brand Backpack White.png', 'White branded Backpack made from 100% cotton. Lightweight and comfortable.', 'White',  45.29, 4.75, 250, 1),
+(2, 'Delrin Led Backpack', '../assets/images/Products/Backpacks/Delrin Led Backpack.png', 'High-tech LED display backpack with customizable messages.', 'Black',  89.99, 4.60, 120, 1),
+(2, 'Divoom Pixoo Backpack', '../assets/images/Products/Backpacks/Divoom Pixoo Pixel Art Laptop Backpack.png', 'Pixel art backpack with smart LED display. Eye-catching.', 'Dark Gray', 99.49, 4.80, 100, 1),
+(2, 'Hacker Man Backpack', '../assets/images/Products/Backpacks/Hacker Man Backpack.png', 'Stylish backpack inspired by hacker culture. Have a Laptop compartment.', 'Dark blue', 15.00, 4.50, 75, 1),
+(2, 'Led Backpack', '../assets/images/Products/Backpacks/Led Backpack.png', 'LED Backpack with smart lighting system. Perfect for night travel and events.', 'Black',  82.30, 4.65, 90, 1),
+(2, 'XDDesign Bobby Tech', '../assets/images/Products/Backpacks/XDDesign Bobby Tech.png', 'Anti-theft backpack with USB charging port and water-repellent fabric.', 'Dark Gray',  110.00, 4.90, 60, 1);
 select * from products;
 
 
-INSERT INTO products (category_id, product_name, picture, description, release_year, price, rating, stock, created_by) VALUES
-(3, 'AI Engineering', '../assets/images/Products/Books/AI Engineering.png', 'Black branded Backpack made from 100% cotton. Lightweight and comfortable.', 2025, 30.00, 5.00, 50, 1),
-(3, 'Algorithms to Live By', '../assets/images/Products/Books/Algorithms to Live By.png', 'A guide to understanding algorithms in everyday life.', 2016, 13.00, 4.50, 60, 1),
-(3, 'Clean Code', '../assets/images/Products/Books/Clean Code.png', 'A book that offers advice on writing clean, maintainable code.', 2008, 49.99, 4.80, 40, 1),
-(3, 'Fluent Python', '../assets/images/Products/Books/Fluent Python.png', 'A practical guide to Python programming and mastering the language.', 2015, 39.99, 4.70, 45, 1),
-(3, 'Grokking Algorithms', '../assets/images/Products/Books/Grokking Algorithms.png', 'An illustrated guide to understanding algorithms with examples.', 2016, 29.99, 4.60, 55, 1),
-(3, 'Life 3.0', '../assets/images/Products/Books/Life 3.0.png', 'A book about artificial intelligence and its impact on the future.', 2017, 29.99, 4.40, 50, 1),
-(3, 'Microserfs', '../assets/images/Products/Books/Microserfs.png', 'A novel about tech geeks trying to make a life at Microsoft.', 1995, 24.99, 4.30, 30, 1),
-(3, 'Operating Systems', '../assets/images/Products/Books/Operating Systems.png', 'An in-depth exploration of the concepts and design of modern operating systems.', 2017, 49.99, 4.75, 25, 1),
-(3, 'Why Machines Learn', '../assets/images/Products/Books/Why Machines Learn.png', 'A book explaining the science behind machine learning in simple terms.', 2020, 29.99, 4.60, 65, 1);
+INSERT INTO products (category_id, product_name, picture, description,  price, rating, stock, created_by) VALUES
+(3, 'AI Engineering', '../assets/images/Products/Books/AI Engineering.png', 'Black branded Backpack made from 100% cotton. Lightweight and comfortable.',  30.00, 5.00, 50, 1),
+(3, 'Algorithms to Live By', '../assets/images/Products/Books/Algorithms to Live By.png', 'A guide to understanding algorithms in everyday life.',  13.00, 4.50, 60, 1),
+(3, 'Clean Code', '../assets/images/Products/Books/Clean Code.png', 'A book that offers advice on writing clean, maintainable code.',  49.99, 4.80, 40, 1),
+(3, 'Fluent Python', '../assets/images/Products/Books/Fluent Python.png', 'A practical guide to Python programming and mastering the language.',  39.99, 4.70, 45, 1),
+(3, 'Grokking Algorithms', '../assets/images/Products/Books/Grokking Algorithms.png', 'An illustrated guide to understanding algorithms with examples.',  29.99, 4.60, 55, 1),
+(3, 'Life 3.0', '../assets/images/Products/Books/Life 3.0.png', 'A book about artificial intelligence and its impact on the future.', 29.99, 4.40, 50, 1),
+(3, 'Microserfs', '../assets/images/Products/Books/Microserfs.png', 'A novel about tech geeks trying to make a life at Microsoft.', , 24.99, 4.30, 30, 1),
+(3, 'Operating Systems', '../assets/images/Products/Books/Operating Systems.png', 'An in-depth exploration of the concepts and design of modern operating systems.',  49.99, 4.75, 25, 1),
+(3, 'Why Machines Learn', '../assets/images/Products/Books/Why Machines Learn.png', 'A book explaining the science behind machine learning in simple terms.',  29.99, 4.60, 65, 1);
 
 
 INSERT INTO products (category_id, product_name, picture, description, price, rating, stock, created_by) VALUES
