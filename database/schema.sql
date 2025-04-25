@@ -1,5 +1,6 @@
-CREATE DATABASE techsavvies;
+CREATE DATABASE IF NOT EXISTS techsavvies;
 USE techsavvies;
+-- Keep the Insert into Products and Insert into Categories change any thing else
 
 CREATE TABLE roots (
     root_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -179,7 +180,7 @@ INSERT INTO products (category_id, product_name, picture, description,  price, r
 (3, 'Fluent Python', '../assets/images/Products/Books/Fluent Python.png', 'A practical guide to Python programming and mastering the language.',  39.99, 4.70, 45, 1),
 (3, 'Grokking Algorithms', '../assets/images/Products/Books/Grokking Algorithms.png', 'An illustrated guide to understanding algorithms with examples.',  29.99, 4.60, 55, 1),
 (3, 'Life 3.0', '../assets/images/Products/Books/Life 3.0.png', 'A book about artificial intelligence and its impact on the future.', 29.99, 4.40, 50, 1),
-(3, 'Microserfs', '../assets/images/Products/Books/Microserfs.png', 'A novel about tech geeks trying to make a life at Microsoft.', , 24.99, 4.30, 30, 1),
+(3, 'Microserfs', '../assets/images/Products/Books/Microserfs.png', 'A novel about tech geeks trying to make a life at Microsoft.', 24.99, 4.30, 30, 1),
 (3, 'Operating Systems', '../assets/images/Products/Books/Operating Systems.png', 'An in-depth exploration of the concepts and design of modern operating systems.',  49.99, 4.75, 25, 1),
 (3, 'Why Machines Learn', '../assets/images/Products/Books/Why Machines Learn.png', 'A book explaining the science behind machine learning in simple terms.',  29.99, 4.60, 65, 1);
 
@@ -259,3 +260,4 @@ INSERT INTO reviews (customer_id, product_id, rating, review_text, created_at) V
 (3, 3, 5, 'Amazing laptop, super fast and great for tech people!', NOW()),
 (4, 4, 4, 'Windows 11 Pro License worked perfectly.', NOW()),
 (5, 5, 5, 'This mechanical keyboard is awesome for gaming!', NOW());
+
