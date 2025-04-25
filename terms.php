@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Terms of Service - TechSavvies</title>
+  <title>Terms of Service</title>
   <?php require_once __DIR__ . '/assets/php/main.php'; ?>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/main.css" />
@@ -68,7 +68,7 @@
     <p>You agree to use our website for lawful purposes only and not to engage in any activity that may harm or disrupt the site.</p>
     
     <h2>Intellectual Property</h2>
-    <p>All content, including text, stolen images, and logos, is owned by TechSavvies and may not be reproduced without permission.</p>
+    <p>All content, including text, images, and logos, is owned by TechSavvies and may not be reproduced without permission.</p>
     
     <h2>Limitation of Liability</h2>
     <p>TechSavvies is not liable for any damages or losses resulting from the use of our website.</p>
@@ -76,13 +76,10 @@
     <h2>Updates to Terms</h2>
     <p>We reserve the right to modify these terms at any time. Please review this page periodically for changes.</p>
   </div>
-  
-  <!-- Authentication Modal -->
-  <?php require_once __DIR__ . '/assets/php/auth.php'; ?>
 
   <!-- Footer Section -->
   <?php require_once __DIR__ . '/assets/php/footer.php'; ?>
 
-  <script src="assets/js/main.js"></script>
+  <script src="/assets/js/main.js"></script>
 </body>
 </html>

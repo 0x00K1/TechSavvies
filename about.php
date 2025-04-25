@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>About Us - TechSavvies</title>
+  <title>About Us</title>
   <?php require_once __DIR__ . '/assets/php/main.php'; ?>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/css/main.css" />
   <style>
     .team-section {
@@ -164,13 +163,7 @@
       </div>
     </section>
   </div>
-
-  <!-- Authentication Modal -->
-  <?php require_once __DIR__ . '/assets/php/auth.php'; ?>
   
-  <!-- Footer Section -->
-  <?php require_once __DIR__ . '/assets/php/footer.php'; ?>
-  
-  <script src="assets/js/main.js"></script>
+  <script src="/assets/js/main.js"></script>
 </body>
 </html>

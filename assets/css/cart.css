@@ -1,0 +1,300 @@
+:root {
+    --secondary-color: #f8f9fa;
+    --danger-color: #d42d2d;
+    --light-border: #e7e7e7;
+    --text-color: #333;
+    --button-bg: linear-gradient(135deg, #0117ff, #8d07cc, #d42d2d);
+    --button-hover: linear-gradient(135deg, #0ca71c, #3b9443);
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    background-color: #fff;
+  }
+  
+  .cart-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 25px;
+    padding: 0 20px;
+  }
+
+  .cart-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding-top: 40px;
+  }
+  
+  .cart-header h1 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  
+  .cart-header p {
+    color: #666;
+    font-size: 1.1rem;
+  }
+
+  .breadcrumb {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+  
+  .breadcrumb-item {
+    display: flex;
+    align-items: center;
+    color: #888;
+    font-weight: 500;
+  }
+  
+  .breadcrumb-item.active {
+    color: #0117ff;
+    font-weight: 600;
+  }
+  
+  .breadcrumb-item:not(:last-child)::after {
+    content: "›";
+    margin: 0 10px;
+    font-size: 1.2rem;
+    color: #ccc;
+  }
+
+  /* Cart Content */
+  .cart-content {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    grid-gap: 40px;
+  }
+
+  /* Cart Items */
+  .cart-items {
+    background: var(--secondary-color);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: var(--shadow);
+  }
+
+  .cart-item {
+    display: flex;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--light-border);
+    position: relative;
+  }
+
+  .cart-item:last-child {
+    border-bottom: none;
+  }
+
+  .item-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 20px;
+  }
+
+  .item-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .item-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+  }
+
+  .item-options {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+
+  .item-price {
+    font-weight: 500;
+    font-size: 1.1rem;
+    color:  #8d07cc;
+  }
+
+  .item-actions {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  .quantity-control {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+  }
+
+  .quantity-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid var(--light-border);
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    user-select: none;
+  }
+
+  .quantity-input {
+    width: 40px;
+    height: 32px;
+    text-align: center;
+    border: none;
+    background: transparent;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 0 8px;
+  }
+
+  .item-subtotal {
+    font-weight: 600;
+    font-size: 1.1rem;
+    min-width: 80px;
+    text-align: right;
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 992px) {
+    .cart-content {
+      grid-template-columns: 1fr;
+    }
+    
+    .cart-summary {
+      position: static;
+      margin-top: 30px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .cart-item {
+      flex-direction: column;
+    }
+    
+    .item-image {
+      width: 100%;
+      height: auto;
+      max-height: 200px;
+      margin-right: 0;
+      margin-bottom: 15px;
+    }
+    
+    .item-actions {
+      margin-left: 0;
+      margin-top: 15px;
+      justify-content: space-between;
+      width: 100%;
+    }
+    
+    .quantity-control {
+      margin-right: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .cart-header h1 {
+      font-size: 1.8rem;
+    }
+    
+    .cart-header p {
+      font-size: 1rem;
+    }
+    
+    .breadcrumb {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+
+  /* Toast Notification */
+  .toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: none;
+  }
+  
+  .toast {
+    background-color: #333;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    min-width: 280px;
+    max-width: 400px;
+  }
+  
+  .toast.success {
+    background-color: #0ca71c;
+  }
+  
+  .toast.error {
+    background-color: var(--danger-color);
+  }
+  
+  .toast-content {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+  
+  .toast-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 5px;
+  }
+
+  /* Loading Overlay */
+  .loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s;
+  }
+
+  .loading-overlay.active {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--secondary-color);
+    border-top-color:  #8d07cc;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }

@@ -1,13 +1,10 @@
 <?php
 require_once __DIR__ . '/db.php';
 
-function getPopularProducts($limit = 9) {
+function getPopularProducts($limit = 9) { // [order_items table needs trigger logic for DB or backend logic]
     global $pdo;
     
     try {
-        // We use a LEFT JOIN to also include products that may not appear in order_items at all.
-        // Counting DISTINCT oi.order_id ensures we only count each order once, 
-        // even if the product appears multiple times in that order.
         $query = "
             SELECT 
                 p.product_id,
@@ -19,6 +16,7 @@ function getPopularProducts($limit = 9) {
             FROM products p
             LEFT JOIN order_items oi ON p.product_id = oi.product_id
             GROUP BY p.product_id, p.product_name, p.picture, p.price, p.description
+            HAVING order_count > 0
             ORDER BY order_count DESC, p.product_id ASC
             LIMIT :limit
         ";
@@ -27,7 +25,6 @@ function getPopularProducts($limit = 9) {
         $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
         $stmt->execute();
         
-        // Return an array of products sorted by popularity
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         error_log("Error fetching popular products: " . $e->getMessage());

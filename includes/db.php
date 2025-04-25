@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/secure_session.php';
 require_once __DIR__ . '/../assets/php/env_loader.php';
 
 // Dynamically check for DB credentials
