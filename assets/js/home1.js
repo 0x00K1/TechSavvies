@@ -24,69 +24,79 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		// Set initial position
 		function updateSliderPosition(animate = true) {
-			const slideWidth = 100 / visibleSlides;
-			const offset = currentSlide * slideWidth;
+			const slideWidthPercentage = 100 / visibleSlides;
+			const offsetPercentage = currentSlide * slideWidthPercentage;
 
-			// Ensure proper centering by adding container padding
-			const container = document.querySelector(".popular-products .slider");
-			if (container) {
-				const containerWidth = container.offsetWidth;
-				const slideElement = slides[0];
-				const slideElementWidth = slideElement.offsetWidth;
-				const totalGap =
-					(containerWidth - slideElementWidth * visibleSlides) / 2;
+			// Simplified transform calculation
+			const transformValue = `translateX(-${offsetPercentage}%)`;
 
-				if (!animate) {
-					popularSlider.style.transition = "none";
-					requestAnimationFrame(() => {
-						popularSlider.style.transform = `translateX(calc(-${offset}% + ${totalGap}px))`;
-						requestAnimationFrame(() => {
-							popularSlider.style.transition =
-								"transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)";
-						});
+			if (!animate) {
+				popularSlider.style.transition = "none"; // Disable transition for instant update
+				requestAnimationFrame(() => { // Use rAF for smoother non-animated updates
+					popularSlider.style.transform = transformValue;
+					requestAnimationFrame(() => { // Re-enable transition after update
+						popularSlider.style.transition =
+							"transform 0.8s cubic-bezier(0.25, 1, 0.5, 1)";
 					});
-				} else {
-					popularSlider.style.transform = `translateX(calc(-${offset}% + ${totalGap}px))`;
-				}
+				});
+			} else {
+				popularSlider.style.transform = transformValue;
 			}
 
-			// Update button states
-			prevButton.style.opacity = currentSlide === 0 ? "0.5" : "1";
-			nextButton.style.opacity = currentSlide === maxSlideIndex ? "0.5" : "1";
+
+			// Update button states (keep this part)
+			prevButton.disabled = currentSlide === 0; // Use disabled attribute for better accessibility
+            nextButton.disabled = currentSlide === maxSlideIndex;
+            prevButton.style.opacity = prevButton.disabled ? "0.5" : "1";
+            nextButton.style.opacity = nextButton.disabled ? "0.5" : "1";
 		}
 
 		function showSlide(index) {
-			// Ensure index is within bounds
-			if (index > maxSlideIndex) {
-				// For smooth infinite loop - first jump without animation to the start
-				currentSlide = 0;
-				updateSliderPosition(true);
-			} else if (index < 0) {
-				// For smooth infinite loop - first jump without animation to the end
-				currentSlide = maxSlideIndex;
-				updateSliderPosition(true);
-			} else {
-				currentSlide = index;
-				updateSliderPosition(true);
-			}
-		}
+            // Corrected wrapping logic
+            if (index >= totalSlides) { // Wrap to first slide if past the end
+                currentSlide = 0;
+            } else if (index < 0) { // Wrap to last slide if before the beginning
+                currentSlide = maxSlideIndex; // Go to the actual last slide index
+            } else {
+                currentSlide = index;
+            }
+
+            // Ensure currentSlide doesn't exceed maxSlideIndex after potential resize
+            currentSlide = Math.min(currentSlide, maxSlideIndex);
+
+            updateSliderPosition(true); // Always animate slide changes initiated by user/auto
+        }
+
 
 		// Event listeners for buttons with smooth transitions
 		prevButton.addEventListener("click", () => {
-			showSlide(currentSlide - 1);
+            if (currentSlide > 0) { // Prevent going back from first slide if not looping
+			    showSlide(currentSlide - 1);
+            } else {
+                showSlide(maxSlideIndex); // Wrap to end
+            }
 			// Reset the interval timer when manually navigating
 			resetAutoSlideTimer();
 		});
 
 		nextButton.addEventListener("click", () => {
-			showSlide(currentSlide + 1);
+            if (currentSlide < maxSlideIndex) { // Prevent going forward from last slide if not looping
+			    showSlide(currentSlide + 1);
+            } else {
+                showSlide(0); // Wrap to start
+            }
 			// Reset the interval timer when manually navigating
 			resetAutoSlideTimer();
 		});
 
 		// Function for automatic sliding
 		function autoSlide() {
-			showSlide(currentSlide + 1);
+			// Use the same logic as the next button click for consistency
+            if (currentSlide < maxSlideIndex) {
+			    showSlide(currentSlide + 1);
+            } else {
+                showSlide(0); // Wrap to start
+            }
 		}
 
 		// Set up automatic sliding every 4 seconds
@@ -159,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 
 		// Initialize the slider position
-		updateSliderPosition(false);
+		updateSliderPosition(false); // Initial position without animation
 	}
 
 	// --- Hero Slider ---
