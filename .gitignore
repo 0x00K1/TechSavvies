@@ -19,3 +19,8 @@ Thumbs.db
 .settings/
 /vendor/
 composer.lock
+
+# Temporary testing files
+assets/css/temp-responsive.css
+assets/images/Products/Front.png
+sample_data.sql

@@ -78,5 +78,6 @@ $hide_cart_on = ['/logout.php', '/categories/cart'];
     </ul>
   </nav>
 </header>
+
 <!-- Authentication Modal-->
 <?php require_once __DIR__ . '/../../assets/php/auth.php'; ?>

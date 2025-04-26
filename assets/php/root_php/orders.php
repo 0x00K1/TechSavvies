@@ -1,4 +1,5 @@
 <div id="orders_display" class="content">
+    <h2 class="page-title">Orders</h2>
     <?php include("search_rows.php")?>
     <div class="table-container">
     <table id="products-table">

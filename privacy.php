@@ -5,7 +5,13 @@
   <?php require_once __DIR__ . '/assets/php/main.php'; ?>
   <link rel="stylesheet" href="assets/css/main.css" />
   <style>
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
     .main-content {
+      flex: 1;
       max-width: 800px;
       margin: 140px auto;
       padding: 40px;
@@ -60,7 +66,7 @@
   <?php require_once __DIR__ . '/assets/php/header.php'; ?>
 
   <!-- Privacy Policy Content -->
-  <div class="main-content">
+  <div class="main-content document-page">
     <h1>Privacy Policy</h1>
     <p>Your privacy is important to us at TechSavvies. This policy explains what information we collect, how we use it, and the choices you have regarding your data.</p>
     

@@ -1,40 +1,43 @@
 <div id="EditProduct" class="content">
-        <form name="Product_queries" id="Product_queries" method="post" action="index.php">
-                <button id="addProPopup_button" class="addProPopup_button_style" type="button" onclick="addProPopup()">
-                    <i class="fas fa-plus"></i> Add Product
-                </button>
-                <?php include("search_rows.php")?>
-            
-            <div class="table-container">
-                <table id="products-table">
-                    <thead>
-                        <tr>
-                            <th data-sort="id">ID <span class="sort-icon">↕</span></th>
-                            <th data-sort="name">Name <span class="sort-icon">↕</span></th>
-                            <th data-sort="price">Price <span class="sort-icon">↕</span></th>
-                            <th data-sort="stock">Stock <span class="sort-icon">↕</span></th>
-                            <th data-sort="category">Category <span class="sort-icon">↕</span></th>
-                            <th data-sort="updated_date">Updated Date <span class="sort-icon">↕</span></th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="products-table-body">
-                        <!-- Table rows will be added dynamically via JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="pagination">
-                <div class="pagination-info">
-                    Showing <span id="showing-start">1</span> to <span id="showing-end">10</span> of <span id="total-items">100</span> items
-                </div>
-                <div class="pagination-controls">
-                    <button type="button" id="prev-page" class="pagination-button" disabled>&laquo; Previous</button>
-                    <button type="button" id="next-page" class="pagination-button">Next &raquo;</button>
-                </div>
-            </div>
-        </form>
+    <h2 class="page-title">Products Management</h2>
+    <div class="top-controls">
+        <div class="search-section">
+            <?php include("search_rows.php")?>
+        </div>
+        <button id="addProPopup_button" class="addProPopup_button_style" type="button" onclick="addProPopup()">
+            <i class="fas fa-plus"></i> Add Product
+        </button>
     </div>
+    
+    <div class="table-container">
+        <table id="products-table">
+            <thead>
+                <tr>
+                    <th data-sort="id">ID <span class="sort-icon">↕</span></th>
+                    <th data-sort="name">Name <span class="sort-icon">↕</span></th>
+                    <th data-sort="price">Price <span class="sort-icon">↕</span></th>
+                    <th data-sort="stock">Stock <span class="sort-icon">↕</span></th>
+                    <th data-sort="category">Category <span class="sort-icon">↕</span></th>
+                    <th data-sort="updated_date">Updated Date <span class="sort-icon">↕</span></th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="products-table-body">
+                <!-- Table rows will be added dynamically via JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="pagination">
+        <div class="pagination-info">
+            Showing <span id="showing-start">1</span> to <span id="showing-end">10</span> of <span id="total-items">100</span> items
+        </div>
+        <div class="pagination-controls">
+            <button type="button" id="prev-page" class="pagination-button" disabled>&laquo; Previous</button>
+            <button type="button" id="next-page" class="pagination-button">Next &raquo;</button>
+        </div>
+    </div>
+</div>
 
     <!-- Confirmation Modal -->
     <div id="confirmation-modal" class="modal">

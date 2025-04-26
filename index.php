@@ -165,7 +165,7 @@ $popularProducts = getPopularProducts(10);
   <!-- Footer Section -->
   <?php require_once __DIR__ . '/assets/php/footer.php'; ?>
 
-  <script src="/assets/js/home1.js"></script>
-  <script src="/assets/js/main.js"></script>
+  <script src="assets/js/home1.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>
