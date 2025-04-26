@@ -229,32 +229,50 @@ if (isset($_GET['product_id']) && array_key_exists($_GET['product_id'], $product
         </div>
 
         <!-- Reviews section -->
-        <div id="reviews" class="reviews-section">
-            <h2>User Reviews</h2>
-            <div class="reviews-container">
-                <!-- Static reviews for demonstration -->
-                <div class="review">
-                    <strong>Emily R.</strong>
-                    <div class="static-rating" style="--rating: 5.0"></div>
-                    <p>Absolutely love this product! Highly recommend!</p>
-                </div>
-                <div class="review">
-                    <strong>John D.</strong>
-                    <div class="static-rating" style="--rating: 4.0"></div>
-                    <p>Great quality and very comfortable to use.</p>
-                </div>
-                <div class="review">
-                    <strong>Sophia M.</strong>
-                    <div class="static-rating" style="--rating: 5.0"></div>
-                    <p>This backpack exceeded my expectations! The material is durable and the design is sleek.</p>
-                </div>
-                <div class="review">
-                    <strong>Michael B.</strong>
-                    <div class="static-rating" style="--rating: 3.0"></div>
-                    <p>Good overall, but the straps could be more padded for extra comfort.</p>
-                </div>
-            </div>
-        </div> 
+        <div class="submit-review">
+    <h3>Leave a Review</h3>
+    <form id="reviewForm">
+        <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($product['product_id']); ?>">
+        <input type="hidden" name="customer_id" value="1"> <!-- TEMPORARY: Replace with actual logged-in user ID -->
+
+        <label for="rating">Rating (1-5):</label>
+        <select name="rating" id="rating" required>
+            <option value="">Select</option>
+            <option value="5">5 - Excellent</option>
+            <option value="4">4 - Good</option>
+            <option value="3">3 - Average</option>
+            <option value="2">2 - Poor</option>
+            <option value="1">1 - Terrible</option>
+        </select>
+
+        <label for="review_text">Your Review:</label>
+        <textarea name="review_text" id="review_text" rows="4" required></textarea>
+
+        <button type="submit">Submit Review</button>
+    </form>
+    <div id="reviewMessage"></div>
+</div>
+
+        <?php
+require_once __DIR__ . '/get_reviews.php'; // ✅ correct relative path!
+
+$reviews = getReviewsByProductId($product['product_id']); // call the function and pass the current product ID
+
+if (!empty($reviews)) {
+    foreach ($reviews as $review) {
+        echo '<div class="review">';
+        echo '<strong>' . htmlspecialchars($review['username']) . '</strong>';
+        echo '<div class="static-rating" style="--rating: ' . htmlspecialchars($review['rating']) . '"></div>';
+        echo '<p>' . htmlspecialchars($review['review_text']) . '</p>';
+        echo '</div>';
+    }
+} else {
+    echo '<p>No reviews yet. Be the first to review!</p>';
+}
+?>
+
+</div>
+
     </div>
 
     <!-- Loading Overlay -->
@@ -269,7 +287,7 @@ if (isset($_GET['product_id']) && array_key_exists($_GET['product_id'], $product
             <button class="toast-close" id="toastClose">&times;</button>
         </div>
     </div>
-
+    <script src="review.js"></script>
     <!-- Include footer -->
     <?php require_once __DIR__ . '/../../assets/php/footer.php'; ?>
     
