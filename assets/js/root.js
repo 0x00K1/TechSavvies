@@ -50,8 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const productTable = new fetchTable({  // generating the object OUTSIDE THE BUTTON SINCE products is the first page
         url: '../assets/php/root_php/fetchTable.php',
         tableName: 'products', //must be like sql100%
-        columnName: [`product_id`, `category_id`, `product_name`, `picture`, `description`, `color`, `size`, `price`,
-            `stock`, `created_at`, `updated_at`, `created_by`],  //must be like sql100%
+        columnName: [`Action`, `product_name`, `picture`, `description`, `color`, `price`, `size`, `stock`],  //must be like sql100% //removed `product_id`, `category_id`,  `created_at`, `updated_at`, `created_by`
+        editableColumns: [ `picture`, `description`, `color`, `price`, `size`], //columns that are editable
         rowsPerPage: 10,
         idNamingSuffix: 'products',    // to locate the next prev current page ids following the standard suffix-next-page so on
     });
@@ -175,7 +175,8 @@ closeProductPopUpButton.addEventListener('click', closeaddProPopup);
 | :------- | :------------------------| :-------------------------------------------------------------------------- | :------------ |                                   |
 | Variable | `url`                    | URL to fetch data from.(or path)                                            |               | Must                              |
 | Variable | `tableName`              | Name of the table/data source. (must match database name)                   |               | Must                              |
-| Variable | `columnName`             | Array of column names to display.  (must match database name)               | `[]`          | Must                              |
+| Variable | `columnName`             | Array of column names to display.  (must match database name)[Action        | `[]`          | Must                              |
+|          |                          |                                                  will have special case]    |               |                                   |
 | Variable | `idNamingSuffix`         | Suffix for generating unique HTML element IDs. ex(id= {suffix}Table)        | `''`          | Must                              |
 | Variable | `rowsPerPage`            | Number of rows per page.                                                    | `100`         | Optional                          |
 | Variable | `sortDirection`          | Sorting direction ('asc' or 'desc').                                        | `'asc'`       | Optional                          |   
@@ -208,6 +209,7 @@ class fetchTable {
         this.url = options.url;
         this.tableName = options.tableName;
         this.columnName = options.columnName || [];
+        this.editableColumns = options.editableColumns || [];
         this.currentPage = options.currentPage || 1;
         this.rowsPerPage = options.rowsPerPage || 100;
         this.sortDirection = options.sortDirection || 'asc';
@@ -327,14 +329,18 @@ class fetchTable {
 
         this.columnName.forEach(column => {
             const hdata = document.createElement('th');
-            hdata.innerHTML = column + `<span class="sort-icon" data-sort="${column}">↕</span>`;
-            hdata.dataset.column = column; // Store column name for sorting
-            hdata.style.cursor = 'pointer'; // Indicate it's clickable
-            hdata.addEventListener('click', (event) => { // the listener for table header
-                const clickedColumn = event.target.dataset.column;
-                if (clickedColumn) {
-                    this.sortData(clickedColumn);
-                }});
+            if(column !== 'Action'){
+                hdata.innerHTML = column + `<span class="sort-icon" data-sort="${column}">↕</span>`;
+                hdata.dataset.column = column; // Store column name for sorting
+                hdata.style.cursor = 'pointer'; // Indicate it's clickable
+                hdata.addEventListener('click', (event) => { // the listener for table header
+                    const clickedColumn = event.target.dataset.column;
+                    if (clickedColumn) {
+                        this.sortData(clickedColumn);
+                    }});
+            }else{
+                hdata.innerHTML = column;
+            }
 
             // Update sort icon
             const sortIconSpan = hdata.querySelector('.sort-icon');
@@ -358,7 +364,10 @@ class fetchTable {
             this.columnName.forEach(bcolumn => {           //for(int i=0 ; i < columnName.length; i++)
                 const bdata = document.createElement('td');
                 bdata.textContent = data[bcolumn];
-                if (data[bcolumn] === undefined) {
+                if(bcolumn === 'Action'){       //if column name is Action then call a function to generate its content and logic
+                    this.generateActionCell(bdata);
+                }
+                else if (data[bcolumn] === undefined) {
                     bdata.textContent = 'not found'; bdata.style.color = 'orange';
                 } else if (data[bcolumn] === null) {
                     bdata.textContent = '-'; bdata.style.color = 'orange';
@@ -432,4 +441,129 @@ class fetchTable {
             this.fetchData(); // Fetch data with the new rows per page
         });
     } //paginationControls
+    generateActionCell(tdElement){
+        // Create a style element for elegant and modern styling if not already added
+        if (!document.getElementById('actionStyles')) {
+            const styleEl = document.createElement('style');
+            styleEl.id = 'actionStyles';
+            styleEl.innerHTML = `
+            .action-container {
+                font-family: Arial, sans-serif;
+                display: flex;
+                gap: 10px;
+                align-items: center;
+            }
+            .action-button {
+                padding: 6px 12px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 0.9rem;
+                transition: background-color 0.3s ease;
+            }
+            .edit-button {
+                background-color: #0078d4;
+                color: #fff;
+            }
+            .edit-button:hover {
+                background-color: #005a9e;
+            }
+            .remove-button {
+                background-color: #e81123;
+                color: #fff;
+            }
+            .remove-button:hover {
+                background-color: #c50f1f;
+            }
+            .confirm-button {
+                background-color: #107c10;
+                color: #fff;
+            }
+            .confirm-button:hover {
+                background-color: #0b6a0b;
+            }
+            .cancel-button {
+                background-color: #f3f2f1;
+                color: #333;
+                border: 1px solid #c8c6c4;
+            }
+            .cancel-button:hover {
+                background-color: #e1dfdd;
+            }
+            `;
+            document.head.appendChild(styleEl);
+        }
+        
+        // Create the container for the action cells.
+        const container = document.createElement('div');
+        container.className = 'action-container';
+
+        // Create the default actions div (Edit and Remove buttons)
+        const defaultActions = document.createElement('div');
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        editButton.className = 'action-button edit-button';
+
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
+        removeButton.className = 'action-button remove-button';
+
+        defaultActions.appendChild(editButton);
+        defaultActions.appendChild(removeButton);
+        
+        // Create the edit actions div (Confirm and Cancel buttons), initially hidden.
+        const editActions = document.createElement('div');
+        editActions.style.display = 'none';
+        
+        const confirmButton = document.createElement('button');
+        confirmButton.textContent = 'Confirm';
+        confirmButton.className = 'action-button confirm-button';
+        
+        const cancelButton = document.createElement('button');
+        cancelButton.textContent = 'Cancel';
+        cancelButton.className = 'action-button cancel-button';
+        
+        editActions.appendChild(confirmButton);
+        editActions.appendChild(cancelButton);
+        
+        // Append both action divs to the main container.
+        container.appendChild(defaultActions);
+        container.appendChild(editActions);
+
+        // Event listener for Edit button: hide default actions, show edit actions.
+        editButton.addEventListener('click', () => {
+            defaultActions.style.display = 'none';
+            editActions.style.display = 'flex';
+            const rowToEdit = editButton.closest('tr');
+            
+            this.editCell();
+        });
+        
+        // Event listener for Cancel button: revert back to default actions.
+        cancelButton.addEventListener('click', () => {
+            editActions.style.display = 'none';
+            defaultActions.style.display = 'flex';
+        });
+        
+        // Event listener for Confirm button: perform confirm action then revert.
+        confirmButton.addEventListener('click', () => {
+            // Execute confirmation logic here. For now, we'll log to console.
+            console.log('Edit confirmed for row.');
+            editActions.style.display = 'none';
+            defaultActions.style.display = 'flex';
+        });
+        
+        // Optional: add event listener for Remove button.
+        removeButton.addEventListener('click', () => {
+            // Execute remove logic here. For now, we'll log to console.
+            console.log('Remove action triggered for row.');
+        });
+        
+        // Append the container div to the td element.
+        tdElement.innerHTML = '';
+        tdElement.appendChild(container);
+    }//generateActionCell
+    editCell(cellsInRow, cellIndex) {
+
+    }//editCell
 }//class
