@@ -299,7 +299,7 @@ if (isset($_GET['product_id']) && array_key_exists($_GET['product_id'], $product
     
     <!-- Include footer -->
     <?php require_once __DIR__ . '/../../assets/php/footer.php'; ?>
-    
+    <script src="review.js"></script>
     <script src="/assets/js/addtocart.js"></script>
 </body>
 </html>
