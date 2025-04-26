@@ -50,7 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const productTable = new fetchTable({  // generating the object OUTSIDE THE BUTTON SINCE products is the first page
         url: '../assets/php/root_php/fetchTable.php',
         tableName: 'products', //must be like sql100%
-        columnName: [`Action`, `product_name`, `picture`, `description`, `color`, `price`, `size`, `stock`],  //must be like sql100% //removed `product_id`, `category_id`,  `created_at`, `updated_at`, `created_by`
+        columnName: [`Action`,'product_id' ,`product_name`, `picture`, `description`, `color`, `price`, `size`, `stock`],  //must be like sql100% //removed , `category_id`,  `created_at`, `updated_at`, `created_by`
+        primaryKey: 'product_id', //primary key of the table
         editableColumns: [ `picture`, `description`, `color`, `price`, `size`], //columns that are editable
         rowsPerPage: 10,
         idNamingSuffix: 'products',    // to locate the next prev current page ids following the standard suffix-next-page so on
@@ -197,7 +198,7 @@ closeProductPopUpButton.addEventListener('click', closeaddProPopup);
 const reviewTable = new fetchTable({              //create an object
             url : '../../api/users/list.php',     //specify the URL
             tableName : 'reviews',                // the table name from database
-            columnName : [`review_id`,`customer_id`,`product_id`,`rating`,`review_text`,`created_at`], //column names from database in any order wanted to be in the table
+            columnName : [`review_id`,`customer_id`,`product_id`,`rating`,`review_text`,`created_at`], //column names from database PRIMARYKEY IS A MUST in any order wanted to be in the table
             rowsPerPage :19,            //optional rowperpage
             idNamingSuffix :'reviews',  //suffix that matches the html IDs  
          });
@@ -206,20 +207,32 @@ const reviewTable = new fetchTable({              //create an object
 
 class fetchTable {
     constructor(options) {
+        // Basic configuration
         this.url = options.url;
         this.tableName = options.tableName;
         this.columnName = options.columnName || [];
-        this.editableColumns = options.editableColumns || [];
+
+        //  Pagination settings
+
         this.currentPage = options.currentPage || 1;
         this.rowsPerPage = options.rowsPerPage || 100;
-        this.sortDirection = options.sortDirection || 'asc';
         this.idNamingSuffix = options.idNamingSuffix || '';
-        this.totalRecords = options.totalRecords || 0;
+        this.totalRecords =  0;
         this.pageOffset = options.pageOffset;
-        this.totalPages = options.totalPages;
+        this.totalPages = 0;
         this.flagPage = options.flagPage || true;
         this.cachedData = [];
+
+        // Sorting settings
+        this.sortDirection = options.sortDirection || 'asc';
         this.sortColumn = null;
+
+        // Editing properties
+        this.editableColumns = options.editableColumns || [];
+        this.originalValue = [];
+        this.primaryKey = options.primaryKey || null; // Primary key of the table
+        this.primaryKeyColumnIndex = null;
+        
         this.paginationControls();
         if (this.cachedData.length === 0) { // Fetch initial data if not provided
             this.fetchData();
@@ -536,7 +549,7 @@ class fetchTable {
             editActions.style.display = 'flex';
             const rowToEdit = editButton.closest('tr');
             
-            this.editCell();
+            this.editCell(rowToEdit);
         });
         
         // Event listener for Cancel button: revert back to default actions.
@@ -547,10 +560,9 @@ class fetchTable {
         
         // Event listener for Confirm button: perform confirm action then revert.
         confirmButton.addEventListener('click', () => {
-            // Execute confirmation logic here. For now, we'll log to console.
-            console.log('Edit confirmed for row.');
             editActions.style.display = 'none';
             defaultActions.style.display = 'flex';
+            confirmEdit();
         });
         
         // Optional: add event listener for Remove button.
@@ -563,7 +575,31 @@ class fetchTable {
         tdElement.innerHTML = '';
         tdElement.appendChild(container);
     }//generateActionCell
-    editCell(cellsInRow, cellIndex) {
 
+    editCell(rowToEdit) {
+        const cells = rowToEdit.querySelectorAll('td');
+        this.primaryKeyColumnIndex = this.columnName.indexOf(this.primaryKey); // Find the index of the primary key column
+        cells.forEach((cell, index) => {
+            if (this.editableColumns.includes(this.columnName[index])) {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.setAttribute('id', `edit-input${index}`); // Unique ID for each input
+                input.setAttribute('name', `edit-input${index}`); // Unique name for each input
+                input.value = cell.textContent;
+                this.originalValue[this.columnName[index]] = cell.textContent; // Store the original value for later use originalValue['price']
+                cell.innerHTML = ''; // Clear the cell content
+                cell.appendChild(input); // Append the input element to the cell
+            }
+        });
     }//editCell
+
+    confirmEdit(){// add notify changed columns 
+        this.editableColumns.forEach((column, index) => {
+            const input = document.getElementById(`edit-input${index}`);
+            const newValue = input.value;
+            if(newValue != this.originalValue[column]){ //the user changed the value
+                //fetch() to the update table \_-_/
+            }
+        });
+    }//confirmEdit
 }//class
