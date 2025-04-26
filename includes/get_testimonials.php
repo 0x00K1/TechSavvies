@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/secure_session.php';
+require_once __DIR__ . '/db.php';
+
 /** [Not implemented yet]
  * Function to get testimonials for display on the home page
  * Includes both product-specific reviews and general website testimonials

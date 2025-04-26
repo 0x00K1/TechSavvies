@@ -2,7 +2,8 @@
 ob_start(); // Start output buffering immediately
 
 require_once __DIR__ . '/../assets/php/main.php';
-require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/secure_session.php';
+require_once __DIR__ . '/db.php';
 
 // Check if user is logged in and not a root user
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {

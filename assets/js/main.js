@@ -580,6 +580,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  login.addEventListener("click", function (e) {
+    if (!isAuthenticated) {
+        openAuthModal();
+    }
+  });
+
   // 3) This function is invoked in the fetch callback to reflect user status
   function updateAccountLink() {
     const accountLink = document.getElementById("accountLink");

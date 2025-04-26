@@ -457,13 +457,13 @@ if (isset($payment_info['payment_method'])) {
                         <?php foreach ($order_items as $item): ?>
                             <tr>
                                 <td>
-                                    <a href="/categories/products/?product_id=<?php echo $item['product_id']; ?>">
+                                    <a href="   /categories/products/?product_id=<?php echo $item['product_id']; ?>">
                                         <?php echo htmlspecialchars($item['product_name']); ?>
                                     </a>
                                 </td>
                                 <td>
                                     <?php if (!empty($item['picture'])): ?>
-                                        <img class="product-image" src="/assets/images/products/<?php echo htmlspecialchars($item['picture']); ?>" alt="<?php echo htmlspecialchars($item['product_name']); ?>">
+                                        <img class="product-image" src="../<?php echo htmlspecialchars($item['picture']); ?>" alt="<?php echo htmlspecialchars($item['product_name']); ?>">
                                     <?php else: ?>
                                         <div class="no-image">No Image</div>
                                     <?php endif; ?>

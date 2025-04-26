@@ -93,7 +93,7 @@ $popularProducts = getPopularProducts(10);
                     <?php foreach ($popularProducts as $product): ?>
                         <div class="slide">
                             <a href="categories/products/?product_id=<?= htmlspecialchars(urlencode($product['product_id']));?>" class="product-card">
-                                <img src="assets/images/Products/<?= htmlspecialchars($product['picture']) ?>" alt="<?= htmlspecialchars($product['product_name']) ?>">
+                                <img src="<?= htmlspecialchars($product['picture']) ?>" alt="<?= htmlspecialchars($product['product_name']) ?>">
                                 <div class="product-info">
                                     <h3><?= htmlspecialchars($product['product_name']) ?></h3>
                                 </div>
