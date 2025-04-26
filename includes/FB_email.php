@@ -29,6 +29,7 @@ try {
         $name = $_POST['name'] ?? '';
         $email = $_POST['email'] ?? '';
         $message = $_POST['message'] ?? '';
+        $subject = $_POST['subject'] ?? 'Contact Form Submission';
 
         if (empty($name) || empty($email) || empty($message)) {
             echo json_encode([
@@ -58,7 +59,7 @@ try {
 
             // Set email format to HTML and define an enhanced HTML body design with logo
             $mail->isHTML(true);
-            $mail->Subject = 'New Support Message Received! (TechSavvies.shop)';
+            $mail->Subject = 'New Contact Form Submission: ' . $subject . ' (TechSavvies.shop)';
 
             $htmlBody = "
                 <html>
@@ -101,6 +102,13 @@ try {
                             .content p {
                                 margin: 10px 0;
                             }
+                            .testimonial-notice {
+                                margin-top: 15px;
+                                padding: 10px;
+                                background-color: #f0f9ff;
+                                border-left: 4px solid #8d07cc;
+                                border-radius: 4px;
+                            }
                             .credit-box {
                                 margin-top: 30px;
                                 padding: 15px;
@@ -115,15 +123,17 @@ try {
                         <div class='container'>
                             <div class='header'>
                                 <img class='logo' src='https://i.postimg.cc/rDHDSjZw/Logo.png' alt='TechSavvies.shop Logo'>
-                                <h2>New Support Message!</h2>
+                                <h2>New Contact Form Submission</h2>
                             </div>
                             <div class='content'>
                                 <p><strong>Name:</strong> " . htmlspecialchars($name) . "</p>
                                 <p><strong>Email:</strong> " . htmlspecialchars($email) . "</p>
-                                <p><strong>Message:</strong><br>" . nl2br(htmlspecialchars($message)) . "</p>
-                            </div>
+                                <p><strong>Subject:</strong> " . htmlspecialchars($subject) . "</p>
+                                <p><strong>Message:</strong><br>" . nl2br(htmlspecialchars($message)) . "</p>";
+                                
+            $htmlBody .= "</div>
                             <div class='credit-box'>
-                                <p>Sent from <strong>TechSavvies.shop</strong> contact section.</p>
+                                <p>Sent from <strong>TechSavvies.shop</strong> contact form.</p>
                             </div>
                         </div>
                     </body>
@@ -131,11 +141,17 @@ try {
             ";
 
             // A plain-text alternative for email clients that do not support HTML
-            $plainTextBody = "New Support Message!\n\n"
+            $plainTextBody = "New Contact Form Submission\n\n"
                 . "Name: " . htmlspecialchars($name) . "\n"
                 . "Email: " . htmlspecialchars($email) . "\n"
-                . "Message:\n" . htmlspecialchars($message) . "\n\n"
-                . "Sent from TechSavvies.shop contact section.";
+                . "Subject: " . htmlspecialchars($subject) . "\n"
+                . "Message:\n" . htmlspecialchars($message) . "\n\n";
+                
+            if ($addToTestimonials) {
+                $plainTextBody .= "Note: The sender has agreed to share this message as a testimonial.\n\n";
+            }
+                
+            $plainTextBody .= "Sent from TechSavvies.shop contact form.";
 
             $mail->Body    = $htmlBody;
             $mail->AltBody = $plainTextBody;
@@ -143,7 +159,8 @@ try {
             $mail->send();
             echo json_encode([
                 'success' => true,
-                'message' => 'Message sent successfully!'
+                'message' => 'Message sent successfully!',
+                'testimonial_saved' => $addToTestimonials && $testimonialSaved
             ]);
         } catch (Exception $e) {
             error_log('Mailer Error: ' . $mail->ErrorInfo);

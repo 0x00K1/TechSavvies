@@ -6,7 +6,8 @@ header('Content-Type: application/json');
 
 // Verify user is logged in
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-    echo json_encode(['success' => false, 'error' => 'User not logged in']);
+    http_response_code(403); // Forbidden
+    echo json_encode(['success' => false, 'error' => 'Unauthorized access']);
     exit;
 }
 

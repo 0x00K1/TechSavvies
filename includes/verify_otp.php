@@ -102,6 +102,12 @@ try {
     // Regenerate session to prevent fixation
     session_regenerate_id(true);
 
+    if ($isRoot) {
+        $_SESSION['root_id']     = $user['root_id'];
+    } else {
+        $_SESSION['customer_id'] = $user['customer_id'];
+    }
+
     // Set session accordingly
     $_SESSION['is_root'] = $isRoot; // [WATCH OUT] => [LATER]
     $_SESSION['user'] = $user;
