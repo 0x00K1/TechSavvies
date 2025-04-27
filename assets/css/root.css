@@ -53,7 +53,7 @@ toolbar
 =================== */
 /* Base toolbar styling */
 .toolbar {
-  width: 15%;
+  width: 17%;
   min-width: 200px;
   background-color: var(--light-bg);
   padding: 1.5rem;
@@ -400,9 +400,6 @@ tr:hover {
     width: auto;
     font-size: 16px; 
    }
-   .search-button{
-      margin: 10px;
-   }
    /*=====================
    added by AI for products
    ==========================*/
@@ -425,7 +422,7 @@ tr:hover {
           flex-wrap: wrap;
           gap: 1rem;
       }
-      .table-container {
+      .table_container {
         width: 100%;
         overflow-x: auto;
         margin-top: 1rem;
@@ -519,10 +516,7 @@ tr:hover {
       background-color: var(--danger-color);
       color: white;
   }
-  .buttons_table {
-    display: flex;
-    gap: 0.5rem;
-}
+
 
 .edit_product_button_style, .remove_product_button_style, .product_cancel_edit_style, .product_confirm_edit_style {
     padding: 0.4rem 0.75rem;
@@ -568,13 +562,3 @@ tr:hover {
 .product_confirm_edit_style:hover {
     background-color: #218838;
 }
-/* 
- .content {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 2rem;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-            */
