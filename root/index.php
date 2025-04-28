@@ -12,6 +12,7 @@
 
 <head>
     <?php require_once __DIR__ . '\..\assets\php\main.php'; ?>
+    <?php require_once __DIR__ . '\..\includes\db.php'; ?>
     <link rel="stylesheet" href="..\assets\css\main.css">
     <link rel="stylesheet" href="..\assets\css\root.css">
     <script type="module" src="..\assets\js\root.js"></script>
@@ -263,7 +264,7 @@
                 ####################################-->
                 <div id="addProPopupDisplay" class="addProPopup">
                     <span class="close" id="closeProductPopUpButton">&times;</span>
-                    <form name="addProductFormName" id="addProductForm" method="post" action="index.php">
+                    <form name="addProductFormName" id="addProductForm" method="post" action="/assets/php/addproduct.php" enctype="multipart/form-data">
                         <!-- notes: i added "Name" at the end of each name attribute to make it diffrent from id to avoid browser warnings use any naming you find suits u best -->
                         <div id="addDisplay" class="AddProduct">
                             <div style="display: inline;">
@@ -274,9 +275,17 @@
                                 <label for="categoryList">Category:</label>
                                 <input id="categoryList" type="text" name="ProCategoryName"
                                     placeholder="Choose a category..." list="Pro-category">
-                                <datalist id="ProCategory">
-                                    <option value="test1"></option>
-                                    <option value="test2"></option>
+                                <datalist id="Pro-category">
+                                <<?php
+try {
+    $stmt = $pdo->query('SELECT category_name FROM categories');
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo '<option value="' . htmlspecialchars($row['category_name']) . '">';
+    }
+} catch (PDOException $e) {
+    echo 'Error: ' . $e->getMessage();
+}
+?>
                                 </datalist>
 
                                 <div id="imageContainer">
@@ -286,7 +295,7 @@
 
                                     <label for="ProductDescreption">Product Description:</label>
                                     <textarea id="ProductDescreption" placeholder="Product description"
-                                        naem="ProductDescreptionName" required></textarea>
+                                        name="ProductDescreptionName" required></textarea>
 
                                     <label for="productColor">Product Color:</label>
                                     <input type="text" name="productColorName" id="productColor"
@@ -322,5 +331,5 @@
     -->
 </div>
 </body>
-
+<script src="assets/js/add_product.js"></script>
 </html>
