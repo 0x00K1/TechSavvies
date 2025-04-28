@@ -18,7 +18,7 @@ if (ini_get("session.use_cookies")) {
     );
 }
 
-// Destroy the session
+// setcookie('cartItems', '', time() - 3600, '/'); // This forces the cartItems cookie to expire
 session_destroy();
 
 // Redirect to a logged-out page

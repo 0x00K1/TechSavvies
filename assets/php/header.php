@@ -2,7 +2,8 @@
 $current_page = $_SERVER['REQUEST_URI'];
 $hide_home_on = ['/', '/logout.php'];
 $hide_account_on = ['/logout.php'];
-$hide_cart_on = ['/logout.php'];
+$hide_cart_on = ['/logout.php', '/categories/cart'];
+$hide_root_on = ['/root', '/root/'];
 ?>
 <header>
   <div class="logo">
@@ -12,10 +13,13 @@ $hide_cart_on = ['/logout.php'];
   </div>
   <nav>
     <ul>
-      <?php if (
+      <?php 
+       // Check if the current URL starts with '/categories/checkouts'
+       $is_checkouts = (strpos($current_page, '/categories/checkouts') === 0);
+      if (
+        !$is_checkouts &&
         !in_array($current_page, $hide_cart_on) &&
-        (!isset($_SESSION['is_root']) || $_SESSION['is_root'] !== true) &&
-        isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true
+        (!isset($_SESSION['is_root']) || $_SESSION['is_root'] !== true)
       ): ?>
         <li id="cartLink">
           <div class="cart-control" id="cartIconWrapper">
@@ -51,7 +55,8 @@ $hide_cart_on = ['/logout.php'];
         </li>
       <?php endif; ?>
       
-      <?php if (isset($_SESSION['is_root']) && $_SESSION['is_root'] === true): ?>
+      <?php if (isset($_SESSION['is_root']) && $_SESSION['is_root'] === true &&
+        !in_array($current_page, $hide_root_on)): ?>
         <li id="rootLink">
           <a href="/root">
             <svg fill="#ffffff" id="rootIcon" viewBox="-2.4 -2.4 28.80 28.80" role="img" xmlns="http://www.w3.org/2000/svg" transform="rotate(0)">
@@ -75,3 +80,5 @@ $hide_cart_on = ['/logout.php'];
     </ul>
   </nav>
 </header>
+<!-- Authentication Modal-->
+<?php require_once __DIR__ . '/../../assets/php/auth.php'; ?>

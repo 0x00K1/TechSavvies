@@ -39,6 +39,7 @@ a:hover {
 	background-clip: text;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
+	cursor: pointer;
 	transform: scale(1.05); /* Slightly enlarges on hover */
 }
 
@@ -590,18 +591,18 @@ nav ul li {
 }
 
 /* ==============================
-   Contact Section - Enhanced
+   Contact Section
 ============================== */
 #contact {
   padding: 80px 20px;
   background: linear-gradient(135deg, var(--secondary-color) 0%, #f0f0f5 100%);
   position: relative;
   overflow: hidden;
+  text-align: center;
 }
 
 #contact h2 {
-  text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   font-size: 2.5em;
   color: var(--primary-color);
   position: relative;
@@ -618,92 +619,61 @@ nav ul li {
   border-radius: 2px;
 }
 
-#contact form {
+.contact-cta {
   max-width: 600px;
   margin: 0 auto;
   background: #ffffff;
   padding: 40px;
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
   position: relative;
   z-index: 2;
   border: 1px solid rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-#contact form:hover {
+.contact-cta:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
-.form-group {
-  position: relative;
+.contact-cta p {
+  font-size: 1.2em;
   margin-bottom: 25px;
+  color: var(--text-color);
 }
 
-#contact input,
-#contact textarea {
-  width: 100%;
-  padding: 15px 20px;
-  border: 2px solid #eaeaea;
-  border-radius: 10px;
-  font-size: 1em;
-  transition: all 0.3s ease;
-  background-color: #fafafa;
-  color: #333;
+.contact-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
-#contact input::placeholder,
-#contact textarea::placeholder {
-  color: #aaa;
-  transition: color 0.3s ease;
-}
-
-#contact input:focus,
-#contact textarea:focus {
-  border-color: var(--accent-color);
-  background-color: #fff;
-  box-shadow: 0 0 0 4px rgba(141, 7, 204, 0.1);
-  outline: none;
-}
-
-#contact input:focus::placeholder,
-#contact textarea:focus::placeholder {
-  color: #ccc;
-}
-
-#contact textarea {
-  min-height: 150px;
-  resize: vertical;
-}
-
-#contact button {
-  padding: 16px 25px;
+.contact-button {
+  display: inline-block;
+  padding: 16px 40px;
   background: linear-gradient(135deg, #0117ff, #8d07cc, #d42d2d);
   color: #fff;
-  border: none;
   border-radius: 10px;
   font-size: 1.1em;
   font-weight: 600;
-  cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  letter-spacing: 0.5px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-  margin-top: 10px;
 }
 
-/* Keep the button hover effect but update it to maintain your gradient */
-#contact button:hover {
-  transform: translateY(-2px);
+.contact-button:hover {
+  transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  background-clip: initial;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
 }
 
-/* Remove this if you want to eliminate the shine effect */
-#contact button::before {
+.contact-button::before {
   content: "";
   position: absolute;
   top: 0;
@@ -719,64 +689,24 @@ nav ul li {
   transition: left 0.7s ease;
 }
 
-#contact button:hover::before {
+.contact-button:hover::before {
   left: 100%;
 }
 
-#contact button:active {
-  transform: translateY(1px);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+.contact-info {
+  font-size: 1em;
+  color: #555;
 }
 
-#messageStatus {
-  text-align: center;
-  margin-top: 20px;
-  min-height: 24px;
-}
-
-#map {
-  margin-top: 40px;
-  text-align: center;
-  font-size: 1.1em;
-  color: var(--primary-color);
-  position: relative;
-  z-index: 2;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: 12px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(5px);
-}
-
-#map p {
-  position: relative;
-  display: inline-block;
-}
-
-#map p::before {
-  content: "#";
-  margin-right: 8px;
-}
-
-/* Responsive adjustments */
+/* Media queries */
 @media (max-width: 768px) {
-  #contact {
-    padding: 60px 15px;
-  }
-  
-  #contact form {
+  .contact-cta {
     padding: 30px 20px;
   }
   
-  #contact h2 {
-    font-size: 2em;
-  }
-  
-  #contact button {
-    padding: 14px 20px;
+  .contact-button {
+    padding: 14px 30px;
+    font-size: 1em;
   }
 }
 
@@ -1186,31 +1116,305 @@ footer {
 
 /* Cart Sidebar Panel */
 #cartSidebar {
-  position: fixed;
-  top: 0;
-  left: -50%; /* Hidden off-screen initially */
-  width: 30%;
-  height: 100%;
-  background: #fff;
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
-  transition: left 0.3s ease;
-  z-index: 1500;
-  padding: 20px;
-  overflow-y: auto;
-}
+	position: fixed;
+	top: 0;
+	right: -400px; /* Changed to right side for modern UX */
+	width: 380px;
+	height: 100vh;
+	background: #fff;
+	box-shadow: -2px 0 15px rgba(0, 0, 0, 0.15);
+	transition: right 0.3s ease;
+	z-index: 1500;
+	padding: 0;
+	overflow-y: auto;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  }
+  
+  #cartSidebar.active {
+	right: 0; /* Slide in from right */
+  }
+  
+  #cartSidebar h2 {
+	margin: 0;
+	padding: 20px;
+	font-size: 1.4rem;
+	font-weight: 600;
+	border-bottom: 1px solid #f0f0f0;
+	background: #fafafa;
+  }
+  
+  /* Close button */
+  #closeCart {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	border: none;
+	background: none;
+	font-size: 24px;
+	cursor: pointer;
+	color: #666;
+	transition: color 0.2s;
+	width: 30px;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+  }
+  
+  #closeCart:hover {
+	color: #000;
+	background: #f0f0f0;
+  }
+  
+  /* Cart content */
+  #cartContent {
+	padding: 20px;
+  }
+  
+  /* Empty cart styling */
+  .empty-cart {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 40px 0;
+	text-align: center;
+  }
+  
+  .empty-cart p {
+	margin: 20px 0;
+	color: #666;
+	font-size: 16px;
+  }
+  
+  .continue-btn {
+	background: #f0f0f0;
+	border: none;
+	border-radius: 4px;
+	padding: 10px 15px;
+	font-size: 14px;
+	cursor: pointer;
+	transition: background 0.2s;
+  }
+  
+  .continue-btn:hover {
+	background: #e0e0e0;
+  }
+  
+  /* Cart items container */
+  .cart-items-container {
+	display: flex;
+	flex-direction: column;
+  }
+  
+  /* Cart item styling */
+  .cart-item {
+	display: flex;
+	flex-direction: row-reverse; /* Reverse to put image on right */
+	gap: 15px;
+	padding: 15px 0;
+  }
+  
+  .cart-item-divider {
+	height: 1px;
+	background-color: #f0f0f0;
+	margin: 0;
+  }
+  
+  /* Image container */
+  .cart-item-image {
+	width: 80px;
+	height: 80px;
+	flex-shrink: 0;
+	overflow: hidden;
+	border-radius: 6px;
+	border: 1px solid #eaeaea;
+  }
+  
+  .cart-item-image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover; /* This ensures proper image display */
+	display: block;
+  }
+  
+  /* Item details container */
+  .cart-item-details {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+  }
+  
+  .item-header {
+	font-weight: 600;
+	font-size: 16px;
+	margin-bottom: 5px;
+	color: #333;
+	line-height: 1.2;
+  }
+  
+  .item-attribute {
+	font-size: 14px;
+	color: #666;
+	margin-bottom: 3px;
+  }
+  
+  .item-price {
+	font-size: 15px;
+	color: #333;
+	margin-bottom: 10px;
+	font-weight: 500;
+  }
+  
+  /* Quantity controls */
+  .quantity-controls {
+	display: flex;
+	align-items: center;
+	margin: 8px 0;
+  }
+  
+  .qty-btn {
+	background-color: #f5f5f5;
+	border: 1px solid #ddd;
+	width: 28px;
+	height: 28px;
+	cursor: pointer;
+	font-size: 16px;
+	font-weight: bold;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.2s;
+  }
+  
+  .qty-btn:hover {
+	background-color: #e0e0e0;
+  }
+  
+  .qty-input {
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	font-size: 14px;
+	width: 40px;
+	height: 28px;
+	text-align: center;
+	margin: 0 8px;
+  }
+  
+  .item-total {
+	font-size: 14px;
+	margin-top: 8px;
+	color: #666;
+  }
+  
+  .item-total span {
+	font-weight: 600;
+	color: #333;
+  }
+  
+  /* Cart footer */
+  .cart-footer {
+	margin-top: 15px;
+	padding-top: 15px;
+	border-top: 2px solid #eaeaea;
+  }
+  
+  .cart-subtotal {
+	display: flex;
+	justify-content: space-between;
+	font-size: 18px;
+	font-weight: 600;
+	margin-bottom: 20px;
+	padding: 10px 0;
+  }
+  
+  #checkoutBtn {
+	display: block;
+	width: 100%;
+	background: linear-gradient(135deg, #0117ff, #8d07cc, #d42d2d);
+	color: white;
+	border: none;
+	border-radius: 6px;
+	padding: 14px 20px;
+	cursor: pointer;
+	font-weight: 600;
+	font-size: 16px;
+	transition: transform 0.2s, box-shadow 0.2s;
+	text-align: center;
+	box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  }
+  
+  #checkoutBtn:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+  }
+  
+  #checkoutBtn:active {
+	transform: translateY(0);
+  }
+  
+  .continue-shopping-a {
+	display: block;
+	width: fit-content;
+	color: var(--button-bg);
+	padding: 12px 25px;
+	border-radius: 30px;
+	text-decoration: none;
+	font-weight: 600;
+	transition: all 0.3s ease;
+	margin: 30px auto 0 auto;
+  }
 
-/* Active state: slide in from the left */
-#cartSidebar.active {
-  left: 0;
-}
+/* Empty cart */
+.empty-cart-btn {
+	display: block;       
+	margin: 20px auto 0; 
+	background: none;    
+	border: none;     
+	padding: 0;   
+	width: 30px;            /* size of the button */
+	height: 48px;
+	cursor: pointer;
+	transition: transform 0.2s, color 0.2s;
+	color: var(--primary-color); /* icon color */
+  }
+  
+  .empty-cart-btn svg {
+	width: 100%;
+	height: 100%;
+	fill: currentColor;   
+  }
+  
+  .empty-cart-btn:hover {
+	transform: scale(1.1);
+	color:#d42d2d
+  }
+  
+  .empty-cart-btn:active {
+	transform: scale(1);
+  }
 
-/* Close button styling */
-#closeCart {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: none;
-  background: none;
-  font-size: 28px;
-  cursor: pointer;
-}
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+	#cartSidebar {
+	  width: 85%;
+	  right: -100%;
+	}
+	
+	.cart-item {
+	  flex-direction: column;
+	}
+	
+	.cart-item-image {
+	  width: 100%;
+	  height: 120px;
+	  margin-bottom: 15px;
+	}
+	
+	.quantity-controls {
+	  margin-top: 15px;
+	}
+  }

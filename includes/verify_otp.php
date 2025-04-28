@@ -102,8 +102,16 @@ try {
     // Regenerate session to prevent fixation
     session_regenerate_id(true);
 
+    if ($isRoot) {
+        // mark that this user *can* be root, but still needs to enter PW once
+        $_SESSION['is_root']        = true;
+        $_SESSION['pending_root_id']= $user['root_id'];
+    } else {
+        $_SESSION['customer_id']    = $user['customer_id'];
+        $_SESSION['is_root']        = false;
+    }
+
     // Set session accordingly
-    $_SESSION['is_root'] = $isRoot; // [WATCH OUT] => [LATER]
     $_SESSION['user'] = $user;
     $_SESSION['logged_in'] = true;
 

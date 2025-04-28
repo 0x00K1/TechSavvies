@@ -2,7 +2,7 @@
 require_once __DIR__ . '/includes/get_popular_products.php';
 
 // Fetch popular products
-$popularProducts = getPopularProducts(9);
+$popularProducts = getPopularProducts(10);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,7 +84,7 @@ $popularProducts = getPopularProducts(9);
     </section>
 
     <!-- Popular Products Slider -->
-    <section class="popular-products">
+    <section class="popular-products" id="popular">
         <h2 class="section-title">Popular Products</h2>
         <div class="slider">
             <div class="slider-container">
@@ -93,7 +93,7 @@ $popularProducts = getPopularProducts(9);
                     <?php foreach ($popularProducts as $product): ?>
                         <div class="slide">
                             <a href="categories/products/?product_id=<?= htmlspecialchars(urlencode($product['product_id']));?>" class="product-card">
-                                <img src="assets/images/Products/<?= htmlspecialchars($product['picture']) ?>" alt="<?= htmlspecialchars($product['product_name']) ?>">
+                                <img src="<?= htmlspecialchars($product['picture']) ?>" alt="<?= htmlspecialchars($product['product_name']) ?>">
                                 <div class="product-info">
                                     <h3><?= htmlspecialchars($product['product_name']) ?></h3>
                                 </div>
@@ -149,24 +149,15 @@ $popularProducts = getPopularProducts(9);
             </div>
     </section>
 
-    <!-- Contact Section - Enhanced structure -->
+    <!-- Contact Section -->
     <section id="contact">
       <h2>Contact Us</h2>
-      <form id="contactForm" action="assets/php/send_email.php" method="POST">
-        <div class="form-group">
-          <input type="text" id="name" name="name" placeholder="Your Name" required />
+      <div class="contact-cta">
+        <p>Have questions or feedback? We'd love to hear from you!</p>
+        <div class="contact-options">
+          <a href="contact.php" class="contact-button">Send Us a Message</a>
+          <p class="contact-info"><strong>01 TechSavvies, Tech City</strong></p>
         </div>
-        <div class="form-group">
-          <input type="email" id="email" name="email" placeholder="Your Email" required />
-        </div>
-        <div class="form-group">
-          <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
-        </div>
-        <button type="submit">Send Message</button>
-      </form>
-      <div id="messageStatus"></div>
-      <div id="map">
-        <p>Address: 01 TechSavvies, Tech City</p>
       </div>
     </section>
   </div>
@@ -174,10 +165,7 @@ $popularProducts = getPopularProducts(9);
   <!-- Footer Section -->
   <?php require_once __DIR__ . '/assets/php/footer.php'; ?>
 
-  <!-- Authentication Modal -->
-  <?php require_once __DIR__ . '/assets/php/auth.php'; ?>
-
-  <script src="assets/js/home1.js"></script>
-  <script src="assets/js/main.js"></script>
+  <script src="/assets/js/home1.js"></script>
+  <script src="/assets/js/main.js"></script>
 </body>
 </html>

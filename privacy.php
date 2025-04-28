@@ -76,13 +76,10 @@
     <h2>Your Rights</h2>
     <p>You have the right to access, update, or delete your personal information. Contact our support team if you have any concerns.</p>
   </div>
-  
-  <!-- Authentication Modal -->
-  <?php require_once __DIR__ . '/assets/php/auth.php'; ?>
 
   <!-- Footer Section -->
   <?php require_once __DIR__ . '/assets/php/footer.php'; ?>
   
-  <script src="assets/js/main.js"></script>
+  <script src="/assets/js/main.js"></script>
 </body>
 </html>

@@ -1,7 +1,8 @@
 <?php
+require_once __DIR__ . '/secure_session.php';
 require_once __DIR__ . '/db.php';
 
-function getPopularProducts($limit = 9) {
+function getPopularProducts($limit = 9) { // [order_items table needs trigger logic for DB or backend logic]
     global $pdo;
     
     try {
