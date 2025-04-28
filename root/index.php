@@ -312,6 +312,13 @@
                                 <label for="addProductCategory">Category:</label>
                                 <select id="addProductCategory" name="category_id" required>
                                 <option value="">–– Select a category ––</option>
+                                <?php
+                                require_once __DIR__ . '/../includes/db.php';
+                                $stmt = $pdo->query('SELECT category_name FROM categories');
+                                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                    echo '<option value="' . htmlspecialchars($row['category_name']) . '">' . htmlspecialchars($row['category_name']) . '</option>';
+                                }
+                                ?>
                                 </select>
                                 <div id="imageContainer">
                                     <label for="imageUpload">Upload Image:</label>
