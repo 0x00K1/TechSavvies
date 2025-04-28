@@ -38,6 +38,16 @@ window.closeAuthModal = function() {
   }
 };
 
+function handleImageError(img, filename) {
+  if (!img.dataset.triedAssets) {
+    img.src = '/assets/images/products/' + filename; // Directly load from products folder
+    img.dataset.triedAssets = 'true';
+  } else {
+    img.src = '/assets/images/products/default.png'; // If no image specified, use default
+    img.onerror = null; // Remove further error handlers to avoid infinite looping
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   // --- Back-to-Top Button ---
   function createBackToTopButton() {
@@ -581,6 +591,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   login.addEventListener("click", function (e) {
+    if (window.isRoot === true) {
+      showToast('Not for Roots.', 'error');
+    }
+
     if (!isAuthenticated) {
         openAuthModal();
     }

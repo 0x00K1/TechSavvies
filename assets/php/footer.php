@@ -5,6 +5,6 @@
       <a href="/terms.php">Terms of Service</a>
     </div>
     <div class="footer-contact">
-      <p><a href="mailto:support@techsavvies.shop">support@techsavvies.shop</a></p>
+      <p><a href="mailto:support@techsavvies.shop">info@techsavvies.shop</a></p>
     </div>
   </footer>

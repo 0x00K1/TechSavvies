@@ -119,7 +119,8 @@ if (!empty($products_to_display)) {
             href="/categories/products?product_id=<?php echo $product['product_id']; ?>">
             <div class="product-image">
               <img src="<?php echo '../' . htmlspecialchars($product['picture']); ?>"
-                  alt="<?php echo htmlspecialchars($product['product_name']); ?>">
+                  alt="<?php echo htmlspecialchars($product['product_name']); ?>"
+                  onerror="handleImageError(this, '<?php echo htmlspecialchars($product['picture']); ?>')">
             </div>
 
             <div class="product-details">

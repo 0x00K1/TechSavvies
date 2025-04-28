@@ -45,6 +45,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  if (window.isRoot === true) {
+    if (addToCartBtn) {
+      addToCartBtn.addEventListener("click", e => {
+            e.preventDefault();
+            showToast("Root accounts cannot add items to the cart.", "error");
+        });
+        addToCartBtn.classList.add("disabled");
+    }
+    return;          // nothing else should run for roots
+  }
+
   addToCartBtn.addEventListener("click", function () {
     try {
       // 1) Gather input values

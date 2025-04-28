@@ -1,605 +1,896 @@
-document.addEventListener('DOMContentLoaded', function () {
-    /*toolbar buttons*/
-    const manageProbutton = document.getElementById('manageProButton');
-    const manageUserbutton = document.getElementById('manageUserButton');
-    const Ordersbutton = document.getElementById('OrdersButton');
-    const transactionbutton = document.getElementById('transactionsButton');
-    const reviewbutton = document.getElementById('ReviewsButton');
+// root.js – Enhanced Admin Dashboard Logic (Schema-Agnostic Version)
+// ------------------------------------------------------------
+// This file implements a database-agnostic version of the admin dashboard
+// that dynamically discovers table structure from the backend API.
+// ------------------------------------------------------------
 
-
-    const logoutbutton = document.getElementById('LogoutButton');
-    const searchbutton = document.getElementById('searchButton');
-
-    /* toolbar div or displays*/
-
-    const EditProduct = document.getElementById('editProduct');
-    const usersdisplay = document.getElementById('usersDisplay');
-    const ordersdisplay = document.getElementById('ordersDisplay');
-    const Transactiondisplay = document.getElementById('transactionsDisplay');
-    const Reviewsdisplay = document.getElementById('reviewsDisplay');
-
-
-    // Function to hide all displays (toolbar)
-    function hideAllDisplays() {
-        const displays = [EditProduct, usersdisplay, ordersdisplay, Transactiondisplay, Reviewsdisplay];
-        displays.forEach(display => {
-            if (display) display.style.display = 'none';
-        });
+// ===== 1. Bootstrapping  ====================================
+document.addEventListener('DOMContentLoaded', () => {
+    setupNavigation();
+    initializeTables();
+    setupModalHandlers();
+    setupFormHandlers();
+  });
+  
+  // ===== 2. Toolbar Navigation  ===============================
+  function setupNavigation() {
+    const buttons = {
+      roots: document.getElementById('manageRootButton'),
+      products: document.getElementById('manageProButton'),
+      users: document.getElementById('manageUserButton'),
+      orders: document.getElementById('OrdersButton'),
+      payments: document.getElementById('transactionsButton'),
+      reviews: document.getElementById('ReviewsButton'),
+      logout: document.getElementById('LogoutButton'),
+    };
+  
+    const sections = {
+      roots: document.getElementById('rootsDisplay'),
+      products: document.getElementById('editProduct'),
+      users: document.getElementById('usersDisplay'),
+      orders: document.getElementById('ordersDisplay'),
+      payments: document.getElementById('transactionsDisplay'),
+      reviews: document.getElementById('reviewsDisplay'),
+    };
+  
+    const hideAllSections = () => Object.values(sections).forEach(s => s && (s.style.display = 'none'));
+    const resetAllButtons = () => Object.values(buttons).forEach(b => b && b.classList.remove('active'));
+  
+    const activate = key => {
+      hideAllSections();
+      resetAllButtons();
+      sections[key].style.display = 'block';
+      buttons[key].classList.add('active');
+    };
+  
+    // initial view
+    activate('roots');
+  
+    // button listeners
+    buttons.roots && buttons.roots.addEventListener('click', () => activate('roots'));
+    buttons.products && buttons.products.addEventListener('click', () => activate('products'));
+    buttons.users && buttons.users.addEventListener('click', () => activate('users'));
+    buttons.orders && buttons.orders.addEventListener('click', () => activate('orders'));
+    buttons.payments && buttons.payments.addEventListener('click', () => activate('payments'));
+    buttons.reviews && buttons.reviews.addEventListener('click', () => activate('reviews'));
+  
+    // logout
+    buttons.logout && buttons.logout.addEventListener('click', () => {
+      if (confirm('Are you sure you want to log out?')) {
+        window.location.href = '/includes/cls.php';
+      }
+    });
+  }
+  
+  // ===== 3. Table Class ===============================
+  class Table {
+    constructor(opt) {
+      // core
+      this.url = opt.url;
+      this.tableName = opt.tableName; // Just for identifying which table we're working with
+      this.idNamingSuffix = opt.idNamingSuffix;
+      this.categoryFilter = null; 
+  
+      // pagination/search/sort state
+      this.page = 1;
+      this.rowsPerPage = opt.rowsPerPage || 25;
+      this.totalRecords = 0;
+      this.sortCol = null;
+      this.sortDir = 'asc';
+      this.searchQuery = '';
+  
+      // structure fetched from backend (initially empty)
+      this.columns = [];
+      this.pk = '';
+      this.editable = [];
+      this.csrfToken = '';
+  
+      // caching keyed by compound key
+      this.cache = {};
+  
+      // initialization
+      this.initControls();
+      this.fetchStructure().then(() => this.fetchData());
     }
-
-    // Function to remove active class from all buttons (toolbar)
-    function removeAllActiveClasses() {
-        const buttons = [manageProbutton, manageUserbutton, Ordersbutton, transactionbutton, reviewbutton];
-        buttons.forEach(button => {
-            if (button) button.classList.remove('active');
-        });
-    }
-
-    // Function to set active tab (toolbar)
-    function setActiveTab(displayElement, activeButton) {
-        hideAllDisplays();
-        removeAllActiveClasses();
-        if (displayElement) displayElement.style.display = 'block';
-        if (activeButton) activeButton.classList.add('active');
-    }
-
-    /* first time loading page  (toolbar)*/
-    setActiveTab(EditProduct, manageProbutton);
-    //### declaring them here within the document load to avoid reapeted fetch requests##
-    //product
-    const productTable = new fetchTable({  // generating the object OUTSIDE THE BUTTON SINCE products is the first page
-        url: '../assets/php/root_php/fetchTable.php',
-        tableName: 'products', //must be like sql100%
-        columnName: [`Action`,'product_id' ,`product_name`, `picture`, `description`, `color`, `price`, `size`, `stock`],  //must be like sql100% //removed , `category_id`,  `created_at`, `updated_at`, `created_by`
-        primaryKey: 'product_id', //primary key of the table
-        editableColumns: [ `picture`, `description`, `color`, `price`, `size`], //columns that are editable
-        rowsPerPage: 10,
-        idNamingSuffix: 'products',    // to locate the next prev current page ids following the standard suffix-next-page so on
-    });
-    //users
-    const userTable = new fetchTable({
-        url: '../assets/php/root_php/fetchTable.php',
-        tableName: 'customers',
-        columnName: ['email', 'customer_id', 'username', 'created_at', 'iamfakeandbad'],
-        rowsPerPage: 10,
-        idNamingSuffix: 'users',
-    });
-    //orders
-    const orderTable = new fetchTable({
-        url: '../assets/php/root_php/fetchTable.php',
-        tableName: 'orders',
-        columnName: ['order_id', 'customer_id', 'status', 'total_amount', 'order_date'],
-        rowsPerPage: 10,
-        idNamingSuffix: 'orders',
-    });
-    //transactions
-    const transactionTable = new fetchTable({
-        url: '../assets/php/root_php/fetchTable.php',
-        tableName: 'payments',
-        columnName: [`payment_id`, `order_id`, `customer_id`, `payment_method`, `payment_status`, `transaction_id`, `amount`, `created_at`],
-        rowsPerPage: 10,
-        idNamingSuffix: 'transactions',
-    });
-    //review
-    const reviewTable = new fetchTable({
-        url: '../assets/php/root_php/fetchTable.php',
-        tableName: 'reviews',
-        columnName: [`review_id`, `customer_id`, `product_id`, `rating`, `review_text`, `created_at`],
-        rowsPerPage: 10,
-        idNamingSuffix: 'reviews',
-    });
-
-
-    // button listeners for toolbar
-    manageProbutton.addEventListener('click', function () {
-        setActiveTab(EditProduct, manageProbutton);//tab switch(toolbar)
-    });
-
-    // calling the table render and fetching and tab switch(toolbar) [TRFS]&
-    manageUserbutton.addEventListener('click', function () {
-        setActiveTab(usersdisplay, manageUserbutton);
-    });
-
-    // calling the table render and fetching and tab switch(toolbar) [TRFS]&
-    Ordersbutton.addEventListener('click', function () {
-        setActiveTab(ordersdisplay, Ordersbutton);
-    });
-
-    // calling the table render and fetching and tab switch(toolbar) [TRFS]&
-    transactionbutton.addEventListener('click', function () {
-        setActiveTab(Transactiondisplay, transactionbutton);
-    });
-
-    // calling the table render and fetching and tab switch(toolbar) [TRFS]&
-    reviewbutton.addEventListener('click', function () {
-        setActiveTab(Reviewsdisplay, reviewbutton);
-    });
-
-
-    //search functionality
-    //  searchbutton.addEventListener('click', function() {    
-    // });
-    //LOGOUT   button
-    logoutbutton.addEventListener('click', function () {
-        const confirmLogout = confirm("Are you sure you want to log out?");
-        if (confirmLogout) {
-            window.location.href = "/includes/cls.php";
-        }
-    });
-});
-
-// edit remove in product table buttons [these gose in class better maybe]
-function confirmationPopup() {
-    document.getElementById("confirmationPopupDisplay").style.display = "block";
-}
-
-function closeconfirmationPopup() {
-    document.getElementById("confirmationPopupDisplay").style.display = "none";
-}
-
-window.product_editbutton = function () {
-    document.getElementById('productEditDisplay').style.display = "block";
-    document.getElementById('buttonsTableDisplay').style.display = "none";
-};
-
-window.product_cancel_edit = function () {
-    document.getElementById('productEditDisplay').style.display = "none";
-    document.getElementById('buttonsTableDisplay').style.display = "block";
-};
-
-//document.getElementById('editProductButton').onclick = window.product-editbutton;
-//document.getElementById('productCancelEdit').onclick = window.product-cancel-edit;
-
-
-
-
-//add product button things
-const addProPopupDisplay = document.getElementById('addProPopupDisplay');
-const addProductButton = document.getElementById('addProPopupButton');
-const closeProductPopUpButton = document.getElementById('closeProductPopUpButton');
-function addProPopup() {
-    document.getElementById("addProPopupDisplay").style.display = "block";
-}
-function closeaddProPopup() {
-    document.getElementById("addProPopupDisplay").style.display = "none";
-}
-addProductButton.addEventListener('click', addProPopup);
-closeProductPopUpButton.addEventListener('click', closeaddProPopup);
-
-/*-------------------------------------------------------------------------------------------------------
-
-#######################################---Global table retriver---#######################################
-
-
--------------------------------------------------------------------------------------------------------------------------------------(Better not means only if you know what you are doing)
-| Type     | Name                     | Description                                                                 | Default Value | Assignment                        |
-| :------- | :------------------------| :-------------------------------------------------------------------------- | :------------ |                                   |
-| Variable | `url`                    | URL to fetch data from.(or path)                                            |               | Must                              |
-| Variable | `tableName`              | Name of the table/data source. (must match database name)                   |               | Must                              |
-| Variable | `columnName`             | Array of column names to display.  (must match database name)[Action        | `[]`          | Must                              |
-|          |                          |                                                  will have special case]    |               |                                   |
-| Variable | `idNamingSuffix`         | Suffix for generating unique HTML element IDs. ex(id= {suffix}Table)        | `''`          | Must                              |
-| Variable | `rowsPerPage`            | Number of rows per page.                                                    | `100`         | Optional                          |
-| Variable | `sortDirection`          | Sorting direction ('asc' or 'desc').                                        | `'asc'`       | Optional                          |   
-| Variable | `cachedData`             | stores already fetched data to avoid repeated fetch requests                | `[]`          | Optional (use hardcoded data)     |
-| Variable | `sortColum`              | keep track of the column to sort                                            | null          | Optional                          |                         
-| Variable | `totalRecords`           | Total number of records.(this fetched from database)                        | `0`           | Better not                        |
-| Variable | `pageOffset`             | Starting index of records for the current page.(for logic display of pages) |               | Better not                        |
-| Variable | `totalPages`             | Total number of pages.(calculated in the class)                             |               | Better not                        |
-| Variable | `flagPage`               | Flag to indicate if total records need to be fetched.                       | `true`        | Better not                        |
-| Variable | `currentPage`            | Current page number.                                                        | `1`           | Better not                        |
-| Method   | `constructor(options)`   | Initializes the `WorkspaceTable` with provided options.                                                                         |
-| Method   | `WorkspaceData()`        | Fetches data from the `url` based on current pagination.                                                                        |
-| Method   | `renderTable()`          | Renders the HTML table with the fetched `data`.                                                                                 |
-| Method   | `updatePaginationInfo()` | Updates the display showing pagination information (e.g., "Showing...").                                                        |
-| Method   | `paginationControls()`   | Sets up event listeners for pagination buttons and rows per page select.                                                        |   
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-----------------------------------------------------------------Usage---------------------------------------------------------------------------------------------------|
-const reviewTable = new fetchTable({              //create an object
-            url : '../../api/users/list.php',     //specify the URL
-            tableName : 'reviews',                // the table name from database
-            columnName : [`review_id`,`customer_id`,`product_id`,`rating`,`review_text`,`created_at`], //column names from database PRIMARYKEY IS A MUST in any order wanted to be in the table
-            rowsPerPage :19,            //optional rowperpage
-            idNamingSuffix :'reviews',  //suffix that matches the html IDs  
-         });
-       
----------------------------------------------------------------------------------------------------------*/
-
-class fetchTable {
-    constructor(options) {
-        // Basic configuration
-        this.url = options.url;
-        this.tableName = options.tableName;
-        this.columnName = options.columnName || [];
-
-        //  Pagination settings
-
-        this.currentPage = options.currentPage || 1;
-        this.rowsPerPage = options.rowsPerPage || 100;
-        this.idNamingSuffix = options.idNamingSuffix || '';
-        this.totalRecords =  0;
-        this.pageOffset = options.pageOffset;
-        this.totalPages = 0;
-        this.flagPage = options.flagPage || true;
-        this.cachedData = [];
-
-        // Sorting settings
-        this.sortDirection = options.sortDirection || 'asc';
-        this.sortColumn = null;
-
-        // Editing properties
-        this.editableColumns = options.editableColumns || [];
-        this.originalValue = [];
-        this.primaryKey = options.primaryKey || null; // Primary key of the table
-        this.primaryKeyColumnIndex = null;
+  
+    // ---------- Initial Structure Fetch -------------------------
+    async fetchStructure() {
+      try {
+        this.showLoading();
+        const response = await fetch(`${this.url}?action=getStructure&tableName=${this.tableName}`);
+        if (!response.ok) throw new Error(`Failed to fetch structure: ${response.statusText}`);
         
-        this.paginationControls();
-        if (this.cachedData.length === 0) { // Fetch initial data if not provided
-            this.fetchData();
+        const structure = await response.json();
+        
+        // Store the structure information
+        this.columns = structure.displayColumns;
+        if (!this.columns.includes('Action') && (structure.editableColumns.length > 0 || structure.deletable)) {
+          this.columns.push('Action'); // Add Action column if editable columns exist
+        }
+        this.pk = structure.primaryKey;
+        this.editable = structure.editableColumns;
+        this.deletable = !!structure.deletable;
+        this.csrfToken = structure.csrf_token;
+        
+        return structure;
+      } catch (error) {
+        this.showError(error);
+        return null;
+      } finally {
+        this.hideLoading();
+      }
+    }
+  
+    // ---------- Control Wiring --------------------------------
+    initControls() {
+      // pagination buttons
+      this.btnPrev = document.getElementById(`${this.idNamingSuffix}PrevPage`);
+      this.btnNext = document.getElementById(`${this.idNamingSuffix}NextPage`);
+      this.lblPage = document.getElementById(`${this.idNamingSuffix}CurrentPage`);
+      this.selRows = document.getElementById(`${this.idNamingSuffix}RowsPerPage`);
+      this.infoElm = document.getElementById(`${this.idNamingSuffix}PaginationInfo`);
+      this.fieldSearch = document.getElementById(`${this.idNamingSuffix}SearchField`);
+      this.btnSearch = document.getElementById(`${this.idNamingSuffix}SearchButton`);
+  
+      // event listeners
+      this.btnPrev && this.btnPrev.addEventListener('click', () => { if (this.page > 1) { this.page--; this.fetchData(); } });
+      this.btnNext && this.btnNext.addEventListener('click', () => { if (this.page < this.totalPages) { this.page++; this.fetchData(); } });
+      this.selRows && this.selRows.addEventListener('change', () => { this.rowsPerPage = parseInt(this.selRows.value); this.page = 1; this.cache = {}; this.fetchData(); });
+      if (this.btnSearch && this.fieldSearch) {
+        // ensure the button never submits the page
+        this.btnSearch.setAttribute('type', 'button');
+    
+        // shared handler:
+        const doSearch = e => {
+          // stop any real form submission
+          e && e.preventDefault();
+          this.searchQuery = this.fieldSearch.value.trim();
+          this.page        = 1;
+          this.cache       = {};
+          this.fetchData();
+        };
+    
+        // click → AJAX search
+        this.btnSearch.addEventListener('click', doSearch);
+    
+        // pressing “Enter” in the field -> AJAX only
+        this.fieldSearch.addEventListener('keypress', e => {
+          if (e.key === 'Enter') {
+            e.preventDefault();   // stop real submit
+            doSearch(e);
+          }
+        });
+      }
+    }
+  
+    // ---------- Fetching --------------------------------------
+    cacheKey() {
+      return `${this.page}_${this.rowsPerPage}_${this.sortCol || ''}_${this.sortDir}_${this.searchQuery}`;
+    }
+  
+    async fetchData() {
+      const key = this.cacheKey();
+      if (this.cache[key]) {
+        this.render(this.cache[key]);
+        return;
+      }
+      
+      // build URL
+      let q = `?action=fetch&tableName=${this.tableName}&rowsPerPage=${this.rowsPerPage}&page=${this.page}`;
+      if (this.sortCol) q += `&sortBy=${this.sortCol}&sortDirection=${this.sortDir}`;
+      if (this.searchQuery) q += `&search=${encodeURIComponent(this.searchQuery)}`;
+      if (this.categoryFilter) q += `&filterCategory=${this.categoryFilter}`;
+      q += `&csrf_token=${this.csrfToken}`;
+  
+      // loading state
+      this.showLoading();
+  
+      try {
+        const response = await fetch(this.url + q);
+        if (!response.ok) throw new Error(response.statusText);
+        
+        const res = await response.json();
+        
+        // Update CSRF token in case it's rotated
+        if (res.csrf_token) {
+          this.csrfToken = res.csrf_token;
+        }
+        
+        this.totalRecords = res.totalRecords;
+        this.totalPages = Math.ceil(this.totalRecords / this.rowsPerPage) || 1;
+        this.cache[key] = res.records;
+        this.render(res.records);
+      } catch (err) {
+        this.showError(err);
+      } finally {
+        this.hideLoading();
+      }
+    }
+  
+    // ---------- Rendering -------------------------------------
+    render(rows) {
+      const container = document.getElementById(`${this.idNamingSuffix}TableDisplay`);
+      if (!container) return;
+      container.innerHTML = '';
+  
+      const table = document.createElement('table');
+      table.className = 'data-table';
+  
+      // head
+      const thead = document.createElement('thead');
+      const hr = document.createElement('tr');
+      this.columns.forEach(col => {
+        const th = document.createElement('th');
+        if (col === 'Action') {
+          th.textContent = 'Action';
         } else {
-            this.renderTable();
-            this.updatePaginationInfo();
+          th.innerHTML = `${col} <span class="sort-icon">${this.sortCol === col ? (this.sortDir === 'asc' ? '↑' : '↓') : '↕'}</span>`;
+          th.style.cursor = 'pointer';
+          th.addEventListener('click', () => { this.toggleSort(col); });
         }
-    }
-    fetchData() {
-
-        this.pageOffset = Math.max(0, (this.currentPage - 1) * this.rowsPerPage);//posiive
-
-        let fetchUrl = `${this.url}?tableName=${this.tableName}&rowNumber=${this.rowsPerPage}&rowOffset=${this.pageOffset}`;
-
-        // Add sorting parameters if a sort column is selected
-        if (this.sortColumn) {
-            fetchUrl += `&sortBy=${this.sortColumn}&sortDirection=${this.sortDirection}`;
-        }
-
-        //uses the cashed data if exists
-        if (this.cachedData[this.currentPage]) {
-            this.renderTable();
-            this.updatePaginationInfo();
-            this.updatePaginationButtons();
-            return;
-        }
-
-        //fetch data
-        fetch(fetchUrl)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(response => {
-                this.cachedData[this.currentPage] = response.records; // Cache the fetched data
-                if (this.flagPage) {  // change flag if rows changed
-                    this.totalRecords = response.totalRecords;// lazy sulotion to avoid repeated fetch of the same value
-                    this.totalPages = Math.ceil(this.totalRecords / this.rowsPerPage);
-                    this.flagPage = false;
-                }
-
-                this.renderTable();
-                this.updatePaginationInfo();
-                this.updatePaginationButtons();
-
-                // UPDATE PAGINATION STUFF
-                const nextPageElement = document.getElementById(`${this.idNamingSuffix}NextPage`);
-
-
-
-                // Disable next button if on last page or no more data
-                if (nextPageElement) {
-                    nextPageElement.disabled = this.currentPage >= this.totalPages;
-                }
-            })
-            .catch(error => {
-                // Handle any errors that occurred during the fetch operation
-                console.error('Error fetching data:', error);
-            });
-    };//fetchdata
-    updatePaginationButtons() {
-        const nextPageElement = document.getElementById(`${this.idNamingSuffix}NextPage`);
-        const prevPageElement = document.getElementById(`${this.idNamingSuffix}PrevPage`);
-
-        if (nextPageElement) {
-            nextPageElement.disabled = this.currentPage >= this.totalPages;
-        }
-        if (prevPageElement) {
-            prevPageElement.disabled = this.currentPage <= 1;
-        }
-        const currentPageElement = document.getElementById(`${this.idNamingSuffix}CurrentPage`);
-        if (currentPageElement) {
-            currentPageElement.textContent = this.currentPage;
-        }
-    }//update paginationButtons
-    sortData(columnName) {
-        if (this.sortColumn === columnName) {
-            this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-        } else {
-            this.sortColumn = columnName;
-            this.sortDirection = 'asc';
-        }
-        this.currentPage = 1; // Reset to first page on sort
-        this.cachedData = {}; // Clear cache to force refetch with new sort
-        this.fetchData(); // Fetch data with sorting parameters
-    }//sort
-    renderTable() {
-        const display = document.getElementById(`${this.idNamingSuffix}TableDisplay`);
-        const tableElement = document.createElement('table');
-        display.innerHTML = '';
-        display.appendChild(tableElement);
-        if (!tableElement) {
-            console.error('Table body element is not provided.');
-            return;
-        }
-
-        //creating the table head
-        const header = document.createElement('thead');
-        const hrow = document.createElement('tr');
-
-        //fill table head
-
-        tableElement.appendChild(header);
-        header.appendChild(hrow);
-
-        this.columnName.forEach(column => {
-            const hdata = document.createElement('th');
-            if(column !== 'Action'){
-                hdata.innerHTML = column + `<span class="sort-icon" data-sort="${column}">↕</span>`;
-                hdata.dataset.column = column; // Store column name for sorting
-                hdata.style.cursor = 'pointer'; // Indicate it's clickable
-                hdata.addEventListener('click', (event) => { // the listener for table header
-                    const clickedColumn = event.target.dataset.column;
-                    if (clickedColumn) {
-                        this.sortData(clickedColumn);
-                    }});
-            }else{
-                hdata.innerHTML = column;
-            }
-
-            // Update sort icon
-            const sortIconSpan = hdata.querySelector('.sort-icon');
-            if (sortIconSpan) {
-                if (this.sortColumn === column) {
-                    sortIconSpan.textContent = this.sortDirection === 'asc' ? '↑' : '↓';
-                } else {
-                    sortIconSpan.textContent = '↕';
-                }
-            }
-            hrow.appendChild(hdata);
-        });
-        
-        //create and fill table body
-        const tbody = document.createElement('tbody');
-        tableElement.appendChild(tbody);
-
-        this.cachedData[this.currentPage].forEach(data => {
-            const brow = document.createElement('tr');
-            tbody.appendChild(brow);
-            this.columnName.forEach(bcolumn => {           //for(int i=0 ; i < columnName.length; i++)
-                const bdata = document.createElement('td');
-                bdata.textContent = data[bcolumn];
-                if(bcolumn === 'Action'){       //if column name is Action then call a function to generate its content and logic
-                    this.generateActionCell(bdata);
-                }
-                else if (data[bcolumn] === undefined) {
-                    bdata.textContent = 'not found'; bdata.style.color = 'orange';
-                } else if (data[bcolumn] === null) {
-                    bdata.textContent = '-'; bdata.style.color = 'orange';
-                }
-                brow.appendChild(bdata);
-            })
-        })
-
-
-
-
-    }//renderTable 
-    updatePaginationInfo() {
-        const paginationInfo = document.getElementById(`${this.idNamingSuffix}PaginationInfo`);
-        const startItem = this.pageOffset + 1;
-        const endItem = Math.min(this.pageOffset + this.rowsPerPage, this.totalRecords);
-        if (!paginationInfo) {
-            console.error('Paginationinfo not found. Make sure they have the correct IDs.');
-            return;
-
-        } else {
-            paginationInfo.innerHTML = `Showing <span>${startItem}
-               </span> to <span >${endItem}
-               </span> of <span>${this.totalRecords}</span> items`;
-        }
-    }
-    paginationControls() {
-
-        const nextPageElement = document.getElementById(`${this.idNamingSuffix}NextPage`);
-        const prevPageElement = document.getElementById(`${this.idNamingSuffix}PrevPage`);
-        const currentPageElement = document.getElementById(`${this.idNamingSuffix}CurrentPage`);
-
-
-        if (!nextPageElement || !prevPageElement || !currentPageElement) {
-            if (!nextPageElement)
-                console.error('nextPageElement not found. Make sure they have the correct IDs.');
-            if (!prevPageElement)
-                console.error('prevPageElement not found. Make sure they have the correct IDs.');
-            if (!currentPageElement)
-                console.error('currentPageElement not found. Make sure they have the correct IDs.');
-            return;
-        }
-
-        currentPageElement.textContent = this.currentPage;
-
-        this.updatePaginationButtons();
-
-        nextPageElement.addEventListener('click', () => {
-            this.currentPage++;
-            this.fetchData();
-
-            // Update buttons state
-            prevPageElement.disabled = false;
-            currentPageElement.textContent = this.currentPage;
-        });
-
-        prevPageElement.addEventListener('click', () => {
-            if (this.currentPage > 1) {
-                this.currentPage--;
-                this.fetchData();
-            }
-        });
-
-        // Handle rows per page change
-        const rowsPerPage = document.getElementById(`${this.idNamingSuffix}RowsPerPage`);
-        rowsPerPage.addEventListener('change', (event) => { // Use an arrow function here
-            this.rowsPerPage = parseInt(rowsPerPage.value); // Get the value and parse it as an integer
-            this.currentPage = 1; // Reset to the first page when rows per page changes
-            this.cachedData = {}; // Clear cache on rows per page change
-            this.flagPage = true; // Reset the flag so total records are fetched again
-            this.fetchData(); // Fetch data with the new rows per page
-        });
-    } //paginationControls
-    generateActionCell(tdElement){
-        // Create a style element for elegant and modern styling if not already added
-        if (!document.getElementById('actionStyles')) {
-            const styleEl = document.createElement('style');
-            styleEl.id = 'actionStyles';
-            styleEl.innerHTML = `
-            .action-container {
-                font-family: Arial, sans-serif;
-                display: flex;
-                gap: 10px;
-                align-items: center;
-            }
-            .action-button {
-                padding: 6px 12px;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-size: 0.9rem;
-                transition: background-color 0.3s ease;
-            }
-            .edit-button {
-                background-color: #0078d4;
-                color: #fff;
-            }
-            .edit-button:hover {
-                background-color: #005a9e;
-            }
-            .remove-button {
-                background-color: #e81123;
-                color: #fff;
-            }
-            .remove-button:hover {
-                background-color: #c50f1f;
-            }
-            .confirm-button {
-                background-color: #107c10;
-                color: #fff;
-            }
-            .confirm-button:hover {
-                background-color: #0b6a0b;
-            }
-            .cancel-button {
-                background-color: #f3f2f1;
-                color: #333;
-                border: 1px solid #c8c6c4;
-            }
-            .cancel-button:hover {
-                background-color: #e1dfdd;
-            }
-            `;
-            document.head.appendChild(styleEl);
-        }
-        
-        // Create the container for the action cells.
-        const container = document.createElement('div');
-        container.className = 'action-container';
-
-        // Create the default actions div (Edit and Remove buttons)
-        const defaultActions = document.createElement('div');
-        const editButton = document.createElement('button');
-        editButton.textContent = 'Edit';
-        editButton.className = 'action-button edit-button';
-
-        const removeButton = document.createElement('button');
-        removeButton.textContent = 'Remove';
-        removeButton.className = 'action-button remove-button';
-
-        defaultActions.appendChild(editButton);
-        defaultActions.appendChild(removeButton);
-        
-        // Create the edit actions div (Confirm and Cancel buttons), initially hidden.
-        const editActions = document.createElement('div');
-        editActions.style.display = 'none';
-        
-        const confirmButton = document.createElement('button');
-        confirmButton.textContent = 'Confirm';
-        confirmButton.className = 'action-button confirm-button';
-        
-        const cancelButton = document.createElement('button');
-        cancelButton.textContent = 'Cancel';
-        cancelButton.className = 'action-button cancel-button';
-        
-        editActions.appendChild(confirmButton);
-        editActions.appendChild(cancelButton);
-        
-        // Append both action divs to the main container.
-        container.appendChild(defaultActions);
-        container.appendChild(editActions);
-
-        // Event listener for Edit button: hide default actions, show edit actions.
-        editButton.addEventListener('click', () => {
-            defaultActions.style.display = 'none';
-            editActions.style.display = 'flex';
-            const rowToEdit = editButton.closest('tr');
+        hr.appendChild(th);
+      });
+      thead.appendChild(hr);
+      table.appendChild(thead);
+  
+      // body
+      const tbody = document.createElement('tbody');
+      if (!rows || rows.length === 0) {
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+        td.colSpan = this.columns.length;
+        td.className = 'no-data';
+        td.textContent = 'No data found.';
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+      } else {
+        rows.forEach(rec => {
+          const tr = document.createElement('tr');
+          tr.dataset.id = rec[this.pk];
+          this.columns.forEach(col => {
+            const td = document.createElement('td');
+            if (col === 'Action') {
+              this.renderActionCell(td, rec);
+            } else if (col === 'picture' && this.tableName === 'products') {
+              const img = document.createElement('img');
+              const fileName = rec[col];
+              const urls = [];
             
-            this.editCell(rowToEdit);
-        });
-        
-        // Event listener for Cancel button: revert back to default actions.
-        cancelButton.addEventListener('click', () => {
-            editActions.style.display = 'none';
-            defaultActions.style.display = 'flex';
-        });
-        
-        // Event listener for Confirm button: perform confirm action then revert.
-        confirmButton.addEventListener('click', () => {
-            editActions.style.display = 'none';
-            defaultActions.style.display = 'flex';
-            confirmEdit();
-        });
-        
-        // Optional: add event listener for Remove button.
-        removeButton.addEventListener('click', () => {
-            // Execute remove logic here. For now, we'll log to console.
-            console.log('Remove action triggered for row.');
-        });
-        
-        // Append the container div to the td element.
-        tdElement.innerHTML = '';
-        tdElement.appendChild(container);
-    }//generateActionCell
-
-    editCell(rowToEdit) {
-        const cells = rowToEdit.querySelectorAll('td');
-        this.primaryKeyColumnIndex = this.columnName.indexOf(this.primaryKey); // Find the index of the primary key column
-        cells.forEach((cell, index) => {
-            if (this.editableColumns.includes(this.columnName[index])) {
-                const input = document.createElement('input');
-                input.type = 'text';
-                input.setAttribute('id', `edit-input${index}`); // Unique ID for each input
-                input.setAttribute('name', `edit-input${index}`); // Unique name for each input
-                input.value = cell.textContent;
-                this.originalValue[this.columnName[index]] = cell.textContent; // Store the original value for later use originalValue['price']
-                cell.innerHTML = ''; // Clear the cell content
-                cell.appendChild(input); // Append the input element to the cell
+              if (fileName) {
+                // 1) try the raw path
+                urls.push(fileName);
+                // 2) then the “assets/images” path
+                urls.push(`/assets/images/products/${fileName}`);
+              }
+              // 3) finally the hard-coded default
+              urls.push('/assets/images/products/default.png');
+            
+              let attempt = 0;
+              img.onerror = () => {
+                attempt++;
+                if (attempt < urls.length) {
+                  img.src = urls[attempt];
+                } else {
+                  // give up — clear the handler so we don’t loop forever
+                  img.onerror = null;
+                }
+              };
+            
+              // kick off the first load
+              img.src = urls[0];
+              img.alt = rec.product_name || '';
+              img.className = 'product-thumb';
+              td.appendChild(img);
+            } else {
+              td.textContent = rec[col] == null ? '-' : rec[col];
             }
+            tr.appendChild(td);
+          });
+          tbody.appendChild(tr);
         });
-    }//editCell
-
-    confirmEdit(){// add notify changed columns 
-        this.editableColumns.forEach((column, index) => {
-            const input = document.getElementById(`edit-input${index}`);
-            const newValue = input.value;
-            if(newValue != this.originalValue[column]){ //the user changed the value
-                //fetch() to the update table \_-_/
+      }
+      table.appendChild(tbody);
+      container.appendChild(table);
+  
+      this.updatePagerUI();
+    }
+  
+    renderActionCell(td, rec) {
+      const wrap = document.createElement('div');
+      wrap.className = 'action-container';
+    
+      // ===== Roots table: =====
+      if (this.tableName === 'roots') {
+        // If this row is *not* the currently-logged in root, show Delete:
+        if (rec[this.pk] !== window.currentRootId) {
+          const btnDel = document.createElement('button');
+          btnDel.textContent = 'Delete';
+          btnDel.className   = 'action-button delete-button';
+          btnDel.addEventListener('click', () => this.confirmDeleteRoot(rec[this.pk]));
+          wrap.appendChild(btnDel);
+        } else {
+          // If it *is* you, show a little placeholder instead of Delete
+          const span = document.createElement('span');
+          span.textContent = 'You :)';
+          wrap.appendChild(span);
+        }
+    
+      // ===== All other tables: =====
+      } else {
+        // 1) Edit button if editable
+        if (this.editable.length > 0) {
+          const btnEdit = document.createElement('button');
+          btnEdit.textContent = 'Edit';
+          btnEdit.className   = 'action-button edit-button';
+          btnEdit.addEventListener('click', () => this.startEdit(rec[this.pk]));
+          wrap.appendChild(btnEdit);
+        }
+    
+        // 2) Delete button if deletable
+        if (this.deletable) {
+          const btnDel = document.createElement('button');
+          btnDel.textContent = 'Delete';
+          btnDel.className   = 'action-button delete-button';
+          btnDel.addEventListener('click', () => this.confirmDelete(rec[this.pk]));
+          wrap.appendChild(btnDel);
+        }
+    
+        // 3) Grant Root (only in customers view)
+        if (this.tableName === 'customers') {
+          const btnRoot = document.createElement('button');
+          btnRoot.textContent = 'Grant Root';
+          btnRoot.className   = 'action-button process-button';
+          btnRoot.addEventListener('click', () => this.confirmGrantRoot(rec[this.pk]));
+          wrap.appendChild(btnRoot);
+        }
+      }
+    
+      // clear & append
+      td.innerHTML = '';
+      td.appendChild(wrap);
+    }    
+  
+    // ---------- Sorting ---------------------------------------
+    toggleSort(col) {
+      if (this.sortCol === col) {
+        this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        this.sortCol = col;
+        this.sortDir = 'asc';
+      }
+      this.page = 1;
+      this.cache = {};
+      this.fetchData();
+    }
+  
+    // ---------- Pagination UI --------------------------------
+    updatePagerUI() {
+      this.lblPage && (this.lblPage.textContent = this.page);
+      if (this.btnPrev) this.btnPrev.disabled = this.page <= 1;
+      if (this.btnNext) this.btnNext.disabled = this.page >= this.totalPages;
+  
+      if (this.infoElm) {
+        const start = this.totalRecords === 0 ? 0 : ((this.page - 1) * this.rowsPerPage) + 1;
+        const end = Math.min(this.page * this.rowsPerPage, this.totalRecords);
+        this.infoElm.innerHTML = `Showing <span>${start}</span> to <span>${end}</span> of <span>${this.totalRecords}</span> items`;
+      }
+    }
+  
+    // ---------- Loading / Error UI ---------------------------
+    showLoading() {
+      const cont = document.getElementById(`${this.idNamingSuffix}TableDisplay`);
+      if (cont) {
+        cont.classList.add('loading');
+        cont.innerHTML = '<div class="loading-spinner">Loading…</div>';
+      }
+    }
+    
+    hideLoading() {
+      const cont = document.getElementById(`${this.idNamingSuffix}TableDisplay`);
+      cont && cont.classList.remove('loading');
+    }
+    
+    showError(err) {
+      const cont = document.getElementById(`${this.idNamingSuffix}TableDisplay`);
+      if (cont) {
+        cont.innerHTML = `<div class="error-message">${err.message}</div>`;
+      }
+    }
+  
+    // ========== Editing =======================================
+    startEdit(id) {
+        if (this.editRow) {
+        this.cancelEdit();
+        }
+    
+        // find the <tr> and the underlying record
+        const tr = document.querySelector(`#${this.idNamingSuffix}TableDisplay tr[data-id='${id}']`);
+        if (!tr) return;
+        this.editRow = tr;
+    
+        // grab the JS object for this row from cache
+        const key = this.cacheKey();
+        const rec = (this.cache[key]||[]).find(r => String(r[this.pk]) === String(id));
+    
+        this.backup = {};
+    
+        tr.querySelectorAll('td').forEach((td, i) => {
+        const col = this.columns[i];
+    
+        // —— special “category” cell: swap in a <select>
+        if (col === 'category') {
+            // backup the original HTML and the numeric id
+            this.backup['category']    = td.innerHTML;
+            this.backup['category_id'] = rec.category_id;
+    
+            const sel = document.createElement('select');
+            window.categoryList.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c.category_id;
+            opt.textContent = c.category_name;
+            if (c.category_id === rec.category_id) opt.selected = true;
+            sel.appendChild(opt);
+            });
+    
+            td.innerHTML = '';
+            td.appendChild(sel);
+            return;  // skip the normal-input logic
+        }
+    
+        // —— “Action” cell: replace with Save/Cancel buttons
+        if (col === 'Action') {
+            td.innerHTML = '';
+            const btnSave   = document.createElement('button');
+            const btnCancel = document.createElement('button');
+            btnSave.textContent   = 'Save';
+            btnSave.className     = 'action-button save-button';
+            btnCancel.textContent = 'Cancel';
+            btnCancel.className   = 'action-button cancel-button';
+            td.appendChild(btnSave);
+            td.appendChild(btnCancel);
+    
+            btnSave.addEventListener('click',   () => this.saveEdit(id));
+            btnCancel.addEventListener('click', () => this.cancelEdit());
+            return;
+        }
+    
+        // —— normal editable columns (text, picture, etc.)
+        if (this.editable.includes(col)) {
+            let initialValue = '';
+            if (col === 'picture') {
+            this.backup[col] = td.innerHTML;
+            const img = td.querySelector('img');
+            if (img) initialValue = img.getAttribute('src');
+            } else {
+            initialValue      = td.textContent;
+            this.backup[col] = initialValue;
             }
+    
+            const input = document.createElement('input');
+            input.value = initialValue;
+            if (col === 'price') {
+            input.type = 'number';
+            input.step = '0.01';
+            } else if (col === 'stock') {
+            input.type = 'number';
+            input.step = '1';
+            }
+    
+            td.innerHTML = '';
+            td.appendChild(input);
+        }
+        // non-editable & non‐category columns left alone
         });
-    }//confirmEdit
-}//class
+    }  
+    
+    cancelEdit() {
+        if (!this.editRow) return;
+      
+        this.editRow.querySelectorAll('td').forEach((td, i) => {
+          const col = this.columns[i];
+          if (col==='category') {
+            td.innerHTML = this.backup['category'];
+          }
+          else if (col === 'Action') {
+            const recId = this.editRow.dataset.id;
+            td.innerHTML = '';
+            this.renderActionCell(
+              td,
+              this.cache[this.cacheKey()].find(r => String(r[this.pk]) === String(recId))
+            );
+          }
+          else if (this.editable.includes(col)) {
+            if (col === 'picture') {
+              // Restore the full <img> HTML
+              td.innerHTML = this.backup[col];
+            } else {
+              // Restore text
+              td.textContent = this.backup[col];
+            }
+          }
+        });
+      
+        this.editRow = null;
+        this.backup = {};
+    }
+  
+    async saveEdit(id) {
+      if (!this.editRow) return;
+      const updated = {};
+      
+      // gather inputs
+      this.editRow.querySelectorAll('td').forEach((td, i) => {
+        const col = this.columns[i];
+        if (col==='category') {
+            const val = td.querySelector('select').value;
+            if (val != this.backup['category_id']) {
+              updated['category_id'] = val;
+            }
+          }
+          else if (this.editable.includes(col)) {
+            const inp = td.querySelector('input');
+            if (inp.value!== this.backup[col]) {
+              updated[col] = inp.value;
+            }
+          }
+      });
+      
+      if (Object.keys(updated).length === 0) {
+        this.cancelEdit();
+        return;
+      }
+  
+      const body = new FormData();
+      body.append('action', 'update');
+      body.append('id', id);
+      body.append('csrf_token', this.csrfToken);
+      Object.entries(updated).forEach(([k, v]) => body.append(k, v));
+  
+      try {
+        const response = await fetch(`${this.url}?action=update&tableName=${this.tableName}&id=${id}`, {
+          method: 'POST',
+          body
+        });
+        
+        if (!response.ok) throw new Error(response.statusText);
+        const res = await response.json();
+        
+        if (res.success) {
+          this.showToast('Record updated', 'success');
+          // Update CSRF token if provided
+          if (res.csrf_token) this.csrfToken = res.csrf_token;
+          this.cache = {};
+          this.fetchData();
+        } else {
+          throw new Error(res.error || 'Update failed');
+        }
+      } catch (e) {
+        this.showToast(e.message, 'error');
+      }
+    }
+  
+    // ========== Delete ========================================
+    confirmDelete(id) {
+      const modal = document.getElementById('confirmationModal');
+      if (!modal) return alert('Modal missing!');
+
+      // map tableNames to user-friendly nouns
+      const labels = {
+        products:  'product',
+        customers: 'user',
+        orders:    'order',
+        payments:  'transaction',
+        reviews:   'review'
+      };
+      const noun = labels[this.tableName] || 'item';
+
+      // inject a custom prompt
+      modal.querySelector('.modal-content p').textContent =
+        `Are you sure you want to delete this ${noun}? This action cannot be undone.`;
+
+      modal.style.display = 'block';
+      const btnOK     = modal.querySelector('.modal-button-confirm');
+      const btnCancel = modal.querySelector('.modal-button-cancel');
+
+      const close = () => {
+        modal.style.display = 'none';
+        // remove old listeners
+        btnOK.replaceWith(btnOK.cloneNode(true));
+        btnCancel.replaceWith(btnCancel.cloneNode(true));
+      };
+
+      btnOK.addEventListener('click', () => {
+        close();
+        this.deleteRecord(id);
+      });
+      btnCancel.addEventListener('click', close);
+
+      // click outside to cancel
+      window.onclick = e => {
+        if (e.target === modal) close();
+      };
+    }
+  
+    async deleteRecord(id) {
+      try {
+        const formData = new FormData();
+        formData.append('csrf_token', this.csrfToken);
+  
+        const response = await fetch(`${this.url}?action=delete&tableName=${this.tableName}&id=${id}`, {
+          method: 'POST',
+          body: formData
+        });
+        
+        if (!response.ok) throw new Error(response.statusText);
+        const res = await response.json();
+        
+        if (res.success) {
+          this.showToast('Record deleted', 'success');
+          // Update CSRF token if provided
+          if (res.csrf_token) this.csrfToken = res.csrf_token;
+          this.cache = {};
+          if (this.page > 1 && this.cacheKey() === '') this.page--;
+          this.fetchData();
+        } else {
+          throw new Error(res.error || 'Delete failed');
+        }
+      } catch (e) {
+        this.showToast(e.message, 'error');
+      }
+    }
+  
+    // ---------- Toast Notifications ---------------------------
+    showToast(msg, type = 'info') {
+      let t = document.getElementById('dashboard-toast');
+      if (!t) {
+        t = document.createElement('div');
+        t.id = 'dashboard-toast';
+        document.body.appendChild(t);
+      }
+      t.className = `toast ${type}`;
+      t.textContent = msg;
+      t.style.display = 'block';
+      clearTimeout(this.toastTO);
+      this.toastTO = setTimeout(() => {
+        t.style.display = 'none';
+      }, 3000);
+    }
+
+
+    /**
+     * Prompt for a password, call the new grantroot endpoint,
+     * then toast success or error.
+     */
+    confirmGrantRoot(id) {
+      const pwd = prompt('Enter a new root password for this user:');
+      if (!pwd) return;
+    
+      const body = new FormData();
+      body.append('action',   'grantroot');
+      body.append('id',       id);
+      body.append('password', pwd);
+      body.append('csrf_token', this.csrfToken);
+    
+      fetch(`${this.url}?action=grantRoot&tableName=${this.tableName}`, {
+        method: 'POST',
+        body
+      })
+      .then(r => r.json())
+      .then(res => {
+        if (res.success) {
+          this.csrfToken = res.csrf_token;
+          this.showToast('User is now a Root', 'success');
+        } else {
+          throw new Error(res.error || 'Failed to grant root');
+        }
+      })
+      .catch(err => this.showToast(err.message, 'error'));
+    }
+
+    /**
+     * Prompt for the current root’s password, then call
+     * our new deleteRoot endpoint.
+     */
+    confirmDeleteRoot(id) {
+      const pwd = prompt('Enter **that user’s** root password to confirm deletion:');
+      if (!pwd) return;
+    
+      const body = new FormData();
+      body.append('action',     'deleteRoot');
+      body.append('id',         id);
+      body.append('password',   pwd);
+      body.append('csrf_token', this.csrfToken);
+    
+      fetch(`${this.url}?action=deleteRoot&tableName=${this.tableName}`, {
+        method: 'POST',
+        body
+      })
+        .then(r => r.json())
+        .then(res => {
+          if (res.success) {
+            this.csrfToken = res.csrf_token;
+            this.showToast('Root account deleted', 'success');
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          } else {
+            throw new Error(res.error || 'Delete failed');
+          }
+        })
+        .catch(err => this.showToast(err.message, 'error'));
+    }    
+  }
+  
+  // ===== 4. Table Instances  ==================================
+  async function initializeTables() {
+    const baseUrl = '/assets/php/root_php/fetchTable.php';
+    
+    window.rootsTable = new Table({
+      url: baseUrl,
+      tableName: 'roots',
+      rowsPerPage: 10,
+      idNamingSuffix: 'roots',
+    });
+
+    window.productsTable = new Table({
+      url: baseUrl,
+      tableName: 'products',
+      rowsPerPage: 10,
+      idNamingSuffix: 'products',
+    });
+  
+    window.usersTable = new Table({
+      url: baseUrl,
+      tableName: 'customers',
+      rowsPerPage: 10,
+      idNamingSuffix: 'users',
+    });
+  
+    window.ordersTable = new Table({
+      url: baseUrl,
+      tableName: 'orders',
+      rowsPerPage: 10,
+      idNamingSuffix: 'orders',
+    });
+  
+    window.paymentsTable = new Table({
+      url: baseUrl,
+      tableName: 'payments',
+      rowsPerPage: 10,
+      idNamingSuffix: 'transactions',
+    });
+  
+    window.reviewsTable = new Table({
+      url: baseUrl,
+      tableName: 'reviews',
+      rowsPerPage: 10,
+      idNamingSuffix: 'reviews',
+    });
+
+    // Load category list once for both filter and edit dropdowns
+    await loadProductCategories();
+  }
+
+  async function loadProductCategories() {
+    const res = await fetch('../assets/php/root_php/fetchTable.php?action=fetch&tableName=categories');
+    const json = await res.json();
+    // stash globally
+    window.categoryList = json.records;  // [ {category_id, category_name}, … ]
+  
+    // populate filter dropdown
+    const sel = document.getElementById('productsCategoryFilter');
+    sel.innerHTML = `<option value="">All</option>` +
+        window.categoryList.map(c =>
+        `<option value="${c.category_id}">${c.category_name}</option>`
+        ).join('');
+
+    sel.addEventListener('change', () => {
+        window.productsTable.categoryFilter = sel.value || null;
+        window.productsTable.page = 1;
+        window.productsTable.cache = {};
+        window.productsTable.fetchData();
+    });
+
+    // — populate the **Add-Product** popup dropdown
+    const addSel = document.getElementById('addProductCategory');
+    addSel.innerHTML = `<option value="">–– Select a category ––</option>`;
+    window.categoryList.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value       = c.category_id;
+        opt.textContent = c.category_name;
+        addSel.appendChild(opt);
+    });
+  }
+  
+  // ===== 5. Modal + Form Handlers  =============================
+  function setupModalHandlers() {
+    // Add‑product popup
+    const btnOpen = document.getElementById('addProPopupButton');
+    const popup = document.getElementById('addProPopupDisplay');
+    const btnClose = document.getElementById('closeProductPopUpButton');
+    btnOpen && btnOpen.addEventListener('click', () => popup.style.display = 'block');
+    btnClose && btnClose.addEventListener('click', () => popup.style.display = 'none');
+    window.onclick = e => { if (e.target === popup) popup.style.display = 'none'; };
+    
+    // Close confirmation modal on outside click
+    window.closeConfirmationModal = function() {
+      const modal = document.getElementById('confirmationModal');
+      if (modal) modal.style.display = 'none';
+    };
+    
+    // Confirmation modal is handled by the Table class confirm/delete methods
+    window.confirmDelete = function() {
+      // This is populated dynamically by the Table class
+      console.warn('confirmDelete called but no handler is attached');
+    };
+  }
+  
+  function setupFormHandlers() {
+    // add‑product form
+    const form = document.getElementById('addProductForm');
+    if (!form) return;
+  
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      
+      // First ensure we have the CSRF token
+      if (!window.productsTable || !window.productsTable.csrfToken) {
+        productsTable.showToast('Missing CSRF token, please try again', 'error');
+        return;
+      }
+      
+      const fd = new FormData(form);
+      fd.append('action', 'create');
+      fd.append('csrf_token', window.productsTable.csrfToken);
+      
+      try {
+        const response = await fetch('../assets/php/root_php/fetchTable.php?action=create&tableName=products', {
+          method: 'POST',
+          body: fd
+        });
+        
+        if (!response.ok) throw new Error(response.statusText);
+        const res = await response.json();
+        
+        if (res.success) {
+          form.reset();
+          document.getElementById('addProPopupDisplay').style.display = 'none';
+          
+          // Update CSRF token if provided
+          if (res.csrf_token) window.productsTable.csrfToken = res.csrf_token;
+          
+          productsTable.cache = {};
+          productsTable.page = 1;
+          productsTable.fetchData();
+          productsTable.showToast('Product added', 'success');
+        } else {
+          throw new Error(res.error || 'Add failed');
+        }
+      } catch (err) {
+        productsTable.showToast(err.message, 'error');
+      }
+    });
+  }
+  
+  // ===== 6. Minimal CSS (auto‑injected) =======================
+  (function injectStyles() {
+    if (document.getElementById('dashboard-css')) return;
+    const css = `
+    .data-table{width:100%;border-collapse:collapse;font-family:inherit}
+    .data-table th,.data-table td{padding:8px 6px;border-bottom:1px solid #ddd;}
+    .data-table th{background:#f7f7f7;user-select:none}
+    .data-table tr:hover{background:#fafafa}
+    .product-thumb{width:36px;height:36px;object-fit:cover;border-radius:4px}
+    .action-container{display:flex;gap:6px;justify-content:center}
+    .action-button{padding:4px 8px;font-size:0.8rem;border:none;border-radius:4px;cursor:pointer}
+    .edit-button{background:#0078d4;color:#fff}.delete-button{background:#e81123;color:#fff}
+    .save-button{background:#107c10;color:#fff}.cancel-button{background:#f3f2f1}
+    .loading-spinner{padding:20px;text-align:center}
+    .toast{position:fixed;bottom:20px;right:20px;padding:10px 14px;border-radius:4px;color:#fff;display:none;z-index:9999}
+    .toast.info{background:#0078d4}.toast.success{background:#107c10}.toast.error{background:#e81123}
+    `;
+    const st = document.createElement('style');
+    st.id = 'dashboard-css';
+    st.textContent = css;
+    document.head.appendChild(st);
+  })();

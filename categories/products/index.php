@@ -49,7 +49,7 @@ $customerId  = $isLoggedIn ? $_SESSION['customer_id'] : null;
     <?php require_once __DIR__ . '/../../assets/php/main.php'; ?>
     <link rel="stylesheet" href="/../../assets/css/main.css">
     <link rel="stylesheet" href="../../assets/css/products.css">
-    <script defer src="/assets/js/main.js"></script>
+    <script src="/assets/js/main.js"></script>
 </head>
 <body>
     <!-- Include header -->
@@ -57,9 +57,12 @@ $customerId  = $isLoggedIn ? $_SESSION['customer_id'] : null;
 
     <div class="product-container">
         <div class="product-content">
-            <div class="product-image">
-                <img id="productImage" src="../<?php echo htmlspecialchars($product['image']); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
-            </div>
+        <div class="product-image">
+            <img id="productImage"
+                src="../<?php echo htmlspecialchars($product['image']); ?>"
+                alt="<?php echo htmlspecialchars($product['name']); ?>"
+                onerror="handleImageError(this, '<?php echo htmlspecialchars($product['image']); ?>')">
+                </div>
             <div class="product-info">
                 <h2 id="productName"><?php echo htmlspecialchars($product['name']); ?></h2>
                 
@@ -219,6 +222,7 @@ $customerId  = $isLoggedIn ? $_SESSION['customer_id'] : null;
     
     <script src="/assets/js/addtocart.js"></script>
     <script>
+        window.isRoot = <?= json_encode($_SESSION['is_root'] ?? false) ?>;
         document.addEventListener('DOMContentLoaded', function() {
             // Toast functionality
             const toastContainer = document.getElementById('toastContainer');
@@ -242,6 +246,8 @@ $customerId  = $isLoggedIn ? $_SESSION['customer_id'] : null;
             toastClose.addEventListener('click', function() {
                 toastContainer.style.display = 'none';
             });
+            
+            window.showToast = showToast;
             
             // Review form submission
             const reviewForm = document.getElementById('reviewForm');
