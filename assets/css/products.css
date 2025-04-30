@@ -58,13 +58,14 @@ body {
   box-shadow: var(--box-shadow);
 }
 
-.product-info h2 {
-  margin: 0 0 15px;
-  font-size: 28px;
-  color: #8d07cc;
-  border-bottom: 2px solid #0117ff;
-  padding-bottom: 10px;
-  word-wrap: break-word;
+.product-info h2::after {
+  content: '';
+  display: block;
+  width: 300px;
+  height: 1.5px;
+  background: linear-gradient(to right, #0117ff, #8d07cc, #d42d2d);
+  margin: 10px auto 0;
+  border-radius: 2px;
 }
 
 .product-info p {
@@ -184,7 +185,7 @@ select:focus {
   text-align: center;
   font-size: 24px;
   margin-bottom: 30px;
-  color: #8d07cc;
+  color: #000000;
   position: relative;
 }
 
@@ -196,7 +197,7 @@ select:focus {
   transform: translateX(-50%);
   width: 80px;
   height: 3px;
-  background: linear-gradient(to right, var(--secondary-color), var(--primary-color));
+  background: linear-gradient(135deg, #d42d2d, #8d07cc, #0117ff);
 }
 
 .reviews-section {

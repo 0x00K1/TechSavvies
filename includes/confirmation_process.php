@@ -111,7 +111,7 @@ try {
             'quantity' => (int)$item['quantity'],
             'color' => $item['color'],
             'size' => $item['size'],
-            'image' => '/assets/images/products/' . ($item['picture'] ?: 'placeholder.png')
+            'image' => ($item['picture'] ?: 'placeholder.png')
         ];
     }
     
@@ -128,7 +128,6 @@ try {
         'customer' => [
             'name' => $customerInfo['username'],
             'email' => $customerInfo['email'],
-            'phone' => '', // Add phone if you store it
             'address' => $customerInfo['address_line1'] . ($customerInfo['address_line2'] ? ', ' . $customerInfo['address_line2'] : ''),
             'city' => $customerInfo['city'],
             'state' => $customerInfo['state'],

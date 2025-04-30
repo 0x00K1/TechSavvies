@@ -434,10 +434,10 @@ function getCartFromCookie() {
     toast.className = 'toast ' + type;
     toastContainer.style.display = 'block';
     
-    // Hide after 5 seconds
+    // Hide after 7 seconds
     setTimeout(() => {
       toastContainer.style.display = 'none';
-    }, 5000);
+    }, 7000);
   }
   
   document.getElementById('toastClose').addEventListener('click', function() {

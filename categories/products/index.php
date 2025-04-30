@@ -91,28 +91,22 @@ $customerId  = $isLoggedIn ? $_SESSION['customer_id'] : null;
                     <span class="currency">$</span><span id="productPrice"><?php echo htmlspecialchars($product['price']); ?></span>
                 </div>
 
-                <!-- Category-specific options -->
-                <?php
-                    $categoryLower = strtolower($product['category']);
-                    if ($categoryLower === 't-shirts'): 
-                ?>
+                <?php if (!empty($product['color'])): ?>
                     <div class="form-group">
-                        <select id="colorSelect" class="form-control">
-                            <option>Black</option>
-                            <option>Red</option>
-                            <option>Blue</option>
-                            <option>White</option>
-                        </select>
+                        <strong>Color:</strong> <?php echo htmlspecialchars($product['color']); ?>
+                        <input type="hidden" id="productColor" value="<?php echo htmlspecialchars($product['color']); ?>">
                     </div>
+                <?php else: ?>
+                    <input type="hidden" id="productColor" value="">
+                <?php endif; ?>
 
+                <?php if (!empty($product['size'])): ?>
                     <div class="form-group">
-                        <select id="sizeSelect" class="form-control">
-                            <option>Small</option>
-                            <option>Medium</option>
-                            <option>Large</option>
-                            <option>XL</option>
-                        </select>
+                        <strong>Size:</strong> <?php echo htmlspecialchars($product['size']); ?>
+                        <input type="hidden" id="productSize" value="<?php echo htmlspecialchars($product['size']); ?>">
                     </div>
+                <?php else: ?>
+                    <input type="hidden" id="productSize" value="">
                 <?php endif; ?>
 
                 <!-- Hidden inputs -->

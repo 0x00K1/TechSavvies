@@ -90,8 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     
     showErrorMessage('No order details found. You may not have permission to view this order or it may have been deleted.');
-    // Optionally redirect after a delay
-    // setTimeout(() => window.location.href = '/', 5000);
+    setTimeout(() => window.location.href = '/', 10000);
   }
   
   /**

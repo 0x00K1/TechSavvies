@@ -4,8 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const productImageEl  = document.getElementById("productImage");
   const productNameEl   = document.getElementById("productName"); 
   const priceField      = document.getElementById("productPrice");
-  const colorSelect     = document.getElementById("colorSelect");
-  const sizeSelect      = document.getElementById("sizeSelect");
+  const colorField      = document.getElementById("productColor");
+  const sizeField       = document.getElementById("productSize");
   const quantityField   = document.getElementById("quantityInput");
   const stockField      = document.getElementById("productStock");
 
@@ -65,15 +65,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const name      = productNameEl ? productNameEl.textContent.trim() : "Unknown Product";
       const imageSrc  = productImageEl ? productImageEl.getAttribute("src") : "";
       const stock = stockField ? parseInt(stockField.value, 10) : 0;
-
-      let color = "";
-      let size  = "";
-      if (colorSelect) {
-        color = colorSelect.value;
-      }
-      if (sizeSelect) {
-        size = sizeSelect.value;
-      }
+      const color = colorField ? colorField.value : "";
+      const size  = sizeField  ? sizeField.value  : "";
 
       // 2) Validate stock if applicable
       if (stockField) {

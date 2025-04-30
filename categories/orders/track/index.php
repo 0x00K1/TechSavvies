@@ -172,7 +172,7 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
           </svg>
           <h4>Contact Support</h4>
           <p>Get help from our customer service team</p>
-          <a href="/#contact" class="help-link">Contact Us</a>
+          <a href="/contact.php" class="help-link">Contact Us</a>
         </div>
         <div class="help-card">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
