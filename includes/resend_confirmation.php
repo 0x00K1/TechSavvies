@@ -186,7 +186,7 @@ $htmlMessage = <<<HTML
     </div>
   </div>
   <div class="footer">
-    &copy; 2025 TechSavvies • All Rights Reserved.
+    &copy; 2025 TechSavvies, All Rights Reserved.
   </div>
 </body>
 </html>

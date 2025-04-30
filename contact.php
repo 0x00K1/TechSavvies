@@ -134,7 +134,7 @@ require_once __DIR__ . '/includes/secure_session.php';
         <div class="map-address">
           <h3>TechSavvies Shop</h3>
           <p>01 TechSavvies, Tech City, TC 10101</p>
-          <p>Open Monday - Friday: 9AM - 6PM<br>Weekend: 10AM - 4PM</p>
+          <p>Sunday - Thursday: 9AM - 6PM<br>Weekend: 10AM - 4PM</p>
           <a href="https://maps.google.com/?q=TechSavvies" target="_blank" class="directions-btn">Get Directions</a>
         </div>
       </div>

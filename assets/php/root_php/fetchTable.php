@@ -274,8 +274,25 @@ function updateRow(PDO $pdo, string $tbl, array $cfg)
     
     $stmt = $pdo->prepare($sql);
     
-    // Bind all parameters at once with positional placeholders
-    $stmt->execute($params);
+    try {
+        $stmt->execute($params);
+    } catch (PDOException $e) {
+         // SQLSTATE 23000 = integrity constraint violation (e.g. duplicate key)
+        if (isset($e->errorInfo[0]) && $e->errorInfo[0] === '23000') {
+            // Extract the key name from MySQL’s message, e.g. “… for key 'email'”
+            if (preg_match("/for key '([^']+)'/", $e->errorInfo[2], $m)) {
+                $field = $m[1];
+                $msg   = ucfirst($field) . " already exists.";
+            } else {
+                $msg = 'Integrity constraint violation.';
+            }
+            http_response_code(409);
+            exit(json_encode(['success'=>false, 'error'=>$msg]));
+        }
+        // fallback for other PDO errors
+        http_response_code(500);
+        exit(json_encode(['success'=>false, 'error'=>'Database error: '.$e->getMessage()]));
+    }
     
     echo json_encode([
         'success' => true,
@@ -372,10 +389,26 @@ function createRow(PDO $pdo, string $tbl, array $cfg)
     $sql = "INSERT INTO {$tbl} ({$colList}) VALUES ({$placeholders})";
 
     $stmt = $pdo->prepare($sql);
-    foreach ($params as $i => $val) {
-        $stmt->bindValue($i + 1, $val);
+    
+    try {
+        foreach ($params as $i => $val) {
+            $stmt->bindValue($i + 1, $val);
+        }
+        $stmt->execute();
+    } catch (PDOException $e) {
+        if (isset($e->errorInfo[0]) && $e->errorInfo[0] === '23000') {
+            if (preg_match("/for key '([^']+)'/", $e->errorInfo[2], $m)) {
+                $field = $m[1];
+                $msg   = ucfirst($field) . " already exists.";
+            } else {
+                $msg = 'Integrity constraint violation.';
+            }
+            http_response_code(409);
+            exit(json_encode(['success'=>false, 'error'=>$msg]));
+        }
+        http_response_code(500);
+        exit(json_encode(['success'=>false, 'error'=>'Database error: '.$e->getMessage()]));
     }
-    $stmt->execute();
 
     echo json_encode([
         'success' => true, 

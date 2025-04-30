@@ -399,89 +399,120 @@ document.addEventListener('DOMContentLoaded', () => {
   
     // ========== Editing =======================================
     startEdit(id) {
-        if (this.editRow) {
-        this.cancelEdit();
-        }
-    
-        // find the <tr> and the underlying record
-        const tr = document.querySelector(`#${this.idNamingSuffix}TableDisplay tr[data-id='${id}']`);
-        if (!tr) return;
-        this.editRow = tr;
-    
-        // grab the JS object for this row from cache
-        const key = this.cacheKey();
-        const rec = (this.cache[key]||[]).find(r => String(r[this.pk]) === String(id));
-    
-        this.backup = {};
-    
-        tr.querySelectorAll('td').forEach((td, i) => {
-        const col = this.columns[i];
-    
-        // —— special “category” cell: swap in a <select>
-        if (col === 'category') {
-            // backup the original HTML and the numeric id
-            this.backup['category']    = td.innerHTML;
-            this.backup['category_id'] = rec.category_id;
-    
-            const sel = document.createElement('select');
-            window.categoryList.forEach(c => {
-            const opt = document.createElement('option');
-            opt.value = c.category_id;
-            opt.textContent = c.category_name;
-            if (c.category_id === rec.category_id) opt.selected = true;
-            sel.appendChild(opt);
-            });
-    
-            td.innerHTML = '';
-            td.appendChild(sel);
-            return;  // skip the normal-input logic
-        }
-    
-        // —— “Action” cell: replace with Save/Cancel buttons
-        if (col === 'Action') {
-            td.innerHTML = '';
-            const btnSave   = document.createElement('button');
-            const btnCancel = document.createElement('button');
-            btnSave.textContent   = 'Save';
-            btnSave.className     = 'action-button save-button';
-            btnCancel.textContent = 'Cancel';
-            btnCancel.className   = 'action-button cancel-button';
-            td.appendChild(btnSave);
-            td.appendChild(btnCancel);
-    
-            btnSave.addEventListener('click',   () => this.saveEdit(id));
-            btnCancel.addEventListener('click', () => this.cancelEdit());
-            return;
-        }
-    
-        // —— normal editable columns (text, picture, etc.)
-        if (this.editable.includes(col)) {
-            let initialValue = '';
-            if (col === 'picture') {
-            this.backup[col] = td.innerHTML;
-            const img = td.querySelector('img');
-            if (img) initialValue = img.getAttribute('src');
-            } else {
-            initialValue      = td.textContent;
-            this.backup[col] = initialValue;
-            }
-    
-            const input = document.createElement('input');
-            input.value = initialValue;
-            if (col === 'price') {
-            input.type = 'number';
-            input.step = '0.01';
-            } else if (col === 'stock') {
-            input.type = 'number';
-            input.step = '1';
-            }
-    
-            td.innerHTML = '';
-            td.appendChild(input);
-        }
-        // non-editable & non‐category columns left alone
-        });
-    }  
+      if (this.editRow) {
+          this.cancelEdit();
+      }
+
+      // find the <tr> and the underlying record
+      const tr = document.querySelector(`#${this.idNamingSuffix}TableDisplay tr[data-id='${id}']`);
+      if (!tr) return;
+      this.editRow = tr;
+
+      // grab the JS object for this row from cache
+      const key = this.cacheKey();
+      const rec = (this.cache[key] || []).find(r => String(r[this.pk]) === String(id));
+
+      this.backup = {};
+
+      tr.querySelectorAll('td').forEach((td, i) => {
+          const col = this.columns[i];
+
+          // —— special “category” cell: swap in a <select>
+          if (col === 'category') {
+              this.backup['category']    = td.innerHTML;
+              this.backup['category_id'] = rec.category_id;
+
+              const sel = document.createElement('select');
+              window.categoryList.forEach(c => {
+                  const opt = document.createElement('option');
+                  opt.value = c.category_id;
+                  opt.textContent = c.category_name;
+                  if (c.category_id === rec.category_id) opt.selected = true;
+                  sel.appendChild(opt);
+              });
+
+              td.innerHTML = '';
+              td.appendChild(sel);
+              return;
+          }
+
+          // —— “Action” cell: replace with Save/Cancel buttons
+          if (col === 'Action') {
+              td.innerHTML = '';
+              const btnSave   = document.createElement('button');
+              const btnCancel = document.createElement('button');
+              btnSave.textContent   = 'Save';
+              btnSave.className     = 'action-button save-button';
+              btnCancel.textContent = 'Cancel';
+              btnCancel.className   = 'action-button cancel-button';
+              td.appendChild(btnSave);
+              td.appendChild(btnCancel);
+
+              btnSave.addEventListener('click',   () => this.saveEdit(id));
+              btnCancel.addEventListener('click', () => this.cancelEdit());
+              return;
+          }
+
+          // —— orders.status dropdown
+          if (this.tableName === 'orders' && col === 'status') {
+              this.backup['status'] = td.textContent.trim();
+              const sel = document.createElement('select');
+              ['pending','paid','shipped','completed','cancelled'].forEach(optVal => {
+                  const opt = document.createElement('option');
+                  opt.value = optVal;
+                  opt.textContent = optVal.charAt(0).toUpperCase() + optVal.slice(1);
+                  if (optVal === rec.status) opt.selected = true;
+                  sel.appendChild(opt);
+              });
+              td.innerHTML = '';
+              td.appendChild(sel);
+              return;
+          }
+
+          // —— payments.payment_status dropdown
+          if (this.tableName === 'payments' && col === 'payment_status') {
+              this.backup['payment_status'] = td.textContent.trim();
+              const sel = document.createElement('select');
+              ['pending','completed','failed'].forEach(optVal => {
+                  const opt = document.createElement('option');
+                  opt.value = optVal;
+                  opt.textContent = optVal.charAt(0).toUpperCase() + optVal.slice(1);
+                  if (optVal === rec.payment_status) opt.selected = true;
+                  sel.appendChild(opt);
+              });
+              td.innerHTML = '';
+              td.appendChild(sel);
+              return;
+          }
+
+          // —— normal editable columns (text, picture, etc.)
+          if (this.editable.includes(col)) {
+              let initialValue = '';
+              if (col === 'picture') {
+                  this.backup[col] = td.innerHTML;
+                  const img = td.querySelector('img');
+                  if (img) initialValue = img.getAttribute('src');
+              } else {
+                  initialValue      = td.textContent;
+                  this.backup[col] = initialValue;
+              }
+
+              const input = document.createElement('input');
+              input.value = initialValue;
+              if (col === 'price') {
+                  input.type = 'number';
+                  input.step = '0.01';
+              } else if (col === 'stock') {
+                  input.type = 'number';
+                  input.step = '1';
+              }
+
+              td.innerHTML = '';
+              td.appendChild(input);
+          }
+          // non-editable & non‐category columns left alone
+      });
+    }
     
     cancelEdit() {
         if (!this.editRow) return;
@@ -517,48 +548,76 @@ document.addEventListener('DOMContentLoaded', () => {
     async saveEdit(id) {
       if (!this.editRow) return;
       const updated = {};
-      
-      // gather inputs
+
+      // gather inputs & selects
       this.editRow.querySelectorAll('td').forEach((td, i) => {
         const col = this.columns[i];
-        if (col==='category') {
-            const val = td.querySelector('select').value;
-            if (val != this.backup['category_id']) {
-              updated['category_id'] = val;
-            }
+
+        // category dropdown
+        if (col === 'category') {
+          const sel = td.querySelector('select');
+          const val = sel && sel.value;
+          if (val != this.backup['category_id']) {
+            updated['category_id'] = val;
           }
-          else if (this.editable.includes(col)) {
-            const inp = td.querySelector('input');
-            if (inp.value!== this.backup[col]) {
-              updated[col] = inp.value;
-            }
+          return;
+        }
+
+        // orders.status dropdown
+        if (this.tableName === 'orders' && col === 'status') {
+          const sel = td.querySelector('select');
+          const val = sel && sel.value;
+          if (val && val !== this.backup['status']) {
+            updated['status'] = val;
           }
+          return;
+        }
+
+        // payments.payment_status dropdown
+        if (this.tableName === 'payments' && col === 'payment_status') {
+          const sel = td.querySelector('select');
+          const val = sel && sel.value;
+          if (val && val !== this.backup['payment_status']) {
+            updated['payment_status'] = val;
+          }
+          return;
+        }
+
+        // normal editable columns => <input>
+        if (this.editable.includes(col)) {
+          const inp = td.querySelector('input');
+          if (!inp) return;
+          const val = inp.value;
+          if (val !== this.backup[col]) {
+            updated[col] = val;
+          }
+        }
       });
-      
+
+      // nothing changed?
       if (Object.keys(updated).length === 0) {
         this.cancelEdit();
         return;
       }
-  
+
+      // build the POST body
       const body = new FormData();
-      body.append('action', 'update');
-      body.append('id', id);
+      body.append('action',      'update');
+      body.append('id',          id);
       body.append('csrf_token', this.csrfToken);
       Object.entries(updated).forEach(([k, v]) => body.append(k, v));
-  
+
       try {
         const response = await fetch(`${this.url}?action=update&tableName=${this.tableName}&id=${id}`, {
           method: 'POST',
           body
         });
-        
         if (!response.ok) throw new Error(response.statusText);
         const res = await response.json();
-        
+
         if (res.success) {
-          this.showToast('Record updated', 'success');
-          // Update CSRF token if provided
           if (res.csrf_token) this.csrfToken = res.csrf_token;
+          this.showToast('Record updated', 'success');
           this.cache = {};
           this.fetchData();
         } else {

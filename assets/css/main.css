@@ -614,7 +614,7 @@ nav ul li {
   display: block;
   width: 80px;
   height: 4px;
-  background: var(--accent-color);
+  background: linear-gradient(135deg, #d42d2d, #8d07cc, #0117ff);
   margin: 15px auto 0;
   border-radius: 2px;
 }
@@ -1089,7 +1089,7 @@ footer {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: var(--accent-color); /* Color on hover */
+	background: linear-gradient(135deg, #d42d2d, #8d07cc, #0117ff); /* Color on hover */
 }
 
 .hover-overlay {
