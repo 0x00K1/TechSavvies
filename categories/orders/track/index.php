@@ -109,10 +109,10 @@ if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
               Shipping Address
             </h4>
             <div class="shipping-address">
-              <div class="shipping-name" id="shippingName">John Doe</div>
-              <div id="shippingAddress">123 Tech Street, Apt 456</div>
-              <div id="shippingCityState">San Francisco, CA 94107</div>
-              <div id="shippingCountry">United States</div>
+              <div class="shipping-name" id="shippingName"></div>
+              <div id="shippingAddress"></div>
+              <div id="shippingCityState"></div>
+              <div id="shippingCountry"></div>
             </div>
           </div>
 

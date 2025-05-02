@@ -26,6 +26,23 @@ if (!$order || $order['status'] !== 'pending') {
   header('Location: /categories/cart');
   exit;
 }
+
+$addresses = [];
+try {
+    $stmt = $pdo->prepare("SELECT * FROM addresses WHERE customer_id = ? ORDER BY is_primary DESC");
+    $stmt->execute([$_SESSION['user']['customer_id']]);
+    $addresses = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    error_log("Error loading addresses: ".$e->getMessage());
+}
+
+$hasAddress = count($addresses) > 0;
+if ($hasAddress) {
+    // pick the primary (or first) address
+    $primaryAddress = array_reduce($addresses, function($carry, $addr){
+        return $addr['is_primary'] ? $addr : $carry;
+    }, $addresses[0]);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,8 +102,8 @@ if (!$order || $order['status'] !== 'pending') {
             </div>
           </div>
           
-          <!-- ========== BILLING BOX (VIEW-ONLY) ========== -->
-          <div class="billing-box">
+          <!-- ========== BILLING BOX ========== -->
+          <div class="billing-box" id="billing-box">
             <h2>
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -94,22 +111,215 @@ if (!$order || $order['status'] !== 'pending') {
               </svg>
               Shipping Address
             </h2>
-            <ul class="billing-details">
-              <li><strong>Name:</strong> <span id="customerName"></span></li>
-              <li><strong>Email:</strong> <span id="customerEmail"></span></li>
-              <li><strong>Address:</strong> <span id="customerAddress"></span></li>
-              <li><strong>City:</strong> <span id="customerCity"></span></li>
-              <li><strong>State/Province:</strong> <span id="customerState"></span></li>
-              <li><strong>ZIP/Postal:</strong> <span id="customerZip"></span></li>
-              <li><strong>Country:</strong> <span id="customerCountry"></span></li>
-            </ul>
-            <button 
-              class="edit-billing-btn" 
-              id="editBillingBtn"
-            >
-              Edit Address
-            </button>
+            <?php if ($hasAddress): ?>
+              <ul class="billing-details">
+                <li>
+                  <strong>Name:</strong>
+                  <span id="customerName">
+                    <?= !empty($_SESSION['user']['username'])
+                        ? htmlspecialchars($_SESSION['user']['username'])
+                        : '' ?>
+                  </span>
+                </li>
+                <li>
+                  <strong>Email:</strong>
+                  <span id="customerEmail">
+                    <?= !empty($_SESSION['user']['email'])
+                        ? htmlspecialchars($_SESSION['user']['email'])
+                        : '' ?>
+                  </span>
+                </li>
+                <li>
+                  <strong>Address:</strong>
+                  <span id="customerAddress">
+                    <?= $hasAddress
+                        ? htmlspecialchars($primaryAddress['address_line1']
+                            . (!empty($primaryAddress['address_line2'])
+                                ? ', '.$primaryAddress['address_line2']
+                                : ''))
+                        : '' ?>
+                  </span>
+                </li>
+                <li>
+                  <strong>City:</strong>
+                  <span id="customerCity">
+                    <?= $hasAddress ? htmlspecialchars($primaryAddress['city']) : '' ?>
+                  </span>
+                </li>
+                <li>
+                  <strong>State/Province:</strong>
+                  <span id="customerState">
+                    <?= $hasAddress ? htmlspecialchars($primaryAddress['state']) : '' ?>
+                  </span>
+                </li>
+                <li>
+                  <strong>ZIP/Postal:</strong>
+                  <span id="customerZip">
+                    <?= $hasAddress ? htmlspecialchars($primaryAddress['postal_code']) : '' ?>
+                  </span>
+                </li>
+                <li>
+                  <strong>Country:</strong>
+                  <span id="customerCountry">
+                    <?= $hasAddress ? htmlspecialchars($primaryAddress['country']) : '' ?>
+                  </span>
+                </li>
+              </ul>
+
+              <button id="editBillingBtn" class="address-billing-btn"
+                      onclick="editAddress(<?= $primaryAddress['address_id'] ?>)">
+                Edit Address
+              </button>
+
+            <?php else: ?>
+              <ul class="billing-details">
+                <li>
+                  <strong>Name:</strong>
+                  <span id="customerName">
+                    <?= !empty($_SESSION['user']['username'])
+                        ? htmlspecialchars($_SESSION['user']['username'])
+                        : '' ?>
+                  </span>
+                </li>
+                <li>
+                  <strong>Email:</strong>
+                  <span id="customerEmail">
+                    <?= !empty($_SESSION['user']['email'])
+                        ? htmlspecialchars($_SESSION['user']['email'])
+                        : '' ?>
+                  </span>
+                </li>
+                <li>
+                  <strong>Address:</strong>
+                  <span id="customerAddress">
+                    <?= $hasAddress
+                        ? htmlspecialchars($primaryAddress['address_line1']
+                            . (!empty($primaryAddress['address_line2'])
+                                ? ', '.$primaryAddress['address_line2']
+                                : ''))
+                        : '' ?>
+                  </span>
+                </li>
+                <li>
+                  <strong>City:</strong>
+                  <span id="customerCity">
+                    <?= $hasAddress ? htmlspecialchars($primaryAddress['city']) : '' ?>
+                  </span>
+                </li>
+                <li>
+                  <strong>State/Province:</strong>
+                  <span id="customerState">
+                    <?= $hasAddress ? htmlspecialchars($primaryAddress['state']) : '' ?>
+                  </span>
+                </li>
+                <li>
+                  <strong>ZIP/Postal:</strong>
+                  <span id="customerZip">
+                    <?= $hasAddress ? htmlspecialchars($primaryAddress['postal_code']) : '' ?>
+                  </span>
+                </li>
+                <li>
+                  <strong>Country:</strong>
+                  <span id="customerCountry">
+                    <?= $hasAddress ? htmlspecialchars($primaryAddress['country']) : '' ?>
+                  </span>
+                </li>
+              </ul>
+
+              <button id="createAddressBtn" class="address-billing-btn" onclick="openAddPopup()">
+                Create Address
+              </button>
+            <?php endif; ?>
           </div>
+
+          <!-- Add Address Popup -->
+        <div id="add-popup" class="popup" onclick="closePopup('add-popup', event)">
+            <div class="form-container" onclick="event.stopPropagation()">
+                <h3>Add Address</h3>
+                <form id="addAddressForm" onsubmit="return validateAddressForm('addAddressForm')">
+                    <input type="hidden" name="action" value="add_address">
+                    <div class="form-row">
+                        <label for="country">Country</label>
+                        <input type="text" id="country" name="country" placeholder="Country" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="address_line1">Address Line 1</label>
+                        <input type="text" id="address_line1" name="address_line1" placeholder="Address Line 1" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="address_line2">Address Line 2</label>
+                        <input type="text" id="address_line2" name="address_line2" placeholder="Address Line 2">
+                    </div>
+                    <div class="form-row inline-fields">
+                        <div>
+                            <label for="city">City</label>
+                            <input type="text" id="city" name="city" placeholder="City" required>
+                        </div>
+                        <div>
+                            <label for="state">State/Province</label>
+                            <input type="text" id="state" name="state" placeholder="State/Province" required>
+                        </div>
+                        <div>
+                            <label for="postal_code">Postal Code</label>
+                            <input type="text" id="postal_code" name="postal_code" placeholder="Postal Code" required>
+                        </div>
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="is_primary" name="is_primary" <?php echo count($addresses) == 0 ? 'checked disabled' : ''; ?>>
+                        <label for="is_primary">Set as primary address</label>
+                    </div>
+                    <div class="button-group">
+                        <button type="submit" class="add-button">Save</button>
+                        <button type="button" class="cancel-button" onclick="closePopup('add-popup')">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Edit Address Popup -->
+        <div id="edit-popup" class="popup" onclick="closePopup('edit-popup', event)">
+            <div class="form-container" onclick="event.stopPropagation()">
+                <h3>Edit Address</h3>
+                <form id="editAddressForm" method="POST" action="/profile.php" onsubmit="return validateAddressForm('editAddressForm')">
+                    <input type="hidden" name="action" value="edit_address">
+                    <input type="hidden" id="edit_address_id" name="address_id" value="">
+                    <div class="form-row">
+                        <label for="edit_country">Country</label>
+                        <input type="text" id="edit_country" name="country" placeholder="Country" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="edit_address_line1">Address Line 1</label>
+                        <input type="text" id="edit_address_line1" name="address_line1" placeholder="Address Line 1" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="edit_address_line2">Address Line 2</label>
+                        <input type="text" id="edit_address_line2" name="address_line2" placeholder="Address Line 2">
+                    </div>
+                    <div class="form-row inline-fields">
+                        <div>
+                            <label for="edit_city">City</label>
+                            <input type="text" id="edit_city" name="city" placeholder="City" required>
+                        </div>
+                        <div>
+                            <label for="edit_state">State/Province</label>
+                            <input type="text" id="edit_state" name="state" placeholder="State/Province" required>
+                        </div>
+                        <div>
+                            <label for="edit_postal_code">Postal Code</label>
+                            <input type="text" id="edit_postal_code" name="postal_code" placeholder="Postal Code" required>
+                        </div>
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="edit_is_primary" name="is_primary">
+                        <label for="edit_is_primary">Set as primary address</label>
+                    </div>
+                    <div class="button-group">
+                        <button type="submit" class="add-button">Update</button>
+                        <button type="button" class="cancel-button" onclick="closePopup('edit-popup')">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
 
           <!-- ========== PAYMENT INFO (FORM) ========== -->
           <div class="payment-info">
@@ -267,10 +477,22 @@ if (!$order || $order['status'] !== 'pending') {
     </div>
   </div>
 
+  <!-- Dialog Modal for Success/Error -->
+  <div id="dialogOverlay" class="dialog-overlay">
+    <div class="dialog-box">
+      <p id="dialogMessage"></p>
+      <button onclick="closeDialog()">Done</button>
+    </div>
+  </div>
+
    <!-- Include Checkout JS -->
    <script>
     window.orderId = <?= json_encode($orderId) ?>;
+    function closeDialog() {
+        document.getElementById('dialogOverlay').style.display = 'none';
+    }
   </script>
   <script src="/assets/js/checkout.js"></script>
+  <script src="/assets/js/addressconfig.js"></script>
 </body>
 </html>

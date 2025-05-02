@@ -178,14 +178,14 @@ function getCartFromCookie() {
   
     // Gather customer details from the page
     const customerInfo = {
-      name: document.getElementById('customerName').textContent.trim(),
-      email: document.getElementById('customerEmail').textContent.trim(),
+      name:    document.getElementById('customerName').textContent.trim(),
+      email:   document.getElementById('customerEmail').textContent.trim(),
       address: document.getElementById('customerAddress').textContent.trim(),
-      city: document.getElementById('customerCity').textContent.trim(),
-      state: document.getElementById('customerState').textContent.trim(),
-      zip: document.getElementById('customerZip').textContent.trim(),
+      city:    document.getElementById('customerCity').textContent.trim(),
+      state:   document.getElementById('customerState').textContent.trim(),
+      postal_code:     document.getElementById('customerZip').textContent.trim(),
       country: document.getElementById('customerCountry').textContent.trim()
-    };
+    };    
   
     // Check if any required customer detail is missing
     if (
@@ -194,7 +194,7 @@ function getCartFromCookie() {
       !customerInfo.address ||
       !customerInfo.city ||
       !customerInfo.state ||
-      !customerInfo.zip ||
+      !customerInfo.postal_code ||
       !customerInfo.country
     ) {
       showToast('Please complete your shipping address details in your profile before checking out.', 'error');
@@ -256,7 +256,7 @@ function getCartFromCookie() {
           // Clear cart cookie
           document.cookie = 'cartItems=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
   
-          showToast('Payment successful! Loading...', 'success');
+          showToast('Payment successful! ...', 'success');
   
           // Store order info in session storage for confirmation page
           const order = {
@@ -273,6 +273,7 @@ function getCartFromCookie() {
             orderStatus: 'paid'
           };
           sessionStorage.setItem('lastOrder', JSON.stringify(order));
+          sessionStorage.setItem('shippingInfo', JSON.stringify(customerInfo));
   
           // Redirect after a short delay
           setTimeout(() => {
@@ -328,6 +329,53 @@ function getCartFromCookie() {
   
   // Initialize page
   document.addEventListener('DOMContentLoaded', function() {
+    const addForm = document.getElementById('addAddressForm');
+    if (!addForm) return;
+
+    addForm.addEventListener('submit', e => {
+      e.preventDefault();
+      // validate fields
+      if (!validateAddressForm('addAddressForm')) return;
+
+      // grab all the inputs
+      const name          = document.getElementById('customerName').textContent.trim();
+      const country       = document.getElementById('country').value.trim();
+      const addr1         = document.getElementById('address_line1').value.trim();
+      const addr2         = document.getElementById('address_line2').value.trim();
+      const city          = document.getElementById('city').value.trim();
+      const state         = document.getElementById('state').value.trim();
+      const postal_code   = document.getElementById('postal_code').value.trim();
+
+      // build the Address line
+      const address = addr1 + (addr2 ? ', ' + addr2 : '');
+
+      // populate the spans in the billing-details list
+      document.getElementById('customerAddress').textContent = address;
+      document.getElementById('customerCity')   .textContent = city;
+      document.getElementById('customerState')  .textContent = state;
+      document.getElementById('customerZip')    .textContent = postal_code;
+      document.getElementById('customerCountry').textContent = country;
+
+      // persist to sessionStorage for later pages
+      sessionStorage.setItem('shippingInfo', JSON.stringify({
+        name,
+        address,
+        city,
+        state,
+        postal_code,
+        country
+      }));
+
+      // switch "Create Address" button to "Edit Address"
+      const btn = document.getElementById('createAddressBtn');
+      btn.textContent = 'Edit Address';
+      btn.id = 'editBillingBtn';
+      btn.onclick = () => openEditPopup();
+
+      // hide the popup
+      closePopup('add-popup');
+    });
+    
     renderCartPreview();
     renderOrderSummary();
     toggleCreditCardFields();
@@ -372,25 +420,27 @@ function getCartFromCookie() {
   // Load customer details
   function loadCustomerDetails() {
     fetch('/includes/get_customer_details.php', { credentials: 'include' })
-      .then(response => response.json())
+      .then(r => r.json())
       .then(data => {
-        if (data.success) {
-          const customerData = data.customer;
-          document.getElementById('customerName').textContent = customerData.name;
-          document.getElementById('customerEmail').textContent = customerData.email;
-          
-          // Concatenate address_line1 and address_line2 (if exists)
-          let fullAddress = customerData.address_line1;
-          if (customerData.address_line2) {
-            fullAddress += ', ' + customerData.address_line2;
-          }
-          document.getElementById('customerAddress').textContent = fullAddress;
-          document.getElementById('customerCity').textContent = customerData.city;
-          document.getElementById('customerState').textContent = customerData.state;
-          document.getElementById('customerZip').textContent = customerData.postal_code;
-          document.getElementById('customerCountry').textContent = customerData.country;
-        }
-      })
+        if (!data.success) return;
+  
+        const c = data.customer;
+  
+        const mappings = [
+          ['customerName',      c.name],
+          ['customerEmail',     c.email],
+          ['customerAddress',   [c.address_line1, c.address_line2].filter(Boolean).join(', ')],
+          ['customerCity',      c.city],
+          ['customerState',     c.state],
+          ['customerZip',       c.postal_code],
+          ['customerCountry',   c.country],
+        ];
+  
+        mappings.forEach(([id, value]) => {
+          const el = document.getElementById(id);
+          if (el) el.textContent = value;
+        });
+      });
   }  
   
   (function() {

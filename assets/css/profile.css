@@ -66,8 +66,14 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="password
 .form-row {
     margin-bottom: 15px;
 }
+.form-container h3 {
+    text-align: center;
+    margin-bottom: 20px;
+}
 .form-row label {
     display: block;
+    text-align: center;
+    font-weight: 500;
     margin-bottom: 5px;
 }
 .form-row input, .form-row select {
@@ -288,4 +294,28 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="password
 .no-addresses, .no-orders {
     margin: 20px 0;
     color: #666;
+}
+
+.add-button:hover,
+.view-orders-button:hover,
+.dialog-box button:hover {
+  filter: brightness(1.1);
+}
+.cancel-button:hover {
+  background-color: #222;
+}
+.edit-btn:hover {
+  background-color: #45a049;
+}
+.delete-btn:hover {
+  background-color: #e53935;
+}
+.primary-btn:hover {
+  background-color: #1976d2;
+}
+.view-order-btn:hover {
+  background-color: #1976d2;
+}
+.button-group button:hover {
+  filter: brightness(1.1);
 }

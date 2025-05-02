@@ -120,6 +120,7 @@ $customerId  = $isLoggedIn ? $_SESSION['customer_id'] : null;
                         <i class="fas fa-shopping-cart"></i> Add to Cart
                     </button>
                 </div>
+                <button id="helpButton" class="help-button"><i class="fas fa-question-circle"></i> Help</button>
             </div>
         </div>
 
@@ -211,13 +212,78 @@ $customerId  = $isLoggedIn ? $_SESSION['customer_id'] : null;
         </div>
     </div>
 
+    <!-- Help Modal -->
+    <div id="helpModal" class="help-modal" style="display: none;">
+        <div class="help-modal-content">
+            <button id="closeHelpModal" class="help-modal-close">&times;</button>
+            <h3>Product Page Help</h3>
+            
+            <div class="help-section">
+                <h4><i class="fas fa-info-circle"></i> Product Information</h4>
+                <p>This page displays detailed information about the product, including:</p>
+                <ul>
+                    <li>Product image (click to enlarge)</li>
+                    <li>Product name and description</li>
+                    <li>Price and availability</li>
+                    <li>Customer reviews and ratings</li>
+                    <li>Product specifications (color, size, etc. if applicable)</li>
+                </ul>
+            </div>
+            
+            <div class="help-section">
+                <h4><i class="fas fa-shopping-cart"></i> Adding to Cart</h4>
+                <p>To purchase this item:</p>
+                <ol>
+                    <li>Review the product details</li>
+                    <li>Check availability (shown as "In Stock" or "Out of Stock")</li>
+                    <li>Click the "Add to Cart" button</li>
+                    <li>You'll see a confirmation message when the item is added</li>
+                    <li>To complete your purchase, Click the Cart icon on the header or go to the <a href="/categories/cart">Cart</a> page</li>
+                </ol>
+            </div>
+            
+            <div class="help-section">
+                <h4><i class="fas fa-star"></i> Reviews</h4>
+                <p>Read customer reviews at the bottom of the page to help with your decision.</p>
+                <p><strong>To write a review:</strong></p>
+                <ol>
+                    <li>You must be logged in (look for the login link if you aren't)</li>
+                    <li>Select a star rating (1-5 stars)</li>
+                    <li>Write your review in the text box</li>
+                    <li>Click "Submit Review"</li>
+                </ol>
+            </div>
+            
+            <div class="help-section">
+                <h4><i class="fas fa-question-circle"></i> Need More Help?</h4>
+                <p>If you have any questions about this product or need further assistance, please contact our customer service team at <a href="/contact.php">Contact</a> page.</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Include footer -->
     <?php require_once __DIR__ . '/../../assets/php/footer.php'; ?>
     
     <script src="/assets/js/addtocart.js"></script>
     <script>
-        window.isRoot = <?= json_encode($_SESSION['is_root'] ?? false) ?>;
         document.addEventListener('DOMContentLoaded', function() {
+            window.isRoot = <?= json_encode($_SESSION['is_root'] ?? false) ?>;
+            const loginLink = document.getElementById('login');
+            if (loginLink) {
+                loginLink.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    // if you have a flag telling you the user is already the root user:
+                    if (window.isRoot === true) {
+                    showToast('Not for Roots.', 'error');
+                    return;
+                    }
+                    // make sure you have a global isAuthenticated boolean
+                    if (!window.isAuthenticated) {
+                    openAuthModal();
+                    }
+                });
+            }
+
             // Toast functionality
             const toastContainer = document.getElementById('toastContainer');
             const toast = document.getElementById('toast');
@@ -266,6 +332,11 @@ $customerId  = $isLoggedIn ? $_SESSION['customer_id'] : null;
                         showToast('Review must be at least 3 characters long', 'error');
                         return false;
                     }
+
+                    if (reviewText.length > 500) {
+                        showToast('Review must be at most 500 characters long', 'error');
+                        return false;
+                    }
                     
                     // Show loading overlay
                     document.getElementById('loadingOverlay').style.display = 'flex';
@@ -291,6 +362,39 @@ $customerId  = $isLoggedIn ? $_SESSION['customer_id'] : null;
                         console.error('Error:', error);
                     });
                 });
+            }
+        });
+
+         // Get modal elements
+        const helpModal = document.getElementById('helpModal');
+        const helpButton = document.getElementById('helpButton');
+        const closeHelpModal = document.getElementById('closeHelpModal');
+        
+        // Open modal when help button is clicked
+        helpButton.addEventListener('click', function() {
+            helpModal.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling while modal is open
+        });
+        
+        // Close modal when close button is clicked
+        closeHelpModal.addEventListener('click', function() {
+            helpModal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        });
+        
+        // Close modal when clicking outside of modal content
+        helpModal.addEventListener('click', function(event) {
+            if (event.target === helpModal) {
+                helpModal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Re-enable scrolling
+            }
+        });
+        
+        // Close modal when ESC key is pressed
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && helpModal.style.display === 'flex') {
+                helpModal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Re-enable scrolling
             }
         });
     </script>

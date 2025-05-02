@@ -522,3 +522,141 @@ form.submitted .star-rating:not(:has(input:checked)) + .error-message {
       padding: 15px;
   }
 }
+
+/* Help button */
+.help-button {
+  background: transparent;
+  border: none;
+  color: #8d07cc;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-left: 10px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.help-button:hover {
+  background-color: #f0e6f7;
+  color: #6a05aa;
+}
+
+.help-button i {
+  margin-right: 0.5em;
+}
+
+/* Modal backdrop + centering */
+.help-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+.help-modal-content {
+  background: #fff;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+      opacity: 0;
+      transform: translateY(-20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.help-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #777;
+  cursor: pointer;
+  transition: color 0.2s;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.help-modal-close:hover {
+  color: #d42d2d;
+  background-color: #f9f9f9;
+}
+
+.help-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.help-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.help-section h4 {
+  color: #0117ff;
+  margin-bottom: 0.7rem;
+  display: flex;
+  align-items: center;
+}
+
+.help-section h4 i {
+  margin-right: 8px;
+  color: #8d07cc;
+}
+
+.help-section ul, 
+.help-section ol {
+  padding-left: 25px;
+  margin: 10px 0;
+}
+
+.help-section li {
+  margin-bottom: 5px;
+}
+
+.help-section a {
+  color: #8d07cc;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.help-section a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .help-modal-content {
+      padding: 1.5rem;
+      width: 95%;
+  }
+}

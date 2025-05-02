@@ -5,11 +5,12 @@ require_once __DIR__ . '/../assets/php/main.php';
 require_once __DIR__ . '/secure_session.php';
 require_once __DIR__ . '/db.php';
 
+header('Content-Type: application/json; charset=utf-8');
+
 // Check if user is logged in and not a root user
 if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     // Return JSON error for AJAX or redirect for form submit
     if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
-        header('Content-Type: application/json');
         echo json_encode(['success' => false, 'message' => 'Unauthorized access']);
         exit;
     } else {
@@ -110,7 +111,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     
                     // Commit transaction
                     $pdo->commit();
-                    $success = "Address added successfully.";
                 }
             } catch (PDOException $e) {
                 // Rollback transaction on error
@@ -127,8 +127,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['success_message'] = $success;
         }
         
-        header("Location: /profile.php#address");
-        exit;
+        $referer = $_SERVER['HTTP_REFERER'] ?? '';
+        if (strpos($referer, '/categories/checkouts') !== false && strpos($referer, $_SERVER['HTTP_HOST']) !== false) {
+            header("Location: $referer");
+            exit;
+        } else {
+            header("Location: /profile.php#address");
+            exit;
+        }
     }
     
     // Edit existing address
@@ -200,8 +206,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['success_message'] = $success;
         }
         
-        header("Location: /profile.php#address");
-        exit;
+        $referer = $_SERVER['HTTP_REFERER'] ?? '';
+        if (strpos($referer, '/categories/checkouts') !== false && strpos($referer, $_SERVER['HTTP_HOST']) !== false) {
+            header("Location: $referer");
+            exit;
+        } else {
+            header("Location: /profile.php#address");
+            exit;
+        }
     }
     
     // Set address as primary
@@ -257,8 +269,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $_SESSION['success_message'] = $success;
             }
-            header("Location: /profile.php#address");
-            exit;
+            $referer = $_SERVER['HTTP_REFERER'] ?? '';
+            if (strpos($referer, '/categories/checkouts') !== false && strpos($referer, $_SERVER['HTTP_HOST']) !== false) {
+                header("Location: $referer");
+                exit;
+            } else {
+                header("Location: /profile.php#address");
+                exit;
+            }
         }
     }
     
@@ -307,8 +325,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             } else {
                 $_SESSION['success_message'] = $success;
-                header("Location: /profile.php#address");
-                exit;
+                $referer = $_SERVER['HTTP_REFERER'] ?? '';
+                if (strpos($referer, '/categories/checkouts') !== false && strpos($referer, $_SERVER['HTTP_HOST']) !== false) {
+                    header("Location: $referer");
+                    exit;
+                } else {
+                    header("Location: /profile.php#address");
+                    exit;
+                }
             }
             
         } catch (Exception $e) {
@@ -328,8 +352,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             } else {
                 $_SESSION['error_message'] = $error;
-                header("Location: /profile.php#address");
-                exit;
+                $referer = $_SERVER['HTTP_REFERER'] ?? '';
+                if (strpos($referer, '/categories/checkouts') !== false && strpos($referer, $_SERVER['HTTP_HOST']) !== false) {
+                    header("Location: $referer");
+                    exit;
+                } else {
+                    header("Location: /profile.php#address");
+                    exit;
+                }
             }
         }
     }

@@ -25,49 +25,60 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   /**
-   * Fetch order details from the server
+   * Fetch order details from the server and merge in any locally‑saved shipping info.
    */
   function fetchOrderDetails(orderId) {
-    // Show loading state
+    // Show loading overlay
     showLoadingState();
-    
-    // Update URL with order ID for sharing/bookmarking
-    const newUrl = window.location.pathname + '?id=' + orderId;
-    window.history.pushState({ orderId: orderId }, '', newUrl);
-    
-    // Fetch order tracking details from the server
+
+    // Update the URL so users can bookmark/share
+    const newUrl = window.location.pathname + '?id=' + encodeURIComponent(orderId);
+    window.history.pushState({ orderId }, '', newUrl);
+
+    // Fetch from your tracking endpoint
     fetch(`/includes/order_tracking.php?order_id=${orderId}`, {
       method: 'GET',
-      credentials: 'same-origin', // Send cookies for auth
-      headers: {
-        'Accept': 'application/json'
-      }
+      credentials: 'same-origin',
+      headers: { 'Accept': 'application/json' }
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Order not found or access denied');
-      }
-      return response.json();
-    })
-    .then(orderData => {
-      // Hide loading state
-      hideLoadingState();
-      
-      if (orderData.error) {
-        showOrderNotFound(orderData.error);
-        return;
-      }
-      
-      // Display order details
-      displayOrderDetails(orderData);
-    })
-    .catch(error => {
-      // Hide loading state
-      hideLoadingState();
-      
-      console.error('Error fetching order details:', error);
-      showOrderNotFound('Unable to load order details. Please try again or contact customer support.');
-    });
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Order not found or access denied');
+        }
+        return response.json();
+      })
+      .then(orderData => {
+        // Hide loading overlay
+        hideLoadingState();
+
+        // Handle server‑side error
+        if (orderData.error) {
+          return showOrderNotFound(orderData.error);
+        }
+
+        // Merge in locally saved shipping info as fallback
+        const saved = JSON.parse(sessionStorage.getItem('shippingInfo') || '{}');
+        const srv   = orderData.shipping || {};
+        orderData.shipping = {
+          name:        saved.name        || srv.name        || '',
+          address:     saved.address     || srv.address     || '',
+          city:        saved.city        || srv.city        || '',
+          state:       saved.state       || srv.state       || '',
+          postal_code: saved.postal_code || srv.postal_code || '',
+          country:     saved.country     || srv.country     || ''
+        };
+        // Re‑persist in case of a refresh
+        sessionStorage.setItem('shippingInfo', JSON.stringify(orderData.shipping));
+
+        // Finally, render on the page
+        displayOrderDetails(orderData);
+      })
+      .catch(error => {
+        // On network/server errors
+        hideLoadingState();
+        console.error('Error fetching order details:', error);
+        showOrderNotFound('Unable to load order details. Please try again or contact support.');
+      });
   }
   
   /**
@@ -142,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update shipping information
     document.getElementById('shippingName').textContent = orderData.shipping.name;
     document.getElementById('shippingAddress').textContent = orderData.shipping.address;
-    document.getElementById('shippingCityState').textContent = `${orderData.shipping.city}, ${orderData.shipping.state} ${orderData.shipping.zip}`;
+    document.getElementById('shippingCityState').textContent = `${orderData.shipping.city}, ${orderData.shipping.state} ${orderData.shipping.postal_code}`;
     document.getElementById('shippingCountry').textContent = orderData.shipping.country;
     
     // Update tracking information if available

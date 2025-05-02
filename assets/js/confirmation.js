@@ -16,49 +16,85 @@ document.addEventListener('DOMContentLoaded', function() {
     setupEmailResend();
   });
   
+  function readCookie(name) {
+    const match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+    return match ? decodeURIComponent(match[1]) : null;
+  }
+  
+  // helper to write a cookie
+  function writeCookie(name, value, days = 365) {
+    const expires = new Date(Date.now() + days*864e5).toUTCString();
+    document.cookie = name + '=' + encodeURIComponent(value) + 
+                      '; path=/; expires=' + expires;
+  }
+  
   /**
-   * Fetch order details from the server using the confirmation_process.php endpoint
+   * Fetch order details from the server using the confirmation_process.php endpoint,
+   * then ensure orderData.customer has all fields, falling back to sessionStorage if needed.
    */
   function fetchOrderDetails(orderId) {
-    // Show loading state
+    // Show loading overlay
     showLoadingState();
-    
+
     fetch(`/includes/confirmation_process.php?order_id=${orderId}`, {
       method: 'GET',
-      credentials: 'same-origin', // Send cookies for auth
-      headers: {
-        'Accept': 'application/json'
-      }
+      credentials: 'same-origin',
+      headers: { 'Accept': 'application/json' }
     })
     .then(response => {
-      if (!response.ok) {
-        throw new Error('Order not found or access denied');
-      }
+      if (!response.ok) throw new Error('Order not found or access denied');
       return response.json();
     })
     .then(orderData => {
-      // Hide loading state
+      // Hide loading overlay
       hideLoadingState();
+
+      // Clear the cart
       clearCart();
+
+      // Handle server error
       if (orderData.error) {
         showErrorMessage(orderData.error);
         return;
       }
-      
-      // Store order in session storage for potential page refreshes
+
+      // Then see if we have a previous version in sessionStorage
+      let savedCust = {};
+      try {
+        const raw = sessionStorage.getItem('lastOrder');
+        if (raw) {
+          const saved = JSON.parse(raw);
+          if (saved.customer) savedCust = saved.customer;
+        }
+      } catch (_) {
+        // ignore JSON parse errors
+      }
+
+      const saved = JSON.parse(sessionStorage.getItem('shippingInfo') || '{}');
+      const srv  = orderData.customer;
+      orderData.customer = {
+        name:    srv.name    || saved.name    || '',
+        email:   srv.email   || saved.email   || '',
+        address: srv.address || saved.address || '',
+        city:    srv.city    || saved.city    || '',
+        state:   srv.state   || saved.state   || '',
+        postal_code: srv.postal_code || saved.postal_code || '',
+        country: srv.country || saved.country || ''
+      };
+
+      // Re‑save the merged orderData back into sessionStorage
       sessionStorage.setItem('lastOrder', JSON.stringify(orderData));
-      
-      // Initialize the page with order data
+      sessionStorage.setItem('shippingInfo', JSON.stringify(orderData.customer));
+
+      // Initialize the confirmation page UI
       initializeConfirmationPage(orderData);
     })
     .catch(error => {
-      // Hide loading state
       hideLoadingState();
-      
       console.error('Error fetching order details:', error);
-      showErrorMessage('Unable to load order details. Please try again or contact customer support.');
-      
-      // Fallback to session storage
+      showErrorMessage('Unable to load order details. Please try again later.');
+
+      // Fallback to sessionStorage if available
       loadOrderFromSessionStorage();
     });
   }
@@ -342,7 +378,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update shipping address
     document.getElementById('shippingName').textContent = order.customer.name;
     document.getElementById('shippingAddress').textContent = order.customer.address;
-    document.getElementById('shippingCityState').textContent = `${order.customer.city}, ${order.customer.state} ${order.customer.zip}`;
+    document.getElementById('shippingCityState').textContent = `${order.customer.city}, ${order.customer.state} ${order.customer.postal_code}`;
     document.getElementById('shippingCountry').textContent = order.customer.country;
     
     // Update payment method display
@@ -354,6 +390,22 @@ document.addEventListener('DOMContentLoaded', function() {
       sendEmailReceiptAutomatically(order);
       sessionStorage.setItem(autoEmailSentKey, "true");
     }
+
+    (function saveToPastPurchases() {
+      // keep only the 10 most recent
+      const existing = JSON.parse(readCookie('pastPurchases') || '[]');
+      // we’ll store minimal info: id, date, total
+      const entry = {
+        orderId:    order.orderId,
+        orderDate:  order.orderDate,
+        total:      order.totals.total
+      };
+      // dedupe if they refresh
+      const filtered = existing.filter(e => e.orderId !== entry.orderId);
+      filtered.unshift(entry);
+      if (filtered.length > 10) filtered.pop();
+      writeCookie('pastPurchases', JSON.stringify(filtered));
+    })();
   }  
   
   // Render ordered items

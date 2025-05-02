@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     <!-- Profile Section -->
     <div class="profile">
       <h1>Profile</h1>
-      <form method="POST" action="profile.php">
+      <form method="POST" action="profile.php" onsubmit="return validateProfileForm()">
           <input type="hidden" name="action" value="update_profile">
           <label for="username">Username</label>
           <input type="text" id="username" name="username" placeholder="Username" required value="<?php echo htmlspecialchars($user['username']); ?>">
@@ -215,7 +215,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         <div id="add-popup" class="popup" onclick="closePopup('add-popup', event)">
             <div class="form-container" onclick="event.stopPropagation()">
                 <h3>Add Address</h3>
-                <form method="POST" action="profile.php">
+                <form id="addAddressForm" method="POST" action="profile.php" onsubmit="return validateAddressForm('addAddressForm')">
                     <input type="hidden" name="action" value="add_address">
                     <div class="form-row">
                         <label for="country">Country</label>
@@ -259,7 +259,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         <div id="edit-popup" class="popup" onclick="closePopup('edit-popup', event)">
             <div class="form-container" onclick="event.stopPropagation()">
                 <h3>Edit Address</h3>
-                <form method="POST" action="profile.php">
+                <form id="editAddressForm" method="POST" action="profile.php" onsubmit="return validateAddressForm('editAddressForm')">
                     <input type="hidden" name="action" value="edit_address">
                     <input type="hidden" id="edit_address_id" name="address_id" value="">
                     <div class="form-row">
@@ -351,130 +351,54 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
   </div>
 
   <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/addressconfig.js"></script>
   <script>
-    // Show/hide popup functions
-    function openAddPopup() {
-        document.getElementById('add-popup').style.display = 'flex';
-    }
-    
-    function closePopup(popupId, event) {
-        if (event && event.target !== event.currentTarget) {
-            return;
-        }
-        document.getElementById(popupId).style.display = 'none';
-    }
-    
-    // Address management functions
-    function editAddress(id) {
-        // Fetch address data via AJAX
-        fetch(`/includes/config_address.php?id=${id}`, {
-            credentials: 'include',  // or 'same-origin' if same-domain
-            headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Populate form fields
-                    const address = data.address;
-                    document.getElementById('edit_address_id').value = address.address_id;
-                    document.getElementById('edit_country').value = address.country;
-                    document.getElementById('edit_address_line1').value = address.address_line1;
-                    document.getElementById('edit_address_line2').value = address.address_line2 || '';
-                    document.getElementById('edit_city').value = address.city;
-                    document.getElementById('edit_state').value = address.state;
-                    document.getElementById('edit_postal_code').value = address.postal_code;
-                    document.getElementById('edit_is_primary').checked = address.is_primary == 1;
-                    
-                    // Display the popup
-                    document.getElementById('edit-popup').style.display = 'flex';
-                } else {
-                    showDialog(data.message || 'Failed to load address data.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showDialog('An error occurred while fetching the address data.');
-            });
-    }
-    
-    function deleteAddress(id) {
-        if (!confirm('Are you sure you want to delete this address?')) return;
-
-        const formBody = new URLSearchParams();
-        formBody.append('id', id);
-
-        fetch('/includes/config_address.php', {
-            method: 'POST',
-            credentials: 'include',          // important for same-domain session cookies
-            headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'X-Requested-With': 'XMLHttpRequest'
-            },
-            body: formBody.toString()
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-            showDialog(data.message);
-            setTimeout(() => window.location.reload(), 1500);
-            } else {
-            showDialog(data.message || 'Failed to delete address.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showDialog('An error occurred while deleting the address.');
-        });
-        }
-    
-    function setPrimaryAddress(id) {
-        // Send request to set this address as primary
-        const formBody = new URLSearchParams();
-        formBody.append('action', 'set_primary');
-        formBody.append('address_id', id);
-        
-        fetch('/includes/config_address.php', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            body: formBody.toString()
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                showDialog(data.message);
-                // Reload the page to show changes
-                setTimeout(() => { window.location.reload(); }, 1500);
-            } else {
-                showDialog(data.message || 'Failed to set address as primary.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            showDialog('An error occurred while updating the address.');
-        });
-    }
-    
-    // Dialog modal functions
     function showDialog(message) {
-      document.getElementById('dialogMessage').innerText = message;
-      document.getElementById('dialogOverlay').style.display = 'flex';
+        document.getElementById('dialogMessage').innerText = message;
+        document.getElementById('dialogOverlay').style.display = 'flex';
     }
     
     function closeDialog() {
       document.getElementById('dialogOverlay').style.display = 'none';
     }
-    
-    <?php if (!empty($success)): ?>
-      showDialog("<?php echo addslashes($success); ?>");
-    <?php elseif (!empty($error)): ?>
-      showDialog("<?php echo addslashes($error); ?>");
-    <?php endif; ?>
+
+    function validateProfileForm() {
+        const usernameInput = document.getElementById('username');
+        const emailInput = document.getElementById('email');
+        const username = usernameInput.value.trim();
+        const email = emailInput.value.trim();
+
+        let isValid = true;
+        let errorMsg = '';
+
+        // Username validation
+        if (username.length < 3 || username.length > 20) {
+            errorMsg += '- Username must be between 3 and 20 characters.\n';
+            usernameInput.classList.add('input-error');
+            isValid = false;
+        } else if (!/^[a-zA-Z0-9_.]+$/.test(username)) {
+            errorMsg += '- Username may only contain letters, numbers, underscores, and periods.\n';
+            usernameInput.classList.add('input-error');
+            isValid = false;
+        } else {
+            usernameInput.classList.remove('input-error');
+        }
+
+        // Email validation
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            errorMsg += '- Please enter a valid email address.\n';
+            emailInput.classList.add('input-error');
+            isValid = false;
+        } else {
+            emailInput.classList.remove('input-error');
+        }
+
+        if (!isValid) {
+            showDialog('Please fix the following:\n' + errorMsg);
+        }
+
+        return isValid;
+    }
   </script>
 </body>
 </html>
