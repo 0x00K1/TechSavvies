@@ -79,20 +79,36 @@ document.addEventListener('DOMContentLoaded', function() {
             messageStatus.innerHTML = '<div class="message-loading">Sending your message...</div>';
             const formData = new FormData(contactForm);
 
-            fetch(contactForm.action, { method: 'POST', body: formData })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        messageStatus.innerHTML = '<div class="message-success">' + data.message + '</div>';
-                        contactForm.reset();
-                        window.scrollTo({ top: messageStatus.offsetTop - 20, behavior: 'smooth' });
-                    } else {
-                        messageStatus.innerHTML = '<div class="message-error">' + data.message + '</div>';
-                    }
+            fetch(contactForm.action, {
+                method: 'POST',
+                body: formData
+              })
+                .then(async res => {
+                  const text = await res.text();  // grab the raw response
+                  if (!res.ok) {
+                    throw new Error(`Server returned ${res.status}: ${text}`);
+                  }
+                  // try to parse JSON
+                  try {
+                    return JSON.parse(text);
+                  } catch (parseErr) {
+                    throw new Error(`Invalid JSON: ${parseErr.message}\nResponse was:\n${text}`);
+                  }
                 })
-                .catch(() => {
-                    messageStatus.innerHTML = '<div class="message-error">An unexpected error occurred.</div>';
+                .then(data => {
+                  if (data.success) {
+                    messageStatus.innerHTML = `<div class="message-success">${data.message}</div>`;
+                    contactForm.reset();
+                    window.scrollTo({ top: messageStatus.offsetTop - 20, behavior: 'smooth' });
+                  } else {
+                    messageStatus.innerHTML = `<div class="message-error">${data.message}</div>`;
+                  }
+                })
+                .catch(err => {
+                  console.error('Contact form error:', err);
+                  messageStatus.innerHTML = `<div class="message-error">An error occurred: ${err.message}</div>`;
                 });
+              
         });
     }
 

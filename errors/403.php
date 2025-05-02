@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<?php require_once __DIR__ . '/assets/php/main.php'; ?>
-	<link rel="stylesheet" href="assets/css/main.css" />
+	<?php require_once __DIR__ . '/../assets/php/main.php'; ?>
+	<link rel="stylesheet" href="/assets/css/main.css" />
 	<title>Forbidden 403</title>
-	<link href="https://fonts.googleapis.com/css?family=Montserrat:700,900" rel="stylesheet">
 	<style>
 		#notfound {
 			position: relative;
@@ -108,7 +107,7 @@
 	</style>
 </head>
 <body>
-	<?php require_once __DIR__ . '/assets/php/header.php'; ?>
+	<?php require_once __DIR__ . '/../assets/php/header.php'; ?>
 	<div id="notfound">
 		<div class="notfound">
 			<div class="notfound-403">

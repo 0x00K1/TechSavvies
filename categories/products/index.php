@@ -266,8 +266,8 @@ $customerId  = $isLoggedIn ? $_SESSION['customer_id'] : null;
     
     <script src="/assets/js/addtocart.js"></script>
     <script>
+        window.isRoot = <?= json_encode($_SESSION['is_root'] ?? false) ?>;
         document.addEventListener('DOMContentLoaded', function() {
-            window.isRoot = <?= json_encode($_SESSION['is_root'] ?? false) ?>;
             const loginLink = document.getElementById('login');
             if (loginLink) {
                 loginLink.addEventListener('click', function (e) {

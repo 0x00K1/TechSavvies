@@ -122,7 +122,7 @@ try {
                     <body>
                         <div class='container'>
                             <div class='header'>
-                                <img class='logo' src='https://i.postimg.cc/rDHDSjZw/Logo.png' alt='TechSavvies.shop Logo'>
+                                <img class='logo' src='https://i.ibb.co/4wj7dT0N/Logo.png' alt='TechSavvies.shop Logo'>
                                 <h2>New Contact Form Submission</h2>
                             </div>
                             <div class='content'>
@@ -133,7 +133,7 @@ try {
                                 
             $htmlBody .= "</div>
                             <div class='credit-box'>
-                                <p>Sent from <strong>TechSavvies.shop</strong> contact form.</p>
+                                <p>Sent from <strong>TechSavvies.shop</strong> contact page.</p>
                             </div>
                         </div>
                     </body>
@@ -147,9 +147,6 @@ try {
                 . "Subject: " . htmlspecialchars($subject) . "\n"
                 . "Message:\n" . htmlspecialchars($message) . "\n\n";
                 
-            if ($addToTestimonials) {
-                $plainTextBody .= "Note: The sender has agreed to share this message as a testimonial.\n\n";
-            }
                 
             $plainTextBody .= "Sent from TechSavvies.shop contact form.";
 
@@ -160,7 +157,6 @@ try {
             echo json_encode([
                 'success' => true,
                 'message' => 'Message sent successfully!',
-                'testimonial_saved' => $addToTestimonials && $testimonialSaved
             ]);
         } catch (Exception $e) {
             error_log('Mailer Error: ' . $mail->ErrorInfo);

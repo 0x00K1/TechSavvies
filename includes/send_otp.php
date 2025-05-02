@@ -97,7 +97,7 @@ $htmlMessage = <<<HTML
 <body>
   <div class="email-container">
     <div class="email-content">
-      <img class="logo" src='https://i.postimg.cc/rDHDSjZw/Logo.png' alt="TechSavvies.shop Logo">
+      <img class="logo" src='https://i.ibb.co/4wj7dT0N/Logo.png' alt="TechSavvies.shop Logo">
       <h2>OTP for TechSavvies.shop</h2>
       <p>Holla, Your One Time Password is:</p>
       <p class="otp-code">$otp</p>
