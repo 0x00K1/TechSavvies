@@ -92,8 +92,8 @@ $popularProducts = getPopularProducts(10);
                 <div class="slider-wrapper">
                     <?php foreach ($popularProducts as $product): ?>
                         <div class="slide">
-                            <a href="categories/products/?product_id=<?= htmlspecialchars(urlencode($product['product_id']));?>" class="product-card">
-                                <img src="<?= htmlspecialchars($product['picture']) ?>" alt="<?= htmlspecialchars($product['product_name']) ?>">
+                            <a href="categories/products?product_id=<?= htmlspecialchars(urlencode($product['product_id']));?>" class="product-card">
+                                <img src="<?= htmlspecialchars($product['picture']) ?>" alt="<?= htmlspecialchars($product['product_name']) ?>" onerror="handleImageError(this, '<?php echo htmlspecialchars($product['picture']); ?>')">
                                 <div class="product-info">
                                     <h3><?= htmlspecialchars($product['product_name']) ?></h3>
                                 </div>

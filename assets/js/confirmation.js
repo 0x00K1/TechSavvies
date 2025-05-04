@@ -416,7 +416,7 @@ document.addEventListener('DOMContentLoaded', function() {
     items.forEach(item => {
       html += `
         <div class="ordered-item">
-          <img src="${item.image}" alt="${item.name}">
+          <img src="../${item.image}" alt="${item.name}" data-filename="${item.image}" onerror="handleImageError(this, this.getAttribute('data-filename'))">
           <div class="ordered-item-info">
             <div class="ordered-item-name">${item.name}</div>
             ${item.color || item.size ? `

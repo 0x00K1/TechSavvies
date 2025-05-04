@@ -457,13 +457,19 @@ if (isset($payment_info['payment_method'])) {
                         <?php foreach ($order_items as $item): ?>
                             <tr>
                                 <td>
-                                    <a href="   /categories/products/?product_id=<?php echo $item['product_id']; ?>">
-                                        <?php echo htmlspecialchars($item['product_name']); ?>
+                                    <a href="/categories/products/?product_id=<?php echo $item['product_id']; ?>">
+                                    <?php if (!empty($item['product_name'])): ?> <?php echo htmlspecialchars($item['product_name']); ?> <?php else: echo "Removed"?><?php endif; ?>
                                     </a>
                                 </td>
                                 <td>
                                     <?php if (!empty($item['picture'])): ?>
-                                        <img class="product-image" src="../<?php echo htmlspecialchars($item['picture']); ?>" alt="<?php echo htmlspecialchars($item['product_name']); ?>">
+                                        <?php 
+                                            $basename = basename($item['picture']); 
+                                        ?>
+                                        <img class="product-image"
+                                            src="../<?php echo htmlspecialchars($item['picture']); ?>"
+                                            alt="<?php echo htmlspecialchars($item['product_name']); ?>"
+                                            data-picture="<?php echo htmlspecialchars($basename); ?>">
                                     <?php else: ?>
                                         <div class="no-image">No Image</div>
                                     <?php endif; ?>
@@ -501,5 +507,41 @@ if (isset($payment_info['payment_method'])) {
     </div>
 
     <script src="/assets/js/main.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('img.product-image').forEach(img => {
+            const filename = img.dataset.picture;
+            if (!filename) return;
+
+            // define one handler we can re‑use
+            function onErr() {
+            // figure out which path we’re on
+            const state = img.dataset.triedPath || 'orig';
+
+            if (state === 'orig') {
+                img.dataset.triedPath = 'products';
+                img.src = '/assets/images/products/' + filename;
+            }
+            else if (state === 'products') {
+                img.dataset.triedPath = 'root';
+                img.src = '/' + filename;
+            }
+            else {
+                img.dataset.triedPath = 'default';
+                img.src = '/assets/images/products/default.png';
+                img.removeEventListener('error', onErr);
+            }
+            }
+
+            // 1) attach before we check
+            img.addEventListener('error', onErr);
+            
+            // 2) if it already failed by the time we get here, retrigger
+            if (img.complete && img.naturalWidth === 0) {
+            onErr();
+            }
+        });
+    });
+    </script>
 </body>
 </html>

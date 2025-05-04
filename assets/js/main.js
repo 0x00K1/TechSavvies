@@ -39,12 +39,17 @@ window.closeAuthModal = function() {
 };
 
 function handleImageError(img, filename) {
-  if (!img.dataset.triedAssets) {
-    img.src = '/assets/images/products/' + filename; // Directly load from products folder
-    img.dataset.triedAssets = 'true';
+  const tried = img.dataset.triedPath || 'none';
+
+  if (tried === 'none') {
+    img.src = '/assets/images/products/' + filename;
+    img.dataset.triedPath = 'products';
+  } else if (tried === 'products') {
+    img.src = filename;
+    img.dataset.triedPath = 'root';
   } else {
-    img.src = '/assets/images/products/default.png'; // If no image specified, use default
-    img.onerror = null; // Remove further error handlers to avoid infinite looping
+    img.src = '/assets/images/products/default.png';
+    img.onerror = null; // prevent infinite loop
   }
 }
 
