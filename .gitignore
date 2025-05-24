@@ -19,3 +19,4 @@ Thumbs.db
 .settings/
 /vendor/
 composer.lock
+.htaccess
