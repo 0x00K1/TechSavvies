@@ -1,8 +1,8 @@
-<?php require_once __DIR__ . '/../includes/root_guard.php'; ?>
+<?php require_once __DIR__.'/../includes/root_guard.php';?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php require_once __DIR__ . '\..\assets\php\main.php'; ?>
+    <?php require_once __DIR__ . '/../assets/php/main.php'; ?>
     <link rel="stylesheet" href="..\assets\css\main.css">
     <link rel="stylesheet" href="..\assets\css\root.css">
     <script type="module" src="..\assets\js\root.js"></script>
@@ -11,7 +11,7 @@
 
 <body>
     <!-- Header section -->
-    <?php include('..\assets\php\header.php'); ?>
+    <?php include(__DIR__.'/../assets/php/header.php'); ?>
     <div class="Boss">
         <!-- toolbar Section -->
         <div class="toolbar">

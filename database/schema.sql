@@ -92,7 +92,7 @@ CREATE TABLE reviews (
     review_id INT AUTO_INCREMENT PRIMARY KEY,
     customer_id INT NOT NULL,
     product_id INT NOT NULL,
-    rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5) COMMENT 'Rating from 1 to 5',
+    rating INT NOT NULL COMMENT 'Rating from 1 to 5' CHECK (rating BETWEEN 1 AND 5),
     review_text TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id) ON DELETE CASCADE,
@@ -100,7 +100,7 @@ CREATE TABLE reviews (
 );
 
 INSERT INTO roots (email, password, username, created_at) VALUES
-('root@techsavvies.shop', '', 'Root', NOW()),
+('root@techsavvies.shop', '', 'Root', NOW());
 
 INSERT INTO categories (category_name, description, created_by) VALUES
 ('T-shirts', 'Cool tech-inspired apparel', 1),
