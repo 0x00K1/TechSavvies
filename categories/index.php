@@ -51,43 +51,43 @@ if (!empty($products_to_display)) {
     <div class="content-container">
       <!-- Category Navigation -->
       <div class="category-navigation">
-        <a href="categories?type=tshirts" class="buttons <?php echo ($_GET['type'] ?? '') === 'tshirts' ? 'active' : ''; ?>">
+        <a href="?type=tshirts" class="buttons <?php echo ($_GET['type'] ?? '') === 'tshirts' ? 'active' : ''; ?>">
           <img src="/assets/images/tshirts.png" alt="T-shirts" class="category-icon" />
           T-shirts
         </a>
-        <a href="categories?type=backpacks" class="buttons <?php echo ($_GET['type'] ?? '') === 'backpacks' ? 'active' : ''; ?>">
+        <a href="?type=backpacks" class="buttons <?php echo ($_GET['type'] ?? '') === 'backpacks' ? 'active' : ''; ?>">
           <img src="/assets/images/backpacks.png" alt="Backpacks" class="category-icon" />
           Backpacks
         </a>
-        <a href="categories?type=books" class="buttons <?php echo ($_GET['type'] ?? '') === 'books' ? 'active' : ''; ?>">
+        <a href="?type=books" class="buttons <?php echo ($_GET['type'] ?? '') === 'books' ? 'active' : ''; ?>">
           <img src="/assets/images/digital-books.png" alt="Books" class="category-icon" />
           Books
         </a>
-        <a href="categories?type=laptops" class="buttons <?php echo ($_GET['type'] ?? '') === 'laptops' ? 'active' : ''; ?>">
+        <a href="?type=laptops" class="buttons <?php echo ($_GET['type'] ?? '') === 'laptops' ? 'active' : ''; ?>">
           <img src="/assets/images/laptops.png" alt="Laptops" class="category-icon" />
           Laptops
         </a>
-        <a href="categories?type=stickers" class="buttons <?php echo ($_GET['type'] ?? '') === 'stickers' ? 'active' : ''; ?>">
+        <a href="?type=stickers" class="buttons <?php echo ($_GET['type'] ?? '') === 'stickers' ? 'active' : ''; ?>">
           <img src="/assets/images/stickers.png" alt="Stickers" class="category-icon" />
           Stickers
         </a>
-        <a href="categories?type=hardware-tools" class="buttons <?php echo ($_GET['type'] ?? '') === 'hardware-tools' ? 'active' : ''; ?>">
+        <a href="?type=hardware-tools" class="buttons <?php echo ($_GET['type'] ?? '') === 'hardware-tools' ? 'active' : ''; ?>">
           <img src="/assets/images/hardware-tools.png" alt="Hardware Tools" class="category-icon" />
           Hardware Tools
         </a>
-        <a href="categories?type=software-tools" class="buttons <?php echo ($_GET['type'] ?? '') === 'software-tools' ? 'active' : ''; ?>">
+        <a href="?type=software-tools" class="buttons <?php echo ($_GET['type'] ?? '') === 'software-tools' ? 'active' : ''; ?>">
           <img src="/assets/images/software-tools.png" alt="Software Tools" class="category-icon" />
           Software Tools
         </a>
-        <a href="categories?type=mugs" class="buttons <?php echo ($_GET['type'] ?? '') === 'mugs' ? 'active' : ''; ?>">
+        <a href="?type=mugs" class="buttons <?php echo ($_GET['type'] ?? '') === 'mugs' ? 'active' : ''; ?>">
           <img src="/assets/images/mugs.png" alt="Mugs" class="category-icon" />
           Mugs
         </a>
-        <a href="categories?type=phone-cases" class="buttons <?php echo ($_GET['type'] ?? '') === 'phone-cases' ? 'active' : ''; ?>">
+        <a href="?type=phone-cases" class="buttons <?php echo ($_GET['type'] ?? '') === 'phone-cases' ? 'active' : ''; ?>">
           <img src="/assets/images/phone-cases.png" alt="Phone Cases" class="category-icon" />
           Phone Cases
         </a>
-        <a href="categories?type=games" class="buttons <?php echo ($_GET['type'] ?? '') === 'games' ? 'active' : ''; ?>">
+        <a href="?type=games" class="buttons <?php echo ($_GET['type'] ?? '') === 'games' ? 'active' : ''; ?>">
           <img src="/assets/images/games.png" alt="Games" class="category-icon" />
           Games
         </a>
